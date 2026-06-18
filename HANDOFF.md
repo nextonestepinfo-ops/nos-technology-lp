@@ -6,6 +6,49 @@
 
 ---
 
+## ★ 別のPCで続ける（数日外出時など）
+
+このリポジトリ（GitHub）に一式が入っているので、別PCでもそのまま続けられます。
+
+**公開URL（誰でも閲覧可・pushで自動更新）:** https://nextonestepinfo-ops.github.io/nos-technology-lp/
+**リポジトリ:** `https://github.com/nextonestepinfo-ops/nos-technology-lp`（公開 / GitHub Pages: `main` の `/`）
+
+### 別PCでのセットアップ
+1. **Git** と **Node.js**（任意のLTS）を入れる。プレビュー確認だけなら Node、編集だけなら不要。
+2. クローン：
+   ```
+   git clone https://github.com/nextonestepinfo-ops/nos-technology-lp.git
+   cd nos-technology-lp
+   ```
+3. ローカルプレビュー（任意）：`npm run serve` → http://localhost:5500/ （`dev-server.mjs`。Python不要）
+4. 編集 → 確認 → 公開：
+   ```
+   git add -A
+   git commit -m "変更内容"
+   git push            # 初回はGitHubログイン（ブラウザ/トークン）を求められる
+   ```
+   push後 数十秒で公開URLが自動更新される。
+
+### Claude Code で続ける場合（別PC）
+- 別PCにも Claude Code を入れ、クローンしたフォルダを開く。**会話履歴は引き継がれない**ので、本書 `HANDOFF.md` と下記「現在の最新状態」を読ませてから作業を依頼する。
+- そのまま渡せる継続プロンプトは「## 0. 継続プロンプト」。
+
+> 注意: このメインPCは `gh` 未導入＆GitHub Credential Manager が `git push` でGUI認証待ちになるクセがある（別PCでは通常の `git push` でOK）。秘密鍵は `js/config.js` に書かない（デモ設定のままトラッキング済）。
+
+---
+
+## 現在の最新状態（2026-06-18 時点・これが最優先で正）
+
+- **構成＝ハイブリッド**：トップ `index.html` は**ハブ**（Hero → Manifesto → マーキー → Services動線 → Process → Contact）。3万円WebとWorksショーケースは **`services/web.html`** へ移設済み。
+- **各サービスは独立ページ**：`services/web.html` / `ai.html` / `system.html`（共通テンプレ、`../css` `../js` 再利用、`#paletteSwitch`あり、preloader無し、`main.js`は存在要素のみ初期化）。上部ナビと、Servicesカードのオーバーレイ「詳しく見る→」で遷移。
+- **配色＝真っ黒ベースのシネマティック**（紺NG）。`js/palette.js` に **9パレット**（暗6: Aether/Ember/Mako/Gold/Void/Signal ＋ 明3: Paper/Mist/Sand）。サイト内スイッチャー(`#paletteSwitch`)で切替＝**色は未確定で検討中**。既定Aether。
+- **演出**：`js/service-hero.js`＝各サービスHeroの“制作ムービー風”3D（サイト/AI/管理画面が自動で組み上がるビルドアニメ＋ドリー＋発光）。`js/hero-hybrid.js`＝トップHeroのAIコア＋周回UIパネル（ホバー/クリック/コアのホバー演出）。`js/service-overlay.js`＝Servicesのズームアップ詳細。白黒スクロールゾーン(zones.js/#sweep)は**廃止**。
+- **公開**：GitHub Pages 稼働中（上記URL）。`npm run serve`=`node dev-server.mjs`（no-store配信）。
+- **次の作業（C→A→B の順）**：C=サービスHeroのホバー拡大／スクロールで停止して制作ムービー再生の作り込み（今は自動ループ）。A=スクロール連動で背景に線/光が走る全体モーション。B=文字スライドインの映画的強化。加えて モバイル最適化、実素材差替（ロゴPNG/Worksスクショ/管理画面UI = `ASSETS.md`）。
+- **キャッシュ注意（プレビュー検証時）**：ブラウザが旧JS/CSSを保持しがち。確認は Ctrl+F5、または `fetch(u,{cache:'reload'})` 後 reload。
+
+---
+
 ## 0. 継続プロンプト（AIにそのまま渡す用）
 
 ```
