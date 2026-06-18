@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" role="img" aria-label="Nos Technology mark">
+  <rect width="100" height="100" rx="22" fill="#f4f5f8"/>
+  <path d="M18 20h16v60H18z" fill="#16213a"/>
+  <path d="M68 20h14v60H68z" fill="#16213a"/>
+  <path d="M32 20h16l20 60H52z" fill="#16213a" opacity=".86"/>
+  <path d="M64 10h26v24z" fill="#1a5cff"/>
+</svg>

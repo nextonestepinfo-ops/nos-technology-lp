@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 180" role="img" aria-label="Nos Technology">
+  <rect width="720" height="180" rx="36" fill="#f4f5f8"/>
+  <g transform="translate(48 40)">
+    <path d="M0 0h16v100H0z" fill="#16213a"/>
+    <path d="M82 0h16v100H82z" fill="#16213a"/>
+    <path d="M14 0h24l58 100H72z" fill="#16213a" opacity=".86"/>
+    <path d="M76-16h42v38z" fill="#1a5cff"/>
+  </g>
+  <text x="190" y="84" fill="#16213a" font-family="Space Grotesk, Arial, sans-serif" font-size="46" font-weight="700">Nos</text>
+  <text x="290" y="84" fill="#5b6478" font-family="Space Grotesk, Arial, sans-serif" font-size="46" font-weight="400">Technology</text>
+  <text x="193" y="126" fill="#1a5cff" font-family="Space Grotesk, Arial, sans-serif" font-size="18" font-weight="600" letter-spacing="3">SYSTEMS FOR HUMAN WORK</text>
+</svg>

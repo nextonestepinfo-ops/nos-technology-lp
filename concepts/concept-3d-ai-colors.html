@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NosTechnology｜AIコア — 配色比較</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+<script type="importmap">
+{ "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js" } }
+</script>
+<style>
+  :root{
+    --paper:#f3f2ee;--ink:#14161a;--ink-soft:#5b626c;
+    --mint:#16b89a;--blue:#3f6df0;--lav:#7b6cf0;
+    --line:color-mix(in srgb,var(--ink) 12%,transparent);
+    --glass:color-mix(in srgb,var(--paper) 62%,transparent);
+    --en:"Space Grotesk",sans-serif;--jp:"Zen Kaku Gothic New",system-ui,sans-serif;--ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;}
+  body{background:var(--paper);color:var(--ink);font-family:var(--jp);line-height:1.85;-webkit-font-smoothing:antialiased;
+    overflow-x:hidden;font-feature-settings:"palt" 1;transition:background .6s var(--ease),color .6s var(--ease);}
+  a{color:inherit;text-decoration:none;}::selection{background:var(--ink);color:var(--paper);}
+  @media(hover:hover)and(pointer:fine){body,a,button,[data-mag]{cursor:none;}}
+  .cur{position:fixed;top:0;left:0;z-index:60;pointer-events:none;}
+  .cur i,.cur b{position:absolute;border-radius:50%;transform:translate(-50%,-50%);}
+  .cur i{width:6px;height:6px;background:var(--ink);}
+  .cur b{width:38px;height:38px;border:1px solid color-mix(in srgb,var(--ink) 35%,transparent);transition:width .3s,height .3s,background .3s,border-color .3s;}
+  .cur.hov b{width:64px;height:64px;background:color-mix(in srgb,var(--ink) 8%,transparent);border-color:transparent;}.cur.hov i{opacity:0;}
+  @media(hover:none),(pointer:coarse){.cur{display:none;}}
+  header{position:fixed;inset:0 0 auto 0;z-index:30;display:flex;align-items:center;justify-content:space-between;padding:24px clamp(22px,5vw,72px);transition:.4s var(--ease);}
+  header.scr{padding-top:14px;padding-bottom:14px;background:var(--glass);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);}
+  .brand{display:flex;align-items:center;gap:11px;font-weight:700;}
+  .brand i{width:22px;height:22px;border-radius:7px;background:conic-gradient(from 200deg,var(--mint),var(--blue),var(--lav),var(--mint));transition:background .6s var(--ease);}
+  nav{display:flex;gap:30px;font-family:var(--en);font-size:.9rem;color:var(--ink-soft);}nav a:hover{color:var(--ink);}
+  .ncta{padding:9px 20px;border-radius:999px;border:1px solid var(--ink);color:var(--ink);transition:.35s var(--ease);}.ncta:hover{background:var(--ink);color:var(--paper);}
+  @media(max-width:820px){nav .lnk{display:none;}}
+  .hero{position:relative;min-height:100svh;display:flex;align-items:center;padding:140px clamp(22px,5vw,72px) 110px;overflow:hidden;}
+  .hero__gl{position:absolute;inset:0;width:100%;height:100%;z-index:0;}
+  .hero__c{position:relative;z-index:2;max-width:600px;pointer-events:none;}
+  .hero__c a,.hero__c [data-mag]{pointer-events:auto;}
+  .badge{display:inline-flex;align-items:center;gap:8px;font-family:var(--en);font-size:.78rem;letter-spacing:.04em;padding:7px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(6px);color:var(--ink-soft);margin-bottom:24px;}
+  .badge i{width:7px;height:7px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);}
+  h1{font-weight:900;font-size:clamp(2.8rem,8vw,6.4rem);line-height:1.04;letter-spacing:.004em;margin-bottom:28px;}
+  h1 .ln{display:block;overflow:hidden;}h1 .ln>span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease);}
+  h1 .ln.in>span{transform:none;}h1 .ln:nth-child(2)>span{transition-delay:.1s;}
+  h1 em{font-style:normal;background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .lead{max-width:480px;color:var(--ink-soft);font-size:clamp(1rem,1.4vw,1.12rem);margin-bottom:36px;}
+  .actions{display:flex;flex-wrap:wrap;gap:14px;}
+  .btn{position:relative;display:inline-flex;align-items:center;gap:9px;padding:16px 30px;border-radius:999px;font-weight:600;font-size:.98rem;border:1px solid transparent;overflow:hidden;isolation:isolate;transition:color .4s var(--ease),border-color .4s var(--ease);}
+  .btn>span{position:relative;z-index:1;}.btn::before{content:"";position:absolute;inset:0;z-index:0;transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ease);}.btn:hover::before{transform:scaleY(1);}
+  .btn--fill{background:var(--ink);color:var(--paper);}.btn--fill::before{background:linear-gradient(120deg,var(--mint),var(--blue));}.btn--fill:hover{color:var(--paper);}
+  .btn--ghost{border-color:var(--line);color:var(--ink);}.btn--ghost::before{background:var(--ink);}.btn--ghost:hover{color:var(--paper);border-color:var(--ink);}
+  /* 配色スウォッチ */
+  .sw{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:50;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+    max-width:min(94vw,620px);padding:12px 16px;border-radius:22px;background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--line);}
+  .sw__t{position:absolute;top:-24px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--en);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+  .chip{display:flex;flex-direction:column;align-items:center;gap:5px;border:none;background:none;padding:2px;}
+  .chip b{width:34px;height:34px;border-radius:10px;border:1px solid transparent;display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.16);transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);}
+  .chip b u{width:15px;height:15px;border-radius:50%;display:block;}
+  .chip.on b{border-color:var(--ink)!important;transform:scale(1.1);box-shadow:0 4px 16px rgba(0,0,0,.22);}
+  .chip small{font-family:var(--en);font-size:.58rem;letter-spacing:.02em;color:var(--ink-soft);}
+  .rv{opacity:0;transform:translateY(24px);transition:.9s var(--ease);}.rv.in{opacity:1;transform:none;}.rv.d1{transition-delay:.25s;}.rv.d2{transition-delay:.4s;}
+  @media(prefers-reduced-motion:reduce){.rv,h1 .ln>span{opacity:1!important;transform:none!important;}.cur{display:none;}body{cursor:auto;}}
+</style>
+</head>
+<body>
+  <div class="cur" id="cur"><i></i><b></b></div>
+  <header id="hd">
+    <a class="brand" data-mag href="#"><i></i> NosTechnology</a>
+    <nav><a class="lnk" href="#">Services</a><a class="lnk" href="#">3万円Web</a><a class="lnk" href="#">Works</a><a class="ncta" data-mag href="#">無料相談</a></nav>
+  </header>
+
+  <section class="hero">
+    <canvas class="hero__gl" id="gl" aria-hidden="true"></canvas>
+    <div class="hero__c">
+      <span class="badge rv"><i></i> AI が、店舗の業務を動かす</span>
+      <h1>
+        <span class="ln"><span>人の時間を、</span></span>
+        <span class="ln"><span><em>AI</em>でつくる。</span></span>
+      </h1>
+      <p class="lead rv d1">問い合わせ対応、返信文案、見込み客の管理、通知。手の回らない作業を、AIの仕組みで自動で回します。</p>
+      <div class="actions rv d2">
+        <a class="btn btn--fill" data-mag href="#"><span>無料相談する</span></a>
+        <a class="btn btn--ghost" data-mag href="#"><span>できることを見る</span></a>
+      </div>
+    </div>
+  </section>
+
+  <!-- 配色スイッチャー（JSが生成） -->
+  <div class="sw" id="sw"><span class="sw__t">配色を選ぶ — Color</span></div>
+
+<script type="module">
+  import * as THREE from "three";
+
+  // ===== 配色パレット定義 =====
+  // css: 画面のCSS変数 / gl: 3Dの色（16進数値）
+  // 背景を白→暖色→寒色→アース→濃紺→黒→ダークブラウンまでスペクトラムで用意。
+  // dark:true の配色は文字を明色にし、コアを暗めの金属＋強めの発光にする。
+  const PALETTES=[
+    {key:'white', label:'White',  css:{paper:'#ffffff',ink:'#14161a',soft:'#5b626c',mint:'#12b39a',blue:'#3b6df0',lav:'#7b6cf0'},
+     gl:{l1:0x12b39a,l2:0x3b6df0,core:0xffffff,emissive:0x0e9ab1,emInt:0.14,wire:0x3b6df0,wireOp:0.16,part:0x12b39a}},
+    {key:'aqua',  label:'Aqua',   css:{paper:'#f3f2ee',ink:'#14161a',soft:'#5b626c',mint:'#16b89a',blue:'#3f6df0',lav:'#7b6cf0'},
+     gl:{l1:0x16b89a,l2:0x3f6df0,core:0xffffff,emissive:0x0e9ab1,emInt:0.14,wire:0x3f6df0,wireOp:0.18,part:0x16b89a}},
+    {key:'cream', label:'Cream',  css:{paper:'#f5f1ea',ink:'#1f1a14',soft:'#6b6056',mint:'#f5a623',blue:'#ff7a59',lav:'#8b6cf0'},
+     gl:{l1:0xf5a623,l2:0xff7a59,core:0xffffff,emissive:0xf59e0b,emInt:0.16,wire:0xff7a59,wireOp:0.20,part:0xf5a623}},
+    {key:'mist',  label:'Mist',   css:{paper:'#e9edf3',ink:'#14152a',soft:'#525872',mint:'#38bdf8',blue:'#4f46e5',lav:'#7c3aed'},
+     gl:{l1:0x4f46e5,l2:0x38bdf8,core:0xffffff,emissive:0x4f46e5,emInt:0.16,wire:0x7c3aed,wireOp:0.20,part:0x38bdf8}},
+    {key:'sand',  label:'Sand',   css:{paper:'#ece4d5',ink:'#2a2117',soft:'#6f6354',mint:'#0e9aa0',blue:'#d98a3d',lav:'#b0673a'},
+     gl:{l1:0x0e9aa0,l2:0xd98a3d,core:0xffffff,emissive:0x0e9aa0,emInt:0.15,wire:0xd98a3d,wireOp:0.20,part:0x0e9aa0}},
+    {key:'navy',  label:'Navy', dark:true, css:{paper:'#0d1b2e',ink:'#e6eefb',soft:'#8aa0bd',mint:'#5fe3c1',blue:'#5b9bff',lav:'#9b8cff'},
+     gl:{l1:0x5fe3c1,l2:0x5b9bff,core:0x223349,emissive:0x1f7bd6,emInt:0.34,wire:0x5b9bff,wireOp:0.30,part:0x5fe3c1}},
+    {key:'night', label:'Night', dark:true, css:{paper:'#0b0f17',ink:'#eef2f6',soft:'#8b97a5',mint:'#5fe3c1',blue:'#4a8dff',lav:'#9b8cff'},
+     gl:{l1:0x5fe3c1,l2:0x4a8dff,core:0x2a3442,emissive:0x1fb6c9,emInt:0.35,wire:0x4a8dff,wireOp:0.28,part:0x5fe3c1}},
+    {key:'espresso',label:'Espresso', dark:true, css:{paper:'#17120d',ink:'#f4ece0',soft:'#a79a87',mint:'#f5a623',blue:'#ff7a45',lav:'#d98cf0'},
+     gl:{l1:0xf5a623,l2:0xff7a45,core:0x2a2017,emissive:0xf59e0b,emInt:0.36,wire:0xff7a45,wireOp:0.28,part:0xf5a623}},
+  ];
+
+  // ===== 入力/カーソル/リビール =====
+  const fine=matchMedia('(hover:hover) and (pointer:fine)').matches, reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  const ptr={x:innerWidth/2,y:innerHeight/2,nx:0,ny:0};
+  addEventListener('pointermove',e=>{ptr.x=e.clientX;ptr.y=e.clientY;ptr.nx=e.clientX/innerWidth-.5;ptr.ny=e.clientY/innerHeight-.5;},{passive:true});
+  if(fine&&!reduce){const cur=document.getElementById('cur'),dot=cur.querySelector('i'),ring=cur.querySelector('b');let rx=ptr.x,ry=ptr.y;
+    (function f(){dot.style.transform=`translate(${ptr.x}px,${ptr.y}px) translate(-50%,-50%)`;rx+=(ptr.x-rx)*.18;ry+=(ptr.y-ry)*.18;ring.style.transform=`translate(${rx}px,${ry}px) translate(-50%,-50%)`;requestAnimationFrame(f);})();
+    document.addEventListener('pointerover',e=>{if(e.target.closest('a,button,[data-mag]'))cur.classList.add('hov');});
+    document.addEventListener('pointerout',e=>{if(e.target.closest('a,button,[data-mag]'))cur.classList.remove('hov');});
+    document.querySelectorAll('[data-mag]').forEach(el=>{el.style.transition='transform .4s cubic-bezier(.16,1,.3,1)';
+      el.addEventListener('pointermove',e=>{const r=el.getBoundingClientRect();el.style.transform=`translate(${(e.clientX-(r.left+r.width/2))*.4}px,${(e.clientY-(r.top+r.height/2))*.4}px)`;});
+      el.addEventListener('pointerleave',()=>el.style.transform='');});}
+  requestAnimationFrame(()=>document.querySelectorAll('h1 .ln').forEach(l=>l.classList.add('in')));
+  const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.2});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+  const hd=document.getElementById('hd');addEventListener('scroll',()=>hd.classList.toggle('scr',scrollY>40),{passive:true});
+
+  // ===== スウォッチUI生成 =====
+  const swWrap=document.getElementById('sw');
+  const chips=PALETTES.map((p,i)=>{
+    const btn=document.createElement('button');btn.className='chip';btn.type='button';
+    btn.innerHTML=`<b style="background:${p.css.paper};border-color:color-mix(in srgb,${p.css.ink} 18%,transparent)"><u style="background:conic-gradient(from 200deg, ${p.css.mint}, ${p.css.blue}, ${p.css.lav}, ${p.css.mint})"></u></b><small>${p.label}</small>`;
+    btn.addEventListener('click',()=>apply(i));
+    swWrap.appendChild(btn);return btn;
+  });
+
+  // ===== 3D: AIコア =====
+  let mat,wireMat,ptsMat,pm,pb;
+  try{
+  const canvas=document.getElementById('gl');
+  const renderer=new THREE.WebGLRenderer({canvas,antialias:true,alpha:true});
+  renderer.setPixelRatio(Math.min(devicePixelRatio||1,2));
+  const scene=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(45,1,0.1,100);cam.position.set(0,0,8);
+  scene.add(new THREE.HemisphereLight(0xffffff,0xdfe6ee,0.95));
+  const dl=new THREE.DirectionalLight(0xffffff,1.0);dl.position.set(5,6,7);scene.add(dl);
+  pm=new THREE.PointLight(0x16b89a,30,40);pm.position.set(-5,2,4);scene.add(pm);
+  pb=new THREE.PointLight(0x3f6df0,28,40);pb.position.set(5,-3,3);scene.add(pb);
+
+  const core=new THREE.Group();core.position.x=2.0;scene.add(core);
+  const geo=new THREE.IcosahedronGeometry(1.8,2);
+  const base=geo.attributes.position.array.slice(0);
+  mat=new THREE.MeshStandardMaterial({color:0xffffff,roughness:.18,metalness:.35,flatShading:true,emissive:0x0e9ab1,emissiveIntensity:.14});
+  const solid=new THREE.Mesh(geo,mat);core.add(solid);
+  wireMat=new THREE.MeshBasicMaterial({color:0x3f6df0,wireframe:true,transparent:true,opacity:.18});
+  const wire=new THREE.Mesh(new THREE.IcosahedronGeometry(2.25,3),wireMat);core.add(wire);
+  const N=reduce?120:320,pp=new Float32Array(N*3);
+  for(let i=0;i<N;i++){const r=2.6+Math.random()*1.8,th=Math.random()*6.28,ph=Math.acos(2*Math.random()-1);
+    pp[i*3]=r*Math.sin(ph)*Math.cos(th);pp[i*3+1]=r*Math.sin(ph)*Math.sin(th);pp[i*3+2]=r*Math.cos(ph);}
+  const pg=new THREE.BufferGeometry();pg.setAttribute('position',new THREE.BufferAttribute(pp,3));
+  ptsMat=new THREE.PointsMaterial({color:0x16b89a,size:.05,transparent:true,opacity:.85,depthWrite:false});
+  const pts=new THREE.Points(pg,ptsMat);core.add(pts);
+  function n3(x,y,z){return Math.sin(x*1.7+y*0.3)*Math.cos(y*1.5+z*0.7)*Math.sin(z*1.3+x*0.5);}
+  function rs(){const r=canvas.getBoundingClientRect();renderer.setSize(r.width,r.height,false);cam.aspect=r.width/r.height;cam.updateProjectionMatrix();
+    const small=r.width<820;core.position.x=small?0:2.0;core.scale.setScalar(small?0.8:1);}
+  rs();addEventListener('resize',rs);
+  let rx=0,ry=0;const posAttr=geo.attributes.position;
+  function loop(t){t=(t||0)/1000;
+    if(!reduce){const amp=0.18+Math.sin(t*1.2)*0.05;
+      for(let i=0;i<posAttr.count;i++){const bx=base[i*3],by=base[i*3+1],bz=base[i*3+2];
+        const d=1+amp*n3(bx*1.3+t*0.6,by*1.3+t*0.5,bz*1.3+t*0.4);
+        posAttr.array[i*3]=bx*d;posAttr.array[i*3+1]=by*d;posAttr.array[i*3+2]=bz*d;}
+      posAttr.needsUpdate=true;geo.computeVertexNormals();}
+    rx+=((ptr.nx*0.6)-rx)*.05;ry+=((ptr.ny*0.5)-ry)*.05;
+    core.rotation.y=t*0.18+rx;core.rotation.x=-ry;wire.rotation.y=-t*0.22;wire.rotation.z=t*0.1;pts.rotation.y=t*0.06;
+    solid.scale.setScalar(1+Math.sin(t*1.6)*0.03);
+    renderer.render(scene,cam);if(!reduce)requestAnimationFrame(loop);}
+  loop(0);
+  }catch(e){console.warn('3D背景を初期化できませんでした。',e);}
+
+  // ===== パレット適用 =====
+  const root=document.documentElement.style;
+  function apply(i){
+    const p=PALETTES[i];
+    root.setProperty('--paper',p.css.paper);root.setProperty('--ink',p.css.ink);root.setProperty('--ink-soft',p.css.soft);
+    root.setProperty('--mint',p.css.mint);root.setProperty('--blue',p.css.blue);root.setProperty('--lav',p.css.lav);
+    chips.forEach((c,j)=>c.classList.toggle('on',j===i));
+    if(mat){mat.color.setHex(p.gl.core);mat.emissive.setHex(p.gl.emissive);mat.emissiveIntensity=p.gl.emInt;
+      mat.metalness=p.dark?0.45:0.35;
+      wireMat.color.setHex(p.gl.wire);wireMat.opacity=p.gl.wireOp;ptsMat.color.setHex(p.gl.part);
+      pm.color.setHex(p.gl.l1);pb.color.setHex(p.gl.l2);}
+  }
+  apply(0); // 既定: Aqua
+</script>
+</body>
+</html>

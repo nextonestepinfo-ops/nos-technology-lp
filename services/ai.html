@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI業務改善・自動化｜Nos Technology。問い合わせ返信、通知、見込み客管理など、毎日の細かい手間をAIと仕組みで肩代わりします。" />
+  <meta name="theme-color" content="#07080c" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Nos Technology" />
+  <meta property="og:title" content="AI業務改善・自動化｜Nos Technology" />
+  <meta property="og:description" content="毎日の細かい手間を、AIと仕組みで肩代わりします。" />
+  <meta property="og:image" content="../assets/og/og-default.svg" />
+  <title>AI業務改善・自動化 — Nos Technology</title>
+
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/sections.css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.mjs"
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <span class="cursor__dot"></span><span class="cursor__ring"></span><span class="cursor__label"></span>
+  </div>
+
+  <header class="header" id="header">
+    <a class="header__brand" href="../index.html" data-magnetic>
+      <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/><path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+        <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/><path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+      </svg>
+      <span class="header__name"><b>Nos</b><span>Technology</span></span>
+    </a>
+    <nav class="header__nav" aria-label="メインナビゲーション">
+      <a href="../index.html">Top</a>
+      <a href="web.html">Web制作</a>
+      <a href="ai.html" aria-current="page">AI自動化</a>
+      <a href="system.html">管理画面</a>
+    </nav>
+    <a class="header__cta" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <canvas class="hero__canvas" id="serviceHeroCanvas" data-kind="ai" aria-hidden="true"></canvas>
+      <div class="hero__content">
+        <span class="hero__badge" data-reveal="fade"><i></i> Service 02 — AI Automation</span>
+        <h1 class="hero__title">
+          <span class="line" data-reveal="line">手間を、</span>
+          <span class="line" data-reveal="line"><em>AI</em>に渡す。</span>
+        </h1>
+        <p class="hero__lead" data-reveal="fade">
+          問い合わせ返信、通知、見込み客の管理。毎日の細かい作業を、AIと仕組みで自動で回します。
+          小さく試せる構成から始められます。
+        </p>
+        <div class="hero__actions" data-reveal="fade">
+          <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
+          <a class="btn btn--ghost" href="#flow" data-magnetic><span>自動化の流れを見る</span></a>
+        </div>
+      </div>
+      <div class="hero__meta" aria-hidden="true"><span>Reply · Notify · Manage</span><span>Scroll<i></i></span></div>
+    </section>
+
+    <section class="section process" id="features">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">What we do</p>
+        <h2 class="section__title" data-reveal="words">できること</h2>
+      </div>
+      <ol class="process__list">
+        <li class="step" data-reveal="rise"><span class="step__no">01</span><h3>返信文案の生成</h3><p>問い合わせ内容に合わせて、返信の下書きをAIが用意。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">02</span><h3>よくある質問の応答</h3><p>定型的な問い合わせは自動で一次対応。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">03</span><h3>通知・リマインド</h3><p>予約や問い合わせを見逃さないよう自動通知。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">04</span><h3>見込み客の整理</h3><p>問い合わせを自動でリスト化し、追客しやすく。</p></li>
+      </ol>
+    </section>
+
+    <section class="section plan" id="flow">
+      <div class="plan__inner">
+        <div class="section__head" style="text-align:center">
+          <p class="process__loop" data-reveal="fade">Auto flow</p>
+          <h2 class="section__title" data-reveal="words">自動で回る流れ</h2>
+        </div>
+        <div class="cycle">
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">01</div><h3>受信</h3><p>問い合わせ・予約を受け取る。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">02</div><h3>判定</h3><p>内容をAIが判定・分類。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">03</div><h3>下書き</h3><p>返信文案を自動生成。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">04</div><h3>確認・送信</h3><p>人が確認して送信（自動も可）。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">05</div><h3>記録</h3><p>見込み客リストへ自動で記録。</p></div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <a class="footer__big" href="../index.html#contact" data-cursor="無料相談">まずは、<br />無料相談から。</a>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__brand">
+        <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/><path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+          <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/><path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+        </svg>
+        <span class="footer__word"><b>Nos</b><span>Technology</span></span>
+      </span>
+      <span class="footer__tagline">Systems <em>for</em> human work.</span>
+      <small>&copy; 2026 Nos Technology — 制作サンプルを含みます。</small>
+    </div>
+  </footer>
+
+  <div class="sw" id="paletteSwitch"><span class="sw__t">Color / Atmosphere</span></div>
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

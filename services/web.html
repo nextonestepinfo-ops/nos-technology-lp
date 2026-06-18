@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Web制作・集客導線改善｜Nos Technology。店舗ページ、Googleマップ、Instagram、問い合わせフォームまで、見つけてもらい相談につながる導線を整えます。" />
+  <meta name="theme-color" content="#07080c" />
+  <meta property="og:type" content="article" />
+  <meta property="og:site_name" content="Nos Technology" />
+  <meta property="og:title" content="Web制作・集客導線改善｜Nos Technology" />
+  <meta property="og:description" content="見つけてもらい、相談につながるまでの導線をまとめて整えます。" />
+  <meta property="og:image" content="../assets/og/og-default.svg" />
+  <title>Web制作・集客導線改善 — Nos Technology</title>
+
+  <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="../css/base.css" />
+  <link rel="stylesheet" href="../css/hero.css" />
+  <link rel="stylesheet" href="../css/sections.css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.mjs"
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <span class="cursor__dot"></span><span class="cursor__ring"></span><span class="cursor__label"></span>
+  </div>
+
+  <header class="header" id="header">
+    <a class="header__brand" href="../index.html" data-magnetic>
+      <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/><path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+        <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/><path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+      </svg>
+      <span class="header__name"><b>Nos</b><span>Technology</span></span>
+    </a>
+    <nav class="header__nav" aria-label="メインナビゲーション">
+      <a href="../index.html">Top</a>
+      <a href="web.html" aria-current="page">Web制作</a>
+      <a href="ai.html">AI自動化</a>
+      <a href="system.html">管理画面</a>
+    </nav>
+    <a class="header__cta" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
+  </header>
+
+  <main id="top">
+    <!-- Hero -->
+    <section class="hero">
+      <canvas class="hero__canvas" id="serviceHeroCanvas" data-kind="web" aria-hidden="true"></canvas>
+      <div class="hero__content">
+        <span class="hero__badge" data-reveal="fade"><i></i> Service 01 — Web Design &amp; Reach</span>
+        <h1 class="hero__title">
+          <span class="line" data-reveal="line">見つけてもらい、</span>
+          <span class="line" data-reveal="line"><em>相談</em>につなげる。</span>
+        </h1>
+        <p class="hero__lead" data-reveal="fade">
+          店舗ページ、既存サイト改善、Googleマップ、Instagram、問い合わせフォームまで。
+          AIとテンプレート設計で、最初に必要な集客導線を素早く形にします。
+        </p>
+        <div class="hero__actions" data-reveal="fade">
+          <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
+          <a class="btn btn--ghost" href="#plan" data-magnetic><span>3万円プランを見る</span></a>
+        </div>
+      </div>
+      <div class="hero__meta" aria-hidden="true"><span>Web · Map · SNS</span><span>Scroll<i></i></span></div>
+    </section>
+
+    <!-- できること -->
+    <section class="section process" id="features">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">What we do</p>
+        <h2 class="section__title" data-reveal="words">できること</h2>
+      </div>
+      <ol class="process__list">
+        <li class="step" data-reveal="rise"><span class="step__no">01</span><h3>店舗ページ制作</h3><p>スマホ最適化された1ページサイト。店舗情報・各種リンクを整理。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">02</span><h3>Map / MEO 整備</h3><p>Googleマップの情報を整え、地図からの来店導線をつくる。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">03</span><h3>SNS・LINE 導線</h3><p>Instagram・LINEと連携し、フォロー・問い合わせへ自然につなぐ。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">04</span><h3>問い合わせフォーム</h3><p>迷わせない問い合わせ導線を設置。通知や自動返信とも連携可。</p></li>
+      </ol>
+    </section>
+
+    <!-- 制作イメージ（流れるショーケース：実スクショに差替え可） -->
+    <section class="section works" id="works">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">Design Samples</p>
+        <h2 class="section__title" data-reveal="words">こんなサイトが、つくれます。</h2>
+        <p class="works__hint" data-reveal="fade">業種に合わせて。（表示はデザインイメージです）</p>
+      </div>
+      <div class="showcase" id="worksShowcase" aria-label="制作サイトのデザインイメージ">
+        <div class="showcase__row" data-dir="left">
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>nexus-workspace.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#c8ee46;--s-fg:#14161a;--s-img:linear-gradient(135deg,#b9e23a,#7aa82c);--s-accent:#14161a">
+              <nav class="site__nav"><b>NEXUS</b><em>Work</em><em>Space</em><em>News</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>未来の働き方を、体験しよう</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">無料見学</span></div><div class="site__img"></div></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>kojika-hotel.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(155deg,#2a2018,#5a4636);--s-fg:#fff;--s-accent:#c9a36a">
+              <nav class="site__nav"><b>KOJIKA HOTEL</b><em>Rooms</em><em>Dining</em><em>Access</em></nav>
+              <div class="site__coverc"><h4>日常から、少し離れる場所</h4><span class="site__btn">空室を見る</span></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>iron-gym.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#141417,#3a2a20);--s-fg:#fff;--s-accent:#ff6a3d">
+              <nav class="site__nav"><b>IRON GYM</b><em>About</em><em>Plan</em><em>Contact</em></nav>
+              <div class="site__coverc"><h4>鍛える、その先へ。</h4><span class="site__btn">体験する</span></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>mode-craft.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#f6f1ec;--s-fg:#1c1814;--s-img:linear-gradient(135deg,#e9d3c5,#bb8d79);--s-accent:#c08457">
+              <nav class="site__nav"><b>MODE CRAFT</b><em>Style</em><em>Menu</em><em>Book</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>髪のデザインで、あなたらしく</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">予約する</span></div><div class="site__img"></div></div></div></article>
+        </div>
+        <div class="showcase__row" data-dir="right">
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>internal-clinic.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#f1f6fd;--s-fg:#13243f;--s-img:linear-gradient(135deg,#dbeafe,#9fbef2);--s-accent:#2f6df0">
+              <nav class="site__nav"><b>INTERNAL MEDICINE</b><em>診療</em><em>アクセス</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>内科専門の、信頼される診療所</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">WEB予約</span></div><div class="site__img"></div></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>mori-cafe.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#caa46f,#5e3f26);--s-fg:#fff;--s-accent:#8a5a32">
+              <nav class="site__nav"><b>MORI CAFE</b><em>Menu</em><em>Store</em></nav>
+              <div class="site__coverc"><h4>自然とともに、心安らぐ場所</h4><span class="site__btn">メニュー</span></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>beauty-salon.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#efe6dc;--s-fg:#231b14;--s-img:linear-gradient(135deg,#efe2d6,#c8b099);--s-accent:#9a7048">
+              <nav class="site__nav"><b>BEAUTY SALON</b><em>Salon</em><em>Book</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>あなたらしい、美しさを</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">ご予約</span></div><div class="site__img"></div></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>local-diner.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#2a1d16,#5a3a28);--s-fg:#fff;--s-accent:#e08a3c">
+              <nav class="site__nav"><b>LOCAL DINER</b><em>Food</em><em>Map</em></nav>
+              <div class="site__coverc"><h4>今日の特別を、この一皿に</h4><span class="site__btn">来店予約</span></div></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3万円Web -->
+    <section class="section plan" id="plan">
+      <div class="plan__inner">
+        <div class="section__head">
+          <p class="section__eyebrow" data-reveal="fade">From ¥30,000</p>
+          <h2 class="section__title" data-reveal="words">3万円から、ちゃんと見える店舗ページを。</h2>
+          <p class="plan__desc" data-reveal="fade">「安いWeb制作」ではありません。AI活用とテンプレート設計で、<strong>最初に必要な導線を早く整える</strong>ための入口です。</p>
+        </div>
+        <div class="plan__grid">
+          <div class="plan__card plan__card--in" data-reveal="rise">
+            <h3 class="plan__card-title">含むもの</h3>
+            <ul class="plan__list">
+              <li>1ページWebサイト</li><li>スマホ対応</li><li>店舗情報の掲載</li>
+              <li>電話 / LINE / Instagram リンク</li><li>Googleマップ導線</li><li>修正1回・納期3〜5日目安</li>
+            </ul>
+          </div>
+          <div class="plan__card plan__card--out" data-reveal="rise">
+            <h3 class="plan__card-title">含まないもの</h3>
+            <ul class="plan__list plan__list--muted">
+              <li>フルオーダーデザイン</li><li>複数ページ構成</li><li>予約システム</li>
+              <li>本格的なSEO施策</li><li>写真撮影</li><li>お客様編集用の管理画面</li>
+            </ul>
+          </div>
+        </div>
+        <div class="plan__cta" data-reveal="fade">
+          <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="相談"><span>このプランを相談する</span></a>
+          <p class="plan__note">※ 検索順位や売上を保証するものではありません。まずは現状の確認から。</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <a class="footer__big" href="../index.html#contact" data-cursor="無料相談">まずは、<br />無料相談から。</a>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__brand">
+        <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/><path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+          <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/><path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+        </svg>
+        <span class="footer__word"><b>Nos</b><span>Technology</span></span>
+      </span>
+      <span class="footer__tagline">Systems <em>for</em> human work.</span>
+      <small>&copy; 2026 Nos Technology — 制作サンプルを含みます。</small>
+    </div>
+  </footer>
+
+  <div class="sw" id="paletteSwitch"><span class="sw__t">Color / Atmosphere</span></div>
+  <script type="module" src="../js/main.js"></script>
+</body>
+</html>

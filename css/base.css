@@ -1,0 +1,172 @@
+/* =========================================================
+   base.css : トークン / リセット / 共通UI
+   方針: 配色は palette.js が --paper / --ink / --mint / --blue / --lav を切替。
+   面・線・ガラスは color-mix で派生させ、明配色でも暗配色でも破綻しない。
+   ========================================================= */
+
+:root {
+  /* シネマティックな“真っ黒”ベース（紺ではない）。アクセントは palette.js が切替（既定: Aether） */
+  --paper:#07080c;
+  --ink:#eef2f7;
+  --ink-soft:#8b95a4;
+  --mint:#36c5ff;
+  --blue:#3d8bff;
+  --lav:#9a8cff;
+
+  /* 派生（自動で明暗に追従） */
+  --surface: color-mix(in srgb, var(--ink) 5%, var(--paper));
+  --surface-2: color-mix(in srgb, var(--ink) 9%, var(--paper));
+  --line: color-mix(in srgb, var(--ink) 14%, transparent);
+  --line-soft: color-mix(in srgb, var(--ink) 7%, transparent);
+  --glass: color-mix(in srgb, var(--paper) 64%, transparent);
+
+  --maxw:1240px;
+  --gut:clamp(20px,5vw,80px);
+  --radius:18px;
+
+  --en:"Space Grotesk", sans-serif;
+  --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
+  --ease:cubic-bezier(.16,1,.3,1);
+}
+
+*,*::before,*::after{box-sizing:border-box;}
+html{scroll-behavior:auto;-webkit-text-size-adjust:100%;}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--jp);line-height:1.85;font-feature-settings:"palt" 1;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
+  transition:background .6s var(--ease),color .6s var(--ease);
+}
+body.is-loading{overflow:hidden;height:100vh;}
+h1,h2,h3,h4,p,ul,ol,figure{margin:0;}
+ul,ol{padding:0;list-style:none;}
+a{color:inherit;text-decoration:none;}
+img,canvas,svg{display:block;max-width:100%;}
+em{font-style:normal;}
+strong{font-weight:700;color:var(--ink);}
+::selection{background:var(--ink);color:var(--paper);}
+
+@media(hover:hover) and (pointer:fine){
+  body{cursor:none;}
+  a,button,[data-cursor],[data-magnetic]{cursor:none;}
+}
+
+/* ---- プリローダー ---- */
+.preloader{position:fixed;inset:0;z-index:200;background:var(--paper);display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:28px;transition:opacity .6s var(--ease),visibility .6s var(--ease);}
+.preloader.is-done{opacity:0;visibility:hidden;}
+.preloader__inner{display:flex;align-items:baseline;gap:18px;font-family:var(--en);}
+.preloader__name{font-size:clamp(1rem,2vw,1.3rem);letter-spacing:.04em;color:var(--ink-soft);}
+.preloader__count{font-size:clamp(3rem,12vw,8rem);font-weight:500;line-height:1;color:var(--ink);font-variant-numeric:tabular-nums;}
+.preloader__bar{width:min(320px,60vw);height:2px;background:var(--line);overflow:hidden;}
+.preloader__bar i{display:block;height:100%;width:0%;background:linear-gradient(90deg,var(--mint),var(--blue));}
+
+/* ---- カスタムカーソル ---- */
+.cursor{position:fixed;top:0;left:0;z-index:300;pointer-events:none;}
+.cursor__dot,.cursor__ring{position:absolute;top:0;left:0;border-radius:50%;transform:translate(-50%,-50%);}
+.cursor__dot{width:7px;height:7px;background:var(--ink);}
+.cursor__ring{width:40px;height:40px;border:1px solid color-mix(in srgb,var(--ink) 40%,transparent);
+  transition:width .3s var(--ease),height .3s var(--ease),background .3s var(--ease),border-color .3s var(--ease);}
+.cursor.is-hover .cursor__ring{width:64px;height:64px;background:color-mix(in srgb,var(--ink) 8%,transparent);border-color:transparent;}
+.cursor.is-hover .cursor__dot{opacity:0;}
+.cursor.is-label .cursor__ring{width:84px;height:84px;background:var(--mint);border-color:transparent;}
+.cursor__label{position:absolute;top:0;left:0;transform:translate(-50%,-50%) scale(.6);font-family:var(--en);
+  font-size:.78rem;font-weight:600;color:#06231d;opacity:0;transition:opacity .25s var(--ease),transform .25s var(--ease);white-space:nowrap;}
+.cursor.is-label .cursor__label{opacity:1;transform:translate(-50%,-50%) scale(1);}
+@media(hover:none),(pointer:coarse){.cursor{display:none;}}
+
+/* ---- ヘッダー ---- */
+.header{position:fixed;inset:0 0 auto 0;z-index:80;display:flex;align-items:center;justify-content:space-between;gap:24px;
+  padding:22px var(--gut);transition:padding .5s var(--ease),background .5s var(--ease),backdrop-filter .5s var(--ease),border-color .5s var(--ease);
+  border-bottom:1px solid transparent;}
+.header.is-scrolled{padding-top:12px;padding-bottom:12px;background:var(--glass);backdrop-filter:blur(14px);border-bottom-color:var(--line-soft);}
+.header__brand{display:inline-flex;align-items:center;gap:11px;font-weight:700;}
+/* ロゴマーク（N＋ブルーの角）。fillはCSS変数なので配色に追従する */
+.logo-mark{width:27px;height:27px;flex:none;}
+.logo-mark{width:24px;height:24px;}
+.header__name{display:inline-flex;align-items:baseline;gap:.22em;font-size:.98rem;letter-spacing:.02em;}
+.header__name b{font-weight:700;color:var(--ink);}
+.header__name>span{font-weight:400;color:var(--ink-soft);}
+.header__nav{display:flex;gap:30px;font-size:.92rem;font-family:var(--en);}
+.header__nav a{color:var(--ink-soft);position:relative;transition:color .3s var(--ease);}
+.header__nav a::after{content:"";position:absolute;left:0;bottom:-4px;width:100%;height:1px;background:var(--mint);transform:scaleX(0);transform-origin:right;transition:transform .4s var(--ease);}
+.header__nav a:hover{color:var(--ink);}
+.header__nav a:hover::after{transform:scaleX(1);transform-origin:left;}
+/* 無料相談＝反転（青地×白）で最も目立たせる */
+.header__cta{padding:10px 22px;border-radius:999px;background:var(--mint);border:1px solid var(--mint);color:#fff;font-size:.9rem;font-weight:700;
+  box-shadow:0 6px 20px color-mix(in srgb,var(--mint) 35%,transparent);transition:background .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);}
+.header__cta:hover{background:var(--ink);border-color:var(--ink);color:var(--paper);transform:translateY(-1px);}
+@media(max-width:860px){.header__nav{display:none;}}
+
+/* ---- ボタン ---- */
+.btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:16px 30px;border-radius:999px;
+  font-weight:600;font-size:.98rem;border:1px solid transparent;overflow:hidden;isolation:isolate;
+  transition:color .4s var(--ease),border-color .4s var(--ease);}
+.btn>span{position:relative;z-index:1;}
+.btn::before{content:"";position:absolute;inset:0;z-index:0;transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ease);}
+.btn:hover::before{transform:scaleY(1);}
+/* プライマリ＝青地×白文字（視認性重視） */
+.btn--primary{background:var(--mint);color:#fff;box-shadow:0 10px 36px color-mix(in srgb,var(--mint) 36%,transparent);}
+.btn--primary::before{background:var(--ink);}
+.btn--primary:hover{color:var(--paper);}
+.btn--ghost{color:var(--ink);border-color:var(--line);}
+.btn--ghost::before{background:var(--ink);}
+.btn--ghost:hover{color:var(--paper);border-color:var(--ink);}
+.btn--block{width:100%;}
+
+/* ---- セクション共通 ---- */
+.section{padding:clamp(90px,14vw,200px) var(--gut);position:relative;}
+.section__head{max-width:var(--maxw);margin:0 auto clamp(48px,7vw,96px);}
+.section__eyebrow{font-family:var(--en);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:18px;}
+.section__title{font-size:clamp(1.9rem,5vw,3.4rem);font-weight:700;line-height:1.25;letter-spacing:.01em;}
+
+/* ---- リビール ---- */
+[data-reveal]{will-change:transform,opacity;}
+[data-reveal="fade"]{opacity:0;transform:translateY(26px);transition:opacity .9s var(--ease),transform .9s var(--ease);}
+[data-reveal="fade"].is-in{opacity:1;transform:none;}
+[data-reveal="rise"]{opacity:0;transform:translateY(48px);transition:opacity 1s var(--ease),transform 1s var(--ease);}
+[data-reveal="rise"].is-in{opacity:1;transform:none;}
+.reveal-line{display:block;overflow:hidden;}
+.reveal-line__inner{display:block;transform:translateY(110%);transition:transform 1s var(--ease);}
+.is-in .reveal-line__inner,.reveal-line.is-in .reveal-line__inner{transform:none;}
+.reveal-word{display:inline-block;overflow:hidden;vertical-align:top;}
+.reveal-word__inner{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease);transition-delay:calc(var(--wi,0)*30ms);}
+.is-in .reveal-word__inner{transform:none;}
+
+/* ---- マーキー（画像タイル付きチップが流れる） ---- */
+.marquee{overflow:hidden;padding:30px 0 64px;background:var(--paper);}
+.marquee__track{display:flex;align-items:center;gap:16px;width:max-content;white-space:nowrap;will-change:transform;}
+.flow-chip{display:inline-flex;align-items:center;gap:11px;padding:11px 20px 11px 12px;border-radius:999px;
+  border:1px solid var(--line);background:var(--surface);font-size:1rem;font-weight:500;color:var(--ink);}
+.flow-chip b{width:24px;height:24px;border-radius:8px;flex:none;
+  background:linear-gradient(135deg,var(--c1,var(--mint)),var(--c2,var(--blue)));}
+
+/* ---- 白⇄黒パネル（セクションが重なるギミック） ---- */
+.section--dark{--paper:#0b0f17;--ink:#f3f6fa;background:var(--paper);color:var(--ink);}
+.panel{position:relative;z-index:1;border-radius:clamp(28px,4vw,56px) clamp(28px,4vw,56px) 0 0;
+  margin-top:-42px;box-shadow:0 -24px 60px color-mix(in srgb,#000 16%,transparent);}
+/* 重なりの継ぎ目に細い発光ライン */
+.panel::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--mint) 70%,transparent),transparent);
+  border-top-left-radius:inherit;border-top-right-radius:inherit;}
+
+/* ---- 背景ゾーン切替のワイプ（サイト全体がフリップする演出） ---- */
+.sweep{position:fixed;inset:0;z-index:120;transform:translateY(100%);pointer-events:none;will-change:transform;
+  box-shadow:0 -10px 50px color-mix(in srgb,var(--mint) 30%,transparent);}
+.sweep::before{content:"";position:absolute;left:0;right:0;top:0;height:2px;background:var(--mint);opacity:.9;}
+
+/* ---- 配色スイッチャー ---- */
+.sw{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:90;display:flex;flex-wrap:wrap;justify-content:center;gap:8px;
+  max-width:min(94vw,620px);padding:12px 16px;border-radius:22px;background:var(--glass);backdrop-filter:blur(14px);border:1px solid var(--line);}
+.sw__t{position:absolute;top:-24px;left:50%;transform:translateX(-50%);white-space:nowrap;font-family:var(--en);font-size:.66rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+.chip{display:flex;flex-direction:column;align-items:center;gap:5px;border:none;background:none;padding:2px;}
+.chip b{width:34px;height:34px;border-radius:10px;border:1px solid transparent;display:grid;place-items:center;box-shadow:0 2px 10px rgba(0,0,0,.16);transition:border-color .3s var(--ease),transform .3s var(--ease),box-shadow .3s var(--ease);}
+.chip b u{width:15px;height:15px;border-radius:50%;display:block;}
+.chip.on b{border-color:var(--ink)!important;transform:scale(1.1);box-shadow:0 4px 16px rgba(0,0,0,.22);}
+.chip small{font-family:var(--en);font-size:.58rem;letter-spacing:.02em;color:var(--ink-soft);}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;}
+  [data-reveal],.reveal-line__inner,.reveal-word__inner{opacity:1!important;transform:none!important;}
+  .cursor{display:none;}body{cursor:auto;}
+}

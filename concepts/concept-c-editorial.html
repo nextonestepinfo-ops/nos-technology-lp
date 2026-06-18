@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>NosTechnology｜Concept C — Bold Editorial</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@700;800;900&family=Zen+Kaku+Gothic+New:wght@500;700;900&display=swap" rel="stylesheet" />
+<style>
+  /* ============================================================
+     Concept C : Bold Editorial — 温かい黒 × アンバー。
+     タイポ主導・大胆・自信。キネティックなマーキーと大見出し。
+     ============================================================ */
+  :root{
+    --bg:#16120c;        /* 温かいダークブラウン（純黒にしない） */
+    --bg-2:#1f1a12;
+    --ink:#f4ece0;       /* クリーム文字 */
+    --ink-soft:#a79a87;
+    --amber:#f5a623;     /* アンバー */
+    --amber-2:#ff7a45;
+    --line:rgba(244,236,224,.14);
+    --display:"Archivo", system-ui, sans-serif;
+    --jp:"Zen Kaku Gothic New", system-ui, sans-serif;
+    --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0;}
+  body{background:var(--bg);color:var(--ink);font-family:var(--jp);line-height:1.8;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;font-feature-settings:"palt" 1;}
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--amber);color:#16120c;}
+
+  header{position:fixed;inset:0 0 auto 0;z-index:20;display:flex;align-items:center;justify-content:space-between;
+    padding:24px clamp(20px,4vw,56px);mix-blend-mode:difference;}
+  .brand{font-family:var(--display);font-weight:900;font-size:1.2rem;letter-spacing:-.01em;color:#fff;}
+  nav{display:flex;gap:28px;font-size:.86rem;color:#fff;font-family:var(--display);font-weight:700;text-transform:uppercase;letter-spacing:.04em;}
+  @media(max-width:820px){nav .lnk{display:none;}}
+
+  .hero{position:relative;min-height:100svh;display:flex;flex-direction:column;justify-content:center;
+    padding:120px clamp(20px,4vw,56px) 0;overflow:hidden;}
+  /* 大背景の番号 */
+  .hero__ghost{position:absolute;right:-2vw;top:8vh;font-family:var(--display);font-weight:900;
+    font-size:42vw;line-height:.8;color:transparent;-webkit-text-stroke:1px rgba(244,236,224,.06);
+    pointer-events:none;z-index:0;}
+  .eyebrow{font-family:var(--display);font-weight:700;font-size:.86rem;letter-spacing:.2em;text-transform:uppercase;
+    color:var(--amber);margin-bottom:24px;display:flex;align-items:center;gap:14px;}
+  .eyebrow::before{content:"";width:48px;height:2px;background:var(--amber);}
+  h1{position:relative;z-index:1;font-weight:900;font-size:clamp(3rem,13vw,10rem);line-height:.96;
+    letter-spacing:-.01em;margin-bottom:6px;}
+  h1 .row{display:block;overflow:hidden;}
+  h1 .row span{display:inline-block;transform:translateY(110%);transition:transform 1s var(--ease);}
+  h1 .row.in span{transform:none;}
+  h1 .row:nth-child(2) span{transition-delay:.1s;}
+  h1 .out{color:transparent;-webkit-text-stroke:1.5px var(--ink);}
+  h1 .amb{color:var(--amber);}
+  .sub{position:relative;z-index:1;display:flex;flex-wrap:wrap;gap:30px;align-items:flex-end;
+    margin-top:30px;max-width:900px;}
+  .lead{font-size:clamp(1rem,1.4vw,1.15rem);color:var(--ink-soft);max-width:480px;}
+  .btn{display:inline-flex;align-items:center;gap:10px;padding:17px 34px;border-radius:0;font-weight:900;
+    font-family:var(--display);text-transform:uppercase;letter-spacing:.04em;font-size:.95rem;
+    background:var(--amber);color:#16120c;transition:.35s var(--ease);clip-path:polygon(0 0,100% 0,100% 100%,0 100%);}
+  .btn:hover{background:var(--ink);transform:translateY(-3px);}
+
+  /* キネティック・マーキー */
+  .marq{position:relative;z-index:1;margin-top:auto;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    overflow:hidden;padding:18px 0;background:var(--bg-2);}
+  .marq__t{display:flex;gap:34px;width:max-content;font-family:var(--display);font-weight:800;
+    font-size:clamp(1.4rem,3.5vw,2.4rem);text-transform:uppercase;white-space:nowrap;will-change:transform;}
+  .marq__t span:nth-child(even){color:var(--amber);-webkit-text-stroke:0;}
+  .marq__t span:nth-child(odd){color:transparent;-webkit-text-stroke:1px var(--ink-soft);}
+
+  .meta{position:absolute;left:clamp(20px,4vw,56px);bottom:96px;z-index:1;display:flex;gap:26px;
+    font-family:var(--display);font-size:.74rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+
+  .rv{opacity:0;transform:translateY(20px);transition:.9s var(--ease);}
+  .rv.in{opacity:1;transform:none;}
+  .rv.d1{transition-delay:.3s;}.rv.d2{transition-delay:.45s;}
+
+  @media(max-width:680px){.meta{display:none;} .sub{gap:20px;}}
+  @media(prefers-reduced-motion:reduce){
+    .rv,h1 .row span{opacity:1!important;transform:none!important;}
+  }
+</style>
+</head>
+<body>
+  <header>
+    <a class="brand" href="#">NOSTECH</a>
+    <nav>
+      <a class="lnk" href="#">Work</a>
+      <a class="lnk" href="#">Services</a>
+      <a class="lnk" href="#">Contact</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero__ghost" aria-hidden="true">AI</div>
+
+    <p class="eyebrow rv">Web · AI · System for local business</p>
+    <h1>
+      <span class="row"><span>人の時間を、</span></span>
+      <span class="row"><span class="amb">AI</span><span>でつくる。</span></span>
+    </h1>
+
+    <div class="sub">
+      <p class="lead rv d1">
+        地域のお店の集客・業務・管理を、AIと仕組みで軽くする。
+        手が回らなかったことを、回るようにします。
+      </p>
+      <a class="btn rv d2" href="#">無料相談 →</a>
+    </div>
+
+    <div class="meta"><span>(01) Web制作</span><span>(02) AI自動化</span><span>(03) 管理画面</span></div>
+
+    <div class="marq">
+      <div class="marq__t" id="marq">
+        <span>集客導線</span><span>AI自動化</span><span>店舗ページ</span><span>管理画面</span>
+        <span>Googleマップ</span><span>見込み客管理</span><span>自動返信</span>
+        <span>集客導線</span><span>AI自動化</span><span>店舗ページ</span><span>管理画面</span>
+        <span>Googleマップ</span><span>見込み客管理</span><span>自動返信</span>
+      </div>
+    </div>
+  </section>
+
+<script>
+  // 見出しの行リビール
+  requestAnimationFrame(()=>document.querySelectorAll('h1 .row').forEach(r=>r.classList.add('in')));
+  const io=new IntersectionObserver((es)=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}}),{threshold:.2});
+  document.querySelectorAll('.rv').forEach(el=>io.observe(el));
+
+  // キネティック・マーキー（スクロール速度で加速）
+  const track=document.getElementById('marq');
+  const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  let half=track.scrollWidth/2,off=0,vel=0,lastY=scrollY;
+  addEventListener('scroll',()=>{vel=scrollY-lastY;lastY=scrollY;},{passive:true});
+  function loop(){
+    off+=0.6+Math.abs(vel)*0.25;
+    if(off>=half){off-=half;half=track.scrollWidth/2;}
+    track.style.transform=`translateX(${-off}px)`;
+    vel*=0.9;
+    if(!reduce)requestAnimationFrame(loop);
+  }
+  if(!reduce)requestAnimationFrame(loop);
+
+  // ゴースト番号にパララックス
+  const ghost=document.querySelector('.hero__ghost');
+  if(!reduce)addEventListener('pointermove',e=>{
+    const x=(e.clientX/innerWidth-.5),y=(e.clientY/innerHeight-.5);
+    ghost.style.transform=`translate(${x*-30}px,${y*-20}px)`;
+  });
+</script>
+</body>
+</html>

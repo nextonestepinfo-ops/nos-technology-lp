@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Nos Technology｜人の時間を、AIでつくる。Systems for human work. AIを核に、店舗のWeb・集客導線・業務自動化・管理画面をまとめて設計します。" />
+  <meta name="theme-color" content="#f4f5f8" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Nos Technology" />
+  <meta property="og:title" content="Nos Technology — 人の時間を、AIでつくる。" />
+  <meta property="og:description" content="地域店舗のWeb制作、Googleマップ、Instagram導線、AI業務自動化をまとめて整える制作パートナー。" />
+  <meta property="og:image" content="assets/og/og-default.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Nos Technology — 人の時間を、AIでつくる。" />
+  <meta name="twitter:description" content="地域店舗のWeb制作、Googleマップ、Instagram導線、AI業務自動化をまとめて整えます。" />
+  <meta name="twitter:image" content="assets/og/og-default.svg" />
+  <!-- 公開URL確定後に追記: <link rel="canonical" href="https://〜/" /> -->
+  <title>Nos Technology — 人の時間を、AIでつくる。</title>
+
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+
+  <script type="importmap">
+    {
+      "imports": {
+        "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+        "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.mjs"
+      }
+    }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "ProfessionalService",
+      "@id": "#nostechnology",
+      "name": "Nos Technology",
+      "description": "地域店舗向けのWeb制作、集客導線改善、AI業務自動化、管理画面開発。",
+      "areaServed": "Japan",
+      "serviceType": ["Web制作", "Googleマップ導線改善", "Instagram導線改善", "AI業務自動化", "管理画面開発"],
+      "slogan": "人の時間を、AIでつくる。"
+    }
+  </script>
+</head>
+
+<body class="is-loading">
+  <!-- プリローダー -->
+  <div class="preloader" id="preloader" aria-hidden="true">
+    <div class="preloader__inner">
+      <span class="preloader__name">NosTechnology</span>
+      <span class="preloader__count" id="preloadCount">0</span>
+    </div>
+    <div class="preloader__bar"><i id="preloadBar"></i></div>
+  </div>
+
+  <!-- カスタムカーソル -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <span class="cursor__dot"></span>
+    <span class="cursor__ring"></span>
+    <span class="cursor__label"></span>
+  </div>
+
+  <!-- ヘッダー -->
+  <header class="header" id="header">
+    <a class="header__brand" href="#top" data-magnetic>
+      <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/>
+        <path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+        <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/>
+        <path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+      </svg>
+      <span class="header__name"><b>Nos</b><span>Technology</span></span>
+    </a>
+    <nav class="header__nav" aria-label="メインナビゲーション">
+      <a href="services/web.html">Web制作</a>
+      <a href="services/ai.html">AI自動化</a>
+      <a href="services/system.html">管理画面</a>
+      <a href="#process">進め方</a>
+    </nav>
+    <a class="header__cta" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
+  </header>
+
+  <main id="top">
+    <!-- ===== Hero（A×B ハイブリッド 3D） ===== -->
+    <section class="hero" id="hero">
+      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <!-- パネルホバー時の英語ラベル（JSが位置と内容を更新） -->
+      <div class="hero-tag" id="heroTag" aria-hidden="true"><span class="en"></span><span class="jp"></span></div>
+      <div class="hero__content">
+        <span class="hero__badge" data-reveal="fade"><i></i> AI を核に、店舗の仕組みをつくる</span>
+        <h1 class="hero__title">
+          <span class="line" data-reveal="line">人の時間を、</span>
+          <span class="line" data-reveal="line"><em>AI</em>でつくる。</span>
+        </h1>
+        <p class="hero__lead" data-reveal="fade">
+          美容室・サロン・飲食店のための、Webサイト、予約・顧客の管理画面、AI返信、集客導線。
+          AIを核に、店舗に必要な仕組みをまとめて設計・自動化します。
+        </p>
+        <div class="hero__actions" data-reveal="fade">
+          <a class="btn btn--primary" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
+          <a class="btn btn--ghost" href="#services" data-magnetic><span>できることを見る</span></a>
+        </div>
+      </div>
+      <div class="hero__meta" aria-hidden="true">
+        <span class="hero__scroll">Scroll<i></i></span>
+        <span>Web · AI · System</span>
+      </div>
+    </section>
+
+    <!-- 機能チップが流れる帯（画像タイル＋ラベル） -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track" id="marquee">
+        <span class="flow-chip"><b style="--c1:#1a5cff;--c2:#3d8bff"></b>Web制作</span>
+        <span class="flow-chip"><b style="--c1:#16b89a;--c2:#0e9ab1"></b>集客導線</span>
+        <span class="flow-chip"><b style="--c1:#ff7a59;--c2:#f5a623"></b>Instagram</span>
+        <span class="flow-chip"><b style="--c1:#34a853;--c2:#1a73e8"></b>Googleマップ</span>
+        <span class="flow-chip"><b style="--c1:#5b6bff;--c2:#1a5cff"></b>AI自動化</span>
+        <span class="flow-chip"><b style="--c1:#0e9ab1;--c2:#5b6bff"></b>見込み客管理</span>
+        <span class="flow-chip"><b style="--c1:#7b6cf0;--c2:#3d8bff"></b>自動返信</span>
+        <span class="flow-chip"><b style="--c1:#f5a623;--c2:#ff7a59"></b>予約管理</span>
+      </div>
+    </div>
+
+    <!-- ===== Manifesto（理念のキャッチコピー） ===== -->
+    <section class="section manifesto" id="manifesto">
+      <p class="manifesto__eyebrow" data-reveal="fade">Time for human work</p>
+      <h2 class="manifesto__text" data-reveal="words">技術が進むほど、人の時間は、<em>もっと価値になる。</em></h2>
+      <p class="manifesto__sub" data-reveal="fade">
+        AIにできることは、AIへ。空いた時間で、人にしかできない仕事を。
+        あなたの時間と、効率と、売上を、もっと前へ。
+      </p>
+    </section>
+
+    <!-- ===== Services ===== -->
+    <section class="section services" id="services">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">(01) What we do</p>
+        <h2 class="section__title" data-reveal="words">主にやっていること</h2>
+      </div>
+      <div class="services__list">
+        <article class="svc" data-reveal="rise" data-cursor="View" data-overlay="svc-01" role="button" tabindex="0" aria-haspopup="dialog">
+          <span class="svc__no">01</span>
+          <div class="svc__body">
+            <h3 class="svc__title">Web制作・集客導線改善</h3>
+            <p class="svc__text">店舗ページ、既存サイト改善、Googleマップ、Instagram、問い合わせフォームまで、「見つけてもらい、相談につながる」導線を整えます。</p>
+            <ul class="svc__tags"><li>店舗ページ</li><li>Map</li><li>SNS</li><li>フォーム</li></ul>
+          </div>
+          <span class="svc__arrow" aria-hidden="true">→</span>
+        </article>
+        <article class="svc" data-reveal="rise" data-cursor="View" data-overlay="svc-02" role="button" tabindex="0" aria-haspopup="dialog">
+          <span class="svc__no">02</span>
+          <div class="svc__body">
+            <h3 class="svc__title">AI業務改善・自動化</h3>
+            <p class="svc__text">問い合わせ対応、返信文案、通知、見込み客管理など、毎日の細かい手間をAIと仕組みで肩代わりします。</p>
+            <ul class="svc__tags"><li>返信案</li><li>通知</li><li>見込み客</li><li>自動化</li></ul>
+          </div>
+          <span class="svc__arrow" aria-hidden="true">→</span>
+        </article>
+        <article class="svc" data-reveal="rise" data-cursor="View" data-overlay="svc-03" role="button" tabindex="0" aria-haspopup="dialog">
+          <span class="svc__no">03</span>
+          <div class="svc__body">
+            <h3 class="svc__title">システム・管理画面開発</h3>
+            <p class="svc__text">予約、顧客、問い合わせ、スタッフ管理など、現場で本当に使う小規模な管理画面を必要な分だけ作ります。</p>
+            <ul class="svc__tags"><li>予約</li><li>顧客</li><li>スタッフ</li><li>管理画面</li></ul>
+          </div>
+          <span class="svc__arrow" aria-hidden="true">→</span>
+        </article>
+      </div>
+
+      <!-- 各サービスの詳細（クリックでズームアップ表示）。文言はここを編集 -->
+      <template id="svc-01-detail">
+        <p class="ov__en">Web Design &amp; Reach</p>
+        <h3 class="ov__title" id="svc-01-title">Web制作・集客導線改善</h3>
+        <p class="ov__lead">「見つけてもらい、相談につながる」までの導線を、まとめて整えます。</p>
+        <div class="ov__cols">
+          <div class="ov__block">
+            <h4>できること</h4>
+            <ul class="ov__list">
+              <li>店舗1ページサイトの制作</li>
+              <li>既存サイトの改善</li>
+              <li>Googleマップ（MEO）の整備</li>
+              <li>Instagram・LINEの導線づくり</li>
+              <li>問い合わせフォーム設置</li>
+            </ul>
+          </div>
+          <div class="ov__block">
+            <h4>対象業種</h4>
+            <ul class="ov__list">
+              <li>美容室・サロン</li>
+              <li>飲食店・カフェ</li>
+              <li>整体・クリニック</li>
+              <li>教室・士業 など地域店舗</li>
+            </ul>
+            <div class="ov__media" aria-hidden="true"><span>Demo / UI（準備中）</span></div>
+          </div>
+        </div>
+        <div class="ov__price">
+          <div class="plan__card plan__card--in">
+            <h4 class="plan__card-title">料金目安・含むもの</h4>
+            <p class="ov__fee">¥30,000〜</p>
+            <ul class="plan__list">
+              <li>スマホ対応・店舗情報の掲載</li>
+              <li>電話 / LINE / Instagram リンク</li>
+              <li>Googleマップ導線・修正1回</li>
+            </ul>
+          </div>
+          <div class="plan__card plan__card--out">
+            <h4 class="plan__card-title">含まないもの</h4>
+            <ul class="plan__list plan__list--muted">
+              <li>フルオーダーデザイン</li>
+              <li>複数ページ構成・予約システム</li>
+              <li>本格的なSEO施策</li>
+            </ul>
+          </div>
+        </div>
+        <a class="btn btn--ghost" href="services/web.html" data-cursor="開く"><span>このサービスを詳しく見る →</span></a>
+        <a class="btn btn--primary" href="#contact" data-overlay-cta data-cursor="相談"><span>無料相談する</span></a>
+      </template>
+
+      <template id="svc-02-detail">
+        <p class="ov__en">AI Automation</p>
+        <h3 class="ov__title" id="svc-02-title">AI業務改善・自動化</h3>
+        <p class="ov__lead">毎日の細かい手間を、AIと仕組みで肩代わりします。小さく試せる構成から。</p>
+        <div class="ov__cols">
+          <div class="ov__block">
+            <h4>できること</h4>
+            <ul class="ov__list">
+              <li>問い合わせ返信の文案を自動生成</li>
+              <li>よくある質問の自動応答</li>
+              <li>予約・問い合わせの通知</li>
+              <li>見込み客リストの自動整理</li>
+              <li>定型作業のテンプレ化</li>
+            </ul>
+          </div>
+          <div class="ov__block">
+            <h4>対象業種</h4>
+            <ul class="ov__list">
+              <li>予約・問い合わせが多い店舗</li>
+              <li>返信・事務に時間を取られている事業者</li>
+            </ul>
+            <div class="ov__media" aria-hidden="true"><span>Demo / UI（準備中）</span></div>
+          </div>
+        </div>
+        <div class="ov__price">
+          <div class="plan__card plan__card--in">
+            <h4 class="plan__card-title">進め方・含むもの</h4>
+            <p class="ov__fee">個別見積</p>
+            <ul class="plan__list">
+              <li>現状ヒアリング・対象業務の切り出し</li>
+              <li>仕組みの構築と調整</li>
+              <li>簡単な使い方の手順書</li>
+            </ul>
+          </div>
+          <div class="plan__card plan__card--out">
+            <h4 class="plan__card-title">含まないもの</h4>
+            <ul class="plan__list plan__list--muted">
+              <li>大規模な基幹システム連携</li>
+              <li>24時間の有人サポート（別途）</li>
+            </ul>
+          </div>
+        </div>
+        <a class="btn btn--ghost" href="services/ai.html" data-cursor="開く"><span>このサービスを詳しく見る →</span></a>
+        <a class="btn btn--primary" href="#contact" data-overlay-cta data-cursor="相談"><span>無料相談する</span></a>
+      </template>
+
+      <template id="svc-03-detail">
+        <p class="ov__en">Admin System</p>
+        <h3 class="ov__title" id="svc-03-title">システム・管理画面開発</h3>
+        <p class="ov__lead">現場で本当に使う小規模な管理画面を、必要な分だけ作ります。</p>
+        <div class="ov__cols">
+          <div class="ov__block">
+            <h4>できること</h4>
+            <ul class="ov__list">
+              <li>予約管理</li>
+              <li>顧客管理</li>
+              <li>問い合わせ一覧</li>
+              <li>スタッフ・シフト管理</li>
+              <li>簡単な集計・通知</li>
+            </ul>
+          </div>
+          <div class="ov__block">
+            <h4>対象業種</h4>
+            <ul class="ov__list">
+              <li>小〜中規模の店舗・事業者</li>
+              <li>表計算での管理に限界を感じている方</li>
+            </ul>
+            <div class="ov__media" aria-hidden="true"><span>Demo / UI（準備中）</span></div>
+          </div>
+        </div>
+        <div class="ov__price">
+          <div class="plan__card plan__card--in">
+            <h4 class="plan__card-title">進め方・含むもの</h4>
+            <p class="ov__fee">個別見積</p>
+            <ul class="plan__list">
+              <li>必要機能の設計</li>
+              <li>小規模な管理画面の制作</li>
+              <li>初期データ投入の補助</li>
+            </ul>
+          </div>
+          <div class="plan__card plan__card--out">
+            <h4 class="plan__card-title">含まないもの</h4>
+            <ul class="plan__list plan__list--muted">
+              <li>既存基幹システムとの連携</li>
+              <li>モバイルアプリ化</li>
+            </ul>
+          </div>
+        </div>
+        <a class="btn btn--ghost" href="services/system.html" data-cursor="開く"><span>このサービスを詳しく見る →</span></a>
+        <a class="btn btn--primary" href="#contact" data-overlay-cta data-cursor="相談"><span>無料相談する</span></a>
+      </template>
+    </section>
+
+    <!-- ===== Process（循環ダイアグラム） ===== -->
+    <section class="section process" id="process">
+      <div class="section__head" style="text-align:center">
+        <p class="process__loop" data-reveal="fade">Repeat &amp; improve</p>
+        <h2 class="section__title" data-reveal="words">短いサイクルで、すぐ形にする。</h2>
+      </div>
+      <div class="cycle">
+        <div class="cstep" data-reveal="rise"><div class="cstep__ring">01</div><h3>把握</h3><p>現状の見え方・導線・業務の流れを確認。</p></div>
+        <div class="cstep" data-reveal="rise"><div class="cstep__ring">02</div><h3>設計</h3><p>効く導線とAIで減らせる作業を切り出す。</p></div>
+        <div class="cstep" data-reveal="rise"><div class="cstep__ring">03</div><h3>制作</h3><p>テンプレート＋AIで素早く形にする。</p></div>
+        <div class="cstep" data-reveal="rise"><div class="cstep__ring">04</div><h3>改善</h3><p>反応を見て、つながる仕組みへ広げる。</p></div>
+      </div>
+    </section>
+
+    <!-- ===== Contact ===== -->
+    <section class="section contact" id="contact">
+      <div class="contact__inner">
+        <p class="section__eyebrow" data-reveal="fade">(05) Contact</p>
+        <h2 class="contact__title" data-reveal="words">まずは、無料相談から。</h2>
+        <p class="contact__lead" data-reveal="fade">現状の見え方や困りごとを教えてください。改善できるところから一緒に整えます。</p>
+        <form class="contact__form" id="contactForm" novalidate data-reveal="fade">
+          <div class="field">
+            <label for="f-name">お名前 / 店舗名</label>
+            <input id="f-name" name="name" type="text" placeholder="NosTechnology 様" />
+          </div>
+          <div class="field">
+            <label for="f-email">メールアドレス</label>
+            <input id="f-email" name="email" type="email" placeholder="example@mail.com" />
+          </div>
+          <div class="field field--full">
+            <label for="f-type">相談内容</label>
+            <select id="f-type" name="type">
+              <option>Web制作・集客導線</option>
+              <option>AI業務改善・自動化</option>
+              <option>管理画面・システム</option>
+              <option>3万円Webプラン</option>
+              <option>まだ決まっていない</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="f-msg">メッセージ</label>
+            <textarea id="f-msg" name="message" rows="4" placeholder="今困っていること、やりたいことなど"></textarea>
+          </div>
+          <div class="hp" aria-hidden="true">
+            <label for="f-company">会社名（入力しないでください）</label>
+            <input id="f-company" name="company" type="text" tabindex="-1" autocomplete="off" />
+          </div>
+          <button class="btn btn--primary btn--block" type="submit" id="contactSubmit" data-magnetic><span>無料相談を送る</span></button>
+          <p class="contact__note" id="formNote" role="status"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__top">
+      <a class="footer__big" href="#contact" data-cursor="無料相談">人の時間を、<br />AIでつくる。</a>
+    </div>
+    <div class="footer__bottom">
+      <span class="footer__brand">
+        <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/>
+          <path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+          <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/>
+          <path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+        </svg>
+        <span class="footer__word"><b>Nos</b><span>Technology</span></span>
+      </span>
+      <span class="footer__tagline">Systems <em>for</em> human work.</span>
+      <small>&copy; 2026 Nos Technology — これは制作中のデモサイトです（素材は仮）。</small>
+    </div>
+  </footer>
+
+  <!-- 配色スイッチャー（色の方向性を試す。確定後は固定/削除可） -->
+  <div class="sw" id="paletteSwitch"><span class="sw__t">Color / Atmosphere</span></div>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

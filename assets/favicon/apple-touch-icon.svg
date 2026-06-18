@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 180 180" role="img" aria-label="Nos Technology">
+  <rect width="180" height="180" rx="42" fill="#16213a"/>
+  <path d="M42 44h24v92H42z" fill="#f4f5f8"/>
+  <path d="M122 44h22v92h-22z" fill="#f4f5f8"/>
+  <path d="M64 44h28l48 92h-30z" fill="#f4f5f8" opacity=".86"/>
+  <path d="M116 26h42v40z" fill="#3d8bff"/>
+</svg>
