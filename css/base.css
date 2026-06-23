@@ -165,6 +165,14 @@ strong{font-weight:700;color:var(--ink);}
 .chip.on b{border-color:var(--ink)!important;transform:scale(1.1);box-shadow:0 4px 16px rgba(0,0,0,.22);}
 .chip small{font-family:var(--en);font-size:.58rem;letter-spacing:.02em;color:var(--ink-soft);}
 
+/* ---- キーボード操作のフォーカス可視化（A11y：カスタムカーソルでも必ず見える） ---- */
+a,button,[data-cursor],[data-magnetic],.svc[data-overlay],.chip{cursor:pointer;}
+:focus-visible{outline:2px solid var(--mint);outline-offset:3px;border-radius:4px;}
+.btn:focus-visible,.header__cta:focus-visible,.chip:focus-visible{outline-offset:4px;}
+.svc[data-overlay]:focus-visible{outline-offset:-6px;}
+.field input:focus-visible,.field select:focus-visible,.field textarea:focus-visible{outline:none;}
+:focus:not(:focus-visible){outline:none;}
+
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;}
   [data-reveal],.reveal-line__inner,.reveal-word__inner{opacity:1!important;transform:none!important;}
