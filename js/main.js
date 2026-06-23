@@ -8,8 +8,12 @@ import { initShowcase } from "./showcase.js";
 import { initContactForm } from "./contact.js";
 import { initPalette } from "./palette.js";
 import { initServiceOverlay } from "./service-overlay.js";
+import { initFlowField } from "./flowfield.js";
 
 async function boot() {
+  // 0. 背景の流れる光（全体のアンビエント・モーション）
+  initFlowField(document.getElementById("bgFlow"));
+
   // 1. カスタムカーソル＆マグネティック
   initCursor(document.getElementById("cursor"));
   initMagnetic();

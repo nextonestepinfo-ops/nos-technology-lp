@@ -113,36 +113,58 @@ export function initServiceHero(canvas, kind = "web") {
   const ptsMat = new THREE.PointsMaterial({ color: 0x36c5ff, size: .04, transparent: true, opacity: .6, depthWrite: false });
   const pts = new THREE.Points(pg, ptsMat); group.add(pts);
 
+  let baseScale = 1;
   function resize() {
     const r = canvas.getBoundingClientRect();
     renderer.setSize(r.width, r.height, false);
     cam.aspect = r.width / r.height; cam.updateProjectionMatrix();
     const small = r.width < 860;
     group.position.x = small ? 0 : 1.6;
-    group.scale.setScalar(small ? 0.7 : 1);
+    baseScale = small ? 0.7 : 1;
+    group.scale.setScalar(baseScale);
   }
   resize();
   window.addEventListener("resize", resize);
 
+  // ヒーローのホバー＆スクロール進行で“画面の中へズームイン”
+  const heroEl = canvas.closest(".hero");
+  let hoverTarget = 0, hover = 0;
+  if (heroEl) {
+    heroEl.addEventListener("pointerenter", () => (hoverTarget = 1));
+    heroEl.addEventListener("pointerleave", () => (hoverTarget = 0));
+  }
+  const heroProgress = () => {
+    if (!heroEl) return 0;
+    const h = heroEl.offsetHeight || 1;
+    return Math.max(0, Math.min(1, (window.scrollY || window.pageYOffset || 0) / (h * 0.85)));
+  };
+
   // ビルドの進行（0→1で組み上げ→保持→リセットを繰り返す）
   let phase = 0;
-  let rx = 0, ry = 0;
+  let rx = 0, ry = 0, camZ = 9;
   function render(now) {
     const t = (now || 0) / 1000;
+    hover = lerp(hover, hoverTarget, 0.08);
+    const sp = heroProgress(); // 0→1 スクロール進行
     rx = lerp(rx, pointer.nx * 0.4, 0.05);
     ry = lerp(ry, pointer.ny * 0.3, 0.05);
     group.rotation.y = -0.18 + Math.sin(t * 0.2) * 0.06 + rx;
     group.rotation.x = -0.04 - ry;
-    panel.position.y = Math.sin(t * 0.6) * 0.08;
-    cam.position.z = 9 + Math.sin(t * 0.15) * 0.3; // ゆるいドリー
+    panel.position.y = Math.sin(t * 0.6) * 0.08 * (1 - hover * 0.5);
+    // スクロールで奥→手前へドリーイン＋ホバーでさらに寄る（画面の中に入っていく感覚）
+    const targetZ = 9 + Math.sin(t * 0.15) * 0.3 - sp * 3.2 - hover * 1.4;
+    camZ = lerp(camZ, targetZ, 0.06);
+    cam.position.z = Math.max(4.2, camZ);
+    group.scale.setScalar(baseScale * (1 + hover * 0.05));
     pts.rotation.y = t * 0.03;
-    glowMat.opacity = 0.4 + Math.sin(t * 1.4) * 0.08;
+    glowMat.opacity = 0.4 + Math.sin(t * 1.4) * 0.08 + hover * 0.18;
 
     if (!prefersReducedMotion) {
-      // 4.5秒周期: 3秒で組み上げ→1.5秒保持→リセット
-      phase = (t % 4.5);
+      // ホバー中は構築が速まり“動いている”感を強める
+      const speed = 1 + hover * 0.9;
+      phase = (t * speed) % 4.5;
       const p = phase < 3 ? phase / 3 : 1;
-      drawBuild(ctx, kind, acc, p, t);
+      drawBuild(ctx, kind, acc, p, t * speed);
       tex.needsUpdate = true;
     }
     renderer.render(scene, cam);
