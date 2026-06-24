@@ -58,29 +58,47 @@ export function initReveal() {
   items.forEach((el) => io.observe(el));
 }
 
-// ヘッダー：スクロール量で背景を出す
+// ヘッダー：ヒーロー中は隠し、ヒーローを過ぎたら追従（is-stuck を付与）
 export function initHeader() {
   const header = document.getElementById("header");
   if (!header) return;
-  const onScroll = () => header.classList.toggle("is-scrolled", window.scrollY > 40);
+  const hero = document.querySelector(".hero");
+  const onScroll = () => {
+    const threshold = hero ? hero.offsetHeight - 90 : 80;
+    header.classList.toggle("is-stuck", (window.scrollY || 0) > threshold);
+  };
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 }
 
-// マーキー：内容を複製して無限ループ。スクロール速度で少し加速させる
+// マーキー：複製して無限ループ＋ビュー進入で3D起き上がり出現（順次）
 export function initMarquee(track, lenis) {
-  if (!track || prefersReducedMotion) return;
+  if (!track) return;
+  const wrap = track.closest(".marquee");
+
+  if (prefersReducedMotion) { if (wrap) wrap.classList.add("in"); return; }
 
   // 複製して途切れない帯にする
   track.innerHTML += track.innerHTML;
-  const half = track.scrollWidth / 2;
+  // 起き上がりのスタッガー用インデックス
+  [...track.children].forEach((c, i) => c.style.setProperty("--ci", String(i)));
 
+  // ビューに入ったら 3D 出現
+  if (wrap && "IntersectionObserver" in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (e.isIntersecting) { wrap.classList.add("in"); io.disconnect(); }
+    }), { threshold: 0.12 });
+    io.observe(wrap);
+  } else if (wrap) {
+    wrap.classList.add("in");
+  }
+
+  const half = track.scrollWidth / 2;
   let offset = 0;
   let velocity = 0;
   if (lenis) lenis.on("scroll", (e) => (velocity = e.velocity || 0));
 
   function loop() {
-    // 基本速度 + スクロール速度ぶんの加速
     offset += 0.5 + Math.abs(velocity) * 0.4;
     if (offset >= half) offset -= half;
     track.style.transform = `translateX(${-offset}px)`;

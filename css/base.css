@@ -76,10 +76,22 @@ strong{font-weight:700;color:var(--ink);}
 @media(hover:none),(pointer:coarse){.cursor{display:none;}}
 
 /* ---- ヘッダー ---- */
+/* ヘッダー＝ヒーロー中は隠れ、ヒーローを過ぎると上からスライドして追従（スティッキー出現） */
 .header{position:fixed;inset:0 0 auto 0;z-index:80;display:flex;align-items:center;justify-content:space-between;gap:24px;
-  padding:22px var(--gut);transition:padding .5s var(--ease),background .5s var(--ease),backdrop-filter .5s var(--ease),border-color .5s var(--ease);
-  border-bottom:1px solid transparent;}
-.header.is-scrolled{padding-top:12px;padding-bottom:12px;background:var(--glass);backdrop-filter:blur(14px);border-bottom-color:var(--line-soft);}
+  padding:14px var(--gut);background:var(--glass);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft);
+  transform:translateY(-118%);opacity:0;pointer-events:none;
+  transition:transform .55s var(--ease),opacity .4s var(--ease),padding .4s var(--ease),background .4s var(--ease);}
+.header.is-stuck{transform:none;opacity:1;pointer-events:auto;}
+/* スティッキー時：ヘッダー下端に“流れるチップの帯”を出す（チップ→バナー化の演出） */
+.header__ticker{position:absolute;left:0;right:0;top:100%;height:0;overflow:hidden;opacity:0;pointer-events:none;
+  background:var(--glass);backdrop-filter:blur(14px);border-bottom:1px solid var(--line-soft);
+  transition:height .5s var(--ease),opacity .5s var(--ease);}
+.header.is-stuck .header__ticker{height:34px;opacity:1;}
+.header__ticker-track{display:flex;align-items:center;gap:14px;width:max-content;height:34px;padding-left:var(--gut);
+  animation:hticker 24s linear infinite;will-change:transform;}
+@keyframes hticker{to{transform:translateX(-50%);}}
+.mini-chip{display:inline-flex;align-items:center;gap:7px;font-family:var(--en);font-size:.7rem;letter-spacing:.02em;color:var(--ink-soft);white-space:nowrap;}
+.mini-chip b{width:7px;height:7px;border-radius:3px;background:linear-gradient(135deg,var(--mint),var(--blue));}
 .header__brand{display:inline-flex;align-items:center;gap:11px;font-weight:700;}
 /* ロゴマーク（N＋ブルーの角）。fillはCSS変数なので配色に追従する */
 .logo-mark{width:27px;height:27px;flex:none;}
@@ -133,11 +145,16 @@ strong{font-weight:700;color:var(--ink);}
 .reveal-word__inner{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease);transition-delay:calc(var(--wi,0)*30ms);}
 .is-in .reveal-word__inner{transform:none;}
 
-/* ---- マーキー（画像タイル付きチップが流れる） ---- */
-.marquee{overflow:hidden;padding:30px 0 64px;background:var(--paper);}
-.marquee__track{display:flex;align-items:center;gap:16px;width:max-content;white-space:nowrap;will-change:transform;}
+/* ---- マーキー（画像タイル付きチップが3Dで起き上がって出現→流れる） ---- */
+.marquee{overflow:hidden;padding:30px 0 64px;background:var(--paper);perspective:1100px;}
+.marquee__track{display:flex;align-items:center;gap:16px;width:max-content;white-space:nowrap;will-change:transform;transform-style:preserve-3d;}
 .flow-chip{display:inline-flex;align-items:center;gap:11px;padding:11px 20px 11px 12px;border-radius:999px;
-  border:1px solid var(--line);background:var(--surface);font-size:1rem;font-weight:500;color:var(--ink);}
+  border:1px solid var(--line);background:var(--surface);font-size:1rem;font-weight:500;color:var(--ink);
+  transform-origin:center top;}
+/* 出現前は伏せておき、ビューに入ったら起き上がる（順次） */
+.marquee:not(.in) .flow-chip{opacity:0;transform:rotateX(-92deg) translateY(10px);}
+.marquee.in .flow-chip{opacity:1;transform:rotateX(0) translateY(0);
+  transition:transform .8s var(--ease),opacity .55s var(--ease);transition-delay:calc(var(--ci,0)*45ms);}
 .flow-chip b{width:24px;height:24px;border-radius:8px;flex:none;
   background:linear-gradient(135deg,var(--c1,var(--mint)),var(--c2,var(--blue)));}
 
@@ -179,6 +196,8 @@ a,button,[data-cursor],[data-magnetic],.svc[data-overlay],.chip{cursor:pointer;}
 @media(prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.001ms!important;transition-duration:.001ms!important;}
   [data-reveal],.reveal-line__inner,.reveal-word__inner{opacity:1!important;transform:none!important;filter:none!important;}
+  .flow-chip{opacity:1!important;transform:none!important;}
+  .header{transform:none!important;opacity:1!important;pointer-events:auto!important;}
   .bg-flow{display:none!important;}
   .cursor{display:none;}body{cursor:auto;}
 }
