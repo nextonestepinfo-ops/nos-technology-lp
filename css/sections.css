@@ -3,6 +3,29 @@
    面の段差は --surface / --surface-2、線は --line で配色追従。
    ========================================================= */
 
+/* ===== Intro（v2：人の時間を、AIでつくる の説明＋画像） ===== */
+.intro{background:var(--paper);}
+.intro__grid{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;
+  gap:clamp(32px,6vw,80px);align-items:center;}
+.intro__title{font-size:clamp(2rem,5vw,3.6rem);font-weight:900;line-height:1.18;letter-spacing:.01em;margin-bottom:26px;}
+.intro__title em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.intro__lead{color:var(--ink-soft);font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.95;max-width:54ch;margin-bottom:36px;}
+.intro__actions{display:flex;flex-wrap:wrap;gap:14px;}
+/* 画像枠（実素材到着までプレースホルダ） */
+.intro__media{position:relative;}
+.intro__media-frame{position:relative;aspect-ratio:4/3;border-radius:var(--radius);overflow:hidden;
+  display:grid;place-items:center;border:1px solid var(--line);
+  background:
+    radial-gradient(120% 120% at 80% 15%, color-mix(in srgb,var(--blue) 14%, transparent), transparent 60%),
+    radial-gradient(120% 120% at 10% 90%, color-mix(in srgb,var(--mint) 12%, transparent), transparent 60%),
+    var(--surface);}
+.intro__media-frame span{font-family:var(--en);font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
+  color:color-mix(in srgb,var(--ink) 42%,transparent);}
+@media(max-width:860px){
+  .intro__grid{grid-template-columns:1fr;gap:32px;}
+  .intro__media{order:-1;} /* モバイルは画像を上に */
+}
+
 /* ===== Services ===== */
 .services{background:var(--paper);}
 .services__list{max-width:var(--maxw);margin:0 auto;border-top:1px solid var(--line);}

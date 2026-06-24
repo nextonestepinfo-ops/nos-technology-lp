@@ -172,13 +172,21 @@ export function initHeroHybrid(canvas) {
 
   function n3(x, y, z) { return Math.sin(x * 1.7 + y * 0.3) * Math.cos(y * 1.5 + z * 0.7) * Math.sin(z * 1.3 + x * 0.5); }
 
+  // 全画面・中央寄せレイアウト（オブジェクトを主役にするv2ヒーロー）
+  const layout = canvas.dataset.layout || "side";
   function resize() {
     const r = canvas.getBoundingClientRect();
     renderer.setSize(r.width, r.height, false);
     cam.aspect = r.width / r.height; cam.updateProjectionMatrix();
     const small = r.width < 860;
-    group.position.x = small ? 0 : 1.7;
-    group.scale.setScalar(small ? 0.55 : 0.82);
+    if (layout === "center") {
+      // オブジェクトを画面中央に置き、大きく見せる（文字は最小・3Dが主役）
+      group.position.x = 0;
+      group.scale.setScalar(small ? 0.6 : 1.0);
+    } else {
+      group.position.x = small ? 0 : 1.7;
+      group.scale.setScalar(small ? 0.55 : 0.82);
+    }
   }
   resize();
   window.addEventListener("resize", resize);
