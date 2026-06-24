@@ -90,6 +90,8 @@
     <!-- ===== Hero（v2：全画面3Dオブジェクトが主役。文字は最小） ===== -->
     <section class="hero hero--v2" id="hero">
       <canvas class="hero__canvas" id="heroCanvas" data-layout="center" aria-hidden="true"></canvas>
+      <!-- ヒーロー上部の横帯タグライン（おしゃれに横へ） -->
+      <div class="hero-topline" aria-hidden="true"><span>Systems</span><i></i><span>for</span><i></i><span>Human</span><i></i><span>Work</span></div>
       <!-- パネルホバー時の英語ラベル（JSが位置と内容を更新） -->
       <div class="hero-tag" id="heroTag" aria-hidden="true">
         <span class="hero-tag__idx"></span>
@@ -101,11 +103,8 @@
         <span class="hint">Click → セクションへ</span>
       </div>
       <div class="hero__content hero__content--center">
-        <p class="hero__brandline" data-reveal="fade">Nos Technology</p>
-        <h1 class="hero__display">
-          <span class="line" data-reveal="line">Systems</span>
-          <span class="line" data-reveal="line"><em>for</em> human work.</span>
-        </h1>
+        <h1 class="hero__wordmark" data-reveal="fade"><b>Nos</b> Technology</h1>
+        <p class="hero__sub" data-reveal="fade">店舗のWeb・集客・業務を、まとめて整える。</p>
         <div class="hero__actions" data-reveal="fade">
           <a class="btn btn--primary" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
         </div>
@@ -444,7 +443,10 @@
   </footer>
 
   <!-- 配色スイッチャー（色の方向性を試す。確定後は固定/削除可） -->
-  <div class="sw" id="paletteSwitch"><span class="sw__t">Color / Atmosphere</span></div>
+  <!-- トップへ戻る（下スクロールで出現） -->
+  <button class="to-top" id="toTop" aria-label="トップへ戻る" data-cursor="Top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8.5v10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  </button>
 
   <script type="module" src="js/main.js"></script>
 </body>

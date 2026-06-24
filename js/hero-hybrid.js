@@ -25,8 +25,11 @@ function drawUI(x, kind, acc, p, t = 0) {
 // p(0〜1)で左→右に“描き込まれる”ビルド表現、t>0でライブ演出（スキャン光＋LIVE）。
 function drawUIWire(x, kind, acc, p, t = 0) {
   x.clearRect(0, 0, 512, 384);
-  x.fillStyle = "#ffffff"; x.fillRect(0, 0, 512, 384);
-  const mint = acc.mint, blue = acc.blue, ink = "#14161a", soft = "#c2c9d3", line = "#e6e9ee", bg = "#eef1f4";
+  // 背景：真っ白を避け淡いグラデ（白飛び防止・上質感）
+  const page = x.createLinearGradient(0, 0, 0, 384);
+  page.addColorStop(0, "#f6f8fb"); page.addColorStop(1, "#e8ecf3");
+  x.fillStyle = page; x.fillRect(0, 0, 512, 384);
+  const mint = acc.mint, blue = acc.blue, ink = "#14161a", soft = "#c2c9d3", line = "#e6e9ee", bg = "#e4e9f1";
   const pill = (px, py, pw, ph, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, ph / 2); x.fill(); };
   const rrect = (px, py, pw, ph, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); };
 
@@ -43,57 +46,75 @@ function drawUIWire(x, kind, acc, p, t = 0) {
   x.beginPath(); x.rect(0, 60, 512 * w, 324); x.clip();
 
   const stroke = (px, py, pw, ph, r, col, lw = 2) => { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
+  const card = (px, py, pw, ph, r) => { x.fillStyle = "#ffffff"; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); x.strokeStyle = line; x.lineWidth = 1.5; x.stroke(); };
   if (kind === "site") {
-    // 見出し2行＋サブ＋CTA(主)＋ゴースト(副)＋右の大ヒーロー画像＋下部に機能チップ（余白を埋める）
+    // 見出し2行＋サブ＋CTA(主)＋ゴースト(副)＋右の大ヒーロー画像＋下部チップ。制作中の“ローディング”が動く。
     rrect(36, 100, 300, 30, 9, ink); rrect(36, 142, 224, 30, 9, ink);
+    if (t > 0 && (t % 1) < 0.5) { x.fillStyle = blue; x.fillRect(268, 142, 4, 30); } // 編集キャレット点滅（ホバー中のみ）
     rrect(36, 192, 252, 13, 6, soft); rrect(36, 214, 206, 13, 6, soft);
     pill(36, 252, 170, 52, mint);
     x.fillStyle = "#fff"; x.font = "700 21px sans-serif"; x.fillText("お問い合わせ", 58, 285);
     stroke(218, 252, 120, 52, 26, line); rrect(240, 272, 76, 12, 6, soft);
-    const g = x.createLinearGradient(356, 90, 476, 320); g.addColorStop(0, mint); g.addColorStop(1, blue);
+    const ga = t * 0.5;
+    const g = x.createLinearGradient(356 + Math.sin(ga) * 40, 90, 476, 320 + Math.cos(ga) * 40); g.addColorStop(0, mint); g.addColorStop(1, blue);
     x.fillStyle = g; x.beginPath(); x.roundRect(356, 90, 120, 214, 16); x.fill();
-    x.fillStyle = "rgba(255,255,255,.22)"; x.beginPath(); x.roundRect(372, 214, 88, 72, 10); x.fill();
+    // ヒーロー画像内のローディングバー（周期で満ちる＝構築中の動き）
+    const lp = t > 0 ? (t * 0.5) % 1 : 1;
+    x.fillStyle = "rgba(255,255,255,.28)"; x.beginPath(); x.roundRect(372, 270, 88, 8, 4); x.fill();
+    x.fillStyle = "rgba(255,255,255,.92)"; x.beginPath(); x.roundRect(372, 270, 88 * lp, 8, 4); x.fill();
     [36, 150, 264].forEach((cx0) => rrect(cx0, 332, 96, 30, 15, bg));
   } else if (kind === "admin") {
-    // 上段KPI2枚＋右にスパークライン、下に大きめ3行（アバター・名前・青ステータス）。1行をミント強調
+    // KPI（数値ティック）＋スパークライン（移動ドット）＋3行（ハイライト行が巡回・ステータスが処理中→確定）
     rrect(36, 80, 130, 14, 7, soft);
     stroke(36, 104, 135, 64, 12, line); stroke(184, 104, 135, 64, 12, line); stroke(332, 104, 148, 64, 12, line);
-    x.fillStyle = ink; x.font = "800 28px sans-serif"; x.fillText("1,248", 52, 150); x.fillText("342", 200, 150);
-    x.fillStyle = mint; x.font = "700 13px sans-serif"; x.fillText("▲12%", 116, 150); x.fillText("▲8%", 252, 150);
-    x.strokeStyle = mint; x.lineWidth = 3; x.beginPath();
-    [[346, 150], [372, 134], [398, 142], [424, 120], [452, 128], [468, 116]].forEach((pt, i) => i ? x.lineTo(pt[0], pt[1]) : x.moveTo(pt[0], pt[1])); x.stroke();
+    const k1 = 1248 + Math.floor((0.5 + 0.5 * Math.sin(t * 0.8)) * 40);
+    x.fillStyle = ink; x.font = "800 28px sans-serif"; x.fillText(k1.toLocaleString(), 52, 150);
+    x.fillText(String(322 + Math.floor((t * 2) % 14)), 200, 150);
+    x.fillStyle = mint; x.font = "700 13px sans-serif"; x.fillText("▲12%", 118, 150); x.fillText("▲8%", 250, 150);
+    const sp = [[346, 150], [372, 134], [398, 142], [424, 120], [452, 128], [468, 116]];
+    x.strokeStyle = mint; x.lineWidth = 3; x.beginPath(); sp.forEach((pt, i) => i ? x.lineTo(pt[0], pt[1]) : x.moveTo(pt[0], pt[1])); x.stroke();
+    const dp = (t * 1.0) % (sp.length - 1), di = Math.floor(dp), fr = dp - di;
+    x.fillStyle = blue; x.beginPath(); x.arc(sp[di][0] + (sp[di + 1][0] - sp[di][0]) * fr, sp[di][1] + (sp[di + 1][1] - sp[di][1]) * fr, 4.5, 0, 7); x.fill();
+    const hi = Math.floor(t * 0.6) % 3;
     for (let i = 0; i < 3; i++) {
-      const ry = 192 + i * 58;
-      if (i === 1) { x.fillStyle = "#e9fbf4"; x.fillRect(24, ry - 6, 464, 52); }
-      x.fillStyle = i === 1 ? mint : "#dde2e9"; x.beginPath(); x.arc(56, ry + 18, 16, 0, 7); x.fill();
+      const ry = 192 + i * 58, on = i === hi;
+      if (on) { x.fillStyle = "#e9fbf4"; x.fillRect(24, ry - 6, 464, 52); }
+      x.fillStyle = on ? mint : "#dde2e9"; x.beginPath(); x.arc(56, ry + 18, 16, 0, 7); x.fill();
       rrect(86, ry + 6, 150, 13, 6, soft); rrect(86, ry + 27, 200, 11, 5, "#d7dde4");
-      pill(388, ry + 4, 92, 28, blue);
-      x.fillStyle = "#fff"; x.font = "700 14px sans-serif"; x.fillText("確定", 408, ry + 23);
+      pill(388, ry + 4, 92, 28, on ? "#cdd6e2" : blue);
+      x.fillStyle = on ? "#7c8696" : "#fff"; x.font = "700 14px sans-serif"; x.fillText(on ? "処理中" : "確定", on ? 400 : 408, ry + 23);
     }
   } else if (kind === "reply") {
-    // 受信(左・グレー)＋送信(右・青・大)＋AIバッジ＋下部に入力バー＋送信ボタン（余白を埋める）
-    rrect(36, 80, 270, 78, 18, bg);
+    // 受信＋送信(青)。送信文が“打ち込まれて”いき、AIバッジが脈動（生成中の動き）。
+    rrect(36, 80, 270, 78, 18, "#e6eaf1");
     rrect(56, 100, 210, 12, 6, "#cdd4dc"); rrect(56, 122, 170, 12, 6, "#cdd4dc");
     rrect(150, 176, 326, 96, 18, blue);
+    const tw = t > 0 ? (t * 0.55) % 1.6 : 1.6, lw = [284, 250, 180];
     x.fillStyle = "rgba(255,255,255,.92)";
-    [196, 218, 240].forEach((yy, i) => { x.beginPath(); x.roundRect(172, yy, [284, 250, 180][i], 12, 6); x.fill(); });
-    x.fillStyle = mint; x.font = "700 17px sans-serif"; x.fillText("✦ AIが文案を生成", 172, 296);
-    stroke(36, 322, 388, 40, 20, line); rrect(56, 336, 160, 12, 6, soft);
-    pill(436, 322, 40, 40, blue); x.fillStyle = "#fff"; x.font = "700 20px sans-serif"; x.fillText("→", 448, 348);
+    [196, 218, 240].forEach((yy, i) => { const pr = Math.max(0, Math.min(1, tw - i * 0.35)); if (pr > 0.02) { x.beginPath(); x.roundRect(172, yy, lw[i] * pr, 12, 6); x.fill(); } });
+    const bp = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin(t * 3));
+    x.globalAlpha = bp; x.fillStyle = mint; x.font = "700 17px sans-serif"; x.fillText("✦ AIが文案を生成", 172, 300); x.globalAlpha = 1;
+    stroke(36, 326, 388, 40, 20, line); rrect(56, 340, 160, 12, 6, soft);
+    pill(436, 326, 40, 40, blue); x.fillStyle = "#fff"; x.font = "700 20px sans-serif"; x.fillText("→", 448, 352);
   } else {
-    // 地図＋検索バー＋検索円＋大ピン＋情報カード（星・ルート）
-    x.fillStyle = bg; x.fillRect(24, 72, 464, 290);
+    // 地図＋検索バー＋レーダー（拡大リング＋回転スイープ）＋ピン(バウンド)＋情報カード(件数ティック)
+    x.fillStyle = "#e9edf3"; x.fillRect(24, 72, 464, 290);
     x.strokeStyle = line; x.lineWidth = 3;
     for (let i = 1; i < 7; i++) { x.beginPath(); x.moveTo(24, 72 + i * 42); x.lineTo(488, 72 + i * 42); x.stroke(); }
     for (let i = 1; i < 9; i++) { x.beginPath(); x.moveTo(24 + i * 52, 72); x.lineTo(24 + i * 52, 362); x.stroke(); }
-    rrect(40, 86, 200, 36, 18, "#fff");
-    x.fillStyle = mint; x.beginPath(); x.arc(60, 104, 7, 0, 7); x.fill(); rrect(76, 98, 120, 12, 6, soft);
-    x.fillStyle = "rgba(63,109,240,.14)"; x.beginPath(); x.arc(216, 232, 86, 0, 7); x.fill();
-    x.fillStyle = blue; x.beginPath(); x.arc(216, 222, 20, 0, 7); x.fill();
-    x.beginPath(); x.moveTo(216, 254); x.lineTo(199, 228); x.lineTo(233, 228); x.closePath(); x.fill();
-    x.fillStyle = "#fff"; x.beginPath(); x.arc(216, 222, 8, 0, 7); x.fill();
-    rrect(298, 212, 182, 104, 16, "#fff"); stroke(298, 212, 182, 104, 16, line, 1);
-    x.fillStyle = mint; x.font = "700 18px sans-serif"; x.fillText("★ 4.3", 318, 246);
+    x.fillStyle = "rgba(63,109,240,.12)"; x.beginPath(); x.arc(216, 232, 86, 0, 7); x.fill();
+    const rr = (t * 0.6) % 1;
+    x.strokeStyle = `rgba(63,109,240,${0.45 * (1 - rr)})`; x.lineWidth = 2.5; x.beginPath(); x.arc(216, 232, 18 + rr * 82, 0, 7); x.stroke();
+    x.save(); x.beginPath(); x.arc(216, 232, 86, 0, 7); x.clip(); x.translate(216, 232); x.rotate(t * 1.1);
+    const sg = x.createLinearGradient(0, 0, 86, 0); sg.addColorStop(0, "rgba(63,109,240,.4)"); sg.addColorStop(1, "rgba(63,109,240,0)");
+    x.strokeStyle = sg; x.lineWidth = 4; x.beginPath(); x.moveTo(0, 0); x.lineTo(86, 0); x.stroke(); x.restore();
+    const pbo = Math.sin(t * 2.2) * 3;
+    x.fillStyle = blue; x.beginPath(); x.arc(216, 222 + pbo, 20, 0, 7); x.fill();
+    x.beginPath(); x.moveTo(216, 254 + pbo); x.lineTo(199, 228 + pbo); x.lineTo(233, 228 + pbo); x.closePath(); x.fill();
+    x.fillStyle = "#fff"; x.beginPath(); x.arc(216, 222 + pbo, 8, 0, 7); x.fill();
+    card(40, 86, 200, 36, 18); x.fillStyle = mint; x.beginPath(); x.arc(60, 104, 7, 0, 7); x.fill(); rrect(76, 98, 120, 12, 6, soft);
+    card(298, 212, 182, 104, 16);
+    x.fillStyle = mint; x.font = "700 18px sans-serif"; x.fillText("★ 4.3 (" + (128 + Math.floor((t * 1.5) % 9)) + ")", 318, 246);
     rrect(318, 258, 120, 11, 5, soft); rrect(318, 274, 90, 11, 5, "#d7dde4");
     pill(318, 290, 108, 26, mint); x.fillStyle = "#fff"; x.font = "700 14px sans-serif"; x.fillText("ルート", 344, 308);
   }

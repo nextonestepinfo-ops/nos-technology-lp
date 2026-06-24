@@ -406,7 +406,10 @@
   </footer>
 
   <!-- 配色スイッチャー（色の方向性を試す。確定後は固定/削除可） -->
-  <div class="sw" id="paletteSwitch"><span class="sw__t">Color / Atmosphere</span></div>
+  <!-- トップへ戻る（下スクロールで出現） -->
+  <button class="to-top" id="toTop" aria-label="トップへ戻る" data-cursor="Top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8.5v10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  </button>
 
   <script type="module" src="js/main.js"></script>
 </body>

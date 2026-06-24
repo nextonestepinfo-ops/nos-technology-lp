@@ -30,8 +30,11 @@ async function boot() {
   // 4b. サービスページのシネマティック・ヒーロー（該当ページのみ）
   await initServiceHeroScene();
 
-  // 5. 配色スイッチャー（AAAゲーム調パレット。中で色を切り替えられる）
+  // 5. 配色を確定適用（Aether固定。スイッチャーUIは廃止＝要素なしでも既定が適用される）
   initPalette(document.getElementById("paletteSwitch"));
+
+  // 5b. 「トップへ戻る」ボタン（下スクロールで出現）
+  initToTop(lenis);
 
   // 6. マーキー（スクロール速度連動）
   initMarquee(document.getElementById("marquee"), lenis);
@@ -47,6 +50,20 @@ async function boot() {
 
   // 9. プリローダー完了後にリビール開始（ヒーローを隠れて再生させない）
   initPreloader(() => initReveal());
+}
+
+// 「トップへ戻る」ボタン：下へスクロールしたら出現、クリックで先頭へ慣性スクロール
+function initToTop(lenis) {
+  const btn = document.getElementById("toTop");
+  if (!btn) return;
+  const onScroll = () => btn.classList.toggle("is-show", (window.scrollY || window.pageYOffset || 0) > window.innerHeight * 0.7);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+  if (lenis && lenis.on) lenis.on("scroll", onScroll);
+  btn.addEventListener("click", () => {
+    if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.1 });
+    else window.scrollTo({ top: 0, behavior: "smooth" });
+  });
 }
 
 // サービスページのシネマティック・ヒーロー（#serviceHeroCanvas がある時のみ）
