@@ -34,17 +34,46 @@
 .hero__actions{display:flex;flex-wrap:wrap;gap:16px;}
 
 /* パネルにホバー時の英語ラベル（3D座標を画面に投影して追従） */
-.hero-tag{position:absolute;left:0;top:0;z-index:3;pointer-events:none;text-align:center;
-  transform:translate(-50%,-130%) scale(.92);opacity:0;transition:opacity .3s var(--ease),transform .3s var(--ease);white-space:nowrap;}
-.hero-tag.is-show{opacity:1;transform:translate(-50%,-130%) scale(1);}
+/* フォーカスしたパネルに寄り添う“情報カード”。暗いスクリムで白パネルでも必ず読める。
+   中身（画像・英語タイトル・連番・特徴チップ・ヒント）が時間差で浮かび上がる。 */
+.hero-tag{position:absolute;left:0;top:0;z-index:3;pointer-events:none;text-align:left;
+  width:max-content;max-width:min(264px,72vw);
+  transform:translate(-50%,-116%) scale(.96);opacity:0;
+  transition:opacity .35s var(--ease),transform .45s var(--ease);white-space:normal;
+  background:linear-gradient(158deg,color-mix(in srgb,#05070d 88%,transparent),color-mix(in srgb,#05070d 66%,transparent));
+  border:1px solid color-mix(in srgb,var(--mint) 24%,transparent);border-radius:15px;
+  padding:15px 17px 16px;backdrop-filter:blur(12px);box-shadow:0 26px 64px rgba(0,0,0,.55);}
+.hero-tag.is-show{opacity:1;transform:translate(-50%,-126%) scale(1);}
+/* コア（AIコア）ホバー時は画像・チップを隠してラベルのみ */
+.hero-tag.is-core{max-width:220px;}
+.hero-tag.is-core .hero-tag__chips,.hero-tag.is-core .hero-tag__thumb,.hero-tag.is-core .hint{display:none;}
+
+.hero-tag__idx{position:absolute;top:11px;right:15px;font-family:var(--en);font-weight:700;font-size:1.05rem;
+  letter-spacing:.06em;color:color-mix(in srgb,var(--mint) 70%,transparent);}
+.hero-tag__thumb{display:block;width:100%;height:78px;object-fit:cover;object-position:center top;
+  border-radius:9px;border:1px solid rgba(255,255,255,.14);margin-bottom:13px;background:#0b0e15;}
 .hero-tag .en{display:inline-flex;align-items:center;gap:8px;font-family:var(--en);font-weight:700;
-  font-size:clamp(1.1rem,2vw,1.6rem);letter-spacing:.16em;text-transform:uppercase;color:var(--ink);}
-.hero-tag .en::after{content:"↗";color:var(--mint);font-weight:700;}
-.hero-tag .en::before{content:"";width:26px;height:1px;background:var(--mint);}
-.hero-tag .jp{display:block;font-size:.72rem;letter-spacing:.1em;color:var(--ink-soft);margin-top:7px;}
-/* パネル補足（英語のおしゃれな注記）＋クリックヒント */
-.hero-tag .note{display:block;font-family:var(--en);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin-top:10px;}
-.hero-tag .hint{display:block;font-family:var(--en);font-size:.64rem;letter-spacing:.1em;color:color-mix(in srgb,var(--ink) 48%,transparent);margin-top:6px;}
+  font-size:1.12rem;letter-spacing:.12em;text-transform:uppercase;color:#fff;}
+.hero-tag .en::before{content:"";width:22px;height:1px;background:var(--mint);}
+.hero-tag .jp{display:block;font-size:.8rem;letter-spacing:.08em;color:rgba(255,255,255,.72);margin-top:6px;}
+.hero-tag .note{display:block;font-family:var(--en);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin-top:11px;}
+.hero-tag__chips{display:flex;flex-wrap:wrap;gap:6px;margin:11px 0 0;padding:0;list-style:none;}
+.hero-tag__chips li{font-size:.7rem;color:rgba(255,255,255,.88);background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.16);border-radius:999px;padding:4px 11px;white-space:nowrap;}
+.hero-tag .hint{display:block;font-family:var(--en);font-size:.64rem;letter-spacing:.08em;color:rgba(255,255,255,.5);margin-top:12px;}
+.hero-tag .hint::before{content:"";display:inline-block;width:14px;height:1px;background:rgba(255,255,255,.4);vertical-align:middle;margin-right:7px;}
+
+/* 時間差リビール（is-show で順に浮かび上がる） */
+.hero-tag__thumb,.hero-tag .en,.hero-tag .jp,.hero-tag .note,.hero-tag__chips li,.hero-tag .hint{
+  opacity:0;transform:translateY(9px);transition:opacity .4s var(--ease),transform .4s var(--ease);}
+.hero-tag.is-show .hero-tag__thumb{opacity:1;transform:none;transition-delay:.04s;}
+.hero-tag.is-show .en{opacity:1;transform:none;transition-delay:.10s;}
+.hero-tag.is-show .jp{opacity:1;transform:none;transition-delay:.16s;}
+.hero-tag.is-show .note{opacity:1;transform:none;transition-delay:.22s;}
+.hero-tag.is-show .hero-tag__chips li:nth-child(1){opacity:1;transform:none;transition-delay:.28s;}
+.hero-tag.is-show .hero-tag__chips li:nth-child(2){opacity:1;transform:none;transition-delay:.34s;}
+.hero-tag.is-show .hero-tag__chips li:nth-child(3){opacity:1;transform:none;transition-delay:.40s;}
+.hero-tag.is-show .hint{opacity:1;transform:none;transition-delay:.46s;}
 
 .hero__meta{position:absolute;left:var(--gut);right:var(--gut);bottom:34px;z-index:2;display:flex;align-items:center;justify-content:space-between;
   font-family:var(--en);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 45%,transparent);}

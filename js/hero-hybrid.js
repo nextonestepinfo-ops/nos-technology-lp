@@ -185,14 +185,14 @@ export function initHeroHybrid(canvas) {
     g.center(); return g;
   }
   const defs = [
-    { kind:"site",  w:2.5, h:1.85, pos:[2.9, 1.0, 0.3],  rot:[-.1, -.5, .03],  en:"Web Design",    jp:"店舗サイト制作",   note:"Design · SEO · Forms",   target:"#works" },
-    { kind:"admin", w:2.2, h:1.6,  pos:[-3.0, 1.3, -0.5], rot:[-.05, .42, -.04], en:"Admin System",  jp:"予約・顧客管理",   note:"Bookings · CRM",         target:"#services" },
-    { kind:"reply", w:2.1, h:1.55, pos:[2.7, -1.5, -0.2], rot:[.05, -.55, .02],  en:"AI Automation", jp:"AI業務自動化",     note:"Replies in seconds",     target:"#services" },
-    { kind:"map",   w:1.95, h:1.45, pos:[-2.7, -1.2, 0.4], rot:[-.08, .5, .03],   en:"Growth",        jp:"集客・SNS導線",   note:"Local SEO · MEO",        target:"#services" },
+    { kind:"site",  w:2.5, h:1.85, pos:[2.9, 1.0, 0.3],  rot:[-.1, -.5, .03],  en:"Web Design",    jp:"店舗サイト制作",   note:"Design · SEO · Forms",   chips:["ランディング設計","Googleマップ","問い合わせ導線"], target:"#works" },
+    { kind:"admin", w:2.2, h:1.6,  pos:[-3.0, 1.3, -0.5], rot:[-.05, .42, -.04], en:"Admin System",  jp:"予約・顧客管理",   note:"Bookings · CRM",         chips:["予約管理","顧客管理","スタッフ管理"],     target:"#services" },
+    { kind:"reply", w:2.1, h:1.55, pos:[2.7, -1.5, -0.2], rot:[.05, -.55, .02],  en:"AI Automation", jp:"AI業務自動化",     note:"Replies in seconds",     chips:["自動文案","24時間対応","見込み客管理"],   target:"#services" },
+    { kind:"map",   w:1.95, h:1.45, pos:[-2.7, -1.2, 0.4], rot:[-.08, .5, .03],   en:"Growth",        jp:"集客・SNS導線",   note:"Local SEO · MEO",        chips:["MEO対策","SNS導線","口コミ獲得"],         target:"#services" },
   ];
   let currentAcc = { mint: "#16b89a", blue: "#3f6df0" };
 
-  const panels = defs.map((d) => {
+  const panels = defs.map((d, idx) => {
     const geo = panelGeo(d.w, d.h);
     // パネルごとに専用キャンバス＋テクスチャ（ビルドアニメで描き替える）
     const cv = document.createElement("canvas"); cv.width = TEX_W; cv.height = TEX_H;
@@ -208,7 +208,7 @@ export function initHeroHybrid(canvas) {
     const mesh = new THREE.Mesh(geo, [face, side]);
     mesh.position.set(...d.pos); mesh.rotation.set(...d.rot);
     mesh.userData = {
-      kind: d.kind, en: d.en, jp: d.jp, note: d.note, target: d.target,
+      kind: d.kind, en: d.en, jp: d.jp, note: d.note, chips: d.chips, idx: String(idx + 1).padStart(2, "0"), target: d.target,
       home: new THREE.Vector3(...d.pos), baseRot: new THREE.Euler(...d.rot),
       ph: Math.random() * 6, ctx, tex,
       h: 0, progress: 1, wasHover: false, click: 0,
@@ -266,14 +266,35 @@ export function initHeroHybrid(canvas) {
   const tagEn = tagEl ? tagEl.querySelector(".en") : null;
   const tagJp = tagEl ? tagEl.querySelector(".jp") : null;
   const tagNote = tagEl ? tagEl.querySelector(".note") : null;
+  const tagIdx = tagEl ? tagEl.querySelector(".hero-tag__idx") : null;
+  const tagThumb = tagEl ? tagEl.querySelector(".hero-tag__thumb") : null;
+  const chipLis = tagEl ? [...tagEl.querySelectorAll(".hero-tag__chips li")] : [];
+  let lastTagKind = "";
   const projV = new THREE.Vector3();
   let tagX = 0, tagY = 0, tagInit = false;
   function updateTag(panel) {
     if (!tagEl) return;
-    if (!panel) { tagEl.classList.remove("is-show"); tagInit = false; return; }
-    if (tagEn && tagEn.textContent !== panel.userData.en) tagEn.textContent = panel.userData.en;
-    if (tagJp && tagJp.textContent !== panel.userData.jp) tagJp.textContent = panel.userData.jp;
-    if (tagNote && tagNote.textContent !== (panel.userData.note || "")) tagNote.textContent = panel.userData.note || "";
+    if (!panel) { tagEl.classList.remove("is-show"); tagInit = false; lastTagKind = ""; return; }
+    const u = panel.userData;
+    const isPanel = !!u.kind;
+    if (tagEn && tagEn.textContent !== u.en) tagEn.textContent = u.en;
+    if (tagJp && tagJp.textContent !== u.jp) tagJp.textContent = u.jp;
+    if (tagNote && tagNote.textContent !== (u.note || "")) tagNote.textContent = u.note || "";
+    if (tagIdx) tagIdx.textContent = u.idx || "";
+    // パネルが変わった時だけ中身を差し替え、再ステージのため演出クラスを付け直す
+    const key = u.kind || "core";
+    if (key !== lastTagKind) {
+      lastTagKind = key;
+      if (tagThumb) {
+        if (isPanel) { tagThumb.src = `assets/panels/panel-${u.kind}.png`; tagThumb.style.display = ""; }
+        else tagThumb.style.display = "none";
+      }
+      const arr = u.chips || [];
+      chipLis.forEach((li, i) => { li.textContent = arr[i] || ""; li.style.display = arr[i] ? "" : "none"; });
+      tagEl.classList.toggle("is-core", !isPanel);
+      // 一旦リセットして次フレームで再生（時間差リビールを毎回頭から）
+      tagEl.classList.remove("is-show"); void tagEl.offsetWidth; tagEl.classList.add("is-staged");
+    }
     panel.getWorldPosition(projV); projV.project(cam);
     const cw = canvas.clientWidth, ch = canvas.clientHeight;
     const tx = (projV.x * 0.5 + 0.5) * cw, ty = (-projV.y * 0.5 + 0.5) * ch;
@@ -376,11 +397,14 @@ export function initHeroHybrid(canvas) {
       // 位置・スケール・回転（ホバーで強く手前にズーム＋正面を向く）
       const floatY = Math.sin(t * 0.7 + u.ph) * 0.12 * (1 - u.h);
       const zBoost = u.h * 2.4 + u.click * 1.8 - otherR * 0.55;
-      m.position.set(u.home.x * (1 - u.h * 0.45), (u.home.y + floatY) * (1 - u.h * 0.35), u.home.z + zBoost);
+      // 他パネルはフォーカス時に外側へ広がる（動きを増やす）
+      m.position.set(u.home.x * (1 - u.h * 0.45) * (1 + otherR * 0.22), (u.home.y + floatY) * (1 - u.h * 0.35) * (1 + otherR * 0.12), u.home.z + zBoost);
       m.scale.setScalar((1 + u.h * 0.62 + u.click * 0.28) * (1 - otherR * 0.08));
       m.rotation.x = u.baseRot.x * (1 - u.h);
       m.rotation.y = u.baseRot.y * (1 - u.h);
       m.rotation.z = u.baseRot.z * (1 - u.h) + Math.sin(t * 0.3 + i) * 0.02 * (1 - u.h);
+      // フォーカス中のパネルはポインタに追従して傾く（“手に取って見ている”インタラクティブな動き）
+      if (u.h > 0.01) { m.rotation.y += pointer.nx * 0.2 * u.h; m.rotation.x += -pointer.ny * 0.16 * u.h; }
       const op = 1 - otherR * 0.38;
       m.material[0].opacity = op; m.material[1].opacity = op;
 
