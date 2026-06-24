@@ -185,7 +185,8 @@ export function initHeroHybrid(canvas) {
     const ctx = cv.getContext("2d");
     drawUI(ctx, d.kind, currentAcc, 1, 0, panelImg[d.kind]);
     const tex = new THREE.CanvasTexture(cv); tex.anisotropy = 4; tex.colorSpace = THREE.SRGBColorSpace;
-    const face = new THREE.MeshStandardMaterial({ map: tex, roughness: .34, metalness: 0, transparent: true });
+    // 面は“発光する画面”として描く：emissiveMapで自発光させ、暗い3D空間でも色がクッキリ出る（光による白飛び/沈みを防ぐ）
+    const face = new THREE.MeshStandardMaterial({ map: tex, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: .92, roughness: .62, metalness: 0, transparent: true, toneMapped: false });
     const side = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .22, metalness: .12, transparent: true });
     const mesh = new THREE.Mesh(geo, [face, side]);
     mesh.position.set(...d.pos); mesh.rotation.set(...d.rot);
@@ -351,13 +352,13 @@ export function initHeroHybrid(canvas) {
 
       // 位置・スケール・回転（ホバーで強く手前にズーム＋正面を向く）
       const floatY = Math.sin(t * 0.7 + u.ph) * 0.12 * (1 - u.h);
-      const zBoost = u.h * 2.4 + u.click * 1.8 - otherR * 1.0;
+      const zBoost = u.h * 2.4 + u.click * 1.8 - otherR * 0.55;
       m.position.set(u.home.x * (1 - u.h * 0.45), (u.home.y + floatY) * (1 - u.h * 0.35), u.home.z + zBoost);
-      m.scale.setScalar((1 + u.h * 0.62 + u.click * 0.28) * (1 - otherR * 0.14));
+      m.scale.setScalar((1 + u.h * 0.62 + u.click * 0.28) * (1 - otherR * 0.08));
       m.rotation.x = u.baseRot.x * (1 - u.h);
       m.rotation.y = u.baseRot.y * (1 - u.h);
       m.rotation.z = u.baseRot.z * (1 - u.h) + Math.sin(t * 0.3 + i) * 0.02 * (1 - u.h);
-      const op = 1 - otherR * 0.6;
+      const op = 1 - otherR * 0.38;
       m.material[0].opacity = op; m.material[1].opacity = op;
 
       // 結線・流れる光（パネルへ）。ホバー対象は強調、他はフォーカス時に減光・パルス停止。
