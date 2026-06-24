@@ -8,12 +8,14 @@ import { pointer, prefersReducedMotion, lerp, clamp } from "./utils.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
 
-// パネルごとの“見せ所”（z=寄り倍率, cx/cy=注視点 0〜1）。中身を大きく見せ、周辺の細かいUIを少し外す。
+// パネルごとの“見せ所”（z=寄り倍率, cx/cy=注視点 0〜1）。
+// ※現行画像はフル幅デスクトップUIで空白が多く、強く寄せると余白に当たって白くなるため z=1（全体表示）。
+//   パネル最適化画像（要素大きめ・端まで）が来たら必要に応じて微調整する。
 const PANEL_FOCUS = {
-  site:  { z: 1.32, cx: 0.42, cy: 0.52 },
-  admin: { z: 1.46, cx: 0.46, cy: 0.60 },
-  reply: { z: 1.52, cx: 0.50, cy: 0.46 },
-  map:   { z: 1.50, cx: 0.60, cy: 0.50 },
+  site:  { z: 1.0, cx: 0.5, cy: 0.5 },
+  admin: { z: 1.0, cx: 0.5, cy: 0.5 },
+  reply: { z: 1.0, cx: 0.5, cy: 0.5 },
+  map:   { z: 1.0, cx: 0.5, cy: 0.5 },
 };
 
 // 画像パネル：生成UI画像を ctx に貼り、ライブ演出（ビルドワイプ＋スキャン光＋LIVE）を重ねる。
