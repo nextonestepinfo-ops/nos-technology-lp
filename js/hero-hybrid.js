@@ -5,6 +5,8 @@
 // "palette" イベントで配色に追従。失敗時は main.js 側でCSS背景にフォールバック。
 import * as THREE from "three";
 import { pointer, prefersReducedMotion, lerp, clamp } from "./utils.js";
+import { RoomEnvironment } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js";
+import { RoundedBoxGeometry } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/geometries/RoundedBoxGeometry.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
 
@@ -135,6 +137,10 @@ export function initHeroHybrid(canvas) {
   const pm = new THREE.PointLight(0x16b89a, 24, 40); pm.position.set(-5, 3, 5); scene.add(pm);
   const pb = new THREE.PointLight(0x3f6df0, 22, 40); pb.position.set(5, -3, 5); scene.add(pb);
 
+  // 環境反射：メタル/ガラスの質感を一段引き上げる（中央の"N"の映り込み）
+  const pmrem = new THREE.PMREMGenerator(renderer);
+  scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
+
   const group = new THREE.Group(); group.position.x = 1.7; group.rotation.x = -0.05; scene.add(group);
 
   // ---- 中央のAIコア ----
@@ -143,6 +149,20 @@ export function initHeroHybrid(canvas) {
   const coreBase = coreGeo.attributes.position.array.slice(0);
   const coreMat = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .16, metalness: .4, flatShading: true, emissive: 0x0e9ab1, emissiveIntensity: .2 });
   const coreMesh = new THREE.Mesh(coreGeo, coreMat); coreWrap.add(coreMesh);
+  coreMesh.visible = false; // モーフ球は隠し“N”を主役化（描画プラミングは壊さず非表示で保持）
+
+  // ---- NOSの“N”を押し出した3Dレターフォーム（中央の主役オブジェクト） ----
+  const nMat = new THREE.MeshPhysicalMaterial({ color: 0xeaf0ff, metalness: .55, roughness: .16, clearcoat: .7, clearcoatRoughness: .18, emissive: 0x1a5cff, emissiveIntensity: .14, envMapIntensity: 1.15 });
+  const nGroup = new THREE.Group();
+  const NH = 2.0, NT = 0.46, ND = 0.52, NOFF = 0.62;
+  const nbar = (w, h, d) => new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 4, Math.min(w, d) * 0.32), nMat);
+  const nLeft = nbar(NT, NH, ND); nLeft.position.x = -NOFF;
+  const nRight = nbar(NT, NH, ND); nRight.position.x = NOFF;
+  const nLen = Math.sqrt((2 * NOFF) ** 2 + NH ** 2);
+  const nDiag = nbar(NT * 0.94, nLen, ND); nDiag.rotation.z = -Math.atan2(2 * NOFF, NH);
+  nGroup.add(nLeft, nRight, nDiag);
+  nGroup.scale.setScalar(0.66);
+  coreWrap.add(nGroup);
   const wireMat = new THREE.MeshBasicMaterial({ color: 0x3f6df0, wireframe: true, transparent: true, opacity: .2 });
   const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.35, 2), wireMat); coreWrap.add(wire);
   const glowMat = new THREE.SpriteMaterial({ map: glowTexture(), color: 0x16b89a, transparent: true, opacity: .5, depthWrite: false });
@@ -345,7 +365,7 @@ export function initHeroHybrid(canvas) {
     group.rotation.y = Math.sin(t * 0.14) * 0.16 * calm + rx;
     group.rotation.x = -0.05 - ry;
 
-    if (!prefersReducedMotion) {
+    if (!prefersReducedMotion && coreMesh.visible) {
       const amp = 0.16 + Math.sin(t * 1.2) * 0.05 + coreHover * 0.14;
       for (let i = 0; i < cAttr.count; i++) {
         const bx = coreBase[i * 3], by = coreBase[i * 3 + 1], bz = coreBase[i * 3 + 2];
@@ -360,6 +380,12 @@ export function initHeroHybrid(canvas) {
     wire.rotation.y = -t * 0.26 - spinExtra * 1.4; wire.rotation.z = t * 0.12;
     pts.rotation.y = t * 0.05 + spinExtra * 0.5;
     pts.scale.setScalar(1 + coreHover * 0.55);
+    // 中央“N”：自転＋ゆらぎ＋ホバーで発光サージ・拡大（“生み出している”印象）
+    nGroup.rotation.y = t * 0.5 + spinExtra * 1.3;
+    nGroup.rotation.x = Math.sin(t * 0.6) * 0.12;
+    nGroup.position.y = Math.sin(t * 1.1) * 0.05;
+    nGroup.scale.setScalar(0.66 * (1 + coreHover * 0.14) * (1 + Math.sin(t * 1.6) * 0.015));
+    nMat.emissiveIntensity = 0.14 + coreHover * 0.6 + Math.sin(t * 1.6) * 0.03;
     coreMesh.scale.setScalar((1 + Math.sin(t * 1.6) * 0.04) * (1 + coreHover * 0.22));
     coreMat.emissiveIntensity = baseEmissive * (1 + coreHover * 2.2) + Math.sin(t * 1.6) * 0.04;
     glowMat.opacity = 0.42 + Math.sin(t * 1.6) * 0.1 + coreHover * 0.35;
@@ -430,6 +456,7 @@ export function initHeroHybrid(canvas) {
     const M = hx(p.css.mint), B = hx(p.css.blue), L = hx(p.css.lav);
     pm.color.setHex(M); pb.color.setHex(B);
     coreMat.emissive.setHex(L); baseEmissive = p.dark ? 0.45 : 0.2; coreMat.emissiveIntensity = baseEmissive; coreMat.metalness = p.dark ? 0.5 : 0.4;
+    nMat.emissive.setHex(B); // 中央“N”の発光も配色追従
     wireMat.color.setHex(B); wireMat.opacity = p.dark ? 0.3 : 0.2;
     glowMat.color.setHex(M); ptsMat.color.setHex(M);
     lineMats.forEach((m) => { m.color.setHex(B); m.opacity = p.dark ? 0.5 : 0.32; });
