@@ -8,115 +8,94 @@ import { pointer, prefersReducedMotion, lerp, clamp } from "./utils.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
 
-// パネルごとの“見せ所”（z=寄り倍率, cx/cy=注視点 0〜1）。
-// 現行画像はフル幅デスクトップUIで空白が多いため、各画像で中身が詰まった位置をピクセル解析で特定し、
-// 白い余白に当たらない安全な範囲で寄せて主役を大きく見せる（reply=吹き出し+AIバッジ / map=ピン+カード / site=見出し+CTA / admin=行+ステータス）。
-const PANEL_FOCUS = {
-  site:  { z: 1.30, cx: 0.42, cy: 0.54 },
-  admin: { z: 1.52, cx: 0.57, cy: 0.55 },
-  reply: { z: 1.45, cx: 0.50, cy: 0.58 },
-  map:   { z: 1.45, cx: 0.60, cy: 0.50 },
-};
-
-// パネルテクスチャ解像度（高解像度化で文字をくっきり）。手描きUIは512座標系のため描画時にスケールする。
+// パネルテクスチャ解像度（高解像度化で手描きUIの文字をくっきり）。手描きは512座標系で描き、ここでスケールする。
 const TEX_W = 1024, TEX_H = 768;
 
-// 画像パネル：生成UI画像を ctx に貼り、ライブ演出（ビルドワイプ＋スキャン光＋LIVE）を重ねる。
-// img未ロード時は手描きUI(drawUIWire)にフォールバック。
-function drawUI(x, kind, acc, p, t = 0, img = null) {
-  const cw = TEX_W, ch = TEX_H;
-  if (!(img && img.complete && img.naturalWidth)) {
-    // フォールバックは512座標系で描かれるためキャンバスへスケール
-    x.save(); x.scale(cw / 512, ch / 384); drawUIWire(x, kind, acc, p, t); x.restore();
-    return;
-  }
-  x.clearRect(0, 0, cw, ch);
-  x.fillStyle = "#ffffff"; x.fillRect(0, 0, cw, ch);
-  x.imageSmoothingEnabled = true; x.imageSmoothingQuality = "high";
-  // カバー配置＋フォーカス寄り（注視点を中心に拡大、余白が出ないようクランプ）
-  const ir = img.naturalWidth / img.naturalHeight, cr = cw / ch;
-  const f = PANEL_FOCUS[kind] || { z: 1, cx: 0.5, cy: 0.5 };
-  let bw, bh;
-  if (ir > cr) { bh = ch; bw = ch * ir; } else { bw = cw; bh = cw / ir; }
-  const dw = bw * f.z, dh = bh * f.z;
-  let dx = cw / 2 - f.cx * dw, dy = ch / 2 - f.cy * dh;
-  dx = Math.min(0, Math.max(cw - dw, dx));
-  dy = Math.min(0, Math.max(ch - dh, dy));
-  // p(0〜1)で左→右に“描き込まれる”ビルドワイプ
-  const w = Math.max(0, Math.min(1, p));
-  x.save(); x.beginPath(); x.rect(0, 0, cw * w, ch); x.clip();
-  x.drawImage(img, dx, dy, dw, dh);
+// パネル面：パネルサイズ用に最適化した手描きUI（太く大きい要素・ブランド配色・ビルド/スキャン演出）。
+// 512座標系で描いてテクスチャ解像度へスケール（リアル写真スクショは小サイズで白く潰れて読めないため手描きを採用）。
+function drawUI(x, kind, acc, p, t = 0) {
+  x.save();
+  x.scale(TEX_W / 512, TEX_H / 384);
+  drawUIWire(x, kind, acc, p, t);
   x.restore();
-  // ホバー中のライブ演出（青いスキャン光＋LIVE表示）。座標はテクスチャ寸法に比例。
-  if (t > 0) {
-    const sx = (t * 0.55 * cw) % cw;
-    const g = x.createLinearGradient(sx - cw * 0.08, 0, sx + cw * 0.08, 0);
-    g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.13)"); g.addColorStop(1, "rgba(26,92,255,0)");
-    x.fillStyle = g; x.fillRect(0, 0, cw, ch);
-    const blink = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * 8));
-    const pw = 132, ph = 50, px = cw - pw - 28, py = 26;
-    x.fillStyle = "rgba(255,255,255,.86)"; x.beginPath(); x.roundRect(px, py, pw, ph, 25); x.fill();
-    x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(px + 30, py + ph / 2, 10, 0, 7); x.fill();
-    x.fillStyle = "rgba(20,22,26,.74)"; x.font = "700 25px sans-serif"; x.textBaseline = "middle"; x.fillText("LIVE", px + 50, py + ph / 2 + 1); x.textBaseline = "alphabetic";
-  }
 }
 
-// UIモックを ctx に手描き（画像フォールバック用）。p(0〜1)で左から“描き込まれる”ビルド表現、t>0でライブ演出。
+// パネルサイズ用に最適化した手描きUI（512×384座標系・業種非依存・太く大きく読める）。
+// p(0〜1)で左→右に“描き込まれる”ビルド表現、t>0でライブ演出（スキャン光＋LIVE）。
 function drawUIWire(x, kind, acc, p, t = 0) {
   x.clearRect(0, 0, 512, 384);
   x.fillStyle = "#ffffff"; x.fillRect(0, 0, 512, 384);
-  const mint = acc.mint, blue = acc.blue, ink = "#14161a", soft = "#aab2bd", bg = "#eef1f4";
-  // 上部バー（常時）
-  x.fillStyle = bg; x.fillRect(0, 0, 512, 54);
-  x.fillStyle = mint; x.beginPath(); x.arc(40, 27, 9, 0, 7); x.fill();
-  x.fillStyle = ink; x.font = "600 18px sans-serif";
-  x.fillText({ site:"STORE SITE", admin:"予約 / 顧客 管理", reply:"AI 返信アシスト", map:"店舗マップ導線" }[kind], 62, 33);
+  const mint = acc.mint, blue = acc.blue, ink = "#14161a", soft = "#c2c9d3", line = "#e6e9ee", bg = "#eef1f4";
+  const pill = (px, py, pw, ph, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, ph / 2); x.fill(); };
+  const rrect = (px, py, pw, ph, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); };
+
+  // 上部バー（常時表示）：ミントの丸＋大きめタイトル
+  x.fillStyle = bg; x.fillRect(0, 0, 512, 60);
+  x.fillStyle = mint; x.beginPath(); x.arc(42, 30, 11, 0, 7); x.fill();
+  x.fillStyle = ink; x.font = "700 22px sans-serif"; x.textBaseline = "alphabetic";
+  x.fillText({ site: "WEB SITE", admin: "DASHBOARD", reply: "AI INBOX", map: "LOCAL MAP" }[kind], 66, 38);
 
   // 本文は左→右にワイプして“出来上がる”
   const w = Math.max(0, Math.min(1, p));
   if (w <= 0) return;
   x.save();
-  x.beginPath(); x.rect(0, 54, 512 * w, 330); x.clip();
+  x.beginPath(); x.rect(0, 60, 512 * w, 324); x.clip();
 
-  const bar = (yy, ww, col, h = 14) => { x.fillStyle = col; x.beginPath(); x.roundRect(36, yy, ww, h, 7); x.fill(); };
   if (kind === "site") {
-    x.fillStyle = ink; x.font = "800 44px sans-serif"; x.fillText("Beauty", 36, 140); x.fillText("Salon", 36, 188);
-    bar(220, 260, soft, 12); bar(244, 200, soft, 12);
-    x.fillStyle = mint; x.beginPath(); x.roundRect(36, 288, 150, 46, 23); x.fill();
-    x.fillStyle = "#fff"; x.font = "700 18px sans-serif"; x.fillText("予約する", 74, 316);
-    x.fillStyle = bg; x.beginPath(); x.roundRect(320, 96, 156, 238, 16); x.fill();
+    // 大きな見出し（2行のプレースホルダ）＋サブ＋大きなCTA＋ヒーロー画像ブロック
+    rrect(40, 104, 290, 30, 9, ink); rrect(40, 148, 210, 30, 9, ink);
+    rrect(40, 202, 250, 14, 7, soft); rrect(40, 226, 200, 14, 7, soft);
+    pill(40, 270, 188, 56, mint);
+    x.fillStyle = "#fff"; x.font = "700 22px sans-serif"; x.fillText("お問い合わせ", 64, 306);
+    const g = x.createLinearGradient(338, 96, 480, 330); g.addColorStop(0, mint); g.addColorStop(1, blue);
+    rrect(338, 96, 142, 232, 18, "#000"); x.fillStyle = g; x.beginPath(); x.roundRect(338, 96, 142, 232, 18); x.fill();
   } else if (kind === "admin") {
-    for (let i = 0; i < 5; i++) {
-      x.fillStyle = i % 2 ? "#f6f8fa" : "#fff"; x.fillRect(36, 84 + i * 46, 440, 46);
-      x.fillStyle = i === 1 ? mint : soft; x.beginPath(); x.arc(60, 107 + i * 46, 8, 0, 7); x.fill();
-      bar(98 + i * 46, 180, "#cdd4dc", 10);
-      x.fillStyle = blue; x.beginPath(); x.roundRect(360, 96 + i * 46, 110, 22, 11); x.fill();
+    // 大きなKPI数値＋大きめ3行（アバター・名前・青ステータス）。1行をミントでハイライト
+    x.fillStyle = ink; x.font = "800 42px sans-serif"; x.fillText("1,248", 40, 130);
+    x.fillStyle = mint; x.font = "700 17px sans-serif"; x.fillText("▲ 12%", 188, 126);
+    for (let i = 0; i < 3; i++) {
+      const ry = 158 + i * 66;
+      if (i === 1) { x.fillStyle = "#e9fbf4"; x.fillRect(24, ry - 8, 464, 60); }
+      x.fillStyle = i === 1 ? mint : "#dde2e9"; x.beginPath(); x.arc(60, ry + 22, 19, 0, 7); x.fill();
+      rrect(94, ry + 8, 150, 15, 7, soft); rrect(94, ry + 30, 210, 13, 6, "#d7dde4");
+      pill(388, ry + 8, 92, 30, blue);
+      x.fillStyle = "#fff"; x.font = "700 15px sans-serif"; x.fillText("確定", 408, ry + 28);
     }
   } else if (kind === "reply") {
-    x.fillStyle = bg; x.beginPath(); x.roundRect(36, 80, 300, 52, 16); x.fill();
-    bar(98, 210, "#cdd4dc", 10);
-    x.fillStyle = blue; x.beginPath(); x.roundRect(150, 160, 326, 120, 16); x.fill();
-    x.fillStyle = "#fff"; x.font = "600 16px sans-serif";
-    x.fillText("ご予約ありがとうございます。", 172, 196); x.fillText("当日は10分前にご来店ください。", 172, 224);
-    x.fillStyle = mint; x.font = "700 14px sans-serif"; x.fillText("✦ AI が文案を生成", 172, 262);
+    // 大きな2つの吹き出し（受信＝グレー／送信＝青）＋AIバッジ
+    rrect(40, 84, 300, 84, 20, bg);
+    rrect(62, 106, 250, 13, 6, "#cdd4dc"); rrect(62, 130, 196, 13, 6, "#cdd4dc");
+    rrect(152, 192, 324, 112, 20, blue);
+    x.fillStyle = "rgba(255,255,255,.92)";
+    [222, 248, 274].forEach((yy, i) => { x.beginPath(); x.roundRect(176, yy, [280, 250, 180][i], 13, 6); x.fill(); });
+    x.fillStyle = mint; x.font = "700 19px sans-serif"; x.fillText("✦ AIが文案を生成", 176, 338);
   } else {
-    x.fillStyle = bg; x.fillRect(36, 72, 440, 250); x.strokeStyle = "#d7dde4"; x.lineWidth = 2;
-    for (let i = 0; i < 6; i++) { x.beginPath(); x.moveTo(36, 100 + i * 40); x.lineTo(476, 100 + i * 40); x.stroke(); }
-    x.fillStyle = blue; x.beginPath(); x.arc(300, 200, 16, 0, 7); x.fill();
-    x.fillStyle = "rgba(63,109,240,.2)"; x.beginPath(); x.arc(300, 200, 40, 0, 7); x.fill();
-    x.fillStyle = mint; x.beginPath(); x.moveTo(300, 176); x.lineTo(312, 200); x.lineTo(288, 200); x.closePath(); x.fill();
+    // 地図＋大きな青ピン＋検索円＋情報カード（星・ルート）
+    x.fillStyle = bg; x.fillRect(24, 72, 464, 290);
+    x.strokeStyle = line; x.lineWidth = 3;
+    for (let i = 1; i < 6; i++) { x.beginPath(); x.moveTo(24, 72 + i * 48); x.lineTo(488, 72 + i * 48); x.stroke(); }
+    for (let i = 1; i < 8; i++) { x.beginPath(); x.moveTo(24 + i * 58, 72); x.lineTo(24 + i * 58, 362); x.stroke(); }
+    x.fillStyle = "rgba(63,109,240,.14)"; x.beginPath(); x.arc(214, 214, 92, 0, 7); x.fill();
+    x.fillStyle = blue; x.beginPath(); x.arc(214, 204, 22, 0, 7); x.fill();
+    x.beginPath(); x.moveTo(214, 242); x.lineTo(195, 210); x.lineTo(233, 210); x.closePath(); x.fill();
+    x.fillStyle = "#fff"; x.beginPath(); x.arc(214, 204, 9, 0, 7); x.fill();
+    rrect(296, 206, 184, 100, 16, "#fff"); x.strokeStyle = line; x.lineWidth = 1; x.beginPath(); x.roundRect(296, 206, 184, 100, 16); x.stroke();
+    x.fillStyle = mint; x.font = "700 19px sans-serif"; x.fillText("★ 4.3", 316, 242);
+    rrect(316, 254, 120, 11, 5, soft);
+    pill(316, 274, 112, 28, mint);
+    x.fillStyle = "#fff"; x.font = "700 15px sans-serif"; x.fillText("ルート", 342, 293);
   }
   x.restore();
 
   // ホバー中のライブ表示（処理が動いている感：スキャン光＋LIVEドット）
   if (t > 0) {
-    const sx = 36 + ((t * 0.55 * 470) % 470);
-    const g = x.createLinearGradient(sx - 34, 0, sx + 34, 0);
+    const sx = 24 + ((t * 0.55 * 470) % 470);
+    const g = x.createLinearGradient(sx - 36, 0, sx + 36, 0);
     g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.16)"); g.addColorStop(1, "rgba(26,92,255,0)");
-    x.fillStyle = g; x.fillRect(0, 54, 512, 330);
+    x.fillStyle = g; x.fillRect(0, 60, 512, 324);
     const blink = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * 8));
-    x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(490, 28, 5, 0, 7); x.fill();
-    x.fillStyle = "rgba(20,22,26,.55)"; x.font = "600 11px sans-serif"; x.textAlign = "right"; x.fillText("LIVE", 480, 32); x.textAlign = "left";
+    x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(488, 30, 6, 0, 7); x.fill();
+    x.fillStyle = "rgba(20,22,26,.6)"; x.font = "700 13px sans-serif"; x.textAlign = "right"; x.fillText("LIVE", 476, 35); x.textAlign = "left";
   }
 }
 
@@ -195,20 +174,12 @@ export function initHeroHybrid(canvas) {
   ];
   let currentAcc = { mint: "#16b89a", blue: "#3f6df0" };
 
-  // パネルに貼る生成UI画像（kind別）。ロード完了後に該当パネルを再描画。
-  const panelImg = {};
-  defs.forEach((d) => {
-    const im = new Image();
-    im.src = `assets/panels/panel-${d.kind}.png`;
-    panelImg[d.kind] = im;
-  });
-
   const panels = defs.map((d) => {
     const geo = panelGeo(d.w, d.h);
     // パネルごとに専用キャンバス＋テクスチャ（ビルドアニメで描き替える）
     const cv = document.createElement("canvas"); cv.width = TEX_W; cv.height = TEX_H;
     const ctx = cv.getContext("2d");
-    drawUI(ctx, d.kind, currentAcc, 1, 0, panelImg[d.kind]);
+    drawUI(ctx, d.kind, currentAcc, 1);
     // 文字をくっきり：高解像度テクスチャ＋異方性フィルタ最大＋ミップ無し線形（NPOTでもボケない）
     const tex = new THREE.CanvasTexture(cv);
     tex.anisotropy = maxAniso; tex.colorSpace = THREE.SRGBColorSpace;
@@ -226,12 +197,7 @@ export function initHeroHybrid(canvas) {
     };
     group.add(mesh); return mesh;
   });
-  const redraw = (panel, p, t = 0) => { drawUI(panel.userData.ctx, panel.userData.kind, currentAcc, p, t, panelImg[panel.userData.kind]); panel.userData.tex.needsUpdate = true; };
-  // 画像ロード完了で、対応パネルを完成形に描き直す（初期は手描きフォールバックで表示）
-  panels.forEach((panel) => {
-    const im = panelImg[panel.userData.kind];
-    if (im && !im.complete) im.addEventListener("load", () => redraw(panel, panel.userData.progress));
-  });
+  const redraw = (panel, p, t = 0) => { drawUI(panel.userData.ctx, panel.userData.kind, currentAcc, p, t); panel.userData.tex.needsUpdate = true; };
 
   // ---- コア→各パネルの結線＋流れる光 ----
   const lines = [], pulses = [], lineMats = [], pulseMats = [];
