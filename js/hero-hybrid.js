@@ -8,17 +8,29 @@ import { pointer, prefersReducedMotion, lerp, clamp } from "./utils.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
 
+// パネルごとの“見せ所”（z=寄り倍率, cx/cy=注視点 0〜1）。中身を大きく見せ、周辺の細かいUIを少し外す。
+const PANEL_FOCUS = {
+  site:  { z: 1.32, cx: 0.42, cy: 0.52 },
+  admin: { z: 1.46, cx: 0.46, cy: 0.60 },
+  reply: { z: 1.52, cx: 0.50, cy: 0.46 },
+  map:   { z: 1.50, cx: 0.60, cy: 0.50 },
+};
+
 // 画像パネル：生成UI画像を ctx に貼り、ライブ演出（ビルドワイプ＋スキャン光＋LIVE）を重ねる。
 // img未ロード時は手描きUI(drawUIWire)にフォールバック。
 function drawUI(x, kind, acc, p, t = 0, img = null) {
   if (!(img && img.complete && img.naturalWidth)) { drawUIWire(x, kind, acc, p, t); return; }
   x.clearRect(0, 0, 512, 384);
   x.fillStyle = "#ffffff"; x.fillRect(0, 0, 512, 384);
-  // 画像をパネル(512×384)へカバー配置
+  // カバー配置＋フォーカス寄り（注視点を中心に拡大、余白が出ないようクランプ）
   const cw = 512, ch = 384, ir = img.naturalWidth / img.naturalHeight, cr = cw / ch;
-  let dw, dh, dx, dy;
-  if (ir > cr) { dh = ch; dw = ch * ir; dx = (cw - dw) / 2; dy = 0; }
-  else { dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) / 2; }
+  const f = PANEL_FOCUS[kind] || { z: 1, cx: 0.5, cy: 0.5 };
+  let bw, bh;
+  if (ir > cr) { bh = ch; bw = ch * ir; } else { bw = cw; bh = cw / ir; }
+  const dw = bw * f.z, dh = bh * f.z;
+  let dx = cw / 2 - f.cx * dw, dy = ch / 2 - f.cy * dh;
+  dx = Math.min(0, Math.max(cw - dw, dx));
+  dy = Math.min(0, Math.max(ch - dh, dy));
   // p(0〜1)で左→右に“描き込まれる”ビルドワイプ
   const w = Math.max(0, Math.min(1, p));
   x.save(); x.beginPath(); x.rect(0, 0, cw * w, ch); x.clip();
