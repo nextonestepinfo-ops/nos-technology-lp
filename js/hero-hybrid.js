@@ -41,49 +41,60 @@ function drawUIWire(x, kind, acc, p, t = 0) {
   x.save();
   x.beginPath(); x.rect(0, 60, 512 * w, 324); x.clip();
 
+  const stroke = (px, py, pw, ph, r, col, lw = 2) => { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
   if (kind === "site") {
-    // 大きな見出し（2行のプレースホルダ）＋サブ＋大きなCTA＋ヒーロー画像ブロック
-    rrect(40, 104, 290, 30, 9, ink); rrect(40, 148, 210, 30, 9, ink);
-    rrect(40, 202, 250, 14, 7, soft); rrect(40, 226, 200, 14, 7, soft);
-    pill(40, 270, 188, 56, mint);
-    x.fillStyle = "#fff"; x.font = "700 22px sans-serif"; x.fillText("お問い合わせ", 64, 306);
-    const g = x.createLinearGradient(338, 96, 480, 330); g.addColorStop(0, mint); g.addColorStop(1, blue);
-    rrect(338, 96, 142, 232, 18, "#000"); x.fillStyle = g; x.beginPath(); x.roundRect(338, 96, 142, 232, 18); x.fill();
+    // 見出し2行＋サブ＋CTA(主)＋ゴースト(副)＋右の大ヒーロー画像＋下部に機能チップ（余白を埋める）
+    rrect(36, 100, 300, 30, 9, ink); rrect(36, 142, 224, 30, 9, ink);
+    rrect(36, 192, 252, 13, 6, soft); rrect(36, 214, 206, 13, 6, soft);
+    pill(36, 252, 170, 52, mint);
+    x.fillStyle = "#fff"; x.font = "700 21px sans-serif"; x.fillText("お問い合わせ", 58, 285);
+    stroke(218, 252, 120, 52, 26, line); rrect(240, 272, 76, 12, 6, soft);
+    const g = x.createLinearGradient(356, 90, 476, 320); g.addColorStop(0, mint); g.addColorStop(1, blue);
+    x.fillStyle = g; x.beginPath(); x.roundRect(356, 90, 120, 214, 16); x.fill();
+    x.fillStyle = "rgba(255,255,255,.22)"; x.beginPath(); x.roundRect(372, 214, 88, 72, 10); x.fill();
+    [36, 150, 264].forEach((cx0) => rrect(cx0, 332, 96, 30, 15, bg));
   } else if (kind === "admin") {
-    // 大きなKPI数値＋大きめ3行（アバター・名前・青ステータス）。1行をミントでハイライト
-    x.fillStyle = ink; x.font = "800 42px sans-serif"; x.fillText("1,248", 40, 130);
-    x.fillStyle = mint; x.font = "700 17px sans-serif"; x.fillText("▲ 12%", 188, 126);
+    // 上段KPI2枚＋右にスパークライン、下に大きめ3行（アバター・名前・青ステータス）。1行をミント強調
+    rrect(36, 80, 130, 14, 7, soft);
+    stroke(36, 104, 135, 64, 12, line); stroke(184, 104, 135, 64, 12, line); stroke(332, 104, 148, 64, 12, line);
+    x.fillStyle = ink; x.font = "800 28px sans-serif"; x.fillText("1,248", 52, 150); x.fillText("342", 200, 150);
+    x.fillStyle = mint; x.font = "700 13px sans-serif"; x.fillText("▲12%", 116, 150); x.fillText("▲8%", 252, 150);
+    x.strokeStyle = mint; x.lineWidth = 3; x.beginPath();
+    [[346, 150], [372, 134], [398, 142], [424, 120], [452, 128], [468, 116]].forEach((pt, i) => i ? x.lineTo(pt[0], pt[1]) : x.moveTo(pt[0], pt[1])); x.stroke();
     for (let i = 0; i < 3; i++) {
-      const ry = 158 + i * 66;
-      if (i === 1) { x.fillStyle = "#e9fbf4"; x.fillRect(24, ry - 8, 464, 60); }
-      x.fillStyle = i === 1 ? mint : "#dde2e9"; x.beginPath(); x.arc(60, ry + 22, 19, 0, 7); x.fill();
-      rrect(94, ry + 8, 150, 15, 7, soft); rrect(94, ry + 30, 210, 13, 6, "#d7dde4");
-      pill(388, ry + 8, 92, 30, blue);
-      x.fillStyle = "#fff"; x.font = "700 15px sans-serif"; x.fillText("確定", 408, ry + 28);
+      const ry = 192 + i * 58;
+      if (i === 1) { x.fillStyle = "#e9fbf4"; x.fillRect(24, ry - 6, 464, 52); }
+      x.fillStyle = i === 1 ? mint : "#dde2e9"; x.beginPath(); x.arc(56, ry + 18, 16, 0, 7); x.fill();
+      rrect(86, ry + 6, 150, 13, 6, soft); rrect(86, ry + 27, 200, 11, 5, "#d7dde4");
+      pill(388, ry + 4, 92, 28, blue);
+      x.fillStyle = "#fff"; x.font = "700 14px sans-serif"; x.fillText("確定", 408, ry + 23);
     }
   } else if (kind === "reply") {
-    // 大きな2つの吹き出し（受信＝グレー／送信＝青）＋AIバッジ
-    rrect(40, 84, 300, 84, 20, bg);
-    rrect(62, 106, 250, 13, 6, "#cdd4dc"); rrect(62, 130, 196, 13, 6, "#cdd4dc");
-    rrect(152, 192, 324, 112, 20, blue);
+    // 受信(左・グレー)＋送信(右・青・大)＋AIバッジ＋下部に入力バー＋送信ボタン（余白を埋める）
+    rrect(36, 80, 270, 78, 18, bg);
+    rrect(56, 100, 210, 12, 6, "#cdd4dc"); rrect(56, 122, 170, 12, 6, "#cdd4dc");
+    rrect(150, 176, 326, 96, 18, blue);
     x.fillStyle = "rgba(255,255,255,.92)";
-    [222, 248, 274].forEach((yy, i) => { x.beginPath(); x.roundRect(176, yy, [280, 250, 180][i], 13, 6); x.fill(); });
-    x.fillStyle = mint; x.font = "700 19px sans-serif"; x.fillText("✦ AIが文案を生成", 176, 338);
+    [196, 218, 240].forEach((yy, i) => { x.beginPath(); x.roundRect(172, yy, [284, 250, 180][i], 12, 6); x.fill(); });
+    x.fillStyle = mint; x.font = "700 17px sans-serif"; x.fillText("✦ AIが文案を生成", 172, 296);
+    stroke(36, 322, 388, 40, 20, line); rrect(56, 336, 160, 12, 6, soft);
+    pill(436, 322, 40, 40, blue); x.fillStyle = "#fff"; x.font = "700 20px sans-serif"; x.fillText("→", 448, 348);
   } else {
-    // 地図＋大きな青ピン＋検索円＋情報カード（星・ルート）
+    // 地図＋検索バー＋検索円＋大ピン＋情報カード（星・ルート）
     x.fillStyle = bg; x.fillRect(24, 72, 464, 290);
     x.strokeStyle = line; x.lineWidth = 3;
-    for (let i = 1; i < 6; i++) { x.beginPath(); x.moveTo(24, 72 + i * 48); x.lineTo(488, 72 + i * 48); x.stroke(); }
-    for (let i = 1; i < 8; i++) { x.beginPath(); x.moveTo(24 + i * 58, 72); x.lineTo(24 + i * 58, 362); x.stroke(); }
-    x.fillStyle = "rgba(63,109,240,.14)"; x.beginPath(); x.arc(214, 214, 92, 0, 7); x.fill();
-    x.fillStyle = blue; x.beginPath(); x.arc(214, 204, 22, 0, 7); x.fill();
-    x.beginPath(); x.moveTo(214, 242); x.lineTo(195, 210); x.lineTo(233, 210); x.closePath(); x.fill();
-    x.fillStyle = "#fff"; x.beginPath(); x.arc(214, 204, 9, 0, 7); x.fill();
-    rrect(296, 206, 184, 100, 16, "#fff"); x.strokeStyle = line; x.lineWidth = 1; x.beginPath(); x.roundRect(296, 206, 184, 100, 16); x.stroke();
-    x.fillStyle = mint; x.font = "700 19px sans-serif"; x.fillText("★ 4.3", 316, 242);
-    rrect(316, 254, 120, 11, 5, soft);
-    pill(316, 274, 112, 28, mint);
-    x.fillStyle = "#fff"; x.font = "700 15px sans-serif"; x.fillText("ルート", 342, 293);
+    for (let i = 1; i < 7; i++) { x.beginPath(); x.moveTo(24, 72 + i * 42); x.lineTo(488, 72 + i * 42); x.stroke(); }
+    for (let i = 1; i < 9; i++) { x.beginPath(); x.moveTo(24 + i * 52, 72); x.lineTo(24 + i * 52, 362); x.stroke(); }
+    rrect(40, 86, 200, 36, 18, "#fff");
+    x.fillStyle = mint; x.beginPath(); x.arc(60, 104, 7, 0, 7); x.fill(); rrect(76, 98, 120, 12, 6, soft);
+    x.fillStyle = "rgba(63,109,240,.14)"; x.beginPath(); x.arc(216, 232, 86, 0, 7); x.fill();
+    x.fillStyle = blue; x.beginPath(); x.arc(216, 222, 20, 0, 7); x.fill();
+    x.beginPath(); x.moveTo(216, 254); x.lineTo(199, 228); x.lineTo(233, 228); x.closePath(); x.fill();
+    x.fillStyle = "#fff"; x.beginPath(); x.arc(216, 222, 8, 0, 7); x.fill();
+    rrect(298, 212, 182, 104, 16, "#fff"); stroke(298, 212, 182, 104, 16, line, 1);
+    x.fillStyle = mint; x.font = "700 18px sans-serif"; x.fillText("★ 4.3", 318, 246);
+    rrect(318, 258, 120, 11, 5, soft); rrect(318, 274, 90, 11, 5, "#d7dde4");
+    pill(318, 290, 108, 26, mint); x.fillStyle = "#fff"; x.font = "700 14px sans-serif"; x.fillText("ルート", 344, 308);
   }
   x.restore();
 
@@ -152,6 +163,13 @@ export function initHeroHybrid(canvas) {
   const ringMat = new THREE.MeshBasicMaterial({ color: 0x1a5cff, transparent: true, opacity: 0, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false });
   const ring = new THREE.Mesh(new THREE.RingGeometry(1.5, 1.62, 72), ringMat);
   scene.add(ring);
+
+  // フォーカス時に手前パネルだけを残して背後を暗転させる“スポットライト”用の暗幕。
+  // 手前にズームしたパネル(world z≈1.5〜2.3)より奥(z=1.1)に置き、コア/他パネル/結線を覆って沈める。
+  const dimMat = new THREE.MeshBasicMaterial({ color: 0x04060c, transparent: true, opacity: 0, depthWrite: false });
+  const dimPlane = new THREE.Mesh(new THREE.PlaneGeometry(48, 30), dimMat);
+  dimPlane.position.z = 1.1; scene.add(dimPlane);
+
   let coreHover = 0, spinExtra = 0, baseEmissive = 0.2;
   const coreWorld = new THREE.Vector3();
 
@@ -167,10 +185,10 @@ export function initHeroHybrid(canvas) {
     g.center(); return g;
   }
   const defs = [
-    { kind:"site",  w:2.5, h:1.85, pos:[2.9, 1.0, 0.3],  rot:[-.1, -.5, .03],  en:"Web Design",    jp:"店舗サイト制作",   target:"#works" },
-    { kind:"admin", w:2.2, h:1.6,  pos:[-3.0, 1.3, -0.5], rot:[-.05, .42, -.04], en:"Admin System",  jp:"予約・顧客管理",   target:"#services" },
-    { kind:"reply", w:2.1, h:1.55, pos:[2.7, -1.5, -0.2], rot:[.05, -.55, .02],  en:"AI Automation", jp:"AI業務自動化",     target:"#services" },
-    { kind:"map",   w:1.95, h:1.45, pos:[-2.7, -1.2, 0.4], rot:[-.08, .5, .03],   en:"Growth",        jp:"集客・SNS導線",   target:"#services" },
+    { kind:"site",  w:2.5, h:1.85, pos:[2.9, 1.0, 0.3],  rot:[-.1, -.5, .03],  en:"Web Design",    jp:"店舗サイト制作",   note:"Design · SEO · Forms",   target:"#works" },
+    { kind:"admin", w:2.2, h:1.6,  pos:[-3.0, 1.3, -0.5], rot:[-.05, .42, -.04], en:"Admin System",  jp:"予約・顧客管理",   note:"Bookings · CRM",         target:"#services" },
+    { kind:"reply", w:2.1, h:1.55, pos:[2.7, -1.5, -0.2], rot:[.05, -.55, .02],  en:"AI Automation", jp:"AI業務自動化",     note:"Replies in seconds",     target:"#services" },
+    { kind:"map",   w:1.95, h:1.45, pos:[-2.7, -1.2, 0.4], rot:[-.08, .5, .03],   en:"Growth",        jp:"集客・SNS導線",   note:"Local SEO · MEO",        target:"#services" },
   ];
   let currentAcc = { mint: "#16b89a", blue: "#3f6df0" };
 
@@ -190,7 +208,7 @@ export function initHeroHybrid(canvas) {
     const mesh = new THREE.Mesh(geo, [face, side]);
     mesh.position.set(...d.pos); mesh.rotation.set(...d.rot);
     mesh.userData = {
-      kind: d.kind, en: d.en, jp: d.jp, target: d.target,
+      kind: d.kind, en: d.en, jp: d.jp, note: d.note, target: d.target,
       home: new THREE.Vector3(...d.pos), baseRot: new THREE.Euler(...d.rot),
       ph: Math.random() * 6, ctx, tex,
       h: 0, progress: 1, wasHover: false, click: 0,
@@ -247,6 +265,7 @@ export function initHeroHybrid(canvas) {
   const tagEl = document.getElementById("heroTag");
   const tagEn = tagEl ? tagEl.querySelector(".en") : null;
   const tagJp = tagEl ? tagEl.querySelector(".jp") : null;
+  const tagNote = tagEl ? tagEl.querySelector(".note") : null;
   const projV = new THREE.Vector3();
   let tagX = 0, tagY = 0, tagInit = false;
   function updateTag(panel) {
@@ -254,6 +273,7 @@ export function initHeroHybrid(canvas) {
     if (!panel) { tagEl.classList.remove("is-show"); tagInit = false; return; }
     if (tagEn && tagEn.textContent !== panel.userData.en) tagEn.textContent = panel.userData.en;
     if (tagJp && tagJp.textContent !== panel.userData.jp) tagJp.textContent = panel.userData.jp;
+    if (tagNote && tagNote.textContent !== (panel.userData.note || "")) tagNote.textContent = panel.userData.note || "";
     panel.getWorldPosition(projV); projV.project(cam);
     const cw = canvas.clientWidth, ch = canvas.clientHeight;
     const tx = (projV.x * 0.5 + 0.5) * cw, ty = (-projV.y * 0.5 + 0.5) * ch;
@@ -270,14 +290,20 @@ export function initHeroHybrid(canvas) {
   canvas.addEventListener("click", () => {
     const obj = pick();
     if (!obj || !obj.userData.target) return;
-    const t = document.querySelector(obj.userData.target);
-    if (!t) return;
+    const target = document.querySelector(obj.userData.target);
+    if (!target) return;
     obj.userData.click = 1; // クリック演出（前へ飛び出す）
-    if (window.__lenis) window.__lenis.scrollTo(t, { offset: -10 });
-    else t.scrollIntoView({ behavior: "smooth" });
+    // 遷移演出：画面を一瞬ワイプ → 少し遅れてスクロール（ただ飛ぶだけにしない）
+    document.body.classList.add("is-warp");
+    setTimeout(() => document.body.classList.remove("is-warp"), 720);
+    setTimeout(() => {
+      if (window.__lenis) window.__lenis.scrollTo(target, { offset: -10 });
+      else target.scrollIntoView({ behavior: "smooth" });
+    }, 230);
   });
 
   let rx = 0, ry = 0;
+  let focusState = false; // is-focusing クラスの現在状態（毎フレームのトグル抑制用）
   const cAttr = coreGeo.attributes.position;
   let hovered = null;
 
@@ -285,6 +311,9 @@ export function initHeroHybrid(canvas) {
     const t = (now || 0) / 1000;
     // フォーカス量（いずれかのパネルにホバー中＝1へ）。全体の動きを鎮める。
     const focus = panels.reduce((mx, p) => Math.max(mx, p.userData.h), 0);
+    // 背景暗転：手前パネル以外を暗幕で沈める＋DOM背景(bg-flow等)もCSSで減光
+    dimMat.opacity = Math.min(1, focus) * 0.66;
+    if (focusState !== focus > 0.35) { focusState = focus > 0.35; document.body.classList.toggle("is-focusing", focusState); }
     const calm = 1 - Math.max(focus, coreHover * 0.55) * 0.9;
     rx = lerp(rx, pointer.nx * 0.5 * calm, 0.06);
     ry = lerp(ry, pointer.ny * 0.4 * calm, 0.06);

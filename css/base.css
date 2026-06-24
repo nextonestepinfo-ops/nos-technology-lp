@@ -183,7 +183,15 @@ strong{font-weight:700;color:var(--ink);}
 .chip small{font-family:var(--en);font-size:.58rem;letter-spacing:.02em;color:var(--ink-soft);}
 
 /* ---- 背景の流れる光の線（全体のアンビエント・モーション） ---- */
-.bg-flow{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.45;}
+.bg-flow{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none;mix-blend-mode:screen;opacity:.45;transition:opacity .45s var(--ease);}
+/* パネル・フォーカス時：DOM背景を減光して手前パネルを主役化（3D側は暗幕で背後を沈める） */
+body.is-focusing .bg-flow{opacity:.08;}
+
+/* ---- パネルクリック時の画面遷移ワイプ演出（ただ飛ぶだけにしない） ---- */
+.warp{position:fixed;inset:0;z-index:200;pointer-events:none;opacity:0;transform:translateX(-100%);
+  background:linear-gradient(115deg,transparent 0%,color-mix(in srgb,var(--mint) 65%,transparent) 44%,color-mix(in srgb,var(--blue) 80%,transparent) 56%,transparent 100%);}
+body.is-warp .warp{animation:warpSweep .72s var(--ease) forwards;}
+@keyframes warpSweep{0%{opacity:0;transform:translateX(-100%);}30%{opacity:.92;}62%{opacity:.92;}100%{opacity:0;transform:translateX(100%);}}
 
 /* ---- キーボード操作のフォーカス可視化（A11y：カスタムカーソルでも必ず見える） ---- */
 a,button,[data-cursor],[data-magnetic],.svc[data-overlay],.chip{cursor:pointer;}
@@ -199,5 +207,6 @@ a,button,[data-cursor],[data-magnetic],.svc[data-overlay],.chip{cursor:pointer;}
   .flow-chip{opacity:1!important;transform:none!important;}
   .header{transform:none!important;opacity:1!important;pointer-events:auto!important;}
   .bg-flow{display:none!important;}
+  .warp{display:none!important;}
   .cursor{display:none;}body{cursor:auto;}
 }

@@ -42,6 +42,9 @@
 .hero-tag .en::after{content:"↗";color:var(--mint);font-weight:700;}
 .hero-tag .en::before{content:"";width:26px;height:1px;background:var(--mint);}
 .hero-tag .jp{display:block;font-size:.72rem;letter-spacing:.1em;color:var(--ink-soft);margin-top:7px;}
+/* パネル補足（英語のおしゃれな注記）＋クリックヒント */
+.hero-tag .note{display:block;font-family:var(--en);font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin-top:10px;}
+.hero-tag .hint{display:block;font-family:var(--en);font-size:.64rem;letter-spacing:.1em;color:color-mix(in srgb,var(--ink) 48%,transparent);margin-top:6px;}
 
 .hero__meta{position:absolute;left:var(--gut);right:var(--gut);bottom:34px;z-index:2;display:flex;align-items:center;justify-content:space-between;
   font-family:var(--en);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 45%,transparent);}

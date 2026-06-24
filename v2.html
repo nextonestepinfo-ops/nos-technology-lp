@@ -46,6 +46,9 @@
     <div class="preloader__bar"><i id="preloadBar"></i></div>
   </div>
 
+  <!-- パネルクリック時の画面遷移ワイプ演出 -->
+  <div class="warp" id="warp" aria-hidden="true"></div>
+
   <!-- カスタムカーソル -->
   <div class="cursor" id="cursor" aria-hidden="true">
     <span class="cursor__dot"></span>
@@ -88,7 +91,7 @@
     <section class="hero hero--v2" id="hero">
       <canvas class="hero__canvas" id="heroCanvas" data-layout="center" aria-hidden="true"></canvas>
       <!-- パネルホバー時の英語ラベル（JSが位置と内容を更新） -->
-      <div class="hero-tag" id="heroTag" aria-hidden="true"><span class="en"></span><span class="jp"></span></div>
+      <div class="hero-tag" id="heroTag" aria-hidden="true"><span class="en"></span><span class="jp"></span><span class="note"></span><span class="hint">Click → セクションへ</span></div>
       <div class="hero__content hero__content--center">
         <p class="hero__brandline" data-reveal="fade">Nos Technology</p>
         <h1 class="hero__display">
