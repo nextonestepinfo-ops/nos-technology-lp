@@ -152,8 +152,9 @@ export function initHeroHybrid(canvas) {
 
   // ---- NOSの“N”：ロゴのパスをそのまま3D押し出し（縦2本＋上下が水平な対角）。三角アクセントは無し ----
   // ダークなメタル質感＋環境反射でリファレンス画像のような艶のある立体に。
-  const nMat = new THREE.MeshPhysicalMaterial({ color: 0x3a4a6e, metalness: .95, roughness: .24, clearcoat: .6, clearcoatRoughness: .22, emissive: 0x12275a, emissiveIntensity: .3, envMapIntensity: 1.4 });
-  const nEdgeMat = new THREE.LineBasicMaterial({ color: 0x16b89a, transparent: true, opacity: .35 });
+  // ホワイトシルバーのクローム（実ロゴの質感に寄せ、暗背景でアクセントになる艶）
+  const nMat = new THREE.MeshPhysicalMaterial({ color: 0xeef2f8, metalness: 1.0, roughness: .15, clearcoat: 1.0, clearcoatRoughness: .1, emissive: 0x1a3366, emissiveIntensity: .05, envMapIntensity: 1.9, reflectivity: 1.0 });
+  const nEdgeMat = new THREE.LineBasicMaterial({ color: 0x16b89a, transparent: true, opacity: .3 });
   const NS = 0.04;               // ロゴ座標(0-100)→three換算
   const ND = 0.56;               // 押し出し奥行き
   const Lp = (x, y) => [(x - 50) * NS, (50 - y) * NS]; // y反転＋中心化
@@ -396,8 +397,8 @@ export function initHeroHybrid(canvas) {
     nGroup.rotation.x = Math.sin(t * 0.5) * 0.05 - pointer.ny * 0.18;
     nGroup.position.set(0, Math.sin(t * 1.0) * 0.05, coreHover * 1.3);
     nGroup.scale.setScalar(0.82 * (1 + coreHover * 0.7) * (1 + Math.sin(t * 1.6) * 0.012));
-    nMat.emissiveIntensity = 0.25 + coreHover * 0.5;
-    nEdgeMat.opacity = 0.5 + coreHover * 0.45 + Math.sin(t * 2) * 0.08;
+    nMat.emissiveIntensity = 0.05 + coreHover * 0.3;
+    nEdgeMat.opacity = 0.32 + coreHover * 0.4 + Math.sin(t * 2) * 0.06;
     coreMesh.scale.setScalar((1 + Math.sin(t * 1.6) * 0.04) * (1 + coreHover * 0.22));
     coreMat.emissiveIntensity = baseEmissive * (1 + coreHover * 2.2) + Math.sin(t * 1.6) * 0.04;
     glowMat.opacity = 0.42 + Math.sin(t * 1.6) * 0.1 + coreHover * 0.35;
