@@ -6,7 +6,6 @@
 import * as THREE from "three";
 import { pointer, prefersReducedMotion, lerp, clamp } from "./utils.js";
 import { RoomEnvironment } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js";
-import { RoundedBoxGeometry } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/geometries/RoundedBoxGeometry.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
 
@@ -151,18 +150,34 @@ export function initHeroHybrid(canvas) {
   const coreMesh = new THREE.Mesh(coreGeo, coreMat); coreWrap.add(coreMesh);
   coreMesh.visible = false; // モーフ球は隠し“N”を主役化（描画プラミングは壊さず非表示で保持）
 
-  // ---- NOSの“N”を押し出した3Dレターフォーム（中央の主役オブジェクト） ----
-  const nMat = new THREE.MeshPhysicalMaterial({ color: 0xeaf0ff, metalness: .55, roughness: .16, clearcoat: .7, clearcoatRoughness: .18, emissive: 0x1a5cff, emissiveIntensity: .14, envMapIntensity: 1.15 });
+  // ---- NOSの“N”：ロゴ準拠＋メカ調の3Dオブジェクト（中央の主役） ----
+  // 本体＝鋼メタル、稜線＝発光ライン（パネル/メカ感）、右上にロゴの青い三角アクセント。
+  const nMat = new THREE.MeshPhysicalMaterial({ color: 0xb9c6dc, metalness: .92, roughness: .3, clearcoat: .5, clearcoatRoughness: .25, emissive: 0x0a1830, emissiveIntensity: .25, envMapIntensity: 1.25 });
+  const nEdgeMat = new THREE.LineBasicMaterial({ color: 0x16b89a, transparent: true, opacity: .8 });
+  const triMat = new THREE.MeshStandardMaterial({ color: 0x1a5cff, metalness: .4, roughness: .22, emissive: 0x1a5cff, emissiveIntensity: .55 });
   const nGroup = new THREE.Group();
-  const NH = 2.0, NT = 0.46, ND = 0.52, NOFF = 0.62;
-  const nbar = (w, h, d) => new THREE.Mesh(new RoundedBoxGeometry(w, h, d, 4, Math.min(w, d) * 0.32), nMat);
+  const NH = 2.0, NT = 0.42, ND = 0.5, NOFF = 0.66;
+  // 1本のバー＝メタル箱＋発光稜線（メカのパネルライン）。rotで傾ける。
+  const nbar = (w, h, d, rot) => {
+    const g = new THREE.Group();
+    const geo = new THREE.BoxGeometry(w, h, d);
+    g.add(new THREE.Mesh(geo, nMat));
+    g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), nEdgeMat));
+    if (rot) g.rotation.z = rot;
+    return g;
+  };
   const nLeft = nbar(NT, NH, ND); nLeft.position.x = -NOFF;
   const nRight = nbar(NT, NH, ND); nRight.position.x = NOFF;
-  const nLen = Math.sqrt((2 * NOFF) ** 2 + NH ** 2);
-  const nDiag = nbar(NT * 0.94, nLen, ND); nDiag.rotation.z = -Math.atan2(2 * NOFF, NH);
-  nGroup.add(nLeft, nRight, nDiag);
-  nGroup.scale.setScalar(0.66);
-  coreWrap.add(nGroup);
+  // 対角：ロゴ準拠で top-left → bottom-right（"\"）
+  const nLen = Math.sqrt((2 * NOFF) ** 2 + NH ** 2) + NT * 0.5;
+  const nDiag = nbar(NT, nLen, ND, Math.atan2(2 * NOFF, NH));
+  // ロゴの青い三角アクセント（右上）
+  const triShape = new THREE.Shape(); triShape.moveTo(0, 0); triShape.lineTo(0.6, 0); triShape.lineTo(0.6, 0.6); triShape.closePath();
+  const triMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(triShape, { depth: ND, bevelEnabled: false }), triMat);
+  triMesh.position.set(NOFF - NT * 0.5, NH * 0.5 - 0.02, -ND / 2);
+  nGroup.add(nLeft, nRight, nDiag, triMesh);
+  nGroup.scale.setScalar(0.62);
+  group.add(nGroup);
   const wireMat = new THREE.MeshBasicMaterial({ color: 0x3f6df0, wireframe: true, transparent: true, opacity: .2 });
   const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.35, 2), wireMat); coreWrap.add(wire);
   const glowMat = new THREE.SpriteMaterial({ map: glowTexture(), color: 0x16b89a, transparent: true, opacity: .5, depthWrite: false });
@@ -177,7 +192,7 @@ export function initHeroHybrid(canvas) {
   const pts = new THREE.Points(pg, ptsMat); coreWrap.add(pts);
 
   // コアのホバー用：見えないプロキシ（変形しても安定して拾える）＋エネルギーリング
-  coreMesh.userData = { en: "Nos Engine", jp: "AIコア" };
+  coreMesh.userData = { en: "NOS TECHNOLOGY", jp: "AI活用のオリジナルを、お手軽価格から。", note: "Original × Affordable" };
   const coreProxy = new THREE.Mesh(new THREE.SphereGeometry(1.5, 16, 16), new THREE.MeshBasicMaterial({ visible: false }));
   coreWrap.add(coreProxy);
   const ringMat = new THREE.MeshBasicMaterial({ color: 0x1a5cff, transparent: true, opacity: 0, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false });
@@ -380,12 +395,13 @@ export function initHeroHybrid(canvas) {
     wire.rotation.y = -t * 0.26 - spinExtra * 1.4; wire.rotation.z = t * 0.12;
     pts.rotation.y = t * 0.05 + spinExtra * 0.5;
     pts.scale.setScalar(1 + coreHover * 0.55);
-    // 中央“N”：自転＋ゆらぎ＋ホバーで発光サージ・拡大（“生み出している”印象）
-    nGroup.rotation.y = t * 0.5 + spinExtra * 1.3;
-    nGroup.rotation.x = Math.sin(t * 0.6) * 0.12;
-    nGroup.position.y = Math.sin(t * 1.1) * 0.05;
-    nGroup.scale.setScalar(0.66 * (1 + coreHover * 0.14) * (1 + Math.sin(t * 1.6) * 0.015));
-    nMat.emissiveIntensity = 0.14 + coreHover * 0.6 + Math.sin(t * 1.6) * 0.03;
+    // 中央“N”：ゆっくり自転＋ゆらぎ。中央ホバーでガッと大アップ（前進＋拡大）＋稜線サージ。
+    nGroup.rotation.y = t * 0.16 + spinExtra * 0.7;
+    nGroup.rotation.x = Math.sin(t * 0.5) * 0.07;
+    nGroup.position.set(0, Math.sin(t * 1.0) * 0.05, coreHover * 1.3);
+    nGroup.scale.setScalar(0.62 * (1 + coreHover * 0.85) * (1 + Math.sin(t * 1.6) * 0.012));
+    nMat.emissiveIntensity = 0.25 + coreHover * 0.5;
+    nEdgeMat.opacity = 0.5 + coreHover * 0.45 + Math.sin(t * 2) * 0.08;
     coreMesh.scale.setScalar((1 + Math.sin(t * 1.6) * 0.04) * (1 + coreHover * 0.22));
     coreMat.emissiveIntensity = baseEmissive * (1 + coreHover * 2.2) + Math.sin(t * 1.6) * 0.04;
     glowMat.opacity = 0.42 + Math.sin(t * 1.6) * 0.1 + coreHover * 0.35;
@@ -456,7 +472,7 @@ export function initHeroHybrid(canvas) {
     const M = hx(p.css.mint), B = hx(p.css.blue), L = hx(p.css.lav);
     pm.color.setHex(M); pb.color.setHex(B);
     coreMat.emissive.setHex(L); baseEmissive = p.dark ? 0.45 : 0.2; coreMat.emissiveIntensity = baseEmissive; coreMat.metalness = p.dark ? 0.5 : 0.4;
-    nMat.emissive.setHex(B); // 中央“N”の発光も配色追従
+    nEdgeMat.color.setHex(M); triMat.color.setHex(B); triMat.emissive.setHex(B); // 中央“N”の稜線(ミント)・三角(ブルー)を配色追従
     wireMat.color.setHex(B); wireMat.opacity = p.dark ? 0.3 : 0.2;
     glowMat.color.setHex(M); ptsMat.color.setHex(M);
     lineMats.forEach((m) => { m.color.setHex(B); m.opacity = p.dark ? 0.5 : 0.32; });
