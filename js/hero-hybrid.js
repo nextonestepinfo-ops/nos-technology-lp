@@ -150,33 +150,28 @@ export function initHeroHybrid(canvas) {
   const coreMesh = new THREE.Mesh(coreGeo, coreMat); coreWrap.add(coreMesh);
   coreMesh.visible = false; // モーフ球は隠し“N”を主役化（描画プラミングは壊さず非表示で保持）
 
-  // ---- NOSの“N”：ロゴ準拠＋メカ調の3Dオブジェクト（中央の主役） ----
-  // 本体＝鋼メタル、稜線＝発光ライン（パネル/メカ感）、右上にロゴの青い三角アクセント。
-  const nMat = new THREE.MeshPhysicalMaterial({ color: 0xb9c6dc, metalness: .92, roughness: .3, clearcoat: .5, clearcoatRoughness: .25, emissive: 0x0a1830, emissiveIntensity: .25, envMapIntensity: 1.25 });
-  const nEdgeMat = new THREE.LineBasicMaterial({ color: 0x16b89a, transparent: true, opacity: .8 });
-  const triMat = new THREE.MeshStandardMaterial({ color: 0x1a5cff, metalness: .4, roughness: .22, emissive: 0x1a5cff, emissiveIntensity: .55 });
+  // ---- NOSの“N”：ロゴのパスをそのまま3D押し出し（縦2本＋上下が水平な対角）。三角アクセントは無し ----
+  // ダークなメタル質感＋環境反射でリファレンス画像のような艶のある立体に。
+  const nMat = new THREE.MeshPhysicalMaterial({ color: 0x1b2438, metalness: .96, roughness: .22, clearcoat: .6, clearcoatRoughness: .22, emissive: 0x0a1730, emissiveIntensity: .22, envMapIntensity: 1.35 });
+  const nEdgeMat = new THREE.LineBasicMaterial({ color: 0x16b89a, transparent: true, opacity: .26 });
+  const NS = 0.04;               // ロゴ座標(0-100)→three換算
+  const ND = 0.56;               // 押し出し奥行き
+  const Lp = (x, y) => [(x - 50) * NS, (50 - y) * NS]; // y反転＋中心化
+  const mkShape = (pts) => { const s = new THREE.Shape(); pts.forEach((p, i) => { const c = Lp(p[0], p[1]); i ? s.lineTo(c[0], c[1]) : s.moveTo(c[0], c[1]); }); s.closePath(); return s; };
+  const extr = (sh) => { const g = new THREE.ExtrudeGeometry(sh, { depth: ND, bevelEnabled: true, bevelThickness: .035, bevelSize: .035, bevelSegments: 2 }); g.translate(0, 0, -ND / 2); return g; };
+  // ロゴのパス：左縦バー / 右縦バー / 対角（上下が水平な平行四辺形）
+  const nShapes = [
+    mkShape([[18, 20], [34, 20], [34, 80], [18, 80]]),
+    mkShape([[68, 20], [82, 20], [82, 80], [68, 80]]),
+    mkShape([[32, 20], [48, 20], [68, 80], [52, 80]]),
+  ];
   const nGroup = new THREE.Group();
-  const NH = 2.0, NT = 0.42, ND = 0.5, NOFF = 0.66;
-  // 1本のバー＝メタル箱＋発光稜線（メカのパネルライン）。rotで傾ける。
-  const nbar = (w, h, d, rot) => {
-    const g = new THREE.Group();
-    const geo = new THREE.BoxGeometry(w, h, d);
-    g.add(new THREE.Mesh(geo, nMat));
-    g.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo), nEdgeMat));
-    if (rot) g.rotation.z = rot;
-    return g;
-  };
-  const nLeft = nbar(NT, NH, ND); nLeft.position.x = -NOFF;
-  const nRight = nbar(NT, NH, ND); nRight.position.x = NOFF;
-  // 対角：ロゴ準拠で top-left → bottom-right（"\"）
-  const nLen = Math.sqrt((2 * NOFF) ** 2 + NH ** 2) + NT * 0.5;
-  const nDiag = nbar(NT, nLen, ND, Math.atan2(2 * NOFF, NH));
-  // ロゴの青い三角アクセント（右上）
-  const triShape = new THREE.Shape(); triShape.moveTo(0, 0); triShape.lineTo(0.6, 0); triShape.lineTo(0.6, 0.6); triShape.closePath();
-  const triMesh = new THREE.Mesh(new THREE.ExtrudeGeometry(triShape, { depth: ND, bevelEnabled: false }), triMat);
-  triMesh.position.set(NOFF - NT * 0.5, NH * 0.5 - 0.02, -ND / 2);
-  nGroup.add(nLeft, nRight, nDiag, triMesh);
-  nGroup.scale.setScalar(0.62);
+  nShapes.forEach((sh) => {
+    const geo = extr(sh);
+    nGroup.add(new THREE.Mesh(geo, nMat));
+    nGroup.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo, 25), nEdgeMat)); // 主要稜線だけ薄く
+  });
+  nGroup.scale.setScalar(0.82); // 少し大きめ
   group.add(nGroup);
   const wireMat = new THREE.MeshBasicMaterial({ color: 0x3f6df0, wireframe: true, transparent: true, opacity: .2 });
   const wire = new THREE.Mesh(new THREE.IcosahedronGeometry(1.35, 2), wireMat); coreWrap.add(wire);
@@ -399,7 +394,7 @@ export function initHeroHybrid(canvas) {
     nGroup.rotation.y = t * 0.16 + spinExtra * 0.7;
     nGroup.rotation.x = Math.sin(t * 0.5) * 0.07;
     nGroup.position.set(0, Math.sin(t * 1.0) * 0.05, coreHover * 1.3);
-    nGroup.scale.setScalar(0.62 * (1 + coreHover * 0.85) * (1 + Math.sin(t * 1.6) * 0.012));
+    nGroup.scale.setScalar(0.82 * (1 + coreHover * 0.7) * (1 + Math.sin(t * 1.6) * 0.012));
     nMat.emissiveIntensity = 0.25 + coreHover * 0.5;
     nEdgeMat.opacity = 0.5 + coreHover * 0.45 + Math.sin(t * 2) * 0.08;
     coreMesh.scale.setScalar((1 + Math.sin(t * 1.6) * 0.04) * (1 + coreHover * 0.22));
@@ -472,7 +467,7 @@ export function initHeroHybrid(canvas) {
     const M = hx(p.css.mint), B = hx(p.css.blue), L = hx(p.css.lav);
     pm.color.setHex(M); pb.color.setHex(B);
     coreMat.emissive.setHex(L); baseEmissive = p.dark ? 0.45 : 0.2; coreMat.emissiveIntensity = baseEmissive; coreMat.metalness = p.dark ? 0.5 : 0.4;
-    nEdgeMat.color.setHex(M); triMat.color.setHex(B); triMat.emissive.setHex(B); // 中央“N”の稜線(ミント)・三角(ブルー)を配色追従
+    nEdgeMat.color.setHex(M); // 中央“N”の稜線を配色追従（薄い縁）
     wireMat.color.setHex(B); wireMat.opacity = p.dark ? 0.3 : 0.2;
     glowMat.color.setHex(M); ptsMat.color.setHex(M);
     lineMats.forEach((m) => { m.color.setHex(B); m.opacity = p.dark ? 0.5 : 0.32; });
