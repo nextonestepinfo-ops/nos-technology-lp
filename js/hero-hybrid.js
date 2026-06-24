@@ -18,14 +18,23 @@ const PANEL_FOCUS = {
   map:   { z: 1.45, cx: 0.60, cy: 0.50 },
 };
 
+// パネルテクスチャ解像度（高解像度化で文字をくっきり）。手描きUIは512座標系のため描画時にスケールする。
+const TEX_W = 1024, TEX_H = 768;
+
 // 画像パネル：生成UI画像を ctx に貼り、ライブ演出（ビルドワイプ＋スキャン光＋LIVE）を重ねる。
 // img未ロード時は手描きUI(drawUIWire)にフォールバック。
 function drawUI(x, kind, acc, p, t = 0, img = null) {
-  if (!(img && img.complete && img.naturalWidth)) { drawUIWire(x, kind, acc, p, t); return; }
-  x.clearRect(0, 0, 512, 384);
-  x.fillStyle = "#ffffff"; x.fillRect(0, 0, 512, 384);
+  const cw = TEX_W, ch = TEX_H;
+  if (!(img && img.complete && img.naturalWidth)) {
+    // フォールバックは512座標系で描かれるためキャンバスへスケール
+    x.save(); x.scale(cw / 512, ch / 384); drawUIWire(x, kind, acc, p, t); x.restore();
+    return;
+  }
+  x.clearRect(0, 0, cw, ch);
+  x.fillStyle = "#ffffff"; x.fillRect(0, 0, cw, ch);
+  x.imageSmoothingEnabled = true; x.imageSmoothingQuality = "high";
   // カバー配置＋フォーカス寄り（注視点を中心に拡大、余白が出ないようクランプ）
-  const cw = 512, ch = 384, ir = img.naturalWidth / img.naturalHeight, cr = cw / ch;
+  const ir = img.naturalWidth / img.naturalHeight, cr = cw / ch;
   const f = PANEL_FOCUS[kind] || { z: 1, cx: 0.5, cy: 0.5 };
   let bw, bh;
   if (ir > cr) { bh = ch; bw = ch * ir; } else { bw = cw; bh = cw / ir; }
@@ -38,17 +47,17 @@ function drawUI(x, kind, acc, p, t = 0, img = null) {
   x.save(); x.beginPath(); x.rect(0, 0, cw * w, ch); x.clip();
   x.drawImage(img, dx, dy, dw, dh);
   x.restore();
-  // ホバー中のライブ演出（青いスキャン光＋LIVE表示）
+  // ホバー中のライブ演出（青いスキャン光＋LIVE表示）。座標はテクスチャ寸法に比例。
   if (t > 0) {
     const sx = (t * 0.55 * cw) % cw;
-    const g = x.createLinearGradient(sx - 40, 0, sx + 40, 0);
-    g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.14)"); g.addColorStop(1, "rgba(26,92,255,0)");
+    const g = x.createLinearGradient(sx - cw * 0.08, 0, sx + cw * 0.08, 0);
+    g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.13)"); g.addColorStop(1, "rgba(26,92,255,0)");
     x.fillStyle = g; x.fillRect(0, 0, cw, ch);
-    // LIVE（背景ピルで画像内容に依らず視認できるように・右上）
     const blink = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * 8));
-    x.fillStyle = "rgba(255,255,255,.82)"; x.beginPath(); x.roundRect(cw - 80, 13, 66, 25, 12); x.fill();
-    x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(cw - 64, 26, 5, 0, 7); x.fill();
-    x.fillStyle = "rgba(20,22,26,.7)"; x.font = "700 12px sans-serif"; x.fillText("LIVE", cw - 52, 30);
+    const pw = 132, ph = 50, px = cw - pw - 28, py = 26;
+    x.fillStyle = "rgba(255,255,255,.86)"; x.beginPath(); x.roundRect(px, py, pw, ph, 25); x.fill();
+    x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(px + 30, py + ph / 2, 10, 0, 7); x.fill();
+    x.fillStyle = "rgba(20,22,26,.74)"; x.font = "700 25px sans-serif"; x.textBaseline = "middle"; x.fillText("LIVE", px + 50, py + ph / 2 + 1); x.textBaseline = "alphabetic";
   }
 }
 
@@ -125,6 +134,8 @@ export function initHeroHybrid(canvas) {
 
   const renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
   renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  // パネル文字の鮮明化に使う異方性フィルタの最大値
+  const maxAniso = renderer.capabilities.getMaxAnisotropy ? renderer.capabilities.getMaxAnisotropy() : 8;
   const scene = new THREE.Scene();
   const cam = new THREE.PerspectiveCamera(44, 1, 0.1, 100);
   cam.position.set(0, 0, 9.5);
@@ -195,12 +206,15 @@ export function initHeroHybrid(canvas) {
   const panels = defs.map((d) => {
     const geo = panelGeo(d.w, d.h);
     // パネルごとに専用キャンバス＋テクスチャ（ビルドアニメで描き替える）
-    const cv = document.createElement("canvas"); cv.width = 512; cv.height = 384;
+    const cv = document.createElement("canvas"); cv.width = TEX_W; cv.height = TEX_H;
     const ctx = cv.getContext("2d");
     drawUI(ctx, d.kind, currentAcc, 1, 0, panelImg[d.kind]);
-    const tex = new THREE.CanvasTexture(cv); tex.anisotropy = 4; tex.colorSpace = THREE.SRGBColorSpace;
-    // 面は“発光する画面”として描く：emissiveMapで自発光させ、暗い3D空間でも色がクッキリ出る（光による白飛び/沈みを防ぐ）
-    const face = new THREE.MeshStandardMaterial({ map: tex, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: .92, roughness: .62, metalness: 0, transparent: true, toneMapped: false });
+    // 文字をくっきり：高解像度テクスチャ＋異方性フィルタ最大＋ミップ無し線形（NPOTでもボケない）
+    const tex = new THREE.CanvasTexture(cv);
+    tex.anisotropy = maxAniso; tex.colorSpace = THREE.SRGBColorSpace;
+    tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
+    // 面は“発光する画面”として描く：emissiveMapで自発光させ暗い空間でも色が出る。強すぎると白がにじむので控えめに。
+    const face = new THREE.MeshStandardMaterial({ map: tex, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: .78, roughness: .66, metalness: 0, transparent: true, toneMapped: false });
     const side = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .22, metalness: .12, transparent: true });
     const mesh = new THREE.Mesh(geo, [face, side]);
     mesh.position.set(...d.pos); mesh.rotation.set(...d.rot);
