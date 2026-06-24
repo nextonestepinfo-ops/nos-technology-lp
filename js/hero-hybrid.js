@@ -8,8 +8,38 @@ import { pointer, prefersReducedMotion, lerp, clamp } from "./utils.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
 
-// UIモックを ctx に描く。p(0〜1)で左から“描き込まれる”ビルド表現、t>0でライブ演出。
-function drawUI(x, kind, acc, p, t = 0) {
+// 画像パネル：生成UI画像を ctx に貼り、ライブ演出（ビルドワイプ＋スキャン光＋LIVE）を重ねる。
+// img未ロード時は手描きUI(drawUIWire)にフォールバック。
+function drawUI(x, kind, acc, p, t = 0, img = null) {
+  if (!(img && img.complete && img.naturalWidth)) { drawUIWire(x, kind, acc, p, t); return; }
+  x.clearRect(0, 0, 512, 384);
+  x.fillStyle = "#ffffff"; x.fillRect(0, 0, 512, 384);
+  // 画像をパネル(512×384)へカバー配置
+  const cw = 512, ch = 384, ir = img.naturalWidth / img.naturalHeight, cr = cw / ch;
+  let dw, dh, dx, dy;
+  if (ir > cr) { dh = ch; dw = ch * ir; dx = (cw - dw) / 2; dy = 0; }
+  else { dw = cw; dh = cw / ir; dx = 0; dy = (ch - dh) / 2; }
+  // p(0〜1)で左→右に“描き込まれる”ビルドワイプ
+  const w = Math.max(0, Math.min(1, p));
+  x.save(); x.beginPath(); x.rect(0, 0, cw * w, ch); x.clip();
+  x.drawImage(img, dx, dy, dw, dh);
+  x.restore();
+  // ホバー中のライブ演出（青いスキャン光＋LIVE表示）
+  if (t > 0) {
+    const sx = (t * 0.55 * cw) % cw;
+    const g = x.createLinearGradient(sx - 40, 0, sx + 40, 0);
+    g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.14)"); g.addColorStop(1, "rgba(26,92,255,0)");
+    x.fillStyle = g; x.fillRect(0, 0, cw, ch);
+    // LIVE（背景ピルで画像内容に依らず視認できるように・右上）
+    const blink = 0.4 + 0.6 * (0.5 + 0.5 * Math.sin(t * 8));
+    x.fillStyle = "rgba(255,255,255,.82)"; x.beginPath(); x.roundRect(cw - 80, 13, 66, 25, 12); x.fill();
+    x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(cw - 64, 26, 5, 0, 7); x.fill();
+    x.fillStyle = "rgba(20,22,26,.7)"; x.font = "700 12px sans-serif"; x.fillText("LIVE", cw - 52, 30);
+  }
+}
+
+// UIモックを ctx に手描き（画像フォールバック用）。p(0〜1)で左から“描き込まれる”ビルド表現、t>0でライブ演出。
+function drawUIWire(x, kind, acc, p, t = 0) {
   x.clearRect(0, 0, 512, 384);
   x.fillStyle = "#ffffff"; x.fillRect(0, 0, 512, 384);
   const mint = acc.mint, blue = acc.blue, ink = "#14161a", soft = "#aab2bd", bg = "#eef1f4";
@@ -139,12 +169,21 @@ export function initHeroHybrid(canvas) {
     { kind:"map",   w:1.95, h:1.45, pos:[-2.7, -1.2, 0.4], rot:[-.08, .5, .03],   en:"Growth",        jp:"集客・SNS導線",   target:"#services" },
   ];
   let currentAcc = { mint: "#16b89a", blue: "#3f6df0" };
+
+  // パネルに貼る生成UI画像（kind別）。ロード完了後に該当パネルを再描画。
+  const panelImg = {};
+  defs.forEach((d) => {
+    const im = new Image();
+    im.src = `assets/panels/panel-${d.kind}.png`;
+    panelImg[d.kind] = im;
+  });
+
   const panels = defs.map((d) => {
     const geo = panelGeo(d.w, d.h);
     // パネルごとに専用キャンバス＋テクスチャ（ビルドアニメで描き替える）
     const cv = document.createElement("canvas"); cv.width = 512; cv.height = 384;
     const ctx = cv.getContext("2d");
-    drawUI(ctx, d.kind, currentAcc, 1);
+    drawUI(ctx, d.kind, currentAcc, 1, 0, panelImg[d.kind]);
     const tex = new THREE.CanvasTexture(cv); tex.anisotropy = 4; tex.colorSpace = THREE.SRGBColorSpace;
     const face = new THREE.MeshStandardMaterial({ map: tex, roughness: .34, metalness: 0, transparent: true });
     const side = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .22, metalness: .12, transparent: true });
@@ -158,7 +197,12 @@ export function initHeroHybrid(canvas) {
     };
     group.add(mesh); return mesh;
   });
-  const redraw = (panel, p, t = 0) => { drawUI(panel.userData.ctx, panel.userData.kind, currentAcc, p, t); panel.userData.tex.needsUpdate = true; };
+  const redraw = (panel, p, t = 0) => { drawUI(panel.userData.ctx, panel.userData.kind, currentAcc, p, t, panelImg[panel.userData.kind]); panel.userData.tex.needsUpdate = true; };
+  // 画像ロード完了で、対応パネルを完成形に描き直す（初期は手描きフォールバックで表示）
+  panels.forEach((panel) => {
+    const im = panelImg[panel.userData.kind];
+    if (im && !im.complete) im.addEventListener("load", () => redraw(panel, panel.userData.progress));
+  });
 
   // ---- コア→各パネルの結線＋流れる光 ----
   const lines = [], pulses = [], lineMats = [], pulseMats = [];
