@@ -3,6 +3,12 @@
    面の段差は --surface / --surface-2、線は --line で配色追従。
    ========================================================= */
 
+/* ===== Works strip（v2：ヒーロー直下で制作サイトが流れる帯） ===== */
+/* 横padding=var(--gut)で、.showcaseの負マージンが相殺され全幅ブリードになる */
+.works-strip{padding:clamp(36px,6vw,80px) var(--gut) clamp(44px,7vw,88px);background:var(--paper);overflow:hidden;}
+.works-strip__eyebrow{text-align:center;font-family:var(--en);font-size:clamp(.78rem,1.3vw,.92rem);
+  letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 clamp(26px,4vw,42px);}
+
 /* ===== Intro（v2：人の時間を、AIでつくる の説明＋画像） ===== */
 .intro{background:var(--paper);}
 .intro__grid{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;
