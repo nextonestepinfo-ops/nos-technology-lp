@@ -301,7 +301,11 @@ export function initHeroHybrid(canvas) {
     // 切替時はスナップ、追従はスムージング（ジッター防止）
     if (!tagInit) { tagX = tx; tagY = ty; tagInit = true; }
     else { tagX += (tx - tagX) * 0.25; tagY += (ty - tagY) * 0.25; }
-    tagEl.style.left = tagX + "px";
+    // 上に十分な余白が無ければカードを下に出す（上で見切れるのを防ぐ）＋左右を画面内にクランプ
+    const cardW = tagEl.offsetWidth || 240, cardH = tagEl.offsetHeight || 210;
+    tagEl.classList.toggle("is-below", tagY < cardH + 56);
+    const clampedX = Math.max(cardW / 2 + 14, Math.min(cw - cardW / 2 - 14, tagX));
+    tagEl.style.left = clampedX + "px";
     tagEl.style.top = tagY + "px";
     tagEl.classList.add("is-show");
   }

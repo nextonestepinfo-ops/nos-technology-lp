@@ -38,12 +38,15 @@
    中身（画像・英語タイトル・連番・特徴チップ・ヒント）が時間差で浮かび上がる。 */
 .hero-tag{position:absolute;left:0;top:0;z-index:3;pointer-events:none;text-align:left;
   width:max-content;max-width:min(264px,72vw);
-  transform:translate(-50%,-116%) scale(.96);opacity:0;
+  transform:translate(-50%,calc(-100% - 20px)) scale(.96);opacity:0;
   transition:opacity .35s var(--ease),transform .45s var(--ease);white-space:normal;
   background:linear-gradient(158deg,color-mix(in srgb,#05070d 88%,transparent),color-mix(in srgb,#05070d 66%,transparent));
   border:1px solid color-mix(in srgb,var(--mint) 24%,transparent);border-radius:15px;
   padding:15px 17px 16px;backdrop-filter:blur(12px);box-shadow:0 26px 64px rgba(0,0,0,.55);}
-.hero-tag.is-show{opacity:1;transform:translate(-50%,-126%) scale(1);}
+.hero-tag.is-show{opacity:1;transform:translate(-50%,calc(-100% - 28px)) scale(1);}
+/* 上に余白が無い時は下に出す（見切れ防止） */
+.hero-tag.is-below{transform:translate(-50%,20px) scale(.96);}
+.hero-tag.is-below.is-show{transform:translate(-50%,28px) scale(1);}
 /* コア（AIコア）ホバー時は画像・チップを隠してラベルのみ */
 .hero-tag.is-core{max-width:220px;}
 .hero-tag.is-core .hero-tag__chips,.hero-tag.is-core .hero-tag__thumb,.hero-tag.is-core .hint{display:none;}
