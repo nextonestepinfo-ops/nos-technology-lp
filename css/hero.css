@@ -23,7 +23,10 @@
   animation:heroPulse 2.4s ease-in-out infinite;}
 @keyframes heroPulse{0%,100%{opacity:.4;transform:scale(.8);}50%{opacity:1;transform:scale(1);}}
 
-.hero__title{font-size:clamp(2.6rem,8vw,6rem);font-weight:900;line-height:1.06;letter-spacing:.004em;margin-bottom:34px;}
+.hero__title{font-size:clamp(3rem,9.5vw,7.4rem);font-weight:900;line-height:1.02;letter-spacing:.004em;margin-bottom:30px;}
+/* ミニマル・ヒーロー：余白を広げてインパクト重視 */
+.hero__content--minimal{max-width:760px;}
+.hero__content--minimal .hero__lead{font-size:clamp(1.05rem,1.6vw,1.3rem);color:var(--ink-soft);margin-bottom:36px;}
 .hero__title .line{display:block;}
 .hero__title em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
 
