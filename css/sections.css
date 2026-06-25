@@ -102,6 +102,11 @@
 .svc:hover::before{opacity:1;}
 .svc__no{font-family:var(--en);font-size:1rem;color:var(--blue);letter-spacing:.08em;}
 .svc__body{position:relative;}
+/* 役割バッジ：Web=入口 / システム=主力 を明示（事業ポジショニング） */
+.svc__role{display:inline-block;font-family:var(--en);font-size:.7rem;letter-spacing:.04em;color:var(--ink-soft);
+  margin-bottom:12px;padding:4px 11px;border:1px solid var(--line);border-radius:999px;}
+.svc__role--lead{color:var(--mint);border-color:color-mix(in srgb,var(--mint) 45%,transparent);}
+.svc__role--flag{color:var(--blue);border-color:color-mix(in srgb,var(--blue) 50%,transparent);background:color-mix(in srgb,var(--blue) 10%,transparent);}
 .svc__title{font-size:clamp(1.4rem,3.2vw,2.3rem);font-weight:700;margin-bottom:14px;line-height:1.3;}
 .svc__text{color:var(--ink-soft);max-width:620px;font-size:clamp(.95rem,1.4vw,1.05rem);}
 .svc__tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px;}

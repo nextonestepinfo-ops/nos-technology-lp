@@ -126,8 +126,9 @@
   letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin:0 0 14px;
   text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}
 .hero__wordmark b{font-weight:700;}
-.hero__sub{font-size:clamp(.95rem,1.4vw,1.12rem);line-height:1.8;color:var(--ink-soft);margin:0 0 26px;max-width:30ch;
+.hero__sub{font-size:clamp(.95rem,1.4vw,1.12rem);line-height:1.8;color:var(--ink-soft);margin:0 0 26px;max-width:32ch;
   text-shadow:0 1px 18px color-mix(in srgb,var(--paper) 72%,transparent);}
+.hero__sub b{color:var(--ink);font-weight:600;}
 .hero--v2 .hero__actions{justify-content:flex-start;}
 /* 下部：左にコピー／右にScrollだけ（要素同士をぶつけない） */
 .hero--v2 .hero__meta{justify-content:flex-end;z-index:2;}
