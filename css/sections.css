@@ -136,20 +136,21 @@
   transition:transform .4s var(--ease),box-shadow .4s var(--ease);}
 .site:hover{transform:translateY(-8px);box-shadow:0 28px 60px color-mix(in srgb,var(--ink) 22%,transparent);}
 
-/* works-strip（トップ）＝実画像のレスポンシブ・セット：PC画面＋右下に重ねたスマホ画面 */
-.works-strip .site{position:relative;width:clamp(250px,27vw,350px);overflow:visible;border:0;background:none;border-radius:0;box-shadow:none;}
-.works-strip .site:hover{box-shadow:none;}
-.site__web{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top;background:#fff;
-  border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 44px color-mix(in srgb,var(--ink) 22%,transparent);}
-/* iPhone風の筐体（ベゼル＋ダイナミックアイランド）。中の img が画面。 */
-.site__phone{position:absolute;right:-16px;bottom:-20px;width:37%;aspect-ratio:9/19.3;z-index:2;
-  background:linear-gradient(155deg,#23262d,#0a0c12);border-radius:13% / 6.2%;padding:4.5%;
-  box-shadow:0 22px 40px color-mix(in srgb,var(--ink) 45%,transparent),
-             inset 0 0 0 1.5px rgba(255,255,255,.10), inset 0 1px 2px rgba(255,255,255,.22);}
-.site__phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;background:#fff;border-radius:9.5% / 4.6%;}
+/* works-strip（トップ）＝1セット：PC画面（横）＋iPhone（縦・全身）を下揃えで横並び。重ねず切れない */
+.works-strip .site{position:static;display:flex;align-items:flex-end;gap:clamp(10px,1.4vw,16px);
+  width:auto;height:clamp(178px,23vw,240px);overflow:visible;border:0;background:none;border-radius:0;box-shadow:none;}
+.works-strip .site:hover{transform:translateY(-8px);box-shadow:none;}
+/* PC画面：白枠なし。影だけで暗背景から浮かせる */
+.site__web{display:block;height:82%;width:auto;aspect-ratio:16/10;object-fit:cover;object-position:top;
+  border:0;border-radius:10px;box-shadow:0 16px 40px rgba(0,0,0,.5);}
+/* iPhone風の全身筐体（ベゼル＋ダイナミックアイランド）。中の img が画面。 */
+.site__phone{position:relative;flex:none;height:100%;width:auto;aspect-ratio:9/19.3;
+  background:linear-gradient(155deg,#262a31,#0a0c12);border-radius:15% / 6.8%;padding:3.2%;
+  box-shadow:0 20px 40px rgba(0,0,0,.55), inset 0 0 0 1.5px rgba(255,255,255,.12), inset 0 1px 2px rgba(255,255,255,.24);}
+.site__phone img{display:block;width:100%;height:100%;object-fit:cover;object-position:top;background:#fff;border-radius:11% / 5%;}
 /* ダイナミックアイランド */
-.site__phone::before{content:"";position:absolute;top:5.5%;left:50%;transform:translateX(-50%);
-  width:30%;height:4.2%;min-height:7px;background:#05060a;border-radius:999px;z-index:3;}
+.site__phone::before{content:"";position:absolute;top:3.4%;left:50%;transform:translateX(-50%);
+  width:30%;height:3.4%;min-height:6px;background:#05060a;border-radius:999px;z-index:3;}
 .works-strip .site:hover .site__phone{transform:translateY(-5px);transition:transform .4s var(--ease);}
 .site__bar{display:flex;align-items:center;gap:6px;padding:9px 13px;background:#eef0f3;}
 .site__bar i{width:8px;height:8px;border-radius:50%;background:#cfd5dd;}
