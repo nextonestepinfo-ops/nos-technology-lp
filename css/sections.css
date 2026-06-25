@@ -52,6 +52,35 @@
   .intro__media{order:-1;} /* モバイルは画像を上に */
 }
 
+/* ===== Story（スクロール・ストーリー：pin＋スクロール同期） ===== */
+.story{position:relative;height:300vh;background:var(--paper);}
+.story__stage{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;padding:0 var(--gut);}
+/* 進捗で灯る背景（pに比例） */
+.story__stage::before{content:"";position:absolute;inset:0;pointer-events:none;
+  background:radial-gradient(60% 55% at 50% 50%, color-mix(in srgb,var(--mint) 18%,transparent), color-mix(in srgb,var(--blue) 8%,transparent) 45%, transparent 72%);
+  opacity:calc(var(--p,0)*0.8);}
+.story__eyebrow{position:relative;z-index:1;font-family:var(--en);font-size:clamp(.7rem,1.3vw,.9rem);
+  letter-spacing:.3em;text-transform:uppercase;color:var(--mint);margin-bottom:7vh;}
+/* 3つの文言ビートを重ねてクロスフェード */
+.story__beats{position:relative;z-index:1;width:min(900px,92vw);min-height:36vh;display:grid;}
+.story__beat{grid-area:1/1;text-align:center;opacity:0;transform:translateY(28px);
+  transition:opacity .6s var(--ease),transform .6s var(--ease);pointer-events:none;}
+.story__beat.is-active{opacity:1;transform:none;}
+.story__beat h2{font-size:clamp(2rem,6vw,4.2rem);font-weight:900;line-height:1.28;letter-spacing:.01em;}
+.story__beat h2 em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.story__beat p{margin-top:22px;color:var(--ink-soft);font-size:clamp(1rem,1.6vw,1.2rem);}
+/* 左の進捗レール（pで満ちる） */
+.story__rail{position:absolute;left:var(--gut);top:50%;transform:translateY(-50%);width:2px;height:34vh;
+  background:color-mix(in srgb,var(--ink) 14%,transparent);border-radius:2px;overflow:hidden;z-index:1;}
+.story__rail i{position:absolute;left:0;top:0;width:100%;height:calc(var(--p,0)*100%);background:linear-gradient(var(--mint),var(--blue));}
+/* スクロール促し（進むと消える） */
+.story__hint{position:absolute;bottom:34px;left:50%;transform:translateX(-50%);z-index:1;
+  font-family:var(--en);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);
+  opacity:calc(1 - var(--p,0)*1.6);display:inline-flex;align-items:center;gap:10px;}
+.story__hint i{width:30px;height:1px;background:linear-gradient(90deg,var(--mint),transparent);}
+@media(max-width:720px){.story{height:280vh;}.story__rail{display:none;}}
+
 /* ===== Services ===== */
 .services{background:var(--paper);}
 .services__list{max-width:var(--maxw);margin:0 auto;border-top:1px solid var(--line);}

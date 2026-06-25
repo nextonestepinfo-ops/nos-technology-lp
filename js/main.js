@@ -10,6 +10,7 @@ import { initPalette } from "./palette.js";
 import { initServiceOverlay } from "./service-overlay.js";
 import { initFlowField } from "./flowfield.js";
 import { initParallax } from "./parallax.js";
+import { initStory } from "./story.js";
 
 // リロード時にブラウザが前回のスクロール位置を復元しないようにする（常にトップから開始）
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -54,6 +55,9 @@ async function boot() {
 
   // 5c. ヒーローのスクロール視差（層ごとに速度差＋フェードで奥行き）
   initParallax(lenis);
+
+  // 5d. スクロール・ストーリー（pin＋スクロール同期のプロト）
+  initStory(lenis);
 
   // 6. マーキー（スクロール速度連動）
   initMarquee(document.getElementById("marquee"), lenis);
