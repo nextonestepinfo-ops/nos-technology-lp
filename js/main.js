@@ -43,6 +43,9 @@ async function boot() {
   // 4b. サービスページのシネマティック・ヒーロー（該当ページのみ）
   await initServiceHeroScene();
 
+  // 4c. Introセクションの小3D（#introCanvas がある時のみ）
+  await initIntroScene();
+
   // 5. 配色を確定適用（Aether固定。スイッチャーUIは廃止＝要素なしでも既定が適用される）
   initPalette(document.getElementById("paletteSwitch"));
 
@@ -80,6 +83,18 @@ function initToTop(lenis) {
     if (window.__lenis) window.__lenis.scrollTo(0, { duration: 1.1 });
     else window.scrollTo({ top: 0, behavior: "smooth" });
   });
+}
+
+// Introセクションの小3D（#introCanvas がある時のみ。非対応時はCSS枠の背景が残る）
+async function initIntroScene() {
+  const c = document.getElementById("introCanvas");
+  if (!c || !supportsWebGL()) return;
+  try {
+    const mod = await import("./intro-3d.js");
+    mod.initIntro3D(c);
+  } catch (err) {
+    console.warn("Intro 3Dの初期化に失敗。", err);
+  }
 }
 
 // サービスページのシネマティック・ヒーロー（#serviceHeroCanvas がある時のみ）
