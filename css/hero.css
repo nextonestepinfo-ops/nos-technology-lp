@@ -87,11 +87,17 @@
 /* =========================================================
    Hero v2：全画面3Dオブジェクトが主役。文字は最小・中央寄せ
    ========================================================= */
-.hero--v2{text-align:center;}
-/* 中央のテキストは、背後のAIコアの発光を受け止める“キーアート”配置 */
+.hero--v2{text-align:left;}
+/* キーアート構図：オブジェクトは中央のまま。コピーは重ねず“左下のキャームゾーン”へアンカー＝可読性確保 */
 .hero__content--center{
-  max-width:760px;margin:0 auto;display:flex;flex-direction:column;align-items:center;
+  position:absolute;left:var(--gut);bottom:clamp(92px,15vh,150px);z-index:2;
+  max-width:min(500px,82vw);margin:0;display:flex;flex-direction:column;align-items:flex-start;text-align:left;
 }
+/* 下からのフロア・グラデ＝可読性＋ステージ感／淡いビネット＝奥行き（オブジェクトより手前・文字より奥） */
+.hero--v2::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(to top, color-mix(in srgb,var(--paper) 92%,transparent), color-mix(in srgb,var(--paper) 34%,transparent) 22%, transparent 44%);}
+.hero--v2::before{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:radial-gradient(135% 105% at 50% 36%, transparent 50%, color-mix(in srgb,var(--paper) 50%, #000 10%) 100%);}
 /* ブランド名（小さく上品に） */
 .hero__brandline{
   font-family:var(--en);font-weight:600;font-size:clamp(.8rem,1.3vw,.95rem);
@@ -108,12 +114,17 @@
 .hero__display em{font-style:italic;font-weight:400;
   background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
   -webkit-background-clip:text;background-clip:text;color:transparent;}
-/* v2の中央ワードマーク（タグラインは上帯へ移動したので、中央は社名＋一言＋CTAのみ） */
-.hero__wordmark{font-family:var(--en);font-weight:500;font-size:clamp(1.7rem,3.6vw,2.7rem);
-  letter-spacing:.26em;text-transform:uppercase;color:var(--ink);margin:0 0 14px;padding-left:.26em;}
+/* 左下のロックアップ：社名ワードマーク＋一言＋CTA。発光オブジェクト上でも読めるよう微シャドウ。 */
+.hero__wordmark{font-family:var(--en);font-weight:500;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.05;
+  letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin:0 0 14px;
+  text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}
 .hero__wordmark b{font-weight:700;}
-.hero__sub{font-size:clamp(.95rem,1.5vw,1.15rem);color:var(--ink-soft);margin-bottom:32px;letter-spacing:.02em;}
-.hero--v2 .hero__actions{justify-content:center;}
+.hero__sub{font-size:clamp(.95rem,1.4vw,1.12rem);line-height:1.8;color:var(--ink-soft);margin:0 0 26px;max-width:30ch;
+  text-shadow:0 1px 18px color-mix(in srgb,var(--paper) 72%,transparent);}
+.hero--v2 .hero__actions{justify-content:flex-start;}
+/* 下部：左にコピー／右にScrollだけ（要素同士をぶつけない） */
+.hero--v2 .hero__meta{justify-content:flex-end;z-index:2;}
+.hero--v2 .hero__meta > span:not(.hero__scroll){display:none;}
 
 /* 案の切替トグル（比較用・控えめ。確定後は削除可） */
 .ver-toggle{
