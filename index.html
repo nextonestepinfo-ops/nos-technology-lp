@@ -100,9 +100,11 @@
   </header>
 
   <main id="top">
-    <!-- ===== Hero（A×B ハイブリッド 3D） ===== -->
-    <section class="hero" id="hero">
-      <canvas class="hero__canvas" id="heroCanvas" aria-hidden="true"></canvas>
+    <!-- ===== Hero（v2：全画面3Dオブジェクトが主役。文字は最小） ===== -->
+    <section class="hero hero--v2" id="hero">
+      <canvas class="hero__canvas" id="heroCanvas" data-layout="center" aria-hidden="true"></canvas>
+      <!-- ヒーロー上部の横帯タグライン -->
+      <div class="hero-topline" aria-hidden="true"><span>Systems</span><i></i><span>for</span><i></i><span>Human</span><i></i><span>Work</span></div>
       <!-- パネルホバー時の英語ラベル（JSが位置と内容を更新） -->
       <div class="hero-tag" id="heroTag" aria-hidden="true">
         <span class="hero-tag__idx"></span>
@@ -113,12 +115,9 @@
         <ul class="hero-tag__chips"><li></li><li></li><li></li></ul>
         <span class="hint">Click → セクションへ</span>
       </div>
-      <div class="hero__content hero__content--minimal">
-        <h1 class="hero__title">
-          <span class="line" data-reveal="line">人の時間を、</span>
-          <span class="line" data-reveal="line"><em>AI</em>でつくる。</span>
-        </h1>
-        <p class="hero__lead" data-reveal="fade">店舗のWeb・集客・業務を、まとめて整える。</p>
+      <div class="hero__content hero__content--center">
+        <h1 class="hero__wordmark" data-reveal="fade"><b>Nos</b> Technology</h1>
+        <p class="hero__sub" data-reveal="fade">店舗のWeb・集客・業務を、まとめて整える。</p>
         <div class="hero__actions" data-reveal="fade">
           <a class="btn btn--primary" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
         </div>
@@ -129,19 +128,70 @@
       </div>
     </section>
 
-    <!-- 機能チップが流れる帯（画像タイル＋ラベル） -->
-    <div class="marquee" aria-hidden="true">
-      <div class="marquee__track" id="marquee">
-        <span class="flow-chip"><b style="--c1:#1a5cff;--c2:#3d8bff"></b>Web制作</span>
-        <span class="flow-chip"><b style="--c1:#16b89a;--c2:#0e9ab1"></b>集客導線</span>
-        <span class="flow-chip"><b style="--c1:#ff7a59;--c2:#f5a623"></b>Instagram</span>
-        <span class="flow-chip"><b style="--c1:#34a853;--c2:#1a73e8"></b>Googleマップ</span>
-        <span class="flow-chip"><b style="--c1:#5b6bff;--c2:#1a5cff"></b>AI自動化</span>
-        <span class="flow-chip"><b style="--c1:#0e9ab1;--c2:#5b6bff"></b>見込み客管理</span>
-        <span class="flow-chip"><b style="--c1:#7b6cf0;--c2:#3d8bff"></b>自動返信</span>
-        <span class="flow-chip"><b style="--c1:#f5a623;--c2:#ff7a59"></b>予約管理</span>
+    <!-- 制作イメージが流れる帯（どんなサイトを作るかを見せる） -->
+    <section class="works-strip" aria-label="制作サイトのデザインイメージ">
+      <p class="works-strip__eyebrow" data-reveal="fade">What we build — こんなサイトが、つくれます</p>
+      <div class="showcase" id="worksShowcase">
+        <div class="showcase__row" data-dir="left">
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>nexus-workspace.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#c8ee46;--s-fg:#14161a;--s-img:linear-gradient(135deg,#b9e23a,#7aa82c);--s-accent:#14161a">
+              <nav class="site__nav"><b>NEXUS</b><em>Work</em><em>Space</em><em>News</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>未来の働き方を、体験しよう</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">無料見学</span></div><div class="site__img"></div></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>kojika-hotel.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(155deg,#2a2018,#5a4636);--s-fg:#fff;--s-accent:#c9a36a">
+              <nav class="site__nav"><b>KOJIKA HOTEL</b><em>Rooms</em><em>Dining</em><em>Access</em></nav>
+              <div class="site__coverc"><h4>日常から、少し離れる場所</h4><span class="site__btn">空室を見る</span></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>iron-gym.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#141417,#3a2a20);--s-fg:#fff;--s-accent:#ff6a3d">
+              <nav class="site__nav"><b>IRON GYM</b><em>About</em><em>Plan</em><em>Contact</em></nav>
+              <div class="site__coverc"><h4>鍛える、その先へ。</h4><span class="site__btn">体験する</span></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>mode-craft.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#f6f1ec;--s-fg:#1c1814;--s-img:linear-gradient(135deg,#e9d3c5,#bb8d79);--s-accent:#c08457">
+              <nav class="site__nav"><b>MODE CRAFT</b><em>Style</em><em>Menu</em><em>Book</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>髪のデザインで、あなたらしく</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">予約する</span></div><div class="site__img"></div></div></div></article>
+        </div>
+        <div class="showcase__row" data-dir="right">
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>internal-clinic.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#f1f6fd;--s-fg:#13243f;--s-img:linear-gradient(135deg,#dbeafe,#9fbef2);--s-accent:#2f6df0">
+              <nav class="site__nav"><b>INTERNAL MEDICINE</b><em>診療</em><em>アクセス</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>内科専門の、信頼される診療所</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">WEB予約</span></div><div class="site__img"></div></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>mori-cafe.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#caa46f,#5e3f26);--s-fg:#fff;--s-accent:#8a5a32">
+              <nav class="site__nav"><b>MORI CAFE</b><em>Menu</em><em>Store</em></nav>
+              <div class="site__coverc"><h4>自然とともに、心安らぐ場所</h4><span class="site__btn">メニュー</span></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>beauty-salon.jp</span></div>
+            <div class="site__screen site--split" style="--s-bg:#efe6dc;--s-fg:#231b14;--s-img:linear-gradient(135deg,#efe2d6,#c8b099);--s-accent:#9a7048">
+              <nav class="site__nav"><b>BEAUTY SALON</b><em>Salon</em><em>Book</em></nav>
+              <div class="site__splitb"><div class="site__txt"><h4>あなたらしい、美しさを</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">ご予約</span></div><div class="site__img"></div></div></div></article>
+          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>local-diner.jp</span></div>
+            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#2a1d16,#5a3a28);--s-fg:#fff;--s-accent:#e08a3c">
+              <nav class="site__nav"><b>LOCAL DINER</b><em>Food</em><em>Map</em></nav>
+              <div class="site__coverc"><h4>今日の特別を、この一皿に</h4><span class="site__btn">来店予約</span></div></div></article>
+        </div>
       </div>
-    </div>
+    </section>
+
+    <!-- ===== Intro（人の時間を、AIでつくる の説明＋画像） ===== -->
+    <section class="section intro" id="intro">
+      <div class="intro__grid">
+        <div class="intro__text">
+          <p class="section__eyebrow" data-reveal="fade">Time for human work</p>
+          <h2 class="intro__title" data-reveal="words">人の時間を、<em>AI</em>でつくる。</h2>
+          <p class="intro__lead" data-reveal="fade">
+            店舗のWeb・集客・業務を、まとめて整える。
+            AIにできることは、AIへ。空いた時間で、人にしかできない仕事を。
+            あなたの時間と、効率と、売上を、もっと前へ。
+          </p>
+          <div class="intro__actions" data-reveal="fade">
+            <a class="btn btn--ghost" href="#services" data-cursor="見る"><span>できることを見る →</span></a>
+            <a class="btn btn--primary" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
+          </div>
+        </div>
+        <div class="intro__media" data-reveal="rise" aria-hidden="true">
+          <div class="intro__media-frame"><span>Image / キービジュアル（準備中）</span></div>
+        </div>
+      </div>
+    </section>
 
     <!-- ===== Manifesto（理念のキャッチコピー） ===== -->
     <section class="section manifesto" id="manifesto">

@@ -400,8 +400,9 @@ export function initHeroHybrid(canvas) {
     group.rotation.x = -0.05 - ry;
     // スクロール視差：下へ行くほどオブジェクトが少し上へドリフト＋わずかに縮小（層の奥行き）
     const sp = Math.min(1, Math.max(0, (window.scrollY || 0) / ((heroEl && heroEl.offsetHeight) || window.innerHeight || 1)));
-    group.position.y = sp * 1.3;
-    group.scale.setScalar(baseScale * (1 - sp * 0.12));
+    group.position.y = sp * 2.6;
+    group.rotation.z = sp * 0.12;
+    group.scale.setScalar(baseScale * (1 - sp * 0.24));
 
     if (!prefersReducedMotion && coreMesh.visible) {
       const amp = 0.16 + Math.sin(t * 1.2) * 0.05 + coreHover * 0.14;

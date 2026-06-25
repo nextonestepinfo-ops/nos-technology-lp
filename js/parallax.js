@@ -9,9 +9,9 @@ export function initParallax(lenis) {
 
   // 対象レイヤー（要素 / スクロール速度係数(負=上へ) / フェード強さ / ポインタ追従px）
   const layers = [
-    { el: document.querySelector(".hero-topline"), speed: -0.10, fade: 0.7, px: 6 },
-    { el: document.querySelector(".hero__content"), speed: -0.34, fade: 1.15, px: 10 },
-    { el: document.querySelector(".hero__meta"), speed: -0.06, fade: 2.2, px: 0 },
+    { el: document.querySelector(".hero-topline"), speed: -0.22, fade: 0.9, px: 12 },
+    { el: document.querySelector(".hero__content"), speed: -0.62, fade: 1.3, px: 22 },
+    { el: document.querySelector(".hero__meta"), speed: -0.12, fade: 2.6, px: 0 },
   ].filter((l) => l.el);
   layers.forEach((l) => { l.el.style.willChange = "transform, opacity"; });
 
