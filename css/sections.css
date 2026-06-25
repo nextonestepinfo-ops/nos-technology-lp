@@ -61,13 +61,24 @@
   background:radial-gradient(60% 55% at 50% 50%, color-mix(in srgb,var(--mint) 18%,transparent), color-mix(in srgb,var(--blue) 8%,transparent) 45%, transparent 72%);
   opacity:calc(var(--p,0)*0.8);}
 .story__eyebrow{position:relative;z-index:1;font-family:var(--en);font-size:clamp(.7rem,1.3vw,.9rem);
-  letter-spacing:.3em;text-transform:uppercase;color:var(--mint);margin-bottom:7vh;}
+  letter-spacing:.3em;text-transform:uppercase;color:var(--mint);margin-bottom:3vh;}
+/* スクロール同期ビジュアル：タスクがAIコアへ吸い込まれる（pで連続スクラブ） */
+.story__viz{position:relative;z-index:1;width:min(680px,92vw);height:30vh;margin-bottom:3vh;}
+.story__core{position:absolute;left:50%;top:50%;width:96px;height:96px;border-radius:50%;
+  transform:translate(-50%,-50%) scale(calc(0.45 + var(--p,0)*0.95));
+  background:radial-gradient(circle, color-mix(in srgb,var(--mint) 80%,transparent), color-mix(in srgb,var(--blue) 38%,transparent) 58%, transparent 72%);
+  box-shadow:0 0 70px color-mix(in srgb,var(--mint) 55%,transparent);opacity:calc(0.4 + var(--p,0)*0.6);}
+.story__chip{position:absolute;left:50%;top:50%;white-space:nowrap;padding:8px 14px;border-radius:999px;
+  font-size:clamp(.74rem,1.4vw,.95rem);background:color-mix(in srgb,var(--ink) 8%,var(--paper));
+  border:1px solid var(--line);color:var(--ink);
+  transform:translate(-50%,-50%) translate(calc(var(--dx)*(1 - var(--p,0))), calc(var(--dy)*(1 - var(--p,0)))) scale(calc(1 - var(--p,0)*0.5));
+  opacity:calc(1 - var(--p,0)*0.95);}
 /* 3つの文言ビートを重ねてクロスフェード */
-.story__beats{position:relative;z-index:1;width:min(900px,92vw);min-height:36vh;display:grid;}
+.story__beats{position:relative;z-index:1;width:min(900px,92vw);min-height:22vh;display:grid;}
 .story__beat{grid-area:1/1;text-align:center;opacity:0;transform:translateY(28px);
   transition:opacity .6s var(--ease),transform .6s var(--ease);pointer-events:none;}
 .story__beat.is-active{opacity:1;transform:none;}
-.story__beat h2{font-size:clamp(2rem,6vw,4.2rem);font-weight:900;line-height:1.28;letter-spacing:.01em;}
+.story__beat h2{font-size:clamp(1.7rem,5vw,3.4rem);font-weight:900;line-height:1.28;letter-spacing:.01em;}
 .story__beat h2 em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .story__beat p{margin-top:22px;color:var(--ink-soft);font-size:clamp(1rem,1.6vw,1.2rem);}
 /* 左の進捗レール（pで満ちる） */
