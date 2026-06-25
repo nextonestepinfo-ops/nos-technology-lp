@@ -94,7 +94,7 @@
 /* =========================================================
    Hero v2：全画面3Dオブジェクトが主役。文字は最小・中央寄せ
    ========================================================= */
-.hero--v2{text-align:left;}
+.hero--v2{text-align:left;min-height:92svh;}
 /* キーアート構図：オブジェクトは中央のまま。コピーは重ねず“左下のキャームゾーン”へアンカー＝可読性確保 */
 .hero__content--center{
   position:absolute;left:var(--gut);bottom:clamp(92px,15vh,150px);z-index:2;
@@ -121,11 +121,15 @@
 .hero__display em{font-style:italic;font-weight:400;
   background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
   -webkit-background-clip:text;background-clip:text;color:transparent;}
-/* 上中央：会社名（ブランド）。タグライン帯はこの下。 */
-.hero__topbrand{position:absolute;top:clamp(32px,5vh,58px);left:0;right:0;z-index:2;text-align:center;pointer-events:none;
-  font-family:var(--en);font-weight:500;font-size:clamp(.95rem,1.8vw,1.3rem);letter-spacing:.34em;text-transform:uppercase;
-  color:var(--ink);padding-left:.34em;}
-.hero__topbrand b{font-weight:700;}
+/* 上中央：会社名（ブランド）＝大きく特徴的に。Nosは差し色グラデ。タグライン帯はこの下。 */
+.hero__topbrand{position:absolute;top:clamp(24px,4vh,46px);left:0;right:0;z-index:2;text-align:center;pointer-events:none;
+  font-family:var(--en);font-weight:500;font-size:clamp(1.25rem,2.7vw,2.05rem);letter-spacing:.3em;text-transform:uppercase;
+  color:var(--ink);padding-left:.3em;}
+.hero__topbrand b{font-weight:700;background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
+/* 下部中央：対応業種の一行（余白を埋め、誰向けかを伝える） */
+.hero__serves{position:absolute;left:0;right:0;bottom:clamp(150px,23vh,228px);z-index:1;text-align:center;pointer-events:none;
+  font-size:clamp(.74rem,1.4vw,.95rem);letter-spacing:.08em;color:color-mix(in srgb,var(--ink) 40%,transparent);padding:0 var(--gut);}
+.hero__serves b{color:var(--ink-soft);font-weight:600;}
 /* 左下：大きな一文（差し色強調）＋CTA。語の途中で折れないよう em は nowrap。 */
 .hero__statement{font-size:clamp(1.4rem,3vw,2.3rem);font-weight:800;line-height:1.5;letter-spacing:.01em;
   color:var(--ink);margin:0 0 30px;max-width:14em;text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}

@@ -203,13 +203,11 @@ body.is-focusing .bg-flow{opacity:.08;}
 @media(max-width:720px){.to-top{width:46px;height:46px;}}
 
 /* ---- ヒーロー上部の横帯タグライン（v2：SYSTEMS — FOR — HUMAN — WORK） ---- */
-.hero-topline{position:absolute;top:clamp(84px,12vh,120px);left:0;right:0;z-index:2;
-  display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,16px);flex-wrap:wrap;
-  font-family:var(--en);font-size:clamp(.66rem,1.3vw,.92rem);letter-spacing:.4em;text-transform:uppercase;
-  color:color-mix(in srgb,var(--ink) 52%,transparent);pointer-events:none;padding:0 var(--gut);}
-.hero-topline span{padding-left:.4em;}
-.hero-topline i{display:inline-block;width:clamp(14px,3vw,38px);height:1px;background:color-mix(in srgb,var(--mint) 60%,transparent);}
-@media(max-width:560px){.hero-topline i{width:12px;}.hero-topline{letter-spacing:.28em;gap:7px;}}
+.hero-topline{position:absolute;top:clamp(78px,11vh,114px);left:0;right:0;z-index:2;text-align:center;pointer-events:none;
+  font-family:var(--en);font-weight:400;font-size:clamp(.66rem,1.2vw,.86rem);letter-spacing:.5em;text-transform:lowercase;
+  color:color-mix(in srgb,var(--ink) 32%,transparent);padding:0 var(--gut);}
+.hero-topline b{font-weight:700;text-transform:uppercase;color:#fff;}
+@media(max-width:560px){.hero-topline{letter-spacing:.3em;}}
 
 /* ---- パネルクリック時の画面遷移ワイプ演出（ただ飛ぶだけにしない） ---- */
 .warp{position:fixed;inset:0;z-index:200;pointer-events:none;opacity:0;transform:translateX(-100%);
