@@ -250,7 +250,15 @@ export function initHeroHybrid(canvas) {
   }
   function panelGeo(w, h) {
     const g = new THREE.ExtrudeGeometry(roundedRect(w, h, .16), { depth: .1, bevelEnabled: true, bevelThickness: .035, bevelSize: .035, bevelSegments: 2 });
-    g.center(); return g;
+    g.center();
+    // ExtrudeGeometryのUVは形状座標のままで0-1に収まらず、テクスチャが面の一部にしか乗らない。
+    // XYバウンディングで0-1へ正規化し、UIテクスチャを面いっぱいに表示する。
+    g.computeBoundingBox();
+    const bb = g.boundingBox, sx = 1 / (bb.max.x - bb.min.x), sy = 1 / (bb.max.y - bb.min.y);
+    const pos = g.attributes.position, uv = g.attributes.uv;
+    for (let i = 0; i < uv.count; i++) uv.setXY(i, (pos.getX(i) - bb.min.x) * sx, (pos.getY(i) - bb.min.y) * sy);
+    uv.needsUpdate = true;
+    return g;
   }
   const defs = [
     { kind:"site",  w:2.5, h:1.85, pos:[2.9, 1.0, 0.3],  rot:[-.1, -.5, .03],  en:"Web Design",    jp:"店舗サイト制作",   note:"Design · SEO · Forms",   chips:["ランディング設計","Googleマップ","問い合わせ導線"], target:"#works" },

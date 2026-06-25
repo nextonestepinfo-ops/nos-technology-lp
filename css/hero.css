@@ -121,14 +121,16 @@
 .hero__display em{font-style:italic;font-weight:400;
   background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
   -webkit-background-clip:text;background-clip:text;color:transparent;}
-/* 左下：小さなブランド表記＋“大きな一文（差し色強調）”＋CTA */
-.hero__brand{font-family:var(--en);font-weight:500;font-size:clamp(.82rem,1.5vw,1rem);letter-spacing:.28em;
-  text-transform:uppercase;color:var(--ink-soft);margin:0 0 16px;}
-.hero__brand b{color:var(--ink);font-weight:700;}
-.hero__statement{font-size:clamp(1.55rem,3.4vw,2.7rem);font-weight:800;line-height:1.42;letter-spacing:.01em;
-  color:var(--ink);margin:0 0 30px;max-width:15ch;text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}
-.hero__statement em{font-style:normal;font-weight:800;background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
-  -webkit-background-clip:text;background-clip:text;color:transparent;}
+/* 上中央：会社名（ブランド）。タグライン帯はこの下。 */
+.hero__topbrand{position:absolute;top:clamp(32px,5vh,58px);left:0;right:0;z-index:2;text-align:center;pointer-events:none;
+  font-family:var(--en);font-weight:500;font-size:clamp(.95rem,1.8vw,1.3rem);letter-spacing:.34em;text-transform:uppercase;
+  color:var(--ink);padding-left:.34em;}
+.hero__topbrand b{font-weight:700;}
+/* 左下：大きな一文（差し色強調）＋CTA。語の途中で折れないよう em は nowrap。 */
+.hero__statement{font-size:clamp(1.4rem,3vw,2.3rem);font-weight:800;line-height:1.5;letter-spacing:.01em;
+  color:var(--ink);margin:0 0 30px;max-width:14em;text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}
+.hero__statement em{display:inline-block;white-space:nowrap;font-style:normal;font-weight:800;
+  background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .hero__statement span{display:block;margin-top:8px;font-size:.78em;font-weight:600;color:var(--ink-soft);}
 
 /* 左下のロックアップ：社名ワードマーク＋一言＋CTA。発光オブジェクト上でも読めるよう微シャドウ。 */
