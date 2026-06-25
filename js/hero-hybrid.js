@@ -25,16 +25,17 @@ function drawUI(x, kind, acc, p, t = 0) {
 // p(0〜1)で左→右に“描き込まれる”ビルド表現、t>0でライブ演出（スキャン光＋LIVE）。
 function drawUIWire(x, kind, acc, p, t = 0) {
   x.clearRect(0, 0, 512, 384);
-  // 背景：真っ白を避け淡いグラデ（白飛び防止・上質感）
+  // 背景：濃紺のダークUI（高級感・発光アクセントが映える）
   const page = x.createLinearGradient(0, 0, 0, 384);
-  page.addColorStop(0, "#f6f8fb"); page.addColorStop(1, "#e8ecf3");
+  page.addColorStop(0, "#111b30"); page.addColorStop(1, "#0a1020");
   x.fillStyle = page; x.fillRect(0, 0, 512, 384);
-  const mint = acc.mint, blue = acc.blue, ink = "#14161a", soft = "#c2c9d3", line = "#e6e9ee", bg = "#e4e9f1";
+  const mint = acc.mint, blue = acc.blue, ink = "#e9eefc", soft = "#3c4d72", line = "#27324e", bg = "#16203a", surf = "#172139";
   const pill = (px, py, pw, ph, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, ph / 2); x.fill(); };
   const rrect = (px, py, pw, ph, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); };
 
   // 上部バー（常時表示）：種別アイコン＋日本語タイトルで“何の画面か”を一目で
   x.fillStyle = bg; x.fillRect(0, 0, 512, 64);
+  x.strokeStyle = "rgba(255,255,255,.05)"; x.lineWidth = 2; x.strokeRect(1, 1, 510, 382); // 画面の縁を締める
   x.save(); x.translate(42, 33); x.strokeStyle = mint; x.fillStyle = mint; x.lineWidth = 3; x.lineJoin = "round";
   if (kind === "site") { x.strokeRect(-13, -12, 26, 24); x.fillRect(-13, -12, 26, 7); }
   else if (kind === "admin") { for (let i = 0; i < 3; i++) x.fillRect(-13, -11 + i * 9, 26, 4); }
@@ -51,7 +52,7 @@ function drawUIWire(x, kind, acc, p, t = 0) {
   x.beginPath(); x.rect(0, 60, 512 * w, 324); x.clip();
 
   const stroke = (px, py, pw, ph, r, col, lw = 2) => { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
-  const card = (px, py, pw, ph, r) => { x.fillStyle = "#ffffff"; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); x.strokeStyle = line; x.lineWidth = 1.5; x.stroke(); };
+  const card = (px, py, pw, ph, r) => { x.fillStyle = surf; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); x.strokeStyle = line; x.lineWidth = 1.5; x.stroke(); };
   if (kind === "site") {
     // 見出し2行＋サブ＋CTA(主)＋ゴースト(副)＋右の大ヒーロー画像＋下部チップ。制作中の“ローディング”が動く。
     rrect(36, 100, 300, 30, 9, ink); rrect(36, 142, 224, 30, 9, ink);
@@ -83,16 +84,16 @@ function drawUIWire(x, kind, acc, p, t = 0) {
     const hi = Math.floor(t * 0.6) % 3;
     for (let i = 0; i < 3; i++) {
       const ry = 192 + i * 58, on = i === hi;
-      if (on) { x.fillStyle = "#e9fbf4"; x.fillRect(24, ry - 6, 464, 52); }
-      x.fillStyle = on ? mint : "#dde2e9"; x.beginPath(); x.arc(56, ry + 18, 16, 0, 7); x.fill();
-      rrect(86, ry + 6, 150, 13, 6, soft); rrect(86, ry + 27, 200, 11, 5, "#d7dde4");
-      pill(388, ry + 4, 92, 28, on ? "#cdd6e2" : blue);
-      x.fillStyle = on ? "#7c8696" : "#fff"; x.font = "700 14px sans-serif"; x.fillText(on ? "処理中" : "確定", on ? 400 : 408, ry + 23);
+      if (on) { x.fillStyle = "rgba(54,197,255,.12)"; x.fillRect(24, ry - 6, 464, 52); }
+      x.fillStyle = on ? mint : "#2c3a58"; x.beginPath(); x.arc(56, ry + 18, 16, 0, 7); x.fill();
+      rrect(86, ry + 6, 150, 13, 6, soft); rrect(86, ry + 27, 200, 11, 5, "#313f5e");
+      pill(388, ry + 4, 92, 28, on ? "#2a3650" : blue);
+      x.fillStyle = on ? "#90a0bd" : "#fff"; x.font = "700 14px sans-serif"; x.fillText(on ? "処理中" : "確定", on ? 400 : 408, ry + 23);
     }
   } else if (kind === "reply") {
     // 受信＋送信(青)。送信文が“打ち込まれて”いき、AIバッジが脈動（生成中の動き）。
-    rrect(36, 80, 270, 78, 18, "#e6eaf1");
-    rrect(56, 100, 210, 12, 6, "#cdd4dc"); rrect(56, 122, 170, 12, 6, "#cdd4dc");
+    rrect(36, 80, 270, 78, 18, "#1c2640");
+    rrect(56, 100, 210, 12, 6, "#3a496a"); rrect(56, 122, 170, 12, 6, "#3a496a");
     rrect(150, 176, 326, 96, 18, blue);
     const tw = t > 0 ? (t * 0.55) % 1.6 : 1.6, lw = [284, 250, 180];
     x.fillStyle = "rgba(255,255,255,.92)";
@@ -103,7 +104,7 @@ function drawUIWire(x, kind, acc, p, t = 0) {
     pill(436, 326, 40, 40, blue); x.fillStyle = "#fff"; x.font = "700 20px sans-serif"; x.fillText("→", 448, 352);
   } else {
     // 地図＋検索バー＋レーダー（拡大リング＋回転スイープ）＋ピン(バウンド)＋情報カード(件数ティック)
-    x.fillStyle = "#e9edf3"; x.fillRect(24, 72, 464, 290);
+    x.fillStyle = "#0e1626"; x.fillRect(24, 72, 464, 290);
     x.strokeStyle = line; x.lineWidth = 3;
     for (let i = 1; i < 7; i++) { x.beginPath(); x.moveTo(24, 72 + i * 42); x.lineTo(488, 72 + i * 42); x.stroke(); }
     for (let i = 1; i < 9; i++) { x.beginPath(); x.moveTo(24 + i * 52, 72); x.lineTo(24 + i * 52, 362); x.stroke(); }
@@ -120,7 +121,7 @@ function drawUIWire(x, kind, acc, p, t = 0) {
     card(40, 86, 200, 36, 18); x.fillStyle = mint; x.beginPath(); x.arc(60, 104, 7, 0, 7); x.fill(); rrect(76, 98, 120, 12, 6, soft);
     card(298, 212, 182, 104, 16);
     x.fillStyle = mint; x.font = "700 18px sans-serif"; x.fillText("★ 4.3 (" + (128 + Math.floor((t * 1.5) % 9)) + ")", 318, 246);
-    rrect(318, 258, 120, 11, 5, soft); rrect(318, 274, 90, 11, 5, "#d7dde4");
+    rrect(318, 258, 120, 11, 5, soft); rrect(318, 274, 90, 11, 5, "#313f5e");
     pill(318, 290, 108, 26, mint); x.fillStyle = "#fff"; x.font = "700 14px sans-serif"; x.fillText("ルート", 344, 308);
   }
   x.restore();
@@ -133,7 +134,7 @@ function drawUIWire(x, kind, acc, p, t = 0) {
     x.fillStyle = g; x.fillRect(0, 60, 512, 324);
     const blink = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * 8));
     x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(488, 30, 6, 0, 7); x.fill();
-    x.fillStyle = "rgba(20,22,26,.6)"; x.font = "700 13px sans-serif"; x.textAlign = "right"; x.fillText("LIVE", 476, 35); x.textAlign = "left";
+    x.fillStyle = "rgba(233,238,252,.7)"; x.font = "700 13px sans-serif"; x.textAlign = "right"; x.fillText("LIVE", 476, 35); x.textAlign = "left";
   }
 }
 

@@ -121,6 +121,16 @@
 .hero__display em{font-style:italic;font-weight:400;
   background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
   -webkit-background-clip:text;background-clip:text;color:transparent;}
+/* 左下：小さなブランド表記＋“大きな一文（差し色強調）”＋CTA */
+.hero__brand{font-family:var(--en);font-weight:500;font-size:clamp(.82rem,1.5vw,1rem);letter-spacing:.28em;
+  text-transform:uppercase;color:var(--ink-soft);margin:0 0 16px;}
+.hero__brand b{color:var(--ink);font-weight:700;}
+.hero__statement{font-size:clamp(1.55rem,3.4vw,2.7rem);font-weight:800;line-height:1.42;letter-spacing:.01em;
+  color:var(--ink);margin:0 0 30px;max-width:15ch;text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}
+.hero__statement em{font-style:normal;font-weight:800;background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
+  -webkit-background-clip:text;background-clip:text;color:transparent;}
+.hero__statement span{display:block;margin-top:8px;font-size:.78em;font-weight:600;color:var(--ink-soft);}
+
 /* 左下のロックアップ：社名ワードマーク＋一言＋CTA。発光オブジェクト上でも読めるよう微シャドウ。 */
 .hero__wordmark{font-family:var(--en);font-weight:500;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.05;
   letter-spacing:.2em;text-transform:uppercase;color:var(--ink);margin:0 0 14px;
