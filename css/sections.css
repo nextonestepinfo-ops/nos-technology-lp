@@ -62,7 +62,8 @@
 .home > .manifesto{order:4;}
 .home > .story{order:5;}
 .home > .intro{order:6;}
-.home > .contact{order:7;}
+.home > .faq{order:7;}
+.home > .contact{order:8;}
 
 /* ===== Story（スクロール・ストーリー：pin＋スクロール同期） ===== */
 .story{position:relative;height:300vh;background:var(--paper);}
@@ -116,6 +117,19 @@
   .story__viz{transform:scale(.62);transform-origin:center;height:24vh;} /* チップが画面外に出ないよう縮小 */
   .story__beat h2{font-size:clamp(1.5rem,7vw,2.2rem);}
 }
+
+/* ===== FAQ（よくある質問・no-JSアコーディオン） ===== */
+.faq{background:var(--paper);}
+.faq__list{max-width:var(--maxw);margin:0 auto;border-top:1px solid var(--line);}
+.faq__item{border-bottom:1px solid var(--line);}
+.faq__item summary{list-style:none;cursor:pointer;padding:clamp(18px,3vw,30px) 8px;
+  font-size:clamp(1.02rem,2vw,1.3rem);font-weight:700;color:var(--ink);
+  display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.faq__item summary::-webkit-details-marker{display:none;}
+.faq__item summary::after{content:"+";color:var(--mint);font-weight:400;font-size:1.5em;line-height:1;transition:transform .3s var(--ease);}
+.faq__item[open] summary::after{transform:rotate(45deg);}
+.faq__a{padding:0 8px clamp(20px,3vw,28px);color:var(--ink-soft);max-width:72ch;line-height:1.9;font-size:clamp(.95rem,1.4vw,1.05rem);}
+.faq__a b{color:var(--ink);font-weight:600;}
 
 /* ===== Services ===== */
 .services{background:var(--paper);}
