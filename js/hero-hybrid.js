@@ -377,7 +377,7 @@ export function initHeroHybrid(canvas) {
   }
 
   // ---- 中央Nを掴んでスワイプ→慣性回転（物理っぽい）＋回すほど背景がじんわり明るく ----
-  let spinY = 0, velY = 0, dragging = false, lastPX = 0, downPX = 0, downPY = 0, moved = false, suppressClick = false, spinHeat = 0;
+  let spinY = 0, velY = 0, spinX = 0, velX = 0, dragging = false, lastPX = 0, lastPY = 0, downPX = 0, downPY = 0, moved = false, suppressClick = false, spinHeat = 0;
   const spinGlow = document.getElementById("spinGlow");
   function coreHitAt(cx, cy) {
     const r = canvas.getBoundingClientRect();
@@ -387,14 +387,16 @@ export function initHeroHybrid(canvas) {
   }
   canvas.addEventListener("pointerdown", (e) => {
     if (!coreHitAt(e.clientX, e.clientY)) return;
-    dragging = true; moved = false; velY = 0; lastPX = downPX = e.clientX; downPY = e.clientY;
+    dragging = true; moved = false; velY = 0; velX = 0; lastPX = downPX = e.clientX; lastPY = downPY = e.clientY;
     if (canvas.setPointerCapture) try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
     e.preventDefault(); // 掴んでいる間はスクロールさせない
   }, { passive: false });
   window.addEventListener("pointermove", (e) => {
     if (!dragging) return;
     const dx = e.clientX - lastPX; lastPX = e.clientX;
-    spinY += dx * 0.012; velY = dx * 0.012;
+    const dy = e.clientY - lastPY; lastPY = e.clientY;
+    spinY += dx * 0.012; velY = dx * 0.012;   // 横ドラッグ→Y軸回転
+    spinX += dy * 0.012; velX = dy * 0.012;   // 縦ドラッグ→X軸回転（斜めは両方＝全方向）
     if (Math.abs(e.clientX - downPX) + Math.abs(e.clientY - downPY) > 6) moved = true;
   });
   const endDrag = () => { if (dragging) { dragging = false; if (moved) suppressClick = true; } };
@@ -463,17 +465,22 @@ export function initHeroHybrid(canvas) {
     coreKick = lerp(coreKick, 0, 0.06); // 起動キックの減衰
     pts.scale.setScalar(1 + coreHover * 0.55 + coreKick * 0.9 + spinHeat * 0.4);
     // スワイプ回転の物理：離すと慣性で回り摩擦で減速。低速かつ非ドラッグ時は正面へやさしく整列。
+    const PI2 = Math.PI * 2;
     if (!dragging) {
       spinY += velY; velY *= 0.95;
-      if (Math.abs(velY) < 0.0016) { const tgt = Math.round(spinY / (Math.PI * 2)) * (Math.PI * 2); spinY += (tgt - spinY) * 0.04; }
+      spinX += velX; velX *= 0.95;
+      if (Math.hypot(velX, velY) < 0.0016) { // 低速時は正面へやさしく整列（両軸）
+        spinY += (Math.round(spinY / PI2) * PI2 - spinY) * 0.04;
+        spinX += (Math.round(spinX / PI2) * PI2 - spinX) * 0.04;
+      }
     }
     // 回すほど背景がじんわり明るく（上限0.6）。回転が収まると減衰して戻る＝文字が見えなくならない。
-    spinHeat = Math.min(0.6, spinHeat * 0.93 + Math.abs(velY) * 1.6);
+    spinHeat = Math.min(0.6, spinHeat * 0.93 + Math.hypot(velX, velY) * 1.6);
     if (spinGlow) spinGlow.style.opacity = spinHeat.toFixed(3);
-    const spinning = dragging || Math.abs(velY) > 0.002;
-    // 中央“N”：通常は正面向き＋ゆらぎ。掴み/慣性中は spinY 主導でくるくる回る。
+    const spinning = dragging || Math.hypot(velX, velY) > 0.002;
+    // 中央“N”：通常は正面向き＋ゆらぎ。掴み/慣性中は spinX/spinY 主導で全方向にくるくる回る。
     nGroup.rotation.y = spinY + (spinning ? 0 : Math.sin(t * 0.28) * 0.3 + pointer.nx * 0.28);
-    nGroup.rotation.x = Math.sin(t * 0.5) * 0.05 - (spinning ? 0 : pointer.ny * 0.18);
+    nGroup.rotation.x = spinX + (spinning ? 0 : Math.sin(t * 0.5) * 0.05 - pointer.ny * 0.18);
     nGroup.position.set(0, Math.sin(t * 1.0) * 0.05, coreHover * 1.3 + coreKick * 0.8);
     nGroup.scale.setScalar(0.82 * (1 + coreHover * 0.7 + coreKick * 0.6) * (1 + Math.sin(t * 1.6) * 0.012));
     nMat.emissiveIntensity = 0.05 + coreHover * 0.3 + coreKick * 1.6 + spinHeat * 0.5;
