@@ -111,7 +111,7 @@
 .showcase__row{display:flex;gap:26px;width:max-content;will-change:transform;padding:8px 0;}
 
 /* 1枚＝ブラウザ枠に入ったミニサイト（実スクショに差替え可） */
-.site{width:clamp(290px,30vw,370px);flex:none;border-radius:14px;overflow:hidden;
+.site{width:clamp(210px,22vw,290px);flex:none;border-radius:14px;overflow:hidden;
   border:1px solid var(--line);background:#fff;box-shadow:0 18px 44px color-mix(in srgb,var(--ink) 14%,transparent);
   transition:transform .4s var(--ease),box-shadow .4s var(--ease);}
 .site:hover{transform:translateY(-8px);box-shadow:0 28px 60px color-mix(in srgb,var(--ink) 22%,transparent);}
