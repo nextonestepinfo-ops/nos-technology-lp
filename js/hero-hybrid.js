@@ -290,6 +290,8 @@ export function initHeroHybrid(canvas) {
     renderer.setSize(r.width, r.height, false);
     cam.aspect = r.width / r.height; cam.updateProjectionMatrix();
     const small = r.width < 860;
+    // モバイルは解像度倍率を抑えて軽量化（高DPR端末でのGPU負荷を低減）
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2));
     if (layout === "center") {
       group.position.x = 0;
       baseScale = small ? 0.6 : 1.0;

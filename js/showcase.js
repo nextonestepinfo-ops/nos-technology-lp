@@ -14,7 +14,7 @@ export function initShowcase(root) {
     row.innerHTML += row.innerHTML;
 
     const dir = row.dataset.dir === "right" ? 1 : -1;
-    const speed = 0.4; // px/frame
+    const speed = 0.72; // px/frame（やや速め）
     let half = row.scrollWidth / 2; // 複製前1セット分の幅
     let offset = 0;
     let paused = false;
