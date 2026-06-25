@@ -112,7 +112,10 @@
   font-family:var(--en);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);
   opacity:calc(1 - var(--p,0)*1.6);display:inline-flex;align-items:center;gap:10px;}
 .story__hint i{width:30px;height:1px;background:linear-gradient(90deg,var(--mint),transparent);}
-@media(max-width:720px){.story{height:280vh;}.story__rail{display:none;}}
+@media(max-width:720px){.story{height:280vh;}.story__rail{display:none;}
+  .story__viz{transform:scale(.62);transform-origin:center;height:24vh;} /* チップが画面外に出ないよう縮小 */
+  .story__beat h2{font-size:clamp(1.5rem,7vw,2.2rem);}
+}
 
 /* ===== Services ===== */
 .services{background:var(--paper);}
