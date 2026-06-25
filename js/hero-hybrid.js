@@ -209,12 +209,22 @@ export function initHeroHybrid(canvas) {
   const pts = new THREE.Points(pg, ptsMat); coreWrap.add(pts);
 
   // コアのホバー用：見えないプロキシ（変形しても安定して拾える）＋エネルギーリング
-  coreMesh.userData = { en: "NOS TECHNOLOGY", jp: "AI活用のオリジナルを、お手軽価格から。", note: "Original × Affordable" };
+  coreMesh.userData = { en: "NOS TECHNOLOGY", jp: "Tap to ignite — クリックで起動", note: "" };
   const coreProxy = new THREE.Mesh(new THREE.SphereGeometry(1.5, 16, 16), new THREE.MeshBasicMaterial({ visible: false }));
   coreWrap.add(coreProxy);
   const ringMat = new THREE.MeshBasicMaterial({ color: 0x1a5cff, transparent: true, opacity: 0, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false });
   const ring = new THREE.Mesh(new THREE.RingGeometry(1.5, 1.62, 72), ringMat);
   scene.add(ring);
+  // 中央クリックの“起動”ギミック用：拡大して消える衝撃波リング＋キック量・バースト進行
+  const burstMat = new THREE.MeshBasicMaterial({ color: 0x36c5ff, transparent: true, opacity: 0, side: THREE.DoubleSide, blending: THREE.AdditiveBlending, depthWrite: false });
+  const burstRing = new THREE.Mesh(new THREE.RingGeometry(1.15, 1.5, 80), burstMat);
+  burstRing.visible = false; scene.add(burstRing);
+  let coreKick = 0, burstT = 1;
+  function igniteCore() {
+    coreKick = 1; burstT = 0;
+    document.body.classList.add("is-warp");
+    setTimeout(() => document.body.classList.remove("is-warp"), 700);
+  }
 
   // フォーカス時に手前パネルだけを残して背後を暗転させる“スポットライト”用の暗幕。
   // 手前にズームしたパネル(world z≈1.5〜2.3)より奥(z=1.1)に置き、コア/他パネル/結線を覆って沈める。
@@ -370,7 +380,11 @@ export function initHeroHybrid(canvas) {
   canvas.style.pointerEvents = "auto";
   canvas.addEventListener("click", () => {
     const obj = pick();
-    if (!obj || !obj.userData.target) return;
+    if (!obj || !obj.userData.target) {
+      // パネル以外＝中央のNをクリック → “起動”ギミック（衝撃波＋フラッシュ＋脈動）
+      if (ray.intersectObject(coreProxy, false).length) igniteCore();
+      return;
+    }
     const target = document.querySelector(obj.userData.target);
     if (!target) return;
     obj.userData.click = 1; // クリック演出（前へ飛び出す）
@@ -420,15 +434,15 @@ export function initHeroHybrid(canvas) {
     coreWrap.rotation.y = t * 0.2 + spinExtra;
     wire.rotation.y = -t * 0.26 - spinExtra * 1.4; wire.rotation.z = t * 0.12;
     pts.rotation.y = t * 0.05 + spinExtra * 0.5;
-    pts.scale.setScalar(1 + coreHover * 0.55);
-    // 中央“N”：基本は正面向き（ロゴの見え方）。ごく緩いゆらぎ＋ポインタ追従。
-    // ホバー時だけ spinExtra でぐるりと回し、前進＋拡大の“ガッと大アップ”に。
+    coreKick = lerp(coreKick, 0, 0.06); // 起動キックの減衰
+    pts.scale.setScalar(1 + coreHover * 0.55 + coreKick * 0.9);
+    // 中央“N”：基本は正面向き。ホバーで前進＋拡大、クリック起動(coreKick)で強く脈動・発光サージ。
     nGroup.rotation.y = Math.sin(t * 0.28) * 0.3 + pointer.nx * 0.28;
     nGroup.rotation.x = Math.sin(t * 0.5) * 0.05 - pointer.ny * 0.18;
-    nGroup.position.set(0, Math.sin(t * 1.0) * 0.05, coreHover * 1.3);
-    nGroup.scale.setScalar(0.82 * (1 + coreHover * 0.7) * (1 + Math.sin(t * 1.6) * 0.012));
-    nMat.emissiveIntensity = 0.05 + coreHover * 0.3;
-    nEdgeMat.opacity = 0.32 + coreHover * 0.4 + Math.sin(t * 2) * 0.06;
+    nGroup.position.set(0, Math.sin(t * 1.0) * 0.05, coreHover * 1.3 + coreKick * 0.8);
+    nGroup.scale.setScalar(0.82 * (1 + coreHover * 0.7 + coreKick * 0.6) * (1 + Math.sin(t * 1.6) * 0.012));
+    nMat.emissiveIntensity = 0.05 + coreHover * 0.3 + coreKick * 1.6;
+    nEdgeMat.opacity = Math.min(1, 0.32 + coreHover * 0.4 + coreKick * 0.6 + Math.sin(t * 2) * 0.06);
     coreMesh.scale.setScalar((1 + Math.sin(t * 1.6) * 0.04) * (1 + coreHover * 0.22));
     coreMat.emissiveIntensity = baseEmissive * (1 + coreHover * 2.2) + Math.sin(t * 1.6) * 0.04;
     glowMat.opacity = 0.42 + Math.sin(t * 1.6) * 0.1 + coreHover * 0.35;
@@ -441,6 +455,16 @@ export function initHeroHybrid(canvas) {
     const rscale = (0.8 + rp * 1.8) * group.scale.x;
     ring.scale.set(rscale, rscale, rscale);
     ringMat.opacity = coreHover * (1 - rp) * 0.7;
+    // 起動の衝撃波：クリックで一度だけ大きく広がって消える
+    if (burstT < 1) {
+      burstT = Math.min(1, burstT + 0.022);
+      const e = 1 - Math.pow(1 - burstT, 3);
+      burstRing.visible = true;
+      burstRing.position.copy(coreWorld); burstRing.quaternion.copy(cam.quaternion);
+      const bsc = (0.6 + e * 7) * group.scale.x;
+      burstRing.scale.set(bsc, bsc, bsc);
+      burstMat.opacity = (1 - e) * 0.85;
+    } else if (burstRing.visible) burstRing.visible = false;
 
     // ホバー判定（パネル → 無ければ中央コア）
     hovered = pick();
