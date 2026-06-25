@@ -52,6 +52,18 @@
   .intro__media{order:-1;} /* モバイルは画像を上に */
 }
 
+/* ===== トップのセクション順（CSS order で安全に並べ替え） =====
+   何屋か(Services)を早く見せ、“人の時間/ギミック”は下へ。HTMLは不変。 */
+.home{display:flex;flex-direction:column;}
+.home > .hero{order:0;}
+.home > .services{order:1;}
+.home > .works-strip{order:2;}
+.home > .process{order:3;}
+.home > .manifesto{order:4;}
+.home > .story{order:5;}
+.home > .intro{order:6;}
+.home > .contact{order:7;}
+
 /* ===== Story（スクロール・ストーリー：pin＋スクロール同期） ===== */
 .story{position:relative;height:300vh;background:var(--paper);}
 .story__stage{position:sticky;top:0;height:100vh;overflow:hidden;display:flex;flex-direction:column;
