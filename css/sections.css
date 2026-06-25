@@ -25,8 +25,28 @@
     radial-gradient(120% 120% at 80% 15%, color-mix(in srgb,var(--blue) 14%, transparent), transparent 60%),
     radial-gradient(120% 120% at 10% 90%, color-mix(in srgb,var(--mint) 12%, transparent), transparent 60%),
     var(--surface);}
-.intro__media-frame span{font-family:var(--en);font-size:.82rem;letter-spacing:.14em;text-transform:uppercase;
-  color:color-mix(in srgb,var(--ink) 42%,transparent);}
+/* ④ 画像の代わりに“作業をAIが肩代わり→時間が戻る”を見せるビジュアル */
+.intro__media-frame{place-items:stretch;}
+.intro__viz{display:flex;flex-direction:column;justify-content:center;gap:clamp(10px,1.8vw,16px);padding:clamp(20px,3.5vw,32px);width:100%;}
+.intro__viz-label{display:inline-flex;align-items:center;gap:8px;font-family:var(--en);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);}
+.intro__viz-dot{width:8px;height:8px;border-radius:50%;background:var(--mint);box-shadow:0 0 10px var(--mint);animation:heroPulse 2.4s ease-in-out infinite;}
+.intro__viz-tasks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:9px;}
+.intro__viz-tasks li{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:10px 14px;border-radius:11px;
+  background:color-mix(in srgb,var(--ink) 6%,transparent);border:1px solid var(--line);font-size:clamp(.85rem,1.2vw,.98rem);color:var(--ink);
+  opacity:0;transform:translateY(8px);animation:vizIn .5s var(--ease) forwards;}
+.intro__viz-tasks li:nth-child(1){animation-delay:.15s;}
+.intro__viz-tasks li:nth-child(2){animation-delay:.3s;}
+.intro__viz-tasks li:nth-child(3){animation-delay:.45s;}
+.intro__viz-tasks li:nth-child(4){animation-delay:.6s;}
+.intro__viz-tasks li i{flex:none;width:20px;height:20px;border-radius:50%;position:relative;
+  background:color-mix(in srgb,var(--mint) 16%,transparent);border:1px solid color-mix(in srgb,var(--mint) 55%,transparent);}
+.intro__viz-tasks li i::after{content:"";position:absolute;left:6px;top:3.5px;width:5px;height:9px;border:solid var(--mint);border-width:0 2px 2px 0;transform:rotate(45deg);}
+.intro__viz-stat{margin-top:4px;}
+.intro__viz-stat b{display:block;font-family:var(--en);font-weight:700;font-size:clamp(2.1rem,4.8vw,3.2rem);line-height:1;
+  background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.intro__viz-stat b small{margin-left:8px;font-size:clamp(.85rem,1.5vw,1.05rem);font-weight:600;-webkit-text-fill-color:initial;color:var(--ink-soft);}
+.intro__viz-stat > span{display:block;margin-top:7px;font-size:.8rem;color:var(--ink-soft);}
+@keyframes vizIn{to{opacity:1;transform:none;}}
 @media(max-width:860px){
   .intro__grid{grid-template-columns:1fr;gap:32px;}
   .intro__media{order:-1;} /* モバイルは画像を上に */
