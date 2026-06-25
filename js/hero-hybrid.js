@@ -283,19 +283,21 @@ export function initHeroHybrid(canvas) {
 
   // 全画面・中央寄せレイアウト（オブジェクトを主役にするv2ヒーロー）
   const layout = canvas.dataset.layout || "side";
+  const heroEl = canvas.closest(".hero");
+  let baseScale = 0.82; // resizeで設定。renderでスクロール視差を掛ける。
   function resize() {
     const r = canvas.getBoundingClientRect();
     renderer.setSize(r.width, r.height, false);
     cam.aspect = r.width / r.height; cam.updateProjectionMatrix();
     const small = r.width < 860;
     if (layout === "center") {
-      // オブジェクトを画面中央に置き、大きく見せる（文字は最小・3Dが主役）
       group.position.x = 0;
-      group.scale.setScalar(small ? 0.6 : 1.0);
+      baseScale = small ? 0.6 : 1.0;
     } else {
       group.position.x = small ? 0 : 1.7;
-      group.scale.setScalar(small ? 0.55 : 0.82);
+      baseScale = small ? 0.55 : 0.82;
     }
+    group.scale.setScalar(baseScale);
   }
   resize();
   window.addEventListener("resize", resize);
@@ -396,6 +398,10 @@ export function initHeroHybrid(canvas) {
     ry = lerp(ry, pointer.ny * 0.4 * calm, 0.06);
     group.rotation.y = Math.sin(t * 0.14) * 0.16 * calm + rx;
     group.rotation.x = -0.05 - ry;
+    // スクロール視差：下へ行くほどオブジェクトが少し上へドリフト＋わずかに縮小（層の奥行き）
+    const sp = Math.min(1, Math.max(0, (window.scrollY || 0) / ((heroEl && heroEl.offsetHeight) || window.innerHeight || 1)));
+    group.position.y = sp * 1.3;
+    group.scale.setScalar(baseScale * (1 - sp * 0.12));
 
     if (!prefersReducedMotion && coreMesh.visible) {
       const amp = 0.16 + Math.sin(t * 1.2) * 0.05 + coreHover * 0.14;

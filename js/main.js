@@ -9,6 +9,7 @@ import { initContactForm } from "./contact.js";
 import { initPalette } from "./palette.js";
 import { initServiceOverlay } from "./service-overlay.js";
 import { initFlowField } from "./flowfield.js";
+import { initParallax } from "./parallax.js";
 
 async function boot() {
   // 0. 背景の流れる光（全体のアンビエント・モーション）
@@ -35,6 +36,9 @@ async function boot() {
 
   // 5b. 「トップへ戻る」ボタン（下スクロールで出現）
   initToTop(lenis);
+
+  // 5c. ヒーローのスクロール視差（層ごとに速度差＋フェードで奥行き）
+  initParallax(lenis);
 
   // 6. マーキー（スクロール速度連動）
   initMarquee(document.getElementById("marquee"), lenis);
