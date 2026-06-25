@@ -11,6 +11,9 @@ import { initServiceOverlay } from "./service-overlay.js";
 import { initFlowField } from "./flowfield.js";
 import { initParallax } from "./parallax.js";
 
+// リロード時にブラウザが前回のスクロール位置を復元しないようにする（常にトップから開始）
+if ("scrollRestoration" in history) history.scrollRestoration = "manual";
+
 async function boot() {
   // 0. 背景の流れる光（全体のアンビエント・モーション）
   initFlowField(document.getElementById("bgFlow"));
@@ -21,6 +24,15 @@ async function boot() {
 
   // 2. 慣性スクロール（失敗時は null = ネイティブ）
   const lenis = await initSmoothScroll();
+
+  // 2b. リロードは常にトップから。ハッシュ指定（#contact 等）がある時だけそのアンカーへ。
+  const hashTarget = location.hash && document.querySelector(location.hash);
+  if (hashTarget) {
+    if (lenis) lenis.scrollTo(hashTarget, { immediate: true }); else hashTarget.scrollIntoView();
+  } else {
+    window.scrollTo(0, 0);
+    if (lenis) lenis.scrollTo(0, { immediate: true });
+  }
 
   // 3. ヘッダー状態
   initHeader();
