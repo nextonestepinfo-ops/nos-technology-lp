@@ -33,11 +33,16 @@ function drawUIWire(x, kind, acc, p, t = 0) {
   const pill = (px, py, pw, ph, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, ph / 2); x.fill(); };
   const rrect = (px, py, pw, ph, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); };
 
-  // 上部バー（常時表示）：ミントの丸＋大きめタイトル
-  x.fillStyle = bg; x.fillRect(0, 0, 512, 60);
-  x.fillStyle = mint; x.beginPath(); x.arc(42, 30, 11, 0, 7); x.fill();
-  x.fillStyle = ink; x.font = "700 22px sans-serif"; x.textBaseline = "alphabetic";
-  x.fillText({ site: "WEB SITE", admin: "DASHBOARD", reply: "AI INBOX", map: "LOCAL MAP" }[kind], 66, 38);
+  // 上部バー（常時表示）：種別アイコン＋日本語タイトルで“何の画面か”を一目で
+  x.fillStyle = bg; x.fillRect(0, 0, 512, 64);
+  x.save(); x.translate(42, 33); x.strokeStyle = mint; x.fillStyle = mint; x.lineWidth = 3; x.lineJoin = "round";
+  if (kind === "site") { x.strokeRect(-13, -12, 26, 24); x.fillRect(-13, -12, 26, 7); }
+  else if (kind === "admin") { for (let i = 0; i < 3; i++) x.fillRect(-13, -11 + i * 9, 26, 4); }
+  else if (kind === "reply") { x.beginPath(); x.roundRect(-13, -12, 26, 18, 6); x.stroke(); x.beginPath(); x.moveTo(-5, 6); x.lineTo(3, 6); x.lineTo(-7, 13); x.closePath(); x.fill(); }
+  else { x.beginPath(); x.arc(0, -3, 9, Math.PI, 0); x.lineTo(0, 13); x.closePath(); x.fill(); x.fillStyle = "#fff"; x.beginPath(); x.arc(0, -3, 3.4, 0, 7); x.fill(); }
+  x.restore();
+  x.fillStyle = ink; x.font = "800 25px sans-serif"; x.textBaseline = "alphabetic";
+  x.fillText({ site: "店舗サイト", admin: "予約・顧客管理", reply: "AI返信アシスト", map: "集客マップ" }[kind], 66, 42);
 
   // 本文は左→右にワイプして“出来上がる”
   const w = Math.max(0, Math.min(1, p));
