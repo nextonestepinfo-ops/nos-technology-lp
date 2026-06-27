@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<script src="js/gate.js?v=20260628"></script>
+<title>マジシャンKOKI｜大人の場のための、上質なマジック｜関西〜全国対応</title>
+<meta name="description" content="マジシャンKOKI 公式サイト。関西を拠点に全国へ出張対応。企業イベント・結婚式・ホテル宴会向けの、大人のためのステージマジック／メンタルマジック。出演料金の目安は最低6万円から、内容によりご相談。" />
+<meta name="theme-color" content="#08080b" />
+
+<!-- ファビコン（スペード・エンブレム／ベクター） -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%230d1016'/%3E%3Cpath transform='translate(5,4.5) scale(0.22)' fill='%23c8102e' d='M50 4C50 4 14 38 14 64a22 22 0 0 0 33 19c-1 9-5 15-11 19h28c-6-4-10-10-11-19a22 22 0 0 0 33-19C86 38 50 4 50 4Z'/%3E%3C/svg%3E" />
+
+<!-- OGP（TODO: 本番ドメイン・OGP画像が決まったら差し替え） -->
+<meta property="og:title" content="マジシャンKOKI｜大人の場のための、上質なマジック" />
+<meta property="og:description" content="企業イベント・結婚式・ホテル宴会のための、参加型ステージマジック。関西から全国へ出張対応。" />
+<meta property="og:type" content="website" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="stylesheet" href="css/style.css?v=20260628b" />
+</head>
+<body>
+
+<!-- 再利用するロゴマーク（スペード・エンブレム） -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="kokiEmblem" viewBox="0 0 40 40">
+    <circle cx="20" cy="20" r="18.5" fill="none" stroke="#c2a366" stroke-width="1"/>
+    <path transform="translate(7.5,6) scale(0.25)" fill="#c8102e" d="M50 4C50 4 14 38 14 64a22 22 0 0 0 33 19c-1 9-5 15-11 19h28c-6-4-10-10-11-19a22 22 0 0 0 33-19C86 38 50 4 50 4Z"/>
+  </symbol>
+</svg>
+
+<!-- スクロール進捗（細い金のライン） -->
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
+
+<!-- ========================= ヘッダー ========================= -->
+<header class="header" id="header">
+  <div class="container header__inner">
+    <a href="#hero" class="brand" aria-label="マジシャンKOKI ホーム">
+      <svg class="brand__mark" aria-hidden="true"><use href="#kokiEmblem" /></svg>
+      <span class="brand__name">KOKI</span>
+    </a>
+
+    <nav class="nav" id="nav" aria-label="メインナビゲーション">
+      <a class="nav__link" href="#scene">Scene</a>
+      <a class="nav__link" href="#performance">Performance</a>
+      <a class="nav__link" href="#price">Price</a>
+      <a class="nav__link" href="#about">About</a>
+      <a class="nav__link" href="#proof">Gallery</a>
+      <a class="nav__ig" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener" aria-label="Instagram（@koki19990907）">
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/>
+          <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+        </svg>
+      </a>
+      <a class="btn btn--primary" href="#contact">出演を相談する</a>
+    </nav>
+
+    <button class="nav-toggle" id="navToggle" aria-label="メニューを開閉" aria-expanded="false" aria-controls="nav">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</header>
+
+<main>
+
+<!-- ========================= 1. Hero ========================= -->
+<!-- 横長写真を全面背景に、テキストのみを左下へ配置（本人写真を隠さない構成・ぼかしなし） -->
+<section class="hero" id="hero">
+  <!-- ヒーロー背景：本人の横長宣材／ステージ写真（高解像度・横長）に差し替え -->
+  <div class="hero__bg" aria-hidden="true">
+    <img src="assets/images/04-corporate-party-magic.png" alt="" />
+  </div>
+  <div class="hero__veil" aria-hidden="true"></div>
+
+  <!-- 右下の回転スペードバッジ -->
+  <div class="hero__badge" aria-hidden="true">
+    <svg viewBox="0 0 120 120">
+      <defs>
+        <path id="badgeArc" d="M60,60 m-44,0 a44,44 0 1,1 88,0 a44,44 0 1,1 -88,0" />
+      </defs>
+      <g class="hero__badge-ring">
+        <text class="hero__badge-text"><textPath href="#badgeArc" startOffset="0">MAGICIAN KOKI ・ STAGE &amp; MENTAL MAGIC ・ </textPath></text>
+      </g>
+      <text x="60" y="72" text-anchor="middle" class="hero__badge-spade">♠</text>
+    </svg>
+  </div>
+
+  <div class="container hero__inner">
+    <!-- テキストのみ・左下配置 -->
+    <div class="hero__card reveal">
+      <p class="eyebrow hero__eyebrow">Magician</p>
+      <h1 class="hero__title">KOKI</h1>
+      <span class="hero__rule" aria-hidden="true"></span>
+      <p class="hero__tagline"><span class="nw">その手のひらで、</span><span class="nw">世界が静かに<span class="accent">ほどけていく</span>。</span></p>
+      <p class="hero__sub"><span class="nw">関西を拠点に全国へ。</span><span class="nw">企業イベント・結婚式・ホテル宴会に。</span></p>
+      <div class="hero__cta">
+        <a class="btn btn--primary btn--lg" href="#contact">出演を相談する</a>
+        <a class="btn btn--ghost btn--lg" href="#contact">空き日程を確認する</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 下部キーワードティッカー -->
+  <div class="hero__ticker" aria-hidden="true">
+    <div class="hero__ticker-track">
+      <span>企業イベント ・ 結婚式 / 披露宴 ・ ホテル / 宴会 ・ ステージマジック ・ メンタルマジック ・ 関西〜全国対応 ・&nbsp;</span>
+      <span>企業イベント ・ 結婚式 / 披露宴 ・ ホテル / 宴会 ・ ステージマジック ・ メンタルマジック ・ 関西〜全国対応 ・&nbsp;</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- ========================= 2. Quick Facts ========================= -->
+<section class="facts" aria-label="依頼前に知りたいこと">
+  <div class="container">
+    <ul class="facts__grid">
+      <li class="facts__item reveal" data-delay="0">
+        <span class="facts__k">Area</span>
+        <span class="facts__v">関西拠点・全国対応</span>
+      </li>
+      <li class="facts__item reveal" data-delay="1">
+        <span class="facts__k">Scene</span>
+        <span class="facts__v">企業・結婚式・ホテル宴会</span>
+      </li>
+      <li class="facts__item reveal" data-delay="2">
+        <span class="facts__k">Style</span>
+        <span class="facts__v">ステージ／メンタルマジック</span>
+      </li>
+      <li class="facts__item reveal" data-delay="3">
+        <span class="facts__k">Price</span>
+        <span class="facts__v">出演料金の目安 6万円〜</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ========================= 3. Scene ========================= -->
+<section class="section" id="scene">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Scene</p>
+      <h2 class="heading">どんな場面に呼べるか</h2>
+      <p class="lead">大人が集まる場で、その日の主役を引き立てます。まずは、開催されるイベントに近いものをご覧ください。</p>
+    </div>
+
+    <div class="scene__grid">
+      <!-- Scene 企業：企業パーティー実演写真に差し替え -->
+      <article class="scene-card reveal" data-delay="0">
+        <div class="scene-card__media"><img src="assets/images/04-corporate-party-magic.png" alt="企業イベントでのマジック" loading="lazy" /></div>
+        <div class="scene-card__body">
+          <p class="scene-card__en">Corporate</p>
+          <h3 class="scene-card__title">企業イベント・懇親会</h3>
+          <p class="scene-card__lead">周年・表彰式・懇親会に。会場の品位を保ったまま、参加者を惹き込みます。</p>
+          <p class="scene-card__meta">相談で決めること：出演時間／ステージの有無</p>
+          <a class="scene-card__link" href="#contact">この場面で相談する</a>
+        </div>
+      </article>
+
+      <!-- Scene 結婚式：披露宴での実演写真に差し替え -->
+      <article class="scene-card reveal" data-delay="1">
+        <div class="scene-card__media"><img src="assets/images/03-wedding-reception-magic.png" alt="結婚式・披露宴でのマジック" loading="lazy" /></div>
+        <div class="scene-card__body">
+          <p class="scene-card__en">Wedding</p>
+          <h3 class="scene-card__title">結婚式・披露宴</h3>
+          <p class="scene-card__lead">披露宴の余興・二次会に。新郎新婦とゲスト全員が主役になれる演出を。</p>
+          <p class="scene-card__meta">相談で決めること：進行のどこで／所要時間</p>
+          <a class="scene-card__link" href="#contact">この場面で相談する</a>
+        </div>
+      </article>
+
+      <!-- Scene ホテル宴会：宴会場の実演写真に差し替え -->
+      <article class="scene-card reveal" data-delay="2">
+        <div class="scene-card__media"><img src="assets/images/08-hotel-banquet-venue.png" alt="ホテル宴会場でのマジック" loading="lazy" /></div>
+        <div class="scene-card__body">
+          <p class="scene-card__en">Hotel Banquet</p>
+          <h3 class="scene-card__title">ホテル・宴会</h3>
+          <p class="scene-card__lead">宴会・祝賀会・各種パーティーに。会場の規模にあわせて構成します。</p>
+          <p class="scene-card__meta">相談で決めること：会場規模／音響の有無</p>
+          <a class="scene-card__link" href="#contact">この場面で相談する</a>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= 4. Performance ========================= -->
+<section class="section section--navy" id="performance">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Performance</p>
+      <h2 class="heading">どんな演出ができるか</h2>
+      <p class="lead">会場・人数・進行にあわせて構成します。いずれもゲストを巻き込む参加型で、その場に一体感が生まれます。</p>
+    </div>
+
+    <div class="perf__grid">
+      <article class="perf-card reveal" data-delay="0">
+        <span class="perf-card__ic" aria-hidden="true">♠</span>
+        <h3 class="perf-card__title">ステージマジック</h3>
+        <p class="perf-card__en">Stage Magic</p>
+        <p class="perf-card__text">会場全体を惹きつける、本格ステージ。</p>
+      </article>
+      <article class="perf-card reveal" data-delay="1">
+        <span class="perf-card__ic" aria-hidden="true">♠</span>
+        <h3 class="perf-card__title">企業向け余興</h3>
+        <p class="perf-card__en">Corporate Show</p>
+        <p class="perf-card__text">周年・懇親会・表彰式に、品のある演出を。</p>
+      </article>
+      <article class="perf-card reveal" data-delay="2">
+        <span class="perf-card__ic" aria-hidden="true">♠</span>
+        <h3 class="perf-card__title">メンタルマジック</h3>
+        <p class="perf-card__en">Mental Magic</p>
+        <p class="perf-card__text">心を読むような、知的な驚きを。</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= 5. Price ========================= -->
+<section class="section section--deep" id="price">
+  <div class="container">
+    <div class="price__wrap reveal">
+      <svg class="price__spade" viewBox="0 0 100 110" aria-hidden="true"><path fill="currentColor" d="M50 4C50 4 14 38 14 64a22 22 0 0 0 33 19c-1 9-5 15-11 19h28c-6-4-10-10-11-19a22 22 0 0 0 33-19C86 38 50 4 50 4Z"/></svg>
+      <p class="eyebrow eyebrow--center">Price</p>
+      <p class="price__label">出演料金の目安</p>
+      <p class="price__amount"><span class="yen">¥</span>60,000<span class="from">〜</span></p>
+      <p class="price__note">内容によりご相談。会場・人数・出演時間・出張距離・演出内容により変動します。企業イベント・結婚式・ホテル宴会は、内容に応じて個別にお見積もりします。</p>
+      <ul class="price__terms">
+        <li>企業イベント</li>
+        <li>結婚式・披露宴</li>
+        <li>ホテル・宴会</li>
+        <li>個別お見積もり</li>
+      </ul>
+      <a class="btn btn--primary btn--lg" href="#contact">日程と内容を相談する</a>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= 6. About KOKI ========================= -->
+<section class="section" id="about">
+  <div class="container">
+    <div class="about__grid">
+      <div class="about__media reveal">
+        <div class="about__media-frame" aria-hidden="true"></div>
+        <!-- About メイン：本人の縦長プロフィール写真に差し替え -->
+        <div class="about__media-main">
+          <img src="assets/images/10-profile-portrait-neutral.png" alt="マジシャンKOKI プロフィール" loading="lazy" />
+        </div>
+        <!-- About サブ：本人の準備風景・手元写真に差し替え -->
+        <div class="about__media-sub">
+          <img src="assets/images/06-backstage-preparation.png" alt="出演前の準備風景" loading="lazy" />
+        </div>
+      </div>
+
+      <div class="about__body">
+        <p class="eyebrow">About KOKI</p>
+        <h2 class="heading"><span class="nw">驚きの先に、</span><span class="nw">信頼を。</span></h2>
+        <!-- TODO: 本人プロフィール文（経歴・受賞・メディア）が届いたら差し替え -->
+        <p class="lead">
+          関西を拠点に、全国で活動するマジシャン KOKI。
+          目の前の一瞬に静かに引き込む、大人のためのマジックを届けます。
+        </p>
+        <ul class="about__list">
+          <li><span class="spade">♠</span><span><span class="nw">大人向けで上質。</span><span class="nw">企業・結婚式・宴会の空気に馴染む。</span></span></li>
+          <li><span class="spade">♠</span><span>参加型で、その場に一体感をつくる。</span></li>
+          <li><span class="spade">♠</span><span>不思議さ重視。記憶に残る体験を。</span></li>
+        </ul>
+        <p class="about__sig">— KOKI</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= 7. Proof（Movie / Gallery / Works / Voice 統合） ========================= -->
+<section class="section section--navy" id="proof">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Gallery</p>
+      <h2 class="heading">写真・動画・対応シーン</h2>
+      <p class="lead">活動の様子は映像と Instagram で。対応できる主なシーンも、あわせてご確認ください。</p>
+    </div>
+
+    <div class="proof__media">
+      <!-- TODO: 横動画は本人のYouTube等を埋め込みに差し替え -->
+      <a class="video-card video-card--main reveal" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener" aria-label="パフォーマンス動画（Instagramで見る）">
+        <img src="assets/images/05-small-stage-performance.png" alt="ステージパフォーマンスの様子" loading="lazy" />
+        <span class="video-card__play"><span class="ring"></span></span>
+        <span class="video-card__label">パフォーマンス動画</span>
+      </a>
+
+      <div class="proof__side">
+        <!-- TODO: 縦ショート動画は本人のInstagram/TikTok縦動画に差し替え -->
+        <a class="video-card video-card--short reveal" data-delay="1" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener" aria-label="ショート動画（Instagramで見る）">
+          <img src="assets/images/11-social-short-video-vertical.png" alt="ショート動画の様子" loading="lazy" />
+          <span class="video-card__play"><span class="ring"></span></span>
+          <span class="video-card__label">Short</span>
+        </a>
+        <!-- TODO: YouTube / TikTok のURLが決まれば導線を追加 -->
+        <a class="btn btn--gold btn--block reveal" data-delay="2" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener">Instagramで活動を見る</a>
+      </div>
+    </div>
+
+    <div class="proof__info reveal">
+      <div class="proof__col">
+        <p class="proof__label">主な対応シーン</p>
+        <ul class="proof__works">
+          <li>企業イベント・懇親会</li>
+          <li>結婚式・披露宴</li>
+          <li>ホテル・宴会</li>
+        </ul>
+        <!-- TODO: 正式な出演実績名・メディア出演は、掲載可否を確認のうえ差し替え -->
+        <p class="proof__pending">出演実績・メディア出演は、掲載可否を確認のうえ順次追加します。</p>
+      </div>
+      <div class="proof__col">
+        <p class="proof__label">お客様の声</p>
+        <!-- TODO: 実名/匿名の掲載可否を確認のうえ、正式な口コミに差し替え -->
+        <ul class="contact-voice">
+          <li><span class="contact-voice__q">&ldquo;</span>ゲスト全員が前のめりに。記憶に残る時間でした。<span class="contact-voice__by">— 結婚式・披露宴</span></li>
+          <li><span class="contact-voice__q">&ldquo;</span>品があって大人向け。会場の一体感が見事でした。<span class="contact-voice__by">— 企業イベント</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= 8. Flow ========================= -->
+<section class="section" id="flow">
+  <div class="container">
+    <div class="section-head">
+      <p class="eyebrow">Flow</p>
+      <h2 class="heading">ご依頼の流れ</h2>
+      <p class="lead">お問い合わせから当日まで、シンプルに進みます。</p>
+    </div>
+
+    <ol class="flow">
+      <li class="flow__step reveal" data-delay="0">
+        <span class="flow__no">01</span>
+        <h3 class="flow__title">お問い合わせ</h3>
+        <p class="flow__text">フォームからお気軽に。</p>
+      </li>
+      <li class="flow__step reveal" data-delay="1">
+        <span class="flow__no">02</span>
+        <h3 class="flow__title">日程・内容の確認</h3>
+        <p class="flow__text">会場・人数・予算をうかがいます。</p>
+      </li>
+      <li class="flow__step reveal" data-delay="2">
+        <span class="flow__no">03</span>
+        <h3 class="flow__title">演出とお見積もり</h3>
+        <p class="flow__text">構成と明確な金額をご提案。</p>
+      </li>
+      <li class="flow__step reveal" data-delay="3">
+        <span class="flow__no">04</span>
+        <h3 class="flow__title">ご予約確定</h3>
+        <p class="flow__text">内容にご納得のうえ確定。</p>
+      </li>
+      <li class="flow__step reveal" data-delay="3">
+        <span class="flow__no">05</span>
+        <h3 class="flow__title">当日出演</h3>
+        <p class="flow__text">会場へうかがいます。</p>
+      </li>
+    </ol>
+  </div>
+</section>
+
+<!-- ========================= FAQ（問い合わせ前の小さな補助・3問） ========================= -->
+<section class="section section--compact" id="faq">
+  <div class="container">
+    <div class="faq-head">
+      <p class="eyebrow">FAQ</p>
+      <h2 class="faq-title">ご相談の前に</h2>
+    </div>
+
+    <div class="faq">
+      <details class="faq__item">
+        <summary class="faq__q">出演時間は、どれくらいですか？</summary>
+        <div class="faq__a"><p>15分〜60分程度を目安に、イベントの進行にあわせて調整します。複数回に分けての出演もご相談いただけます。</p></div>
+      </details>
+      <details class="faq__item">
+        <summary class="faq__q">どこまで出張できますか？</summary>
+        <div class="faq__a"><p>関西を拠点に全国へ対応します。遠方の場合は交通費を別途ご相談のうえ、無理のない形でご提案します。</p></div>
+      </details>
+      <details class="faq__item">
+        <summary class="faq__q">いつ頃までに相談すればよいですか？</summary>
+        <div class="faq__a"><p>1ヶ月前までが安心ですが、直近のご相談も歓迎です。まずは空き日程の確認だけでもお気軽にどうぞ。</p></div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= 9. Contact ========================= -->
+<section class="section section--deep" id="contact">
+  <div class="container">
+    <div class="contact__grid">
+      <aside class="contact__aside">
+        <p class="eyebrow">Contact</p>
+        <h2 class="heading"><span class="nw">まずは、</span><span class="nw">ご相談から。</span></h2>
+        <p class="contact__aside-lead">空き日程の確認や、概算のお見積もりだけでも歓迎です。下記フォームよりお気軽にどうぞ。</p>
+
+        <!-- TODO: 正式なメール・電話番号が決まったら、ここに連絡先ブロックを追加して有効化 -->
+        <p class="contact__note">お電話・メールの窓口は現在準備中です。ご連絡はフォームよりお願いいたします。</p>
+
+        <!-- 相談導線の補助画像：本人の打ち合わせ・手元写真に差し替え -->
+        <div class="contact-direct__media">
+          <img src="assets/images/12-contact-consultation-table.png" alt="ご相談・お打ち合わせのイメージ" loading="lazy" />
+        </div>
+      </aside>
+
+      <!-- 静的フォーム。送信処理は後付けしやすいよう form[action] を用意 -->
+      <!-- TODO: 公開前に action を送信先（メール送信API / フォームサービス）へ接続する -->
+      <form class="form" id="contactForm" action="#" method="post" novalidate>
+        <p class="form__intro">希望日・会場・人数・イベント内容・ご予算は、分かる範囲で大丈夫です。</p>
+        <div class="form__row">
+          <div class="field">
+            <label for="f-name">お名前<span class="req">*</span></label>
+            <input type="text" id="f-name" name="name" required autocomplete="name" />
+          </div>
+          <div class="field">
+            <label for="f-company">会社・団体名</label>
+            <input type="text" id="f-company" name="company" autocomplete="organization" />
+          </div>
+        </div>
+
+        <div class="form__row">
+          <div class="field">
+            <label for="f-email">メールアドレス<span class="req">*</span></label>
+            <input type="email" id="f-email" name="email" required autocomplete="email" />
+          </div>
+          <div class="field">
+            <label for="f-tel">電話番号</label>
+            <input type="tel" id="f-tel" name="tel" autocomplete="tel" />
+          </div>
+        </div>
+
+        <div class="form__row">
+          <div class="field">
+            <label for="f-date">希望日</label>
+            <input type="date" id="f-date" name="date" />
+          </div>
+          <div class="field">
+            <label for="f-venue">会場・エリア</label>
+            <input type="text" id="f-venue" name="venue" placeholder="例：大阪市内のホテル" />
+          </div>
+        </div>
+
+        <div class="form__row">
+          <div class="field">
+            <label for="f-type">イベント内容</label>
+            <select id="f-type" name="eventType">
+              <option value="">選択してください</option>
+              <option>企業イベント・懇親会</option>
+              <option>結婚式・披露宴</option>
+              <option>ホテル・宴会</option>
+              <option>その他パーティー</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="f-people">人数</label>
+            <input type="text" id="f-people" name="people" placeholder="例：80名" />
+          </div>
+        </div>
+
+        <div class="field field--full">
+          <label for="f-budget">ご予算の目安</label>
+          <input type="text" id="f-budget" name="budget" placeholder="例：10万円前後 ／ ご相談" />
+        </div>
+
+        <div class="field field--full">
+          <label for="f-message">ご希望の演出・ご相談内容</label>
+          <textarea id="f-message" name="message" placeholder="出演時間、ステージ／テーブル、参加型の希望などをご記入ください。"></textarea>
+        </div>
+
+        <p class="form__msg" id="formMsg">ありがとうございます。内容を確認のうえ、折り返しご連絡いたします。</p>
+        <button class="btn btn--primary btn--lg btn--block" type="submit">この内容で相談する</button>
+        <p class="form__note">※ いただいた情報は本件のご相談以外には使用しません。</p>
+      </form>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ========================= フッター ========================= -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer__grid">
+      <div>
+        <p class="footer__brand">
+          <svg class="footer__mark" aria-hidden="true"><use href="#kokiEmblem" /></svg>
+          <span>KOKI</span>
+        </p>
+        <p class="footer__tagline"><span class="nw">大人の場のための、</span><span class="nw">上質なマジック。</span><span class="nw">関西から全国へ。</span></p>
+      </div>
+      <nav class="footer__nav" aria-label="フッターナビゲーション">
+        <a href="#scene">Scene</a>
+        <a href="#performance">Performance</a>
+        <a href="#price">Price</a>
+        <a href="#about">About</a>
+        <a href="#proof">Gallery</a>
+        <a href="#flow">Flow</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </div>
+    <div class="footer__copy">
+      <span>&copy; <span id="year">2026</span> マジシャンKOKI. All rights reserved.</span>
+      <span>企業イベント・結婚式・ホテル宴会 ／ 関西〜全国対応</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ページトップへ戻る -->
+<button class="to-top" id="toTop" type="button" aria-label="ページ上部へ戻る">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+</button>
+
+<script src="js/main.js?v=20260628"></script>
+</body>
+</html>
