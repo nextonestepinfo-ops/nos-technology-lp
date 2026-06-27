@@ -1,13 +1,13 @@
 /* =========================================================
    Client preview gate for GitHub Pages.
-   PASS: 0907
+   PASS: 04
    This is a light preview barrier, not server-side authentication.
    ========================================================= */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "koki_preview_ok";
-  var PASS = "0907";
+  var PASS = "04";
 
   if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
 
@@ -42,7 +42,7 @@
       '<form class="box" autocomplete="off">' +
       '<div class="mark">&#9824;</div>' +
       '<p class="ttl">KOKI</p>' +
-      '<p class="sub">クライアント確認用ページです。<br>共有された4桁のパスワードを入力してください。</p>' +
+      '<p class="sub">クライアント確認用ページです。<br>共有されたパスワードを入力してください。</p>' +
       '<label for="koki-pass">PASSWORD</label>' +
       '<input id="koki-pass" name="pass" type="password" inputmode="numeric" pattern="[0-9]*" maxlength="4" autocomplete="current-password" />' +
       '<button type="submit">表示する</button>' +
