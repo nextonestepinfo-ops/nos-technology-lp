@@ -1,13 +1,13 @@
 /* =========================================================
    Client preview gate for GitHub Pages.
-   PASS: 04
+   PASS: 0000
    This is a light preview barrier, not server-side authentication.
    ========================================================= */
 (function () {
   "use strict";
 
   var STORAGE_KEY = "koki_preview_ok";
-  var PASS = "04";
+  var PASS = "0000";
 
   if (sessionStorage.getItem(STORAGE_KEY) === "1") return;
 
