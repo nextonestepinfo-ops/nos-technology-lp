@@ -12,6 +12,32 @@
   const progress = document.getElementById("scrollProgress");
   const toTop = document.getElementById("toTop");
 
+  // ---- ローディング画面 → ヒーロー登場 ----
+  // ゲートがある場合は解除時に gate.js から __startIntro() が呼ばれる。
+  // ゲートが無い（認証済み or 本番）場合はここで開始する。
+  var loader = document.getElementById("loader");
+  var introStarted = false;
+  function startIntro() {
+    if (introStarted) return;
+    introStarted = true;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    function finish() {
+      document.body.classList.add("is-loaded");
+      if (loader) {
+        loader.classList.add("is-hidden");
+        setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 900);
+      }
+    }
+    if (reduce) { finish(); return; }
+    var minDone = false;
+    var loadDone = document.readyState === "complete";
+    setTimeout(function () { minDone = true; if (loadDone) finish(); }, 1300); // 最低表示時間
+    if (!loadDone) window.addEventListener("load", function () { loadDone = true; if (minDone) finish(); });
+    setTimeout(finish, 2800); // 安全策（読み込みが遅くても必ず進む）
+  }
+  window.__startIntro = startIntro;
+  if (!window.__gateWillShow) startIntro(); // ゲートが出ないならすぐ開始
+
   // ---- ヘッダー追従・スクロール進捗・トップへ戻るの表示 ----
   // 毎フレーム処理を避けるため rAF で間引く
   let ticking = false;

@@ -583,6 +583,52 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate
   .scroll-progress { transition: none; }
 }
 
+/* ---------- ローディング画面（イントロ） ---------- */
+#loader {
+  position: fixed; inset: 0; z-index: 9000; display: flex; align-items: center; justify-content: center;
+  background: radial-gradient(120% 90% at 50% 34%, #0d1322, #08080b 72%);
+  transition: opacity .8s var(--ease), visibility .8s var(--ease);
+}
+#loader.is-hidden { opacity: 0; visibility: hidden; pointer-events: none; }
+.loader__inner { display: flex; flex-direction: column; align-items: center; gap: 20px; }
+.loader__mark { width: 52px; height: 52px; animation: ldMark 1.3s var(--ease) both; }
+.loader__name {
+  font-family: var(--f-display); font-weight: 600; font-size: 2rem; letter-spacing: .28em;
+  color: var(--c-ink); padding-left: .28em; animation: ldName 1.3s var(--ease) .08s both;
+}
+.loader__bar { display: block; width: 116px; height: 1px; background: var(--c-line); overflow: hidden; margin-top: 4px; }
+.loader__bar i {
+  display: block; height: 100%; transform-origin: left;
+  background: linear-gradient(90deg, var(--c-gold-soft), var(--c-gold));
+  animation: ldBar 1.15s var(--ease) .14s both;
+}
+@keyframes ldMark { from { opacity: 0; transform: translateY(8px) scale(.92); } to { opacity: 1; transform: none; } }
+@keyframes ldName { from { opacity: 0; letter-spacing: .62em; } to { opacity: 1; letter-spacing: .28em; } }
+@keyframes ldBar  { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* ---------- ヒーロー登場（ローダー後） ---------- */
+body.is-loaded .hero__bg img   { animation: heroZoom 20s ease-out both; }
+body.is-loaded .hero__eyebrow  { animation: heroUp .85s var(--ease) .05s both; }
+body.is-loaded .hero__title    { animation: heroUp 1.05s var(--ease) .16s both; }
+body.is-loaded .hero__rule     { transform-origin: left; animation: heroRule .8s var(--ease) .52s both; }
+body.is-loaded .hero__tagline  { animation: heroUp .9s var(--ease) .42s both; }
+body.is-loaded .hero__sub      { animation: heroUp .9s var(--ease) .56s both; }
+body.is-loaded .hero__cta      { animation: heroUp .9s var(--ease) .7s both; }
+body.is-loaded .hero__ticker   { animation: heroFade 1.4s var(--ease) 1s both; }
+body.is-loaded .hero__badge    { animation: heroFade 1.6s var(--ease) 1.1s both; }
+@keyframes heroUp   { from { opacity: 0; transform: translateY(28px); } to { opacity: 1; transform: none; } }
+@keyframes heroRule { from { opacity: 0; transform: scaleX(0); } to { opacity: 1; transform: scaleX(1); } }
+@keyframes heroFade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes heroZoom { from { transform: scale(1.04); } to { transform: scale(1.14); } }
+
+@media (prefers-reduced-motion: reduce) {
+  #loader { display: none; }
+  .loader__mark, .loader__name, .loader__bar i { animation: none; }
+  body.is-loaded .hero__bg img, body.is-loaded .hero__eyebrow, body.is-loaded .hero__title,
+  body.is-loaded .hero__rule, body.is-loaded .hero__tagline, body.is-loaded .hero__sub,
+  body.is-loaded .hero__cta, body.is-loaded .hero__ticker, body.is-loaded .hero__badge { animation: none; }
+}
+
 /* =========================================================
    レスポンシブ
    ========================================================= */
