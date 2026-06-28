@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20260628c" />
+<link rel="stylesheet" href="css/style.css?v=20260629" />
 </head>
 <body>
 
@@ -68,6 +68,15 @@
       <a class="btn btn--primary" href="#contact">出演を相談する</a>
     </nav>
 
+    <!-- スマホのトップバーに常時表示するInstagram -->
+    <a class="header__ig" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener" aria-label="Instagram（@koki19990907）">
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="1.7"/>
+        <circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="1.7"/>
+        <circle cx="17.2" cy="6.8" r="1.2" fill="currentColor"/>
+      </svg>
+    </a>
+
     <button class="nav-toggle" id="navToggle" aria-label="メニューを開閉" aria-expanded="false" aria-controls="nav">
       <span></span><span></span><span></span>
     </button>
@@ -105,7 +114,7 @@
       <h1 class="hero__title">KOKI</h1>
       <span class="hero__rule" aria-hidden="true"></span>
       <p class="hero__tagline"><span class="nw">その手のひらで、</span><span class="nw">世界が静かに<span class="accent">ほどけていく</span>。</span></p>
-      <p class="hero__sub"><span class="nw">関西を拠点に全国へ。</span><span class="nw">企業イベント・結婚式・ホテル宴会に。</span></p>
+      <p class="hero__sub"><span class="nw">関西を拠点に全国へ。</span><span class="nw">企業・結婚式・宴会ほか、幅広く対応。</span></p>
       <div class="hero__cta">
         <a class="btn btn--primary btn--lg" href="#contact">出演を相談する</a>
         <a class="btn btn--ghost btn--lg" href="#contact">空き日程を確認する</a>
@@ -129,19 +138,19 @@
     <ul class="facts__grid">
       <li class="facts__item reveal" data-delay="0">
         <span class="facts__k">Area</span>
-        <span class="facts__v">関西拠点・全国対応</span>
+        <span class="facts__v">関西〜全国対応</span>
       </li>
       <li class="facts__item reveal" data-delay="1">
         <span class="facts__k">Scene</span>
-        <span class="facts__v">企業・結婚式・ホテル宴会</span>
+        <span class="facts__v">企業・結婚式・宴会</span>
       </li>
       <li class="facts__item reveal" data-delay="2">
         <span class="facts__k">Style</span>
-        <span class="facts__v">ステージ／メンタルマジック</span>
+        <span class="facts__v">ステージ／メンタル</span>
       </li>
       <li class="facts__item reveal" data-delay="3">
         <span class="facts__k">Price</span>
-        <span class="facts__v">出演料金の目安 6万円〜</span>
+        <span class="facts__v">目安 6万円〜</span>
       </li>
     </ul>
   </div>
@@ -153,7 +162,7 @@
     <div class="section-head">
       <p class="eyebrow">Scene</p>
       <h2 class="heading">どんな場面に呼べるか</h2>
-      <p class="lead">大人が集まる場で、その日の主役を引き立てます。まずは、開催されるイベントに近いものをご覧ください。</p>
+      <p class="lead">大人が集まる場で、その日の主役を引き立てます。</p>
     </div>
 
     <div class="scene__grid">
@@ -163,8 +172,7 @@
         <div class="scene-card__body">
           <p class="scene-card__en">Corporate</p>
           <h3 class="scene-card__title">企業イベント・懇親会</h3>
-          <p class="scene-card__lead">周年・表彰式・懇親会に。会場の品位を保ったまま、参加者を惹き込みます。</p>
-          <p class="scene-card__meta">相談で決めること：出演時間／ステージの有無</p>
+          <p class="scene-card__lead">周年・表彰式・懇親会に。品位を保ったまま盛り上げます。</p>
           <a class="scene-card__link" href="#contact">この場面で相談する</a>
         </div>
       </article>
@@ -175,8 +183,7 @@
         <div class="scene-card__body">
           <p class="scene-card__en">Wedding</p>
           <h3 class="scene-card__title">結婚式・披露宴</h3>
-          <p class="scene-card__lead">披露宴の余興・二次会に。新郎新婦とゲスト全員が主役になれる演出を。</p>
-          <p class="scene-card__meta">相談で決めること：進行のどこで／所要時間</p>
+          <p class="scene-card__lead">披露宴の余興・二次会に。ゲスト全員が主役になる演出を。</p>
           <a class="scene-card__link" href="#contact">この場面で相談する</a>
         </div>
       </article>
@@ -187,12 +194,13 @@
         <div class="scene-card__body">
           <p class="scene-card__en">Hotel Banquet</p>
           <h3 class="scene-card__title">ホテル・宴会</h3>
-          <p class="scene-card__lead">宴会・祝賀会・各種パーティーに。会場の規模にあわせて構成します。</p>
-          <p class="scene-card__meta">相談で決めること：会場規模／音響の有無</p>
+          <p class="scene-card__lead">宴会・祝賀会・各種パーティーに。規模にあわせて構成します。</p>
           <a class="scene-card__link" href="#contact">この場面で相談する</a>
         </div>
       </article>
     </div>
+
+    <p class="scene__note">上記以外のパーティー・イベントも幅広く対応します。まずはお気軽にご相談ください。</p>
   </div>
 </section>
 
@@ -202,7 +210,7 @@
     <div class="section-head">
       <p class="eyebrow">Performance</p>
       <h2 class="heading">どんな演出ができるか</h2>
-      <p class="lead">会場・人数・進行にあわせて構成します。いずれもゲストを巻き込む参加型で、その場に一体感が生まれます。</p>
+      <p class="lead">会場・人数・進行にあわせて構成。ゲストを巻き込む参加型で、一体感が生まれます。</p>
     </div>
 
     <div class="perf__grid">
@@ -236,7 +244,7 @@
       <p class="eyebrow eyebrow--center">Price</p>
       <p class="price__label">出演料金の目安</p>
       <p class="price__amount"><span class="yen">¥</span>60,000<span class="from">〜</span></p>
-      <p class="price__note">内容によりご相談。会場・人数・出演時間・出張距離・演出内容により変動します。企業イベント・結婚式・ホテル宴会は、内容に応じて個別にお見積もりします。</p>
+      <p class="price__note">内容によりご相談。会場・人数・時間・距離・演出により変動します。</p>
       <ul class="price__terms">
         <li>企業イベント</li>
         <li>結婚式・披露宴</li>
@@ -410,11 +418,6 @@
 
         <!-- TODO: 正式なメール・電話番号が決まったら、ここに連絡先ブロックを追加して有効化 -->
         <p class="contact__note">お電話・メールの窓口は現在準備中です。ご連絡はフォームよりお願いいたします。</p>
-
-        <!-- 相談導線の補助画像：本人の打ち合わせ・手元写真に差し替え -->
-        <div class="contact-direct__media">
-          <img src="assets/images/12-contact-consultation-table.png" alt="ご相談・お打ち合わせのイメージ" loading="lazy" />
-        </div>
       </aside>
 
       <!-- 静的フォーム。送信処理は後付けしやすいよう form[action] を用意 -->
@@ -525,6 +528,6 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
 
-<script src="js/main.js?v=20260629"></script>
+<script src="js/main.js?v=20260630"></script>
 </body>
 </html>

@@ -11,6 +11,7 @@
   const body = document.body;
   const progress = document.getElementById("scrollProgress");
   const toTop = document.getElementById("toTop");
+  const heroEl = document.querySelector(".hero");
 
   // ---- ローディング画面 → ヒーロー登場 ----
   // ゲートがある場合は解除時に gate.js から __startIntro() が呼ばれる。
@@ -46,7 +47,9 @@
     ticking = true;
     requestAnimationFrame(function () {
       const y = window.scrollY;
-      header.classList.toggle("is-scrolled", y > 40);
+      // ヒーローを過ぎてからヘッダーを表示（ヒーローの大きなKOKIとの重複を回避）
+      const showHeader = heroEl ? y > heroEl.offsetHeight - 80 : y > 60;
+      header.classList.toggle("is-visible", showHeader);
       if (progress) {
         const h = document.documentElement.scrollHeight - window.innerHeight;
         progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
