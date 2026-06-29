@@ -1,0 +1,962 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#16213a">
+<title>NosTechnology 書類メーカー｜見積・請求</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='22' fill='%2316213a'/%3E%3Cpath d='M18 20h16v60H18z' fill='%23fff'/%3E%3Cpath d='M68 20h14v60H68z' fill='%23fff'/%3E%3Cpath d='M32 20h16l20 60H52z' fill='%23fff' opacity='.86'/%3E%3Cpath d='M64 10h26v24z' fill='%233d8bff'/%3E%3C/svg%3E">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.production.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.23.2/babel.min.js"></script>
+<!-- Excel出力（SheetJS）。読み込み失敗時はExcelボタンのみ無効化し、他機能は動作 -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Noto+Serif+JP:wght@500;700&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html,body{height:100%;overflow:hidden;}
+body{font-family:'Zen Kaku Gothic New','Hiragino Sans','Yu Gothic',sans-serif;background:#eef1f6;color:#16213a;line-height:1.7;-webkit-font-smoothing:antialiased;}
+:root{
+  --navy:#16213a;--navy2:#22304f;--blue:#1a5cff;--blue2:#3d8bff;
+  --paper:#f7f8fb;--g1:#f1f3f7;--g2:#e4e8ef;--g3:#cfd6e0;--g4:#9aa3b2;--g6:#5b6478;--g8:#2a3447;
+  --red:#d94436;--green:#1f9d57;--amber:#b07a16;
+  --sh:0 2px 14px rgba(22,33,58,.08);--shl:0 10px 40px rgba(22,33,58,.18);
+}
+.root{display:flex;flex-direction:column;height:100dvh;overflow:hidden;}
+
+/* ===== ヘッダー ===== */
+.hdr{background:var(--navy);padding:11px 16px;padding-top:calc(11px + env(safe-area-inset-top,0px));display:flex;align-items:center;gap:11px;flex-shrink:0;box-shadow:0 2px 10px rgba(0,0,0,.2);}
+.hdr-logo{width:34px;height:34px;flex-shrink:0;}
+.hdr-ttl{display:flex;flex-direction:column;line-height:1.15;}
+.hdr-ttl b{font-size:14px;font-weight:700;color:#fff;letter-spacing:.02em;}
+.hdr-ttl small{font-size:9px;color:var(--blue2);font-family:'Space Grotesk',sans-serif;letter-spacing:.14em;font-weight:600;}
+.hdr-sp{flex:1;}
+.hdr-btn{background:var(--blue);color:#fff;border:none;border-radius:8px;padding:8px 13px;font-size:12px;font-weight:700;cursor:pointer;font-family:inherit;white-space:nowrap;}
+.hdr-btn:active{transform:scale(.96);}
+
+/* ===== ページ ===== */
+.content{flex:1;overflow:hidden;position:relative;}
+.page{position:absolute;inset:0;overflow-y:auto;-webkit-overflow-scrolling:touch;}
+.page.hidden{display:none;}
+.wrap{padding:16px;display:flex;flex-direction:column;gap:13px;max-width:760px;margin:0 auto;padding-bottom:30px;}
+
+/* ===== 下部ナビ ===== */
+.bnav{display:flex;background:#fff;border-top:1px solid var(--g2);flex-shrink:0;padding-bottom:calc(3px + env(safe-area-inset-bottom,0px));box-shadow:0 -2px 14px rgba(0,0,0,.06);}
+.nbtn{flex:1;display:flex;flex-direction:column;align-items:center;padding:7px 2px 4px;border:none;background:none;cursor:pointer;font-size:10px;font-family:inherit;color:var(--g4);font-weight:500;gap:1px;position:relative;}
+.nbtn .ni{font-size:21px;line-height:1;}
+.nbtn.on{color:var(--navy);font-weight:700;}
+.nbtn .nd{width:22px;height:3px;border-radius:2px;margin-top:2px;background:transparent;}
+.nbtn.on .nd{background:var(--blue);}
+
+/* ===== カード ===== */
+.card{background:#fff;border-radius:14px;box-shadow:var(--sh);overflow:hidden;}
+.card-h{background:var(--navy);color:#fff;padding:11px 15px;font-size:12px;font-weight:700;letter-spacing:.05em;display:flex;align-items:center;gap:7px;}
+.card-b{padding:15px;}
+.card-note{padding:14px 15px;font-size:12.5px;line-height:2;color:var(--g6);}
+
+/* ===== ステータス ===== */
+.st{display:flex;align-items:center;gap:9px;padding:11px 14px;border-radius:11px;font-size:12.5px;font-weight:500;}
+.st-info{background:#eaf1ff;color:#1a4fb0;border:1px solid #c2d6ff;}
+.st-ok{background:#e6f7ee;color:#177a44;border:1px solid #a8e0c1;}
+.st-err{background:#fdeae8;color:#b22d20;border:1px solid #f3bdb7;}
+.st-load{background:#fef3e0;color:#8a5e10;border:1px solid #f3d49a;}
+.spin{width:15px;height:15px;border:2px solid rgba(0,0,0,.15);border-top-color:currentColor;border-radius:50%;animation:sp .7s linear infinite;flex-shrink:0;}
+@keyframes sp{to{transform:rotate(360deg)}}
+
+/* ===== アップロード ===== */
+.uzone{border:2px dashed var(--g3);border-radius:16px;padding:30px 16px;text-align:center;cursor:pointer;background:var(--paper);display:flex;flex-direction:column;align-items:center;gap:7px;transition:all .2s;}
+.uzone.drag{border-color:var(--blue);background:#eef4ff;}
+.uzone .ui{font-size:44px;}
+.uzone h3{font-size:16px;font-weight:700;color:var(--navy);}
+.uzone p{font-size:12.5px;color:var(--g6);line-height:1.7;}
+.ubadge{background:var(--navy);color:#fff;font-size:10px;padding:4px 11px;border-radius:20px;margin-top:3px;letter-spacing:.03em;}
+.img-preview{width:100%;border-radius:11px;overflow:hidden;box-shadow:var(--sh);}
+.img-preview img{width:100%;display:block;}
+
+/* ===== フォーム ===== */
+.fg{display:flex;flex-direction:column;gap:12px;}
+.fr{display:flex;flex-direction:column;gap:4px;}
+.fr label{font-size:10.5px;font-weight:700;color:var(--g6);letter-spacing:.05em;}
+.fr input,.fr select,.fr textarea{border:1.5px solid var(--g2);border-radius:9px;padding:11px 12px;font-size:16px;font-family:inherit;color:var(--g8);background:#fff;width:100%;-webkit-appearance:none;transition:border-color .15s,box-shadow .15s;}
+.fr input:focus,.fr select:focus,.fr textarea:focus{outline:none;border-color:var(--blue);box-shadow:0 0 0 3px rgba(26,92,255,.12);}
+.fr textarea{resize:vertical;min-height:74px;line-height:1.7;}
+.fr select{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%235b6478' stroke-width='1.6' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;background-size:11px;padding-right:32px;}
+.g2c{display:grid;grid-template-columns:1fr 1fr;gap:11px;}
+.g3c{display:grid;grid-template-columns:1fr 1fr 1fr;gap:9px;}
+
+/* ===== 書類タイプ切替 ===== */
+.dtype{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;}
+.dtype button{border:1.5px solid var(--g2);background:#fff;border-radius:11px;padding:12px 4px;font-family:inherit;font-size:13px;font-weight:700;color:var(--g6);cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:4px;transition:all .15s;}
+.dtype button .di{font-size:19px;}
+.dtype button.on{border-color:var(--blue);background:#eef4ff;color:var(--navy);box-shadow:0 0 0 3px rgba(26,92,255,.1);}
+
+/* ===== 明細カード編集 ===== */
+.lines{display:flex;flex-direction:column;gap:10px;}
+.line{background:var(--paper);border:1.5px solid var(--g2);border-radius:12px;padding:11px;display:flex;flex-direction:column;gap:9px;position:relative;}
+.line-no{position:absolute;top:-8px;left:11px;background:var(--navy);color:#fff;font-size:10px;font-weight:700;border-radius:6px;padding:1px 8px;font-family:'Space Grotesk',sans-serif;}
+.line-amt{text-align:right;font-size:13px;font-weight:700;color:var(--navy);}
+.line-amt span{font-size:11px;color:var(--g4);font-weight:500;margin-right:6px;}
+.line-tools{display:flex;gap:6px;}
+.iconbtn{border:1.5px solid var(--g2);background:#fff;border-radius:8px;width:34px;height:34px;display:flex;align-items:center;justify-content:center;font-size:14px;cursor:pointer;color:var(--g6);flex-shrink:0;}
+.iconbtn:active{background:var(--g1);}
+.iconbtn.danger{color:var(--red);border-color:#f3cfc9;}
+.iconbtn:disabled{opacity:.35;}
+
+/* ===== ボタン ===== */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;padding:13px 18px;border-radius:11px;border:none;font-size:13.5px;font-weight:700;font-family:inherit;cursor:pointer;-webkit-appearance:none;transition:transform .1s,opacity .15s;}
+.btn:active{transform:scale(.97);}
+.btn-navy{background:var(--navy);color:#fff;}
+.btn-blue{background:var(--blue);color:#fff;}
+.btn-out{background:#fff;color:var(--navy);border:1.5px solid var(--g3);}
+.btn-ghost{background:var(--g1);color:var(--g6);}
+.btn-sm{padding:9px 14px;font-size:12px;border-radius:9px;}
+.btn-full{width:100%;}
+.btn:disabled{opacity:.4;cursor:default;}
+.btn-row{display:flex;gap:9px;}
+.btn-row>.btn{flex:1;}
+
+/* ===== 合計サマリー（編集画面） ===== */
+.sumbox{background:var(--navy);border-radius:13px;padding:14px 16px;color:#fff;display:flex;flex-direction:column;gap:6px;}
+.sumbox .row{display:flex;justify-content:space-between;font-size:12px;color:rgba(255,255,255,.72);}
+.sumbox .row.big{font-size:14px;color:#fff;font-weight:700;border-top:1px solid rgba(255,255,255,.18);padding-top:8px;margin-top:3px;}
+.sumbox .row.big .amt{font-size:21px;}
+.sumbox .row .amt{font-family:'Space Grotesk',sans-serif;font-weight:700;}
+.sumbox .row.neg{color:#ffb3ab;}
+
+/* ===== 印鑑設定 ===== */
+.stamp-area{display:flex;align-items:center;gap:14px;}
+.stamp-c{width:78px;height:78px;border:2.5px solid var(--red);border-radius:50%;overflow:hidden;display:flex;align-items:center;justify-content:center;background:#fff6f5;cursor:pointer;flex-shrink:0;}
+.stamp-c img{width:100%;height:100%;object-fit:contain;}
+.stamp-ph{font-size:11px;color:var(--red);text-align:center;line-height:1.5;font-weight:700;}
+.stamp-info{font-size:12px;color:var(--g6);line-height:1.7;}
+
+/* ===== 履歴 ===== */
+.hitem{background:#fff;border-radius:12px;box-shadow:var(--sh);padding:13px 15px;display:flex;align-items:center;gap:12px;}
+.htag{font-size:9.5px;font-weight:700;padding:3px 8px;border-radius:6px;flex-shrink:0;letter-spacing:.04em;}
+.htag.invoice{background:#eaf1ff;color:var(--blue);}
+.htag.quote{background:#e6f7ee;color:var(--green);}
+.htag.delivery{background:#fef3e0;color:var(--amber);}
+.hmain{flex:1;min-width:0;}
+.hmain .h1{font-size:13.5px;font-weight:700;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hmain .h2{font-size:11px;color:var(--g4);font-family:'Space Grotesk',sans-serif;}
+.hamt{font-size:14px;font-weight:700;color:var(--navy);font-family:'Space Grotesk',sans-serif;white-space:nowrap;}
+
+/* ===== 空状態 ===== */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:46vh;gap:11px;text-align:center;padding:24px;}
+.empty .ei{font-size:52px;opacity:.28;}
+.empty h3{font-size:16px;color:var(--g6);}
+.empty p{font-size:12.5px;color:var(--g4);line-height:1.8;}
+
+/* ===== A4プレビュー（表示専用） ===== */
+.pv-toolbar{display:flex;gap:9px;align-items:center;background:#fff;border-radius:12px;padding:11px;box-shadow:var(--sh);flex-wrap:wrap;}
+.pv-toolbar .btn{flex:1;min-width:120px;}
+.inv-scale-wrap{width:100%;display:flex;justify-content:center;margin-top:13px;}
+.inv-inner{background:#fff;box-shadow:var(--shl);width:595px;transform-origin:top center;border-radius:3px;}
+.idoc{padding:30px 34px;font-family:'Noto Serif JP',serif,'Hiragino Mincho ProN','Yu Mincho',serif;}
+.ititle-blk{text-align:center;margin-bottom:22px;}
+.ititle{font-size:26px;font-weight:700;letter-spacing:.34em;color:var(--navy);border-bottom:3px solid var(--navy);display:inline-block;padding-bottom:5px;padding-left:.34em;}
+.ino{font-size:11px;color:var(--g6);margin-top:6px;font-family:'Space Grotesk','Zen Kaku Gothic New',sans-serif;letter-spacing:.04em;}
+.imeta{display:flex;justify-content:space-between;gap:18px;margin-bottom:18px;}
+.ito-name{font-size:17px;font-weight:700;color:var(--navy);border-bottom:2px solid var(--navy);padding-bottom:3px;margin-bottom:3px;display:inline-block;}
+.ito-suffix{font-size:12px;font-weight:400;margin-left:4px;}
+.ito-sub{font-size:11px;color:var(--g6);font-family:'Zen Kaku Gothic New',sans-serif;margin-top:4px;line-height:1.7;}
+.ifrom{text-align:right;min-width:188px;position:relative;padding-bottom:76px;}
+.ifrom-logo{display:flex;justify-content:flex-end;margin-bottom:6px;}
+.ifrom-logo svg{width:118px;height:auto;}
+.ifrom-name{font-size:13px;font-weight:700;color:var(--navy);margin-bottom:2px;}
+.ifrom-info{font-size:10px;color:var(--g6);line-height:1.95;font-family:'Zen Kaku Gothic New',sans-serif;}
+.stamp-on{position:absolute;bottom:4px;right:6px;width:64px;height:64px;border-radius:50%;overflow:hidden;opacity:.88;}
+.stamp-on img{width:100%;height:100%;object-fit:contain;}
+.idates{display:flex;gap:20px;margin-bottom:14px;font-size:11px;font-family:'Zen Kaku Gothic New',sans-serif;color:var(--g6);}
+.idates strong{color:var(--navy);}
+.itotal{background:var(--navy);color:#fff;border-radius:8px;padding:11px 18px;display:flex;align-items:center;justify-content:space-between;margin-bottom:15px;}
+.itotal .lbl{font-size:11px;opacity:.82;}
+.itotal .amt{font-size:22px;font-weight:700;font-family:'Space Grotesk',sans-serif;}
+.itotal .amt span{font-size:13px;margin-right:2px;}
+.itbl{width:100%;border-collapse:collapse;margin-bottom:10px;font-size:11px;font-family:'Zen Kaku Gothic New',sans-serif;}
+.itbl thead tr{background:var(--navy);color:#fff;}
+.itbl thead th{padding:8px 8px;font-weight:700;text-align:left;}
+.itbl thead th:not(:first-child){text-align:right;}
+.itbl tbody tr{border-bottom:1px solid var(--g2);}
+.itbl tbody tr:nth-child(even){background:#f8f9fc;}
+.itbl td{padding:7px 8px;vertical-align:top;}
+.itbl td:not(:first-child){text-align:right;white-space:nowrap;}
+.sub-row td{border-top:2px solid var(--g2);padding:6px 8px;font-weight:500;color:var(--g6);}
+.tax-row td{color:var(--g6);padding:3px 8px;font-size:10.5px;}
+.ttl-row td{border-top:2px solid var(--navy);background:#eef4ff;font-weight:700;font-size:13px;color:var(--navy);padding:8px 8px;}
+.ibank{border:1.5px solid var(--g2);border-radius:8px;overflow:hidden;margin-top:15px;}
+.ibank-h{background:var(--g1);padding:7px 12px;font-size:10px;font-weight:700;color:var(--g6);letter-spacing:.06em;font-family:'Zen Kaku Gothic New',sans-serif;}
+.ibank-b{padding:9px 12px;font-size:11.5px;line-height:2;font-family:'Zen Kaku Gothic New',sans-serif;}
+.ibank-b strong{color:var(--navy);}
+.inotes{margin-top:13px;font-size:10px;color:var(--g6);font-family:'Zen Kaku Gothic New',sans-serif;line-height:1.85;padding:9px 12px;background:var(--g1);border-radius:7px;}
+.inotes strong{color:var(--g8);}
+.ifooter{margin-top:20px;text-align:center;font-size:10px;color:var(--g4);font-family:'Zen Kaku Gothic New',sans-serif;border-top:1px solid var(--g2);padding-top:11px;}
+
+.helper{font-size:11px;color:var(--g4);line-height:1.7;}
+.divider{height:1px;background:var(--g2);margin:3px 0;}
+.toast{position:fixed;left:50%;bottom:calc(70px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--navy);color:#fff;padding:11px 20px;border-radius:30px;font-size:12.5px;font-weight:700;box-shadow:var(--shl);z-index:50;animation:tin .25s ease;}
+@keyframes tin{from{opacity:0;transform:translate(-50%,8px);}to{opacity:1;transform:translate(-50%,0);}}
+
+@page{size:A4 portrait;margin:12mm;}
+@media print{
+  html,body{overflow:visible;height:auto;background:#fff;}
+  .root{height:auto;}
+  .hdr,.bnav,.pv-toolbar,.no-print{display:none !important;}
+  .content,.page{position:static;overflow:visible;}
+  .page.hidden{display:none !important;}
+  .wrap{padding:0;max-width:none;}
+  .inv-scale-wrap{display:block;margin:0;}
+  .inv-inner{width:100%;transform:none !important;box-shadow:none;border-radius:0;}
+  .idoc{padding:0;}
+}
+@media (max-width:380px){.g2c{grid-template-columns:1fr;}}
+</style>
+</head>
+<body>
+<div id="root"></div>
+<script type="text/babel">
+const {useState,useRef,useCallback,useEffect,useMemo} = React;
+
+/* ====== 定数・ユーティリティ ====== */
+// OCR.space 公開デモキー（未設定時のフォールバック）。個人キーはコードに同梱せず、設定画面で入力・保存する（GitHub公開でも安全）
+const OCR_SPACE_DEMO = 'helloworld';
+const LOGO_SVG = (
+  <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-label="NosTechnology">
+    <rect width="100" height="100" rx="22" fill="#16213a"/>
+    <path d="M18 20h16v60H18z" fill="#fff"/>
+    <path d="M68 20h14v60H68z" fill="#fff"/>
+    <path d="M32 20h16l20 60H52z" fill="#fff" opacity=".86"/>
+    <path d="M64 10h26v24z" fill="#3d8bff"/>
+  </svg>
+);
+const LOGO_DOC = (
+  <svg viewBox="0 0 720 180" xmlns="http://www.w3.org/2000/svg">
+    <g transform="translate(0 26)">
+      <path d="M0 0h13v82H0z" fill="#16213a"/>
+      <path d="M67 0h13v82H67z" fill="#16213a"/>
+      <path d="M11 0h20l48 82H59z" fill="#16213a" opacity=".86"/>
+      <path d="M62-13h34v31z" fill="#1a5cff"/>
+    </g>
+    <text x="120" y="86" fill="#16213a" fontFamily="Space Grotesk, sans-serif" fontSize="46" fontWeight="700">Nos</text>
+    <text x="218" y="86" fill="#5b6478" fontFamily="Space Grotesk, sans-serif" fontSize="46" fontWeight="400">Technology</text>
+  </svg>
+);
+
+const fmt = n => Number(n||0).toLocaleString('ja-JP');
+const cleanNum = s => Number(String(s).replace(/[¥,￥\s]/g,''))||0;
+const ymd = d => d.toLocaleDateString('ja-JP',{year:'numeric',month:'2-digit',day:'2-digit'}).replace(/\//g,'-');
+const TODAY = ymd(new Date());
+const endOfNextMonth = () => { const d=new Date(); d.setMonth(d.getMonth()+2); d.setDate(0); return ymd(d); };
+const plusDays = n => { const d=new Date(); d.setDate(d.getDate()+n); return ymd(d); };
+
+const LS = {
+  get:k=>{try{const v=localStorage.getItem(k);return v?JSON.parse(v):null;}catch{return null;}},
+  set:(k,v)=>{try{localStorage.setItem(k,JSON.stringify(v));}catch{}}
+};
+
+// 書類タイプ定義（1つのデータモデルでタイトル・文言だけ切替）
+const DOC_TYPES = {
+  invoice:  {label:'請求書', icon:'📋', prefix:'INV', dateLabel:'支払期限', amountLabel:'ご請求金額（税込）', footer:'上記の通りご請求申し上げます。', showBank:true,  tag:'invoice'},
+  quote:    {label:'見積書', icon:'📝', prefix:'EST', dateLabel:'有効期限', amountLabel:'お見積金額（税込）', footer:'下記の通りお見積り申し上げます。', showBank:false, tag:'quote'},
+  delivery: {label:'納品書', icon:'📦', prefix:'DLV', dateLabel:'納品日',   amountLabel:'納品金額（税込）',   footer:'下記の通り納品いたしました。',   showBank:false, tag:'delivery'},
+};
+
+const INIT_SENDER = {
+  senderName:'NosTechnology', senderPostal:'', senderAddress:'', senderPhone:'',
+  senderEmail:'', senderRegistration:'', defaultStaff:'',
+  bankName:'', bankBranch:'', bankType:'普通', bankAccount:'', bankHolder:'',
+  defaultNotes:'お振込手数料は御社にてご負担くださいますようお願い申し上げます。\nご不明な点がございましたら、お気軽にお問い合わせください。',
+  // 読み取りエンジン設定（キーはこの端末のlocalStorageにのみ保存）
+  ocrEngine:'ocrspace', ocrSpaceKey:'', openaiKey:'', geminiKey:''
+};
+
+const seq = (history, type) => {
+  const ym = new Date().getFullYear()+String(new Date().getMonth()+1).padStart(2,'0');
+  const n = history.filter(d=>d.docType===type && (d.number||'').includes(ym)).length + 1;
+  return `${DOC_TYPES[type].prefix}-${ym}-${String(n).padStart(3,'0')}`;
+};
+
+const newDoc = (type='invoice', history=[]) => ({
+  id: 'D'+Date.now(),
+  docType: type,
+  number: seq(history,type),
+  issueDate: TODAY,
+  dueDate: type==='quote' ? plusDays(30) : type==='delivery' ? TODAY : endOfNextMonth(),
+  clientName:'', clientPerson:'', clientPostal:'', clientAddress:'',
+  subject:'', notes:'', staffName:'',
+  taxRate:10, discount:0, withholding:false,
+  items:[{id:1,name:'',qty:1,unit:'式',unitPrice:0}],
+});
+
+/* ====== 合計計算 ====== */
+function calcTotals(doc){
+  const subtotal = doc.items.reduce((s,it)=>s+Number(it.qty||0)*Number(it.unitPrice||0),0);
+  const discount = Number(doc.discount||0);
+  const taxable = Math.max(0, subtotal - discount);
+  const tax = Math.floor(taxable*Number(doc.taxRate||0)/100);
+  // 源泉徴収税（復興特別所得税込 10.21%）。税抜報酬額ベース。
+  const withholding = doc.withholding ? Math.floor(taxable*0.1021) : 0;
+  const total = taxable + tax - withholding;
+  return {subtotal,discount,taxable,tax,withholding,total};
+}
+
+/* ====== ファイル名生成（PDF・Excel共通：日付_種別_宛先_担当_番号） ====== */
+// Windowsで使えない文字を除去し、AI/ドライブで後から整理しやすい名前にする
+const sanitizeName = s => String(s||'').replace(/[\\\/:*?"<>|]/g,'').replace(/\s+/g,'').trim();
+const buildFilename = (doc, dt) => {
+  const parts=[doc.issueDate, dt.label, sanitizeName(doc.clientName)||'宛先未設定'];
+  if(doc.staffName) parts.push('担当'+sanitizeName(doc.staffName));
+  parts.push(doc.number);
+  return parts.join('_');
+};
+
+/* ====== AI読み取り（OpenAI / Gemini）：画像から構造化抽出 ====== */
+const fileToDataURL = file => new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(file); });
+const EXTRACT_PROMPT = `この見積書または請求書の画像から内容を抽出し、JSONのみで返答してください。説明文は不要です。
+形式: {"clientName":"宛先の会社名（御中は除く）","clientPerson":"先方の担当者名","subject":"件名","items":[{"name":"品目名","qty":数量(数値),"unit":"単位","unitPrice":単価(税抜・数値・記号やカンマなし)}]}
+読み取れない項目は空文字、品目が無ければ items は空配列にしてください。`;
+function parseJSONLoose(s){ const m=String(s).match(/\{[\s\S]*\}/); if(!m) throw new Error('AIの応答を解析できませんでした'); return JSON.parse(m[0]); }
+async function extractWithOpenAI(file, key){
+  const dataUrl=await fileToDataURL(file);
+  const res=await fetch('https://api.openai.com/v1/chat/completions',{
+    method:'POST', headers:{'Content-Type':'application/json','Authorization':`Bearer ${key}`},
+    body:JSON.stringify({ model:'gpt-4o-mini', temperature:0, max_tokens:1500,
+      messages:[{role:'user',content:[{type:'text',text:EXTRACT_PROMPT},{type:'image_url',image_url:{url:dataUrl}}]}] })
+  });
+  if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.error?.message||`OpenAI APIエラー(${res.status})`); }
+  const data=await res.json();
+  return parseJSONLoose(data.choices?.[0]?.message?.content||'');
+}
+async function extractWithGemini(file, key){
+  const dataUrl=await fileToDataURL(file); const b64=dataUrl.split(',')[1];
+  const res=await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${encodeURIComponent(key)}`,{
+    method:'POST', headers:{'Content-Type':'application/json'},
+    body:JSON.stringify({ contents:[{parts:[{text:EXTRACT_PROMPT},{inline_data:{mime_type:file.type,data:b64}}]}] })
+  });
+  if(!res.ok){ const e=await res.json().catch(()=>({})); throw new Error(e.error?.message||`Gemini APIエラー(${res.status})`); }
+  const data=await res.json();
+  const txt=data.candidates?.[0]?.content?.parts?.map(p=>p.text).join('')||'';
+  return parseJSONLoose(txt);
+}
+
+/* ====== 入力（フォーカスを保持する uncontrolled） ====== */
+function TextInput({value, onCommit, ...rest}){
+  const ref = useRef();
+  useEffect(()=>{ if(ref.current && ref.current!==document.activeElement) ref.current.value = value ?? ''; },[value]);
+  return <input ref={ref} defaultValue={value}
+    onChange={e=>onCommit(e.target.value)}
+    {...rest}/>;
+}
+
+/* ====== 明細1行カード ====== */
+function LineCard({index, total, item, onChange, onDel, onMove, isFirst, isLast}){
+  const amt = Number(item.qty||0)*Number(item.unitPrice||0);
+  return (
+    <div className="line">
+      <div className="line-no">{String(index+1).padStart(2,'0')}</div>
+      <div className="fr">
+        <TextInput value={item.name} placeholder="品目・作業内容"
+          onCommit={v=>onChange(item.id,'name',v)}/>
+      </div>
+      <div className="g3c">
+        <div className="fr"><label>数量</label>
+          <TextInput value={item.qty} type="number" inputMode="decimal"
+            onCommit={v=>onChange(item.id,'qty',v)}/></div>
+        <div className="fr"><label>単位</label>
+          <TextInput value={item.unit} placeholder="式"
+            onCommit={v=>onChange(item.id,'unit',v)}/></div>
+        <div className="fr"><label>単価</label>
+          <TextInput value={item.unitPrice} type="number" inputMode="numeric"
+            onCommit={v=>onChange(item.id,'unitPrice',v)}/></div>
+      </div>
+      <div style={{display:'flex',alignItems:'center',justifyContent:'space-between'}}>
+        <div className="line-tools">
+          <button className="iconbtn" disabled={isFirst} onClick={()=>onMove(index,-1)} title="上へ">▲</button>
+          <button className="iconbtn" disabled={isLast} onClick={()=>onMove(index,1)} title="下へ">▼</button>
+          <button className="iconbtn danger" disabled={total<=1} onClick={()=>onDel(item.id)} title="削除">✕</button>
+        </div>
+        <div className="line-amt"><span>金額</span>¥{fmt(amt)}</div>
+      </div>
+    </div>
+  );
+}
+
+/* ====== アコーディオン（設定用・トップレベル定義で再マウント防止） ====== */
+function Acc({id, icon, label, open, onToggle, children}){
+  return (
+    <div className="card">
+      <button className="card-h" style={{width:'100%',border:'none',cursor:'pointer',justifyContent:'space-between'}} onClick={()=>onToggle(id)}>
+        <span>{icon} {label}</span>
+        <span style={{transition:'transform .2s',transform:open?'rotate(180deg)':'none',color:'var(--blue2)'}}>▼</span>
+      </button>
+      {open && <div className="card-b">{children}</div>}
+    </div>
+  );
+}
+
+/* ====== A4プレビュー（表示専用） ====== */
+function A4Preview({doc, sender, stamp, totals, dt}){
+  return (
+    <div className="idoc">
+      <div className="ititle-blk">
+        <div className="ititle">{dt.label}</div>
+        <div className="ino">No. {doc.number}</div>
+      </div>
+      <div className="imeta">
+        <div>
+          <span className="ito-name">{doc.clientName||'（宛先会社名）'}<span className="ito-suffix">御中</span></span>
+          {(doc.clientPostal||doc.clientAddress)&&<div className="ito-sub">{doc.clientPostal&&`〒${doc.clientPostal} `}{doc.clientAddress}</div>}
+          {doc.clientPerson&&<div className="ito-sub">ご担当：{doc.clientPerson}</div>}
+          {doc.subject&&<div className="ito-sub" style={{marginTop:6}}>件名：<strong style={{color:'#2a3447'}}>{doc.subject}</strong></div>}
+        </div>
+        <div className="ifrom">
+          <div className="ifrom-logo">{LOGO_DOC}</div>
+          <div className="ifrom-name">{sender.senderName||'NosTechnology'}</div>
+          <div className="ifrom-info">
+            {sender.senderPostal&&<div>〒{sender.senderPostal}</div>}
+            {sender.senderAddress&&<div>{sender.senderAddress}</div>}
+            {sender.senderPhone&&<div>TEL: {sender.senderPhone}</div>}
+            {sender.senderEmail&&<div>{sender.senderEmail}</div>}
+            {sender.senderRegistration&&<div>登録番号: {sender.senderRegistration}</div>}
+            {doc.staffName&&<div>担当: {doc.staffName}</div>}
+          </div>
+          {stamp&&<div className="stamp-on"><img src={stamp} alt="印"/></div>}
+        </div>
+      </div>
+      <div className="idates">
+        <div>発行日：<strong>{doc.issueDate}</strong></div>
+        <div>{dt.dateLabel}：<strong>{doc.dueDate}</strong></div>
+      </div>
+      <div className="itotal">
+        <div className="lbl">{dt.amountLabel}</div>
+        <div className="amt"><span>¥</span>{fmt(totals.total)}</div>
+      </div>
+      <table className="itbl">
+        <thead><tr>
+          <th style={{width:'42%'}}>品目</th><th style={{width:'11%'}}>数量</th>
+          <th style={{width:'9%'}}>単位</th><th style={{width:'18%'}}>単価</th><th style={{width:'20%'}}>金額</th>
+        </tr></thead>
+        <tbody>
+          {doc.items.map(it=>(
+            <tr key={it.id}>
+              <td style={{whiteSpace:'normal',textAlign:'left'}}>{it.name||'　'}</td>
+              <td>{it.qty}</td><td>{it.unit}</td>
+              <td>¥{fmt(it.unitPrice)}</td>
+              <td>¥{fmt(Number(it.qty||0)*Number(it.unitPrice||0))}</td>
+            </tr>
+          ))}
+          <tr className="sub-row"><td colSpan={4} style={{textAlign:'right'}}>小計</td><td style={{textAlign:'right'}}>¥{fmt(totals.subtotal)}</td></tr>
+          {totals.discount>0&&<tr className="tax-row"><td colSpan={4} style={{textAlign:'right'}}>値引き</td><td style={{textAlign:'right'}}>−¥{fmt(totals.discount)}</td></tr>}
+          <tr className="tax-row"><td colSpan={4} style={{textAlign:'right'}}>消費税（{doc.taxRate}%）</td><td style={{textAlign:'right'}}>¥{fmt(totals.tax)}</td></tr>
+          {totals.withholding>0&&<tr className="tax-row"><td colSpan={4} style={{textAlign:'right'}}>源泉徴収税（10.21%）</td><td style={{textAlign:'right'}}>−¥{fmt(totals.withholding)}</td></tr>}
+          <tr className="ttl-row"><td colSpan={4} style={{textAlign:'right'}}>合計</td><td style={{textAlign:'right'}}>¥{fmt(totals.total)}</td></tr>
+        </tbody>
+      </table>
+      {dt.showBank&&(sender.bankName||sender.bankAccount)&&(
+        <div className="ibank">
+          <div className="ibank-h">▍ お振込先</div>
+          <div className="ibank-b">
+            <strong>{sender.bankName} {sender.bankBranch}</strong>　{sender.bankType} {sender.bankAccount}<br/>
+            {sender.bankHolder&&<>口座名義：{sender.bankHolder}</>}
+          </div>
+        </div>
+      )}
+      {doc.notes&&(
+        <div className="inotes"><strong>備考</strong><br/>
+          {doc.notes.split('\n').map((l,i)=><span key={i}>{l}<br/></span>)}
+        </div>
+      )}
+      <div className="ifooter">このたびはお取引いただき誠にありがとうございます。{dt.footer}</div>
+    </div>
+  );
+}
+
+/* ============================== App ============================== */
+function App(){
+  const [history,setHistory] = useState(()=>LS.get('docHistory')||[]);
+  const [doc,setDoc]   = useState(()=>newDoc('invoice', LS.get('docHistory')||[]));
+  const [sender,setSender] = useState(()=>({...INIT_SENDER, ...(LS.get('sender')||{})}));
+  const [stamp,setStamp]   = useState(()=>LS.get('stamp')||null);
+  const [page,setPage]     = useState('upload');
+  const [openAcc,setOpenAcc] = useState('company');
+  const [hasDoc,setHasDoc] = useState(false);
+  const [drag,setDrag]     = useState(false);
+  const [status,setStatus] = useState({t:'info',m:'見積書の写真・PDFをアップロードしてください'});
+  const [ocrRunning,setOcrRunning] = useState(false);
+  const [previewImg,setPreviewImg] = useState(null);
+  const [scale,setScale]   = useState(1);
+  const [toast,setToast]   = useState('');
+  const fileRef=useRef(); const stampRef=useRef(); const invWrap=useRef();
+
+  const dt = DOC_TYPES[doc.docType];
+  const totals = useMemo(()=>calcTotals(doc),[doc]);
+
+  // 初期値に設定のデフォルト（備考・自社担当者）を反映
+  useEffect(()=>{ setDoc(p=>({...p, notes:p.notes||sender.defaultNotes||'', staffName:p.staffName||sender.defaultStaff||''})); },[]);
+
+  // A4を画面幅に合わせて縮小
+  useEffect(()=>{
+    const calc=()=>{ if(invWrap.current){ const w=invWrap.current.offsetWidth-4; setScale(Math.min(1,w/595)); } };
+    calc(); window.addEventListener('resize',calc);
+    return ()=>window.removeEventListener('resize',calc);
+  },[page]);
+
+  const showToast=m=>{ setToast(m); setTimeout(()=>setToast(''),2200); };
+
+  const updDoc=(k,v)=>setDoc(p=>({...p,[k]:v}));
+  const updSnd=(k,v)=>setSender(p=>({...p,[k]:v}));
+
+  const changeItem=useCallback((id,k,v)=>{
+    const val = (k==='name'||k==='unit') ? v : (parseFloat(v)||0);
+    setDoc(p=>({...p,items:p.items.map(it=>it.id===id?{...it,[k]:val}:it)}));
+  },[]);
+  const addItem=()=>setDoc(p=>({...p,items:[...p.items,{id:Date.now(),name:'',qty:1,unit:'式',unitPrice:0}]}));
+  const delItem=id=>setDoc(p=>({...p,items:p.items.filter(it=>it.id!==id)}));
+  const moveItem=(idx,dir)=>setDoc(p=>{
+    const a=[...p.items]; const j=idx+dir; if(j<0||j>=a.length) return p;
+    [a[idx],a[j]]=[a[j],a[idx]]; return {...p,items:a};
+  });
+
+  // 書類タイプ切替（番号も振り直す）
+  const switchType=type=>setDoc(p=>({...p, docType:type, number:seq(history,type),
+    dueDate: type==='quote'?plusDays(30):type==='delivery'?TODAY:endOfNextMonth() }));
+
+  const saveSender=()=>{ LS.set('sender',sender); if(stamp) LS.set('stamp',stamp); else localStorage.removeItem('stamp'); showToast('✓ 設定を保存しました'); };
+  const handleStamp=e=>{ const f=e.target.files[0]; if(!f)return; const r=new FileReader(); r.onload=ev=>setStamp(ev.target.result); r.readAsDataURL(f); };
+
+  // 履歴へ保存（同一IDは上書き）
+  const saveDoc=()=>{
+    setHistory(prev=>{
+      const next=[{...doc, savedAt:TODAY, total:totals.total}, ...prev.filter(d=>d.id!==doc.id)];
+      LS.set('docHistory',next); return next;
+    });
+    showToast('✓ 履歴に保存しました');
+  };
+  const openDoc=d=>{ setDoc({...d}); setHasDoc(true); setPage('edit'); };
+  const dupDoc=d=>{ const c={...d, id:'D'+Date.now(), number:seq(history,d.docType), issueDate:TODAY, savedAt:undefined}; setDoc(c); setHasDoc(true); setPage('edit'); showToast('複製しました（新規番号）'); };
+  const delDoc=id=>setHistory(prev=>{ const n=prev.filter(d=>d.id!==id); LS.set('docHistory',n); return n; });
+
+  const resetDoc=()=>{
+    const nd=newDoc(doc.docType, history);
+    if(sender.defaultNotes) nd.notes=sender.defaultNotes;
+    if(sender.defaultStaff) nd.staffName=sender.defaultStaff;
+    setDoc(nd); setHasDoc(false); setPreviewImg(null);
+    setStatus({t:'info',m:'見積書の写真・PDFをアップロードしてください'});
+    setPage('upload');
+  };
+
+  /* ===== OCR：見積書 → 自動読取 ===== */
+  const parseOcrText=text=>{
+    const lines=text.split(/\r?\n/).map(l=>l.trim()).filter(Boolean);
+    const items=[];
+    const lineRe=/^(.+?)\s+([\d]+\.?[\d]*)\s*(m|㎡|㎥|cm|mm|式|個|本|枚|冊|台|件|ヶ月|時間|日|回|人|名|セット|点|頁|ページ)?\s+([\d,]+)\s+([\d,]+)\s*$/;
+    lines.forEach(line=>{
+      const m=line.match(lineRe);
+      if(m){
+        const name=m[1].replace(/^[・\s]+|[・\s]+$/g,'').trim();
+        const qty=parseFloat(m[2])||1, unit=m[3]||'式', unitPrice=cleanNum(m[4]);
+        if(name.length>0&&name.length<40&&unitPrice>0) items.push({id:Date.now()+Math.random(),name,qty,unit,unitPrice});
+      }
+    });
+    let clientName='';
+    for(const l of lines){ if(/御中/.test(l)){clientName=l.replace(/御中/,'').replace(/\s/g,'').trim();break;} }
+    const tantoM=text.match(/(?:ご?担当者?)[：:\s]*([^\s\r\n]{2,10})/);
+    const subjM=text.match(/件\s*名[：:\s]*([^\r\n]{2,40})/);
+    setDoc(p=>({
+      ...p,
+      clientName:clientName||p.clientName,
+      clientPerson:(tantoM?tantoM[1].trim():'')||p.clientPerson,
+      subject:(subjM?subjM[1].trim():'')||p.subject,
+      items:items.length>0?items:p.items,
+    }));
+  };
+
+  // AI抽出結果をフォームへ反映
+  const applyExtracted=obj=>{
+    const items=(obj.items||[]).filter(it=>it&&(it.name||it.unitPrice)).map(it=>({
+      id:Date.now()+Math.random(), name:String(it.name||'').slice(0,60),
+      qty:parseFloat(it.qty)||1, unit:String(it.unit||'式'), unitPrice:cleanNum(it.unitPrice)
+    }));
+    setDoc(p=>({...p,
+      clientName:obj.clientName||p.clientName,
+      clientPerson:obj.clientPerson||p.clientPerson,
+      subject:obj.subject||p.subject,
+      items:items.length?items:p.items
+    }));
+  };
+
+  const handleFile=async file=>{
+    if(!file) return;
+    const allowed=['image/png','image/jpeg','image/jpg','image/webp','application/pdf'];
+    if(!allowed.includes(file.type)){ setStatus({t:'err',m:'PNG・JPG・WebP・PDF のみ対応しています'}); return; }
+    if(file.size>1024*1024*5){ setStatus({t:'err',m:'ファイルが大きすぎます（5MBまで）'}); return; }
+    setPreviewImg(file.type.startsWith('image/')?URL.createObjectURL(file):null);
+    setHasDoc(true); setOcrRunning(true);
+    const engine=sender.ocrEngine||'ocrspace';
+    try{
+      if(engine==='openai'||engine==='gemini'){
+        const label=engine==='openai'?'OpenAI':'Gemini';
+        if(file.type==='application/pdf') throw new Error('AI読取は画像（写真）のみ対応です。PDFはOCR.spaceをご利用ください');
+        const key=engine==='openai'?sender.openaiKey:sender.geminiKey;
+        if(!key) throw new Error(`設定 →「読み取りエンジン」で ${label} APIキーを入力してください`);
+        setStatus({t:'load',m:`${label} で内容を解析しています…`});
+        const obj=await (engine==='openai'?extractWithOpenAI(file,key):extractWithGemini(file,key));
+        applyExtracted(obj);
+      }else{
+        setStatus({t:'load',m:'OCRで文字を読み取っています…'});
+        const key=sender.ocrSpaceKey||OCR_SPACE_DEMO;
+        const fd=new FormData();
+        fd.append('file',file); fd.append('apikey',key);
+        fd.append('language','jpn'); fd.append('isOverlayRequired','false');
+        fd.append('detectOrientation','true'); fd.append('scale','true'); fd.append('OCREngine','2');
+        const res=await fetch('https://api.ocr.space/parse/image',{method:'POST',body:fd});
+        const data=await res.json();
+        if(data.IsErroredOnProcessing) throw new Error(data.ErrorMessage?.[0]||'OCRエラー');
+        const text=data.ParsedResults?.[0]?.ParsedText||'';
+        if(!text.trim()) throw new Error('文字を読み取れませんでした');
+        parseOcrText(text);
+      }
+      setStatus({t:'ok',m:'✓ 読取完了！「作成」タブで内容を確認・修正してください'});
+      setTimeout(()=>setPage('edit'),650);
+    }catch(e){
+      setStatus({t:'err',m:`読取失敗: ${e.message}`});
+    }finally{ setOcrRunning(false); }
+  };
+
+  // PDF出力：印刷前にdocument.titleをファイル名に設定（ブラウザの保存ファイル名に反映）
+  const printPDF=()=>{
+    const fn=buildFilename(doc,dt);
+    const prev=document.title;
+    document.title=fn;
+    const restore=()=>{ document.title=prev; window.removeEventListener('afterprint',restore); };
+    window.addEventListener('afterprint',restore);
+    setPage('preview');
+    setTimeout(()=>window.print(),180);
+  };
+  const onDrop=useCallback(e=>{e.preventDefault();setDrag(false);handleFile(e.dataTransfer.files[0]);},[]);
+
+  /* ===== Excel(.xlsx)出力 ===== */
+  const exportExcel=()=>{
+    if(typeof XLSX==='undefined'){ showToast('Excelライブラリ未読込（オンライン環境で再試行）'); return; }
+    const rows=[];
+    rows.push([dt.label]);
+    rows.push(['書類番号',doc.number,'',  '発行元',sender.senderName]);
+    rows.push(['発行日',doc.issueDate,'', dt.dateLabel,doc.dueDate]);
+    rows.push(['宛先',(doc.clientName?doc.clientName+' 御中':''),'', 'ご担当',doc.clientPerson]);
+    if(doc.subject) rows.push(['件名',doc.subject]);
+    rows.push([]);
+    rows.push(['品目','数量','単位','単価','金額']);
+    doc.items.forEach(it=>rows.push([it.name,Number(it.qty||0),it.unit,Number(it.unitPrice||0),Number(it.qty||0)*Number(it.unitPrice||0)]));
+    rows.push([]);
+    rows.push(['','','','小計',totals.subtotal]);
+    if(totals.discount>0) rows.push(['','','','値引き',-totals.discount]);
+    rows.push(['','','',`消費税(${doc.taxRate}%)`,totals.tax]);
+    if(totals.withholding>0) rows.push(['','','','源泉徴収税',-totals.withholding]);
+    rows.push(['','','','合計',totals.total]);
+    if(dt.showBank&&(sender.bankName||sender.bankAccount)){
+      rows.push([]);
+      rows.push(['お振込先',`${sender.bankName} ${sender.bankBranch} ${sender.bankType} ${sender.bankAccount}`]);
+      rows.push(['口座名義',sender.bankHolder]);
+    }
+    const ws=XLSX.utils.aoa_to_sheet(rows);
+    ws['!cols']=[{wch:30},{wch:10},{wch:8},{wch:14},{wch:14}];
+    const wb=XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb,ws,dt.label);
+    XLSX.writeFile(wb,`${buildFilename(doc,dt)}.xlsx`);
+    showToast('✓ Excelを出力しました');
+  };
+
+  const copyBank=()=>{
+    const t=`${sender.bankName} ${sender.bankBranch} ${sender.bankType} ${sender.bankAccount} ${sender.bankHolder}`.trim();
+    if(navigator.clipboard) navigator.clipboard.writeText(t).then(()=>showToast('振込先をコピーしました'));
+  };
+
+  const navs=[
+    {id:'upload',i:'📥',l:'取込'},{id:'edit',i:'✏️',l:'作成'},
+    {id:'preview',i:'👁',l:'プレビュー'},{id:'history',i:'🕘',l:'履歴'},{id:'settings',i:'⚙️',l:'設定'},
+  ];
+
+  return (
+    <div className="root">
+      <div className="hdr">
+        <div className="hdr-logo">{LOGO_SVG}</div>
+        <div className="hdr-ttl"><b>書類メーカー</b><small>NOSTECHNOLOGY</small></div>
+        <div className="hdr-sp"/>
+        {hasDoc&&<button className="hdr-btn" onClick={printPDF}>🖨️ PDF</button>}
+      </div>
+
+      <div className="content">
+
+        {/* ===== 取込（OCR） ===== */}
+        <div className={`page${page==='upload'?'':' hidden'}`}>
+          <div className="wrap">
+            <div className={`uzone${drag?' drag':''}`}
+              onClick={()=>fileRef.current.click()}
+              onDragOver={e=>{e.preventDefault();setDrag(true);}}
+              onDragLeave={()=>setDrag(false)} onDrop={onDrop}>
+              <div className="ui">📸</div>
+              <h3>見積書を読み込む</h3>
+              <p>タップして写真・PDFを選択<br/>OCRで自動的に請求書へ変換します</p>
+              <div className="ubadge">PNG・JPG・WebP・PDF 対応</div>
+              <input ref={fileRef} type="file" accept=".png,.jpg,.jpeg,.webp,.pdf" style={{display:'none'}} onChange={e=>handleFile(e.target.files[0])}/>
+            </div>
+            <div className={`st st-${status.t}`}>
+              {(status.t==='load'||ocrRunning)&&<div className="spin"/>}<span>{status.m}</span>
+            </div>
+            {previewImg&&<div className="img-preview"><img src={previewImg} alt="プレビュー"/></div>}
+            <button className="btn btn-blue btn-full" onClick={()=>{setHasDoc(true);setPage('edit');}}>✏️ 手入力で新規作成</button>
+            <div className="card">
+              <div className="card-h">📖 使い方</div>
+              <div className="card-note">
+                ① 見積書の写真・PDFを取込（OCR自動読取）<br/>
+                ②「作成」で書類タイプ・宛先・明細を確認／修正<br/>
+                ③「設定」で会社情報・振込先・印鑑を保存（初回のみ）<br/>
+                ④「プレビュー」→ 🖨️ PDF出力 / 📊 Excel出力
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* ===== 作成（編集フォーム：モバイル最適化） ===== */}
+        <div className={`page${page==='edit'?'':' hidden'}`}>
+          <div className="wrap">
+            {!hasDoc?(
+              <div className="empty">
+                <div className="ei">✏️</div><h3>書類がまだありません</h3>
+                <p>「取込」から見積書を読み込むか<br/>手入力で新規作成してください</p>
+                <button className="btn btn-navy" onClick={()=>setPage('upload')}>📥 取込へ</button>
+              </div>
+            ):(<>
+              {/* 書類タイプ */}
+              <div className="card"><div className="card-b">
+                <div className="fr" style={{marginBottom:11}}><label>書類タイプ</label></div>
+                <div className="dtype">
+                  {Object.entries(DOC_TYPES).map(([k,v])=>(
+                    <button key={k} className={doc.docType===k?'on':''} onClick={()=>switchType(k)}>
+                      <span className="di">{v.icon}</span>{v.label}
+                    </button>
+                  ))}
+                </div>
+              </div></div>
+
+              {/* 基本情報 */}
+              <div className="card"><div className="card-b"><div className="fg">
+                <div className="g2c">
+                  <div className="fr"><label>書類番号</label><input value={doc.number} onChange={e=>updDoc('number',e.target.value)}/></div>
+                  <div className="fr"><label>消費税率</label>
+                    <select value={doc.taxRate} onChange={e=>updDoc('taxRate',Number(e.target.value))}>
+                      <option value="0">0%</option><option value="8">8%（軽減）</option><option value="10">10%</option>
+                    </select></div>
+                </div>
+                <div className="g2c">
+                  <div className="fr"><label>発行日</label><input type="date" value={doc.issueDate} onChange={e=>updDoc('issueDate',e.target.value)}/></div>
+                  <div className="fr"><label>{dt.dateLabel}</label><input type="date" value={doc.dueDate} onChange={e=>updDoc('dueDate',e.target.value)}/></div>
+                </div>
+                <div className="fr"><label>自社担当者（書類とPDF/Excelのファイル名に反映）</label><input value={doc.staffName} onChange={e=>updDoc('staffName',e.target.value)} placeholder="山田"/></div>
+              </div></div></div>
+
+              {/* 宛先 */}
+              <div className="card">
+                <div className="card-h">🏢 宛先</div>
+                <div className="card-b"><div className="fg">
+                  <div className="fr"><label>会社名（御中）</label><input value={doc.clientName} onChange={e=>updDoc('clientName',e.target.value)} placeholder="株式会社〇〇"/></div>
+                  <div className="g2c">
+                    <div className="fr"><label>郵便番号</label><input value={doc.clientPostal} onChange={e=>updDoc('clientPostal',e.target.value)} placeholder="123-4567" inputMode="numeric"/></div>
+                    <div className="fr"><label>ご担当者</label><input value={doc.clientPerson} onChange={e=>updDoc('clientPerson',e.target.value)} placeholder="山田 様"/></div>
+                  </div>
+                  <div className="fr"><label>住所</label><input value={doc.clientAddress} onChange={e=>updDoc('clientAddress',e.target.value)} placeholder="広島市〇〇区…"/></div>
+                  <div className="fr"><label>件名</label><input value={doc.subject} onChange={e=>updDoc('subject',e.target.value)} placeholder="〇〇制作費"/></div>
+                </div></div>
+              </div>
+
+              {/* 明細（カード式） */}
+              <div className="card">
+                <div className="card-h">📑 明細</div>
+                <div className="card-b">
+                  <div className="lines">
+                    {doc.items.map((it,idx)=>(
+                      <LineCard key={it.id} index={idx} total={doc.items.length} item={it}
+                        onChange={changeItem} onDel={delItem} onMove={moveItem}
+                        isFirst={idx===0} isLast={idx===doc.items.length-1}/>
+                    ))}
+                  </div>
+                  <button className="btn btn-out btn-full btn-sm" style={{marginTop:11}} onClick={addItem}>＋ 明細を追加</button>
+                </div>
+              </div>
+
+              {/* 値引き・源泉・備考 */}
+              <div className="card"><div className="card-b"><div className="fg">
+                <div className="g2c">
+                  <div className="fr"><label>値引き（円）</label><input type="number" inputMode="numeric" value={doc.discount} onChange={e=>updDoc('discount',parseFloat(e.target.value)||0)}/></div>
+                  <div className="fr"><label>源泉徴収（10.21%）</label>
+                    <select value={doc.withholding?'1':'0'} onChange={e=>updDoc('withholding',e.target.value==='1')}>
+                      <option value="0">なし</option><option value="1">差し引く</option>
+                    </select></div>
+                </div>
+                <div className="fr"><label>備考</label><textarea value={doc.notes} onChange={e=>updDoc('notes',e.target.value)} rows={3}/></div>
+              </div></div></div>
+
+              {/* 合計サマリー */}
+              <div className="sumbox">
+                <div className="row"><span>小計</span><span className="amt">¥{fmt(totals.subtotal)}</span></div>
+                {totals.discount>0&&<div className="row neg"><span>値引き</span><span className="amt">−¥{fmt(totals.discount)}</span></div>}
+                <div className="row"><span>消費税（{doc.taxRate}%）</span><span className="amt">¥{fmt(totals.tax)}</span></div>
+                {totals.withholding>0&&<div className="row neg"><span>源泉徴収税</span><span className="amt">−¥{fmt(totals.withholding)}</span></div>}
+                <div className="row big"><span>{dt.amountLabel}</span><span className="amt">¥{fmt(totals.total)}</span></div>
+              </div>
+
+              <div className="btn-row">
+                <button className="btn btn-out" onClick={resetDoc}>🔄 新規</button>
+                <button className="btn btn-navy" onClick={saveDoc}>💾 履歴に保存</button>
+                <button className="btn btn-blue" onClick={()=>setPage('preview')}>👁 プレビュー</button>
+              </div>
+            </>)}
+          </div>
+        </div>
+
+        {/* ===== プレビュー（A4・表示専用） ===== */}
+        <div className={`page${page==='preview'?'':' hidden'}`}>
+          <div className="wrap" ref={invWrap}>
+            {!hasDoc?(
+              <div className="empty"><div className="ei">👁</div><h3>プレビューする書類がありません</h3>
+                <button className="btn btn-navy" onClick={()=>setPage('upload')}>📥 取込へ</button></div>
+            ):(<>
+              <div className="pv-toolbar no-print">
+                <button className="btn btn-out btn-sm" onClick={()=>setPage('edit')}>← 編集</button>
+                <button className="btn btn-navy" onClick={printPDF}>🖨️ 印刷・PDF</button>
+                <button className="btn btn-blue" onClick={exportExcel}>📊 Excel出力</button>
+              </div>
+              <div className="inv-scale-wrap">
+                <div className="inv-inner" style={{transform:`scale(${scale})`,marginBottom:`${595*scale-595}px`}}>
+                  <A4Preview doc={doc} sender={sender} stamp={stamp} totals={totals} dt={dt}/>
+                </div>
+              </div>
+            </>)}
+          </div>
+        </div>
+
+        {/* ===== 履歴 ===== */}
+        <div className={`page${page==='history'?'':' hidden'}`}>
+          <div className="wrap">
+            {history.length===0?(
+              <div className="empty"><div className="ei">🕘</div><h3>保存した書類はありません</h3>
+                <p>「作成」画面で「💾 履歴に保存」すると<br/>ここに一覧表示されます</p></div>
+            ):history.map(d=>{
+              const v=DOC_TYPES[d.docType];
+              return (
+                <div className="hitem" key={d.id}>
+                  <span className={`htag ${v.tag}`}>{v.label}</span>
+                  <div className="hmain" onClick={()=>openDoc(d)} style={{cursor:'pointer'}}>
+                    <div className="h1">{d.clientName||'（宛先未設定）'}{d.subject?`／${d.subject}`:''}</div>
+                    <div className="h2">{d.number}・{d.issueDate}</div>
+                  </div>
+                  <div className="hamt">¥{fmt(d.total)}</div>
+                  <button className="iconbtn" onClick={()=>dupDoc(d)} title="複製">⧉</button>
+                  <button className="iconbtn danger" onClick={()=>delDoc(d.id)} title="削除">🗑</button>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+
+        {/* ===== 設定 ===== */}
+        <div className={`page${page==='settings'?'':' hidden'}`}>
+          <div className="wrap">
+            <Acc id="company" icon="🏢" label="会社情報（自社）" open={openAcc==='company'} onToggle={id=>setOpenAcc(o=>o===id?null:id)}>
+              <div className="fg">
+                <div className="fr"><label>会社名・屋号</label><input value={sender.senderName} onChange={e=>updSnd('senderName',e.target.value)} placeholder="NosTechnology"/></div>
+                <div className="g2c">
+                  <div className="fr"><label>郵便番号</label><input value={sender.senderPostal} onChange={e=>updSnd('senderPostal',e.target.value)} placeholder="730-0000" inputMode="numeric"/></div>
+                  <div className="fr"><label>電話番号</label><input value={sender.senderPhone} onChange={e=>updSnd('senderPhone',e.target.value)} placeholder="082-000-0000" inputMode="tel"/></div>
+                </div>
+                <div className="fr"><label>住所</label><input value={sender.senderAddress} onChange={e=>updSnd('senderAddress',e.target.value)} placeholder="広島市〇〇区…"/></div>
+                <div className="fr"><label>メール</label><input value={sender.senderEmail} onChange={e=>updSnd('senderEmail',e.target.value)} placeholder="info@…" inputMode="email"/></div>
+                <div className="fr"><label>インボイス登録番号</label><input value={sender.senderRegistration} onChange={e=>updSnd('senderRegistration',e.target.value)} placeholder="T1234567890123"/></div>
+                <div className="fr"><label>デフォルト担当者（新規作成時に自動入力）</label><input value={sender.defaultStaff} onChange={e=>updSnd('defaultStaff',e.target.value)} placeholder="山田"/></div>
+                <div className="helper">電話番号などが未定でも空欄でOK。後から入力して「💾 設定を保存」すれば次回から自動入力されます。</div>
+              </div>
+            </Acc>
+
+            <Acc id="bank" icon="🏦" label="振込先情報" open={openAcc==='bank'} onToggle={id=>setOpenAcc(o=>o===id?null:id)}>
+              <div className="fg">
+                <div className="g2c">
+                  <div className="fr"><label>銀行名</label><input value={sender.bankName} onChange={e=>updSnd('bankName',e.target.value)} placeholder="〇〇銀行"/></div>
+                  <div className="fr"><label>支店名</label><input value={sender.bankBranch} onChange={e=>updSnd('bankBranch',e.target.value)} placeholder="〇〇支店"/></div>
+                </div>
+                <div className="g2c">
+                  <div className="fr"><label>口座種別</label>
+                    <select value={sender.bankType} onChange={e=>updSnd('bankType',e.target.value)}>
+                      <option>普通</option><option>当座</option><option>貯蓄</option>
+                    </select></div>
+                  <div className="fr"><label>口座番号</label><input value={sender.bankAccount} onChange={e=>updSnd('bankAccount',e.target.value)} placeholder="1234567" inputMode="numeric"/></div>
+                </div>
+                <div className="fr"><label>口座名義（カナ）</label><input value={sender.bankHolder} onChange={e=>updSnd('bankHolder',e.target.value)} placeholder="ノステクノロジー"/></div>
+                <button className="btn btn-ghost btn-sm" onClick={copyBank}>📋 振込先をコピー</button>
+                <div className="helper">※ 振込先は請求書のみに表示されます（見積書・納品書には非表示）。</div>
+              </div>
+            </Acc>
+
+            <Acc id="stamp" icon="🔴" label="印鑑・社判" open={openAcc==='stamp'} onToggle={id=>setOpenAcc(o=>o===id?null:id)}>
+              <div className="stamp-area">
+                <div className="stamp-c" onClick={()=>stampRef.current.click()}>
+                  {stamp?<img src={stamp} alt="印鑑"/>:<div className="stamp-ph">印鑑<br/>タップ</div>}
+                </div>
+                <div className="stamp-info">PNG・JPG対応<br/>背景透過PNG推奨<br/>書類右下に表示</div>
+                <input ref={stampRef} type="file" accept="image/*" style={{display:'none'}} onChange={handleStamp}/>
+              </div>
+              {stamp&&<button className="btn btn-out btn-sm" style={{marginTop:12}} onClick={()=>setStamp(null)}>削除</button>}
+            </Acc>
+
+            <Acc id="ocr" icon="🤖" label="読み取りエンジン（OCR / AI）" open={openAcc==='ocr'} onToggle={id=>setOpenAcc(o=>o===id?null:id)}>
+              <div className="fg">
+                <div className="fr"><label>使用するエンジン</label>
+                  <select value={sender.ocrEngine} onChange={e=>updSnd('ocrEngine',e.target.value)}>
+                    <option value="ocrspace">OCR.space（無料・手軽）</option>
+                    <option value="openai">OpenAI GPT-4o mini（高精度・要APIキー）</option>
+                    <option value="gemini">Google Gemini（高精度・無料枠あり・要APIキー）</option>
+                  </select></div>
+                {sender.ocrEngine==='ocrspace'&&(
+                  <div className="fr"><label>OCR.space APIキー（空欄=無料デモキー）</label>
+                    <input value={sender.ocrSpaceKey} onChange={e=>updSnd('ocrSpaceKey',e.target.value)} placeholder="未設定でも利用可"/></div>)}
+                {sender.ocrEngine==='openai'&&(
+                  <div className="fr"><label>OpenAI APIキー</label>
+                    <input type="password" value={sender.openaiKey} onChange={e=>updSnd('openaiKey',e.target.value)} placeholder="sk-…"/></div>)}
+                {sender.ocrEngine==='gemini'&&(
+                  <div className="fr"><label>Gemini APIキー</label>
+                    <input type="password" value={sender.geminiKey} onChange={e=>updSnd('geminiKey',e.target.value)} placeholder="AIza…"/></div>)}
+                <div className="helper">APIキーはこの端末（ブラウザ）にのみ保存され、コードやGitHubには一切含まれません。OpenAI / Gemini は宛先・件名・明細まで高精度に自動入力します（画像のみ対応）。OCR.space はPDFも対応。</div>
+              </div>
+            </Acc>
+
+            <Acc id="notes" icon="📝" label="デフォルト備考" open={openAcc==='notes'} onToggle={id=>setOpenAcc(o=>o===id?null:id)}>
+              <div className="fr"><label>新規作成時に自動入力される備考</label>
+                <textarea value={sender.defaultNotes} onChange={e=>updSnd('defaultNotes',e.target.value)} rows={4}/></div>
+            </Acc>
+
+            <button className="btn btn-blue btn-full" onClick={saveSender}>💾 設定を保存する</button>
+            <div className="helper" style={{textAlign:'center'}}>会社情報・振込先・印鑑はこの端末に保存され、次回も自動入力されます。</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div className="bnav">
+        {navs.map(({id,i,l})=>(
+          <button key={id} className={`nbtn${page===id?' on':''}`} onClick={()=>setPage(id)}>
+            <div className="ni">{i}</div><div>{l}</div><div className="nd"/>
+          </button>
+        ))}
+      </div>
+
+      {toast&&<div className="toast">{toast}</div>}
+    </div>
+  );
+}
+
+ReactDOM.createRoot(document.getElementById('root')).render(<App/>);
+</script>
+</body>
+</html>
