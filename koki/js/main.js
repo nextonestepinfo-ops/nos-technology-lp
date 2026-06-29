@@ -23,6 +23,7 @@
     introStarted = true;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     function finish() {
+      window.scrollTo(0, 0); // ヒーロー表示時は最上部から
       document.body.classList.add("is-loaded");
       if (loader) {
         loader.classList.add("is-hidden");

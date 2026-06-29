@@ -53,15 +53,17 @@
     var form = g.querySelector("form");
     var input = g.querySelector("input");
     var err = g.querySelector(".err");
-    input.focus();
+    // 自動フォーカスはしない（スマホでキーボードが即出てスクロール位置がずれるのを防ぐ）
 
     form.addEventListener("submit", function (e) {
       e.preventDefault();
       if (input.value === "0000") {
         sessionStorage.setItem("koki_ok", "1");
+        if (input.blur) input.blur();
         var h = document.getElementById("koki-gate-hide");
         if (h) h.remove();
         g.remove();
+        window.scrollTo(0, 0); // 最上部に固定
         if (window.__startIntro) window.__startIntro(); // ゲート解除後にイントロ開始
       } else {
         err.classList.add("show");
