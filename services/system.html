@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="システム・管理画面開発｜Nos Technology。予約・顧客・問い合わせ・スタッフ管理など、現場で本当に使う小規模な管理画面を必要な分だけ作ります。" />
+  <meta name="description" content="システム・管理画面開発｜Nos Technology。売上管理・給与計算・勤怠×シフトなど、お店に合わせた独自システムを必要な分だけ。現場で本当に使う小規模な管理画面を作ります。" />
   <meta name="theme-color" content="#07080c" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Nos Technology" />
@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/hero.css" />
   <link rel="stylesheet" href="../css/sections.css" />
+  <link rel="stylesheet" href="../css/demos.css" />
 
   <script type="importmap">
     {
@@ -61,56 +62,236 @@
       <div class="hero__content">
         <span class="hero__badge" data-reveal="fade"><i></i> Service 03 — Admin System</span>
         <h1 class="hero__title">
-          <span class="line" data-reveal="line">現場で使う、</span>
-          <span class="line" data-reveal="line"><em>管理画面</em>を。</span>
+          <span class="line" data-reveal="line">お店の“独自</span>
+          <span class="line" data-reveal="line"><em>システム</em>”を。</span>
         </h1>
         <p class="hero__lead" data-reveal="fade">
-          予約、顧客、問い合わせ、スタッフ管理。表計算の限界を超えて、現場が本当に使う
-          小規模な管理画面を、必要な分だけ作ります。
+          売上の集計、給料の計算、勤怠とシフトの突き合わせ——
+          ノートと表計算と電卓でやっているその作業を、あなたのお店専用の1画面に。
+          既製ソフトに業務を合わせるのではなく、<b>業務にシステムを合わせます</b>。
         </p>
         <div class="hero__actions" data-reveal="fade">
           <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
-          <a class="btn btn--ghost" href="#screens" data-magnetic><span>画面イメージを見る</span></a>
+          <a class="btn btn--ghost" href="#screens" data-magnetic><span>画面の実例を見る</span></a>
         </div>
       </div>
       <div class="hero__meta" aria-hidden="true"><span>Booking · CRM · Staff</span><span>Scroll<i></i></span></div>
     </section>
 
-    <section class="section process" id="features">
-      <div class="section__head">
-        <p class="section__eyebrow" data-reveal="fade">What we do</p>
-        <h2 class="section__title" data-reveal="words">できること</h2>
+    <!-- ===== 画面の実例（営業でそのまま見せるデモ3枚。データはサンプル） ===== -->
+    <section class="section" id="screens">
+      <div class="section__head" style="max-width:var(--maxw);margin-left:auto;margin-right:auto;">
+        <p class="section__eyebrow" data-reveal="fade">Screens</p>
+        <h2 class="section__title" data-reveal="words">たとえば、こんな画面。</h2>
+        <p class="plan__desc" data-reveal="fade">全部つくる必要はありません。<b>いま一番面倒なところから1画面ずつ</b>。以下はその実例です（データはサンプル）。</p>
       </div>
-      <ol class="process__list">
-        <li class="step" data-reveal="rise"><span class="step__no">01</span><h3>予約管理</h3><p>予約の受付・一覧・変更を1画面で。</p></li>
-        <li class="step" data-reveal="rise"><span class="step__no">02</span><h3>顧客管理</h3><p>来店履歴・連絡先・メモを一元管理。</p></li>
-        <li class="step" data-reveal="rise"><span class="step__no">03</span><h3>問い合わせ一覧</h3><p>問い合わせの状況を見える化。</p></li>
-        <li class="step" data-reveal="rise"><span class="step__no">04</span><h3>スタッフ・集計</h3><p>シフトや簡単な集計・通知に対応。</p></li>
-      </ol>
+
+      <!-- ① 売上ダッシュボード -->
+      <div class="demo">
+        <div class="demo__copy" data-reveal="rise">
+          <span class="demo__no">CASE 01 — Sales</span>
+          <h3 class="demo__title">売上が、<em>細かく</em>見える。</h3>
+          <p class="demo__text">レジ締めのあとの電卓とノートを、この1画面に。日別・時間帯別・メニュー別・支払い方法別まで、知りたい粒度で自動集計します。</p>
+          <ul class="demo__points">
+            <li>時間帯別で「忙しい時間」が分かる<small>→ シフトの厚みを合わせられる</small></li>
+            <li>メニュー別で「稼ぎ頭」が分かる<small>→ 推すメニューが決まる</small></li>
+            <li>現金・カード・QRの内訳も自動<small>→ レジ締めが数分で終わる</small></li>
+          </ul>
+        </div>
+        <figure class="shot" data-reveal="rise" aria-label="売上ダッシュボードの画面例">
+          <div class="shot__bar"><i></i><i></i><i></i><span>yourshop-admin.jp / 売上</span></div>
+          <div class="shot__body">
+            <div class="ap-head">
+              <h4>今日の売上</h4>
+              <span class="ap-badge">レジと自動連携</span>
+              <time>7/5（日） 20:12 更新</time>
+            </div>
+            <div class="kpi-row">
+              <div class="kpi"><small>売上</small><b>¥68,500</b><em>+8.2%</em></div>
+              <div class="kpi"><small>客数</small><b>42</b><em>+5</em></div>
+              <div class="kpi"><small>客単価</small><b>¥1,630</b><em class="down">-1.1%</em></div>
+            </div>
+            <div class="sales-mid">
+              <div class="hours">
+                <small>時間帯別（前週比較つき）</small>
+                <div class="hours__bars" aria-hidden="true">
+                  <i style="--v:22%;--d:0"></i><i style="--v:34%;--d:1"></i><i style="--v:58%;--d:2"></i>
+                  <i style="--v:88%;--d:3" class="pk"></i><i style="--v:72%;--d:4"></i><i style="--v:40%;--d:5"></i>
+                  <i style="--v:46%;--d:6"></i><i style="--v:64%;--d:7"></i><i style="--v:96%;--d:8" class="pk"></i>
+                  <i style="--v:70%;--d:9"></i><i style="--v:30%;--d:10"></i>
+                </div>
+                <div class="hours__lbl"><span>10時</span><span>14時</span><span>20時</span></div>
+              </div>
+              <div class="paysplit">
+                <span class="paysplit__donut" aria-hidden="true"></span>
+                <ul>
+                  <li><i style="background:var(--mint)"></i>現金 46%</li>
+                  <li><i style="background:var(--blue)"></i>カード 32%</li>
+                  <li><i style="background:#5b6bff"></i>QR 14%</li>
+                  <li><i style="background:#33405e"></i>その他 8%</li>
+                </ul>
+              </div>
+            </div>
+            <ul class="rank">
+              <li><span>カット＋カラー</span><span class="rank__bar"><i style="--v:92%"></i></span><b>¥28,600</b></li>
+              <li><span>カット</span><span class="rank__bar"><i style="--v:64%"></i></span><b>¥19,800</b></li>
+              <li><span>トリートメント</span><span class="rank__bar"><i style="--v:41%"></i></span><b>¥12,700</b></li>
+            </ul>
+          </div>
+        </figure>
+      </div>
+
+      <!-- ② 給与計算 -->
+      <div class="demo">
+        <div class="demo__copy" data-reveal="rise">
+          <span class="demo__no">CASE 02 — Payroll</span>
+          <h3 class="demo__title">給料計算が、<em>打刻から自動</em>。</h3>
+          <p class="demo__text">勤怠の打刻がそのまま給与明細の下書きに。時給・残業・交通費を店のルール通りに計算し、月末の数時間を数分にします。</p>
+          <ul class="demo__points">
+            <li>スタッフごとの時給・手当ルールを登録<small>→ 例外も店のルール通り</small></li>
+            <li>残業・深夜の割増も自動<small>→ 計算ミスと言った言わないを防ぐ</small></li>
+            <li>明細PDF・振込用CSVまで出力<small>→ 銀行画面に打ち直さない</small></li>
+          </ul>
+        </div>
+        <figure class="shot" data-reveal="rise" aria-label="給与計算の画面例">
+          <div class="shot__bar"><i></i><i></i><i></i><span>yourshop-admin.jp / 給与</span></div>
+          <div class="shot__body">
+            <div class="ap-head">
+              <h4>2026年6月分 給与</h4>
+              <span class="ap-badge">打刻から自動計算</span>
+            </div>
+            <div class="pay-table" role="table" aria-label="給与一覧（サンプル）">
+              <div class="tr tr--h"><span>スタッフ</span><span class="num">勤務</span><span class="num col-sp">残業</span><span class="num col-sp">時給</span><span class="num">交通費</span><span class="yen">支給額</span></div>
+              <div class="tr"><span class="nm"><i>佐</i><span class="nm__t">佐藤 美咲<small>店長・正社員</small></span></span><span class="num">168h</span><span class="num col-sp">6h</span><span class="num col-sp">—</span><span class="num">¥8,400</span><span class="yen">¥318,200</span></div>
+              <div class="tr"><span class="nm"><i>田</i><span class="nm__t">田中 蓮<small>スタイリスト</small></span></span><span class="num">152h</span><span class="num col-sp">3h</span><span class="num col-sp">¥1,400</span><span class="num">¥6,200</span><span class="yen">¥225,700</span></div>
+              <div class="tr"><span class="nm"><i>山</i><span class="nm__t">山本 結衣<small>アシスタント</small></span></span><span class="num">96h</span><span class="num col-sp">0h</span><span class="num col-sp">¥1,150</span><span class="num">¥4,800</span><span class="yen">¥115,200</span></div>
+              <div class="tr tr--sum"><span class="nm">合計（3名）</span><span class="num">416h</span><span class="num col-sp">9h</span><span class="num col-sp"></span><span class="num">¥19,400</span><span class="yen">¥659,100</span></div>
+            </div>
+            <div class="pay-foot">
+              <small>締め日・割増率はお店のルールに合わせて設定</small>
+              <div><span class="ap-btn">明細PDF</span><span class="ap-btn ap-btn--pri">振込CSVを出力</span></div>
+            </div>
+          </div>
+        </figure>
+      </div>
+
+      <!-- ③ 勤怠×シフト（独自システムの例） -->
+      <div class="demo">
+        <div class="demo__copy" data-reveal="rise">
+          <span class="demo__no">CASE 03 — Shift × Attendance</span>
+          <h3 class="demo__title">勤怠とシフトを、<em>1枚に混ぜる</em>。</h3>
+          <p class="demo__text">「シフト表はLINE、打刻は紙、集計は月末にまとめて」——バラバラの3つを1画面に。予定と実績のズレがその日のうちに見えます。市販ソフトにない、<b>お店専用の混ぜ方</b>ができるのが独自システムです。</p>
+          <ul class="demo__points">
+            <li>シフト希望の提出→下書きまで自動<small>→ 組む時間を短縮</small></li>
+            <li>予定と打刻のズレを自動で検出<small>→ 残業・遅刻がその日に分かる</small></li>
+            <li>そのまま給与計算（CASE 02）へ<small>→ 転記ゼロ</small></li>
+          </ul>
+        </div>
+        <figure class="shot" data-reveal="rise" aria-label="勤怠とシフトの画面例">
+          <div class="shot__bar"><i></i><i></i><i></i><span>yourshop-admin.jp / シフト</span></div>
+          <div class="shot__body">
+            <div class="ap-head">
+              <h4>今週のシフト × 勤怠</h4>
+              <div class="shift-legend" aria-hidden="true">
+                <span><i class="lg-plan"></i>予定</span><span><i class="lg-act"></i>実績</span><span><i class="lg-ot"></i>残業</span><span><i class="lg-late"></i>遅刻</span>
+              </div>
+            </div>
+            <div class="shift-grid">
+              <table aria-label="週間シフトと勤怠（サンプル）">
+                <thead>
+                  <tr><th></th><th>MON</th><th>TUE</th><th>WED</th><th class="today">THU</th><th>FRI</th><th>SAT</th></tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th>佐藤<small>店長</small></th>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>9:00-18:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act ot"></i><small>9:00-19:30</small></span></td>
+                    <td><span class="sh--off">休</span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>9:00-18:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>9:00-18:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act ot"></i><small>9:00-20:00</small></span></td>
+                  </tr>
+                  <tr>
+                    <th>田中<small>スタイリスト</small></th>
+                    <td><span class="sh"><i class="plan"></i><i class="act late"></i><small>10:12-19:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>10:00-19:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>10:00-19:00</small></span></td>
+                    <td><span class="sh--off">休</span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>10:00-19:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>10:00-19:00</small></span></td>
+                  </tr>
+                  <tr>
+                    <th>山本<small>アシスタント</small></th>
+                    <td><span class="sh--off">休</span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>12:00-18:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>12:00-18:00</small></span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act"></i><small>12:00-18:00</small></span></td>
+                    <td><span class="sh--off">休</span></td>
+                    <td><span class="sh"><i class="plan"></i><i class="act ot"></i><small>11:00-19:00</small></span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+            <ul class="shift-alerts">
+              <li class="a-ot"><b>残業</b>佐藤さん 火・土で +2.5h <span>— 給与に自動反映済み</span></li>
+              <li class="a-late"><b>遅刻</b>田中さん 月 +12分 <span>— 本人に自動通知済み</span></li>
+              <li class="a-ok"><b>OK</b>今週のシフト充足率 98% <span>— 土曜14時台のみ手薄</span></li>
+            </ul>
+          </div>
+        </figure>
+      </div>
     </section>
 
-    <section class="section plan" id="screens">
-      <div class="plan__inner">
-        <div class="section__head">
-          <p class="section__eyebrow" data-reveal="fade">Screens</p>
-          <h2 class="section__title" data-reveal="words">画面イメージ</h2>
-          <p class="plan__desc" data-reveal="fade">必要な機能だけを、見やすく。（実画面イメージは準備中）</p>
-        </div>
-        <div class="plan__grid">
-          <div class="plan__card plan__card--in" data-reveal="rise">
-            <h3 class="plan__card-title">予約・顧客ダッシュボード</h3>
-            <div class="ov__media" aria-hidden="true"><span>Admin UI（準備中）</span></div>
-          </div>
-          <div class="plan__card plan__card--in" data-reveal="rise">
-            <h3 class="plan__card-title">問い合わせ一覧</h3>
-            <div class="ov__media" aria-hidden="true"><span>Admin UI（準備中）</span></div>
-          </div>
-        </div>
-        <div class="plan__cta" data-reveal="fade">
-          <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="相談"><span>必要な機能を相談する</span></a>
-          <p class="plan__note">※ 規模により個別見積。まずは現状の業務フローの確認から。</p>
-        </div>
+    <!-- ===== 組み合わせは自由（独自システムの幅） ===== -->
+    <section class="section mix" id="mix">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">Mix &amp; match</p>
+        <h2 class="section__title" data-reveal="words">混ぜ方は、お店の数だけ。</h2>
       </div>
+      <ul class="mix__chips" data-reveal="fade">
+        <li>売上 <b>×</b> 給与 <b>×</b> 勤怠</li>
+        <li>予約 <b>×</b> 顧客カルテ</li>
+        <li>在庫 <b>×</b> 発注アラート</li>
+        <li>日報 <b>×</b> LINE通知</li>
+        <li>問い合わせ <b>×</b> AI下書き返信</li>
+        <li>回数券 <b>×</b> 会員管理</li>
+        <li>レシート <b>×</b> 経費メモ</li>
+        <li>Googleカレンダー <b>×</b> 予約</li>
+      </ul>
+      <p class="mix__note" data-reveal="fade">既製ソフトは「業務をソフトに合わせる」もの。私たちは<b>いまのやり方を聞いてから、それに合う画面を作ります</b>。だから現場が使い続けられます。</p>
+    </section>
+
+    <!-- ===== 進め方と料金の考え方 ===== -->
+    <section class="section pricing" id="price">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">Flow &amp; Pricing</p>
+        <h2 class="section__title" data-reveal="words">小さく作って、現場で育てる。</h2>
+        <p class="pricing__lead" data-reveal="fade">最初から大きなシステムは作りません。<b>一番面倒な1画面から</b>始めて、現場で使いながら広げます。だから失敗しにくく、無駄な機能に払いません。</p>
+      </div>
+      <div class="pricing__grid">
+        <article class="price-card price-card--lead" data-reveal="rise">
+          <span class="price-card__role">進め方</span>
+          <h3 class="price-card__name">3ステップで、現場に届く</h3>
+          <ul class="price-roi">
+            <li><b>1. 業務を聞く（無料相談）</b><span>いまのノート・表計算・LINEの流れをそのまま見せてください。</span></li>
+            <li><b>2. 一番面倒な1画面を作る</b><span>小さく作って現場で試す。合わなければその場で直します。</span></li>
+            <li><b>3. 使いながら広げる</b><span>売上→給与→シフトのように、必要になった分だけ足していく。</span></li>
+          </ul>
+        </article>
+        <article class="price-card price-card--flag" data-reveal="rise">
+          <span class="price-card__role price-card__role--flag">料金の考え方</span>
+          <h3 class="price-card__name">個別見積 — 効果から逆算</h3>
+          <p class="price-card__fee price-card__fee--quote">個別見積</p>
+          <p class="price-card__sub">「毎月何時間が浮くか」から逆算してご提案します。安売りではなく、AI活用で開発を効率化した分を価格に反映しています。</p>
+          <ul class="price-roi">
+            <li><b>時間が減る</b><span>レジ締め・給与計算・シフト作成などの定型作業を自動化。</span></li>
+            <li><b>ミスが減る</b><span>転記ゼロ・計算ルール固定で、月末の照合作業をなくす。</span></li>
+            <li><b>必要な分だけ</b><span>1画面から。使わない機能には払わない。</span></li>
+          </ul>
+          <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="相談"><span>うちの場合いくら？を相談する</span></a>
+        </article>
+      </div>
+      <p class="pricing__foot" data-reveal="fade">※ 画面はすべてサンプルです。実際の項目・レイアウトはお店の業務に合わせて設計します。</p>
     </section>
   </main>
 

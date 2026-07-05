@@ -1,0 +1,158 @@
+/* =========================================================
+   demos.css : services/system.html 専用
+   「売上・給与・勤怠×シフト」のデモ画面（DOMモック）を
+   実プロダクトに見える精度で描く。配色はbase.cssのトークンに追従。
+   ========================================================= */
+
+/* ---- デモ共通レイアウト：コピー＋ブラウザ枠 ---- */
+.demo{max-width:var(--maxw);margin:0 auto clamp(70px,10vw,120px);
+  display:grid;grid-template-columns:.72fr 1.28fr;gap:clamp(24px,4vw,56px);align-items:center;}
+.demo:nth-of-type(even){grid-template-columns:1.28fr .72fr;}
+.demo:nth-of-type(even) .demo__copy{order:2;}
+.demo__no{font-family:var(--en);font-size:.85rem;letter-spacing:.14em;color:var(--blue);margin-bottom:14px;display:block;}
+.demo__title{font-size:clamp(1.5rem,3vw,2.2rem);font-weight:800;line-height:1.35;margin-bottom:16px;}
+.demo__title em{background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.demo__text{color:var(--ink-soft);font-size:clamp(.95rem,1.4vw,1.05rem);line-height:1.9;margin-bottom:20px;}
+.demo__points{display:flex;flex-direction:column;gap:10px;}
+.demo__points li{position:relative;padding-left:26px;font-size:.95rem;color:var(--ink);}
+.demo__points li::before{content:"";position:absolute;left:2px;top:7px;width:9px;height:9px;border-radius:50%;
+  background:linear-gradient(135deg,var(--mint),var(--blue));}
+.demo__points li small{display:block;color:var(--ink-soft);font-size:.84rem;}
+
+/* ---- ブラウザ枠（アプリ画面の器） ---- */
+.shot{border-radius:16px;overflow:hidden;border:1px solid var(--line);
+  background:#0d1424;box-shadow:0 34px 90px rgba(0,0,0,.55);}
+.shot__bar{display:flex;align-items:center;gap:6px;padding:11px 14px;background:#121a2e;border-bottom:1px solid var(--line-soft);}
+.shot__bar i{width:9px;height:9px;border-radius:50%;background:#2a3348;}
+.shot__bar i:first-child{background:color-mix(in srgb,var(--mint) 65%,transparent);}
+.shot__bar span{margin-left:8px;font-family:var(--en);font-size:.66rem;letter-spacing:.04em;color:var(--ink-soft);
+  background:#0a1120;padding:4px 12px;border-radius:6px;}
+.shot__body{padding:clamp(14px,2vw,24px);display:flex;flex-direction:column;gap:clamp(12px,1.6vw,18px);}
+
+/* アプリ内の共通部品 */
+.ap-head{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.ap-head h4{font-size:clamp(.95rem,1.5vw,1.1rem);font-weight:700;color:var(--ink);}
+.ap-head time{font-family:var(--en);font-size:.74rem;color:var(--ink-soft);}
+.ap-badge{display:inline-flex;align-items:center;gap:7px;font-size:.7rem;font-weight:700;color:var(--mint);
+  padding:4px 12px;border-radius:999px;background:color-mix(in srgb,var(--mint) 11%,transparent);
+  border:1px solid color-mix(in srgb,var(--mint) 38%,transparent);}
+.ap-badge::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--mint);
+  box-shadow:0 0 9px var(--mint);animation:heroPulse 2.2s ease-in-out infinite;}
+.ap-btn{font-size:.72rem;font-weight:700;color:var(--ink-soft);padding:7px 14px;border-radius:999px;
+  border:1px solid var(--line);background:transparent;}
+.ap-btn--pri{color:#fff;background:var(--mint);border-color:var(--mint);}
+
+/* ---- ① 売上ダッシュボード ---- */
+.kpi-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;}
+.kpi{padding:14px 16px;border-radius:12px;background:#121b30;border:1px solid var(--line-soft);}
+.kpi small{display:block;font-size:.68rem;color:var(--ink-soft);margin-bottom:5px;}
+.kpi b{font-family:var(--en);font-size:clamp(1.05rem,2vw,1.5rem);font-weight:800;color:var(--ink);line-height:1.1;}
+.kpi em{font-style:normal;font-family:var(--en);font-size:.68rem;font-weight:700;color:var(--mint);margin-left:7px;}
+.kpi em.down{color:#ff9a7a;}
+
+.sales-mid{display:grid;grid-template-columns:1.5fr 1fr;gap:12px;align-items:stretch;}
+/* 時間帯別バー（.is-in で伸びる） */
+.hours{padding:14px 16px 10px;border-radius:12px;background:#121b30;border:1px solid var(--line-soft);display:flex;flex-direction:column;}
+.hours small{font-size:.68rem;color:var(--ink-soft);}
+.hours__bars{flex:1;display:flex;align-items:flex-end;gap:6px;height:96px;margin-top:10px;}
+.hours__bars i{flex:1;border-radius:4px 4px 2px 2px;height:6%;min-height:3px;
+  background:linear-gradient(180deg,var(--mint),color-mix(in srgb,var(--blue) 75%,transparent));
+  opacity:.85;transition:height .9s var(--ease);transition-delay:calc(var(--d,0)*60ms);}
+.hours__bars i.pk{opacity:1;box-shadow:0 0 14px color-mix(in srgb,var(--mint) 45%,transparent);}
+[data-reveal].is-in .hours__bars i{height:var(--v);}
+.hours__lbl{display:flex;justify-content:space-between;font-family:var(--en);font-size:.6rem;color:var(--ink-soft);margin-top:6px;}
+/* 支払内訳ドーナツ */
+.paysplit{padding:14px 16px;border-radius:12px;background:#121b30;border:1px solid var(--line-soft);
+  display:flex;align-items:center;gap:14px;}
+.paysplit__donut{flex:none;width:84px;height:84px;border-radius:50%;position:relative;
+  background:conic-gradient(var(--mint) 0 46%, var(--blue) 46% 78%, #5b6bff 78% 92%, #33405e 92% 100%);}
+.paysplit__donut::after{content:"46%";position:absolute;inset:16px;border-radius:50%;background:#121b30;
+  display:grid;place-items:center;font-family:var(--en);font-size:.8rem;font-weight:800;color:var(--ink);}
+.paysplit ul{display:flex;flex-direction:column;gap:6px;font-size:.72rem;color:var(--ink-soft);}
+.paysplit li{display:flex;align-items:center;gap:8px;}
+.paysplit li i{width:8px;height:8px;border-radius:3px;flex:none;}
+/* メニュー別ランキング */
+.rank{display:flex;flex-direction:column;gap:8px;}
+.rank li{display:grid;grid-template-columns:1.1fr 2fr auto;align-items:center;gap:10px;font-size:.78rem;color:var(--ink);}
+.rank li span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.rank__bar{height:8px;border-radius:4px;background:#1c2842;overflow:hidden;}
+.rank__bar i{display:block;height:100%;width:0;border-radius:4px;
+  background:linear-gradient(90deg,var(--mint),var(--blue));transition:width 1s var(--ease);transition-delay:.25s;}
+[data-reveal].is-in .rank__bar i{width:var(--v);}
+.rank b{font-family:var(--en);font-size:.78rem;color:var(--ink-soft);font-weight:700;}
+
+/* ---- ② 給与計算 ---- */
+.pay-table{border:1px solid var(--line-soft);border-radius:12px;overflow:hidden;font-size:.8rem;}
+.pay-table .tr{display:grid;grid-template-columns:1.3fr .9fr .7fr .8fr .8fr 1.1fr;gap:6px;align-items:center;
+  padding:11px 14px;border-bottom:1px solid var(--line-soft);}
+.pay-table .tr:last-child{border-bottom:none;}
+.pay-table .tr--h{background:#121b30;font-size:.66rem;color:var(--ink-soft);letter-spacing:.04em;}
+.pay-table .tr--sum{background:color-mix(in srgb,var(--mint) 7%,transparent);font-weight:700;}
+.pay-table .nm{display:flex;align-items:center;gap:9px;color:var(--ink);font-weight:600;}
+.pay-table .nm i{flex:none;width:26px;height:26px;border-radius:50%;display:grid;place-items:center;
+  font-size:.68rem;font-weight:800;color:#06231d;background:linear-gradient(135deg,var(--mint),var(--blue));font-style:normal;}
+/* 名前＋役職の縦積みブロック（flex内で名前が折れないように） */
+.pay-table .nm__t{display:flex;flex-direction:column;line-height:1.35;white-space:nowrap;}
+.pay-table .nm small{display:block;font-size:.62rem;color:var(--ink-soft);font-weight:400;}
+.pay-table .num{font-family:var(--en);color:var(--ink-soft);text-align:right;}
+.pay-table .yen{font-family:var(--en);font-weight:800;color:var(--ink);text-align:right;}
+.pay-table .tr--sum .yen{background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.pay-foot{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;}
+.pay-foot small{font-size:.7rem;color:var(--ink-soft);}
+.pay-foot div{display:flex;gap:8px;}
+
+/* ---- ③ 勤怠×シフト ---- */
+.shift-legend{display:flex;gap:16px;flex-wrap:wrap;font-size:.68rem;color:var(--ink-soft);}
+.shift-legend i{display:inline-block;width:22px;height:9px;border-radius:4px;vertical-align:middle;margin-right:6px;}
+.shift-legend .lg-plan{border:1.5px dashed color-mix(in srgb,var(--ink) 40%,transparent);background:transparent;}
+.shift-legend .lg-act{background:linear-gradient(90deg,var(--mint),var(--blue));}
+.shift-legend .lg-ot{background:#5b6bff;}
+.shift-legend .lg-late{background:#ff8a5c;}
+.shift-grid{border:1px solid var(--line-soft);border-radius:12px;overflow-x:auto;}
+.shift-grid table{width:100%;min-width:520px;border-collapse:collapse;font-size:.72rem;}
+.shift-grid th,.shift-grid td{padding:9px 7px;border-bottom:1px solid var(--line-soft);text-align:left;}
+.shift-grid thead th{background:#121b30;font-family:var(--en);font-weight:600;font-size:.64rem;color:var(--ink-soft);letter-spacing:.06em;}
+.shift-grid thead th.today{color:var(--mint);}
+.shift-grid tbody th{white-space:nowrap;color:var(--ink);font-weight:600;font-size:.74rem;}
+.shift-grid tbody th small{display:block;font-size:.6rem;color:var(--ink-soft);font-weight:400;}
+.shift-grid tbody tr:last-child th,.shift-grid tbody tr:last-child td{border-bottom:none;}
+/* セル内：予定（点線枠）と実績（塗り）の2段バー */
+.sh{display:flex;flex-direction:column;gap:3px;min-width:56px;}
+.sh i{display:block;height:9px;border-radius:4px;}
+.sh .plan{border:1.5px dashed color-mix(in srgb,var(--ink) 35%,transparent);}
+.sh .act{background:linear-gradient(90deg,var(--mint),var(--blue));position:relative;}
+.sh .act.ot::after{content:"";position:absolute;right:-14px;top:0;bottom:0;width:14px;border-radius:0 4px 4px 0;background:#5b6bff;}
+.sh .act.late{background:linear-gradient(90deg,#ff8a5c,var(--blue));}
+.sh small{font-family:var(--en);font-size:.56rem;color:var(--ink-soft);letter-spacing:.02em;}
+.sh--off{color:color-mix(in srgb,var(--ink) 28%,transparent);font-size:.64rem;}
+/* 差分アラート行 */
+.shift-alerts{display:flex;flex-direction:column;gap:8px;}
+.shift-alerts li{display:flex;align-items:center;gap:10px;font-size:.76rem;color:var(--ink);
+  padding:9px 13px;border-radius:10px;background:#121b30;border:1px solid var(--line-soft);}
+.shift-alerts li b{font-size:.62rem;font-weight:700;padding:3px 9px;border-radius:999px;flex:none;}
+.shift-alerts .a-ot b{color:#9aa5ff;background:rgba(91,107,255,.14);border:1px solid rgba(91,107,255,.4);}
+.shift-alerts .a-late b{color:#ffb08a;background:rgba(255,138,92,.12);border:1px solid rgba(255,138,92,.38);}
+.shift-alerts .a-ok b{color:var(--mint);background:color-mix(in srgb,var(--mint) 11%,transparent);border:1px solid color-mix(in srgb,var(--mint) 38%,transparent);}
+.shift-alerts li span{color:var(--ink-soft);}
+
+/* ---- 組み合わせ例チップ ---- */
+.mix{max-width:var(--maxw);margin:0 auto;}
+.mix__chips{display:flex;flex-wrap:wrap;gap:10px;margin-top:26px;}
+.mix__chips li{display:inline-flex;align-items:center;gap:8px;font-size:.86rem;color:var(--ink);
+  padding:11px 18px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);
+  transition:border-color .3s var(--ease),transform .3s var(--ease);}
+.mix__chips li:hover{border-color:color-mix(in srgb,var(--mint) 50%,transparent);transform:translateY(-2px);}
+.mix__chips li b{font-family:var(--en);color:var(--mint);font-weight:700;}
+.mix__note{margin-top:22px;color:var(--ink-soft);font-size:.92rem;}
+
+/* ---- レスポンシブ ---- */
+@media(max-width:900px){
+  .demo,.demo:nth-of-type(even){grid-template-columns:1fr;gap:18px;}
+  .demo:nth-of-type(even) .demo__copy{order:0;}
+  .kpi-row{grid-template-columns:repeat(3,1fr);gap:7px;}
+  .kpi{padding:10px 11px;}
+  .sales-mid{grid-template-columns:1fr;}
+  .pay-table{font-size:.68rem;overflow-x:auto;}
+  .pay-table .tr{grid-template-columns:1.4fr .8fr .8fr 1.1fr;}
+  .pay-table .col-sp{display:none;} /* スマホは交通費/残業列を畳む */
+}
