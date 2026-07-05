@@ -4,7 +4,7 @@
 // パネルはホバーで手前にズーム＋中身がビルドアニメ、クリックで対応セクションへ慣性スクロール。
 // "palette" イベントで配色に追従。失敗時は main.js 側でCSS背景にフォールバック。
 import * as THREE from "three";
-import { pointer, prefersReducedMotion, lerp, clamp } from "./utils.js";
+import { pointer, prefersReducedMotion, isCoarsePointer, lerp, clamp } from "./utils.js";
 import { RoomEnvironment } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
@@ -412,6 +412,7 @@ export function initHeroHybrid(canvas) {
   const layout = canvas.dataset.layout || "side";
   const heroEl = canvas.closest(".hero");
   let baseScale = 0.82; // resizeで設定。renderでスクロール視差を掛ける。
+  let groupYBase = 0;   // スマホ：3D一式を上へ寄せ、下半分を文字ゾーンにする
   function resize() {
     const r = canvas.getBoundingClientRect();
     renderer.setSize(r.width, r.height, false);
@@ -427,6 +428,14 @@ export function initHeroHybrid(canvas) {
       baseScale = small ? 0.55 : 0.82;
     }
     group.scale.setScalar(baseScale);
+    groupYBase = small ? 0.85 : 0;
+    // スマホ：パネルを内側＆上へ寄せて「画面端で切れる」のを防ぎ、Nの周りにフレームインさせる
+    panels.forEach((m) => {
+      const u = m.userData;
+      if (!u.homeBase) u.homeBase = u.home.clone();
+      if (small) u.home.set(u.homeBase.x * 0.58, u.homeBase.y * 0.66 + 0.35, u.homeBase.z);
+      else u.home.copy(u.homeBase);
+    });
   }
   resize();
   window.addEventListener("resize", resize);
@@ -503,6 +512,9 @@ export function initHeroHybrid(canvas) {
     return ray.intersectObjects(panels, false).length === 0 && ray.intersectObject(coreProxy, false).length > 0;
   }
   canvas.addEventListener("pointerdown", (e) => {
+    // タッチ端末ではドラッグ回転を無効化（Nの上で指を動かすとスクロールできない
+    // “スクロールトラップ”になるため）。タップでの起動演出は click 側で生きる。
+    if (isCoarsePointer) return;
     if (!coreHitAt(e.clientX, e.clientY)) return;
     dragging = true; moved = false; velY = 0; velX = 0; lastPX = downPX = e.clientX; lastPY = downPY = e.clientY;
     if (canvas.setPointerCapture) try { canvas.setPointerCapture(e.pointerId); } catch (_) {}
@@ -561,7 +573,7 @@ export function initHeroHybrid(canvas) {
     group.rotation.x = -0.05 - ry;
     // スクロール視差：下へ行くほどオブジェクトが少し上へドリフト＋わずかに縮小（層の奥行き）
     const sp = Math.min(1, Math.max(0, (window.scrollY || 0) / ((heroEl && heroEl.offsetHeight) || window.innerHeight || 1)));
-    group.position.y = sp * 2.6;
+    group.position.y = groupYBase + sp * 2.6;
     group.rotation.z = sp * 0.12;
     group.scale.setScalar(baseScale * (1 - sp * 0.24));
 

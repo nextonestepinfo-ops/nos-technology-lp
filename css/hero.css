@@ -177,10 +177,11 @@
 @media(max-width:720px){
   .hero{padding-top:120px;}
   .hero__meta{font-size:.66rem;}
-  /* スマホ：上の社名/タグラインを小さく上へ、下のコピーを整理（servesは重なるので非表示） */
-  .hero__topbrand{top:18px;font-size:clamp(1.05rem,5vw,1.4rem);letter-spacing:.22em;}
-  .hero-topline{top:54px;font-size:.62rem;letter-spacing:.32em;}
+  /* スマホ：社名はヘッダーと二重になるため非表示。3Dは上半分・文字は下半分に分離 */
+  .hero__topbrand,.hero-topline{display:none;}
   .hero__serves{display:none;}
+  /* 下半分の文字ゾーンを守るフロア・グラデを強める */
+  .hero--v2::after{background:linear-gradient(to top, var(--paper), color-mix(in srgb,var(--paper) 78%,transparent) 34%, transparent 58%);}
   .hero--v2 .hero__content--center{bottom:clamp(70px,12vh,108px);max-width:90vw;}
   .hero__statement{font-size:clamp(1.3rem,6.2vw,1.8rem);line-height:1.45;max-width:none;margin-bottom:22px;}
   .hero__actions .btn{padding:14px 22px;}
