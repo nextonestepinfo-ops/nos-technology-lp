@@ -21,29 +21,35 @@ function drawUI(x, kind, acc, p, t = 0) {
   x.restore();
 }
 
-// パネルサイズ用に最適化した手描きUI（512×384座標系・業種非依存・太く大きく読める）。
+// パネルサイズ用に最適化した手描きUI（512×384座標系）。
+// “実在するプロダクトの画面”に見える精度で描く＝安心感の核。
+// 実データ風の文言（名前・時刻・件数・文章）と本物の情報階層で構成する。
 // p(0〜1)で左→右に“描き込まれる”ビルド表現、t>0でライブ演出（スキャン光＋LIVE）。
+const JP = '"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif';
+const EN = '"Space Grotesk",sans-serif';
+
 function drawUIWire(x, kind, acc, p, t = 0) {
   x.clearRect(0, 0, 512, 384);
-  // 背景：濃紺のダークUI（高級感・発光アクセントが映える）
   const page = x.createLinearGradient(0, 0, 0, 384);
-  page.addColorStop(0, "#111b30"); page.addColorStop(1, "#0a1020");
+  page.addColorStop(0, "#101a2e"); page.addColorStop(1, "#0a101f");
   x.fillStyle = page; x.fillRect(0, 0, 512, 384);
-  const mint = acc.mint, blue = acc.blue, ink = "#e9eefc", soft = "#3c4d72", line = "#27324e", bg = "#16203a", surf = "#172139";
+  const mint = acc.mint, blue = acc.blue, ink = "#eaf0fc", sub = "#8fa0c0", soft = "#3c4d72", line = "#26324e", bg = "#151f38", surf = "#182240";
   const pill = (px, py, pw, ph, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, ph / 2); x.fill(); };
   const rrect = (px, py, pw, ph, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); };
+  const stroke = (px, py, pw, ph, r, col, lw = 2) => { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
+  const card = (px, py, pw, ph, r) => { rrect(px, py, pw, ph, r, surf); x.strokeStyle = line; x.lineWidth = 1.5; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
+  const txt = (s, px, py, size, col, weight = 500, font = JP) => { x.fillStyle = col; x.font = `${weight} ${size}px ${font}`; x.fillText(s, px, py); };
 
   // 上部バー（常時表示）：種別アイコン＋日本語タイトルで“何の画面か”を一目で
   x.fillStyle = bg; x.fillRect(0, 0, 512, 64);
-  x.strokeStyle = "rgba(255,255,255,.05)"; x.lineWidth = 2; x.strokeRect(1, 1, 510, 382); // 画面の縁を締める
+  x.strokeStyle = "rgba(255,255,255,.05)"; x.lineWidth = 2; x.strokeRect(1, 1, 510, 382);
   x.save(); x.translate(42, 33); x.strokeStyle = mint; x.fillStyle = mint; x.lineWidth = 3; x.lineJoin = "round";
   if (kind === "site") { x.strokeRect(-13, -12, 26, 24); x.fillRect(-13, -12, 26, 7); }
   else if (kind === "admin") { for (let i = 0; i < 3; i++) x.fillRect(-13, -11 + i * 9, 26, 4); }
   else if (kind === "reply") { x.beginPath(); x.roundRect(-13, -12, 26, 18, 6); x.stroke(); x.beginPath(); x.moveTo(-5, 6); x.lineTo(3, 6); x.lineTo(-7, 13); x.closePath(); x.fill(); }
   else { x.beginPath(); x.arc(0, -3, 9, Math.PI, 0); x.lineTo(0, 13); x.closePath(); x.fill(); x.fillStyle = "#fff"; x.beginPath(); x.arc(0, -3, 3.4, 0, 7); x.fill(); }
   x.restore();
-  x.fillStyle = ink; x.font = "800 25px sans-serif"; x.textBaseline = "alphabetic";
-  x.fillText({ site: "店舗サイト", admin: "予約・顧客管理", reply: "AI返信アシスト", map: "集客マップ" }[kind], 66, 42);
+  txt({ site: "店舗サイト", admin: "予約・顧客管理", reply: "AI返信アシスト", map: "集客マップ" }[kind], 66, 42, 25, ink, 800);
 
   // 本文は左→右にワイプして“出来上がる”
   const w = Math.max(0, Math.min(1, p));
@@ -51,78 +57,175 @@ function drawUIWire(x, kind, acc, p, t = 0) {
   x.save();
   x.beginPath(); x.rect(0, 60, 512 * w, 324); x.clip();
 
-  const stroke = (px, py, pw, ph, r, col, lw = 2) => { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
-  const card = (px, py, pw, ph, r) => { x.fillStyle = surf; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); x.strokeStyle = line; x.lineWidth = 1.5; x.stroke(); };
   if (kind === "site") {
-    // 見出し2行＋サブ＋CTA(主)＋ゴースト(副)＋右の大ヒーロー画像＋下部チップ。制作中の“ローディング”が動く。
-    rrect(36, 100, 300, 30, 9, ink); rrect(36, 142, 224, 30, 9, ink);
-    if (t > 0 && (t % 1) < 0.5) { x.fillStyle = blue; x.fillRect(268, 142, 4, 30); } // 編集キャレット点滅（ホバー中のみ）
-    rrect(36, 192, 252, 13, 6, soft); rrect(36, 214, 206, 13, 6, soft);
-    pill(36, 252, 170, 52, mint);
-    x.fillStyle = "#fff"; x.font = "700 21px sans-serif"; x.fillText("お問い合わせ", 58, 285);
-    stroke(218, 252, 120, 52, 26, line); rrect(240, 272, 76, 12, 6, soft);
-    const ga = t * 0.5;
-    const g = x.createLinearGradient(356 + Math.sin(ga) * 40, 90, 476, 320 + Math.cos(ga) * 40); g.addColorStop(0, mint); g.addColorStop(1, blue);
-    x.fillStyle = g; x.beginPath(); x.roundRect(356, 90, 120, 214, 16); x.fill();
-    // ヒーロー画像内のローディングバー（周期で満ちる＝構築中の動き）
-    const lp = t > 0 ? (t * 0.5) % 1 : 1;
-    x.fillStyle = "rgba(255,255,255,.28)"; x.beginPath(); x.roundRect(372, 270, 88, 8, 4); x.fill();
-    x.fillStyle = "rgba(255,255,255,.92)"; x.beginPath(); x.roundRect(372, 270, 88 * lp, 8, 4); x.fill();
-    [36, 150, 264].forEach((cx0) => rrect(cx0, 332, 96, 30, 15, bg));
-  } else if (kind === "admin") {
-    // KPI（数値ティック）＋スパークライン（移動ドット）＋3行（ハイライト行が巡回・ステータスが処理中→確定）
-    rrect(36, 80, 130, 14, 7, soft);
-    stroke(36, 104, 135, 64, 12, line); stroke(184, 104, 135, 64, 12, line); stroke(332, 104, 148, 64, 12, line);
-    const k1 = 1248 + Math.floor((0.5 + 0.5 * Math.sin(t * 0.8)) * 40);
-    x.fillStyle = ink; x.font = "800 28px sans-serif"; x.fillText(k1.toLocaleString(), 52, 150);
-    x.fillText(String(322 + Math.floor((t * 2) % 14)), 200, 150);
-    x.fillStyle = mint; x.font = "700 13px sans-serif"; x.fillText("▲12%", 118, 150); x.fillText("▲8%", 250, 150);
-    const sp = [[346, 150], [372, 134], [398, 142], [424, 120], [452, 128], [468, 116]];
-    x.strokeStyle = mint; x.lineWidth = 3; x.beginPath(); sp.forEach((pt, i) => i ? x.lineTo(pt[0], pt[1]) : x.moveTo(pt[0], pt[1])); x.stroke();
-    const dp = (t * 1.0) % (sp.length - 1), di = Math.floor(dp), fr = dp - di;
-    x.fillStyle = blue; x.beginPath(); x.arc(sp[di][0] + (sp[di + 1][0] - sp[di][0]) * fr, sp[di][1] + (sp[di + 1][1] - sp[di][1]) * fr, 4.5, 0, 7); x.fill();
-    const hi = Math.floor(t * 0.6) % 3;
-    for (let i = 0; i < 3; i++) {
-      const ry = 192 + i * 58, on = i === hi;
-      if (on) { x.fillStyle = "rgba(54,197,255,.12)"; x.fillRect(24, ry - 6, 464, 52); }
-      x.fillStyle = on ? mint : "#2c3a58"; x.beginPath(); x.arc(56, ry + 18, 16, 0, 7); x.fill();
-      rrect(86, ry + 6, 150, 13, 6, soft); rrect(86, ry + 27, 200, 11, 5, "#313f5e");
-      pill(388, ry + 4, 92, 28, on ? "#2a3650" : blue);
-      x.fillStyle = on ? "#90a0bd" : "#fff"; x.font = "700 14px sans-serif"; x.fillText(on ? "処理中" : "確定", on ? 400 : 408, ry + 23);
+    // ===== 店舗の完成サイト（明るいページ＝ひと目で「Webサイト」と分かる） =====
+    const cream = "#f8f5f0", inkD = "#231d16", subD = "#8a7f70";
+    rrect(24, 72, 464, 292, 12, cream);
+    // ページ内ナビ：店名ロゴ＋メニュー＋予約ピル
+    txt("Kissa Nos", 44, 104, 19, inkD, 800, EN);
+    txt("メニュー", 210, 102, 12, subD, 600);
+    txt("こだわり", 272, 102, 12, subD, 600);
+    txt("アクセス", 334, 102, 12, subD, 600);
+    pill(398, 84, 74, 28, inkD); txt("ご予約", 418, 103, 12, "#fff", 700);
+    // 見出し（実文言）＋編集キャレット
+    txt("今日の一杯を、", 44, 156, 30, inkD, 800);
+    txt("丁寧に。", 44, 196, 30, inkD, 800);
+    if (t > 0 && (t % 1) < 0.5) { x.fillStyle = blue; x.fillRect(172, 172, 3.5, 28); }
+    txt("駅から歩いて3分。自家焙煎の", 44, 226, 12.5, subD);
+    txt("小さな喫茶店です。", 44, 246, 12.5, subD);
+    // CTA
+    pill(44, 268, 132, 40, mint); txt("ご予約する", 70, 294, 15, "#fff", 700);
+    stroke(188, 268, 122, 40, 20, "#d9d2c7", 2); txt("メニューを見る", 205, 293, 12, subD, 600);
+    // 右：写真ブロック（珈琲カップ＋湯気を描いて“写真”に見せる）
+    const ph_ = x.createLinearGradient(330, 90, 470, 300);
+    ph_.addColorStop(0, "#c8a273"); ph_.addColorStop(.55, "#8a5f3c"); ph_.addColorStop(1, "#4c3320");
+    x.fillStyle = ph_; x.beginPath(); x.roundRect(330, 88, 142, 218, 12); x.fill();
+    // ソーサー＋カップ
+    x.fillStyle = "rgba(255,248,238,.95)"; x.beginPath(); x.ellipse(401, 240, 46, 13, 0, 0, 7); x.fill();
+    x.beginPath(); x.roundRect(371, 190, 60, 46, [6, 6, 22, 22]); x.fill();
+    x.strokeStyle = "rgba(255,248,238,.95)"; x.lineWidth = 7; x.beginPath(); x.arc(437, 208, 12, -1.2, 1.3); x.stroke();
+    x.fillStyle = "#5a3d28"; x.beginPath(); x.ellipse(401, 192, 26, 7, 0, 0, 7); x.fill();
+    // 湯気（tでゆらぐ）
+    x.strokeStyle = "rgba(255,255,255,.65)"; x.lineWidth = 3; x.lineCap = "round";
+    for (let i = 0; i < 2; i++) {
+      const sx0 = 392 + i * 18, ph2 = t * 1.4 + i * 2;
+      x.beginPath(); x.moveTo(sx0, 178);
+      x.quadraticCurveTo(sx0 + Math.sin(ph2) * 7, 158, sx0 + Math.sin(ph2 + 1) * 5, 140);
+      x.stroke();
     }
+    // 下部の店舗情報行（信頼感：営業時間・駅徒歩・星）
+    txt("★ 4.8", 44, 342, 14, "#b98a2e", 800, EN);
+    txt("口コミ 214件", 96, 341, 11, subD);
+    txt("水曜定休", 188, 341, 11, subD);
+    txt("8:00 – 18:00", 260, 341, 11.5, subD, 600, EN);
+  } else if (kind === "admin") {
+    // ===== 予約・顧客管理ダッシュボード（今日の予約が動いている） =====
+    txt("7/4（土）", 36, 92, 14, sub, 700);
+    txt("本日の予約", 110, 92, 13, sub);
+    // KPI 3枚（実数値＋前月比）
+    const kpi = [
+      ["本日の予約", (12 + Math.floor((t * 0.8) % 3)) + " 件", "▲ 2"],
+      ["今月の売上", "¥482,000", "▲ 12%"],
+      ["新規のお客様", "8 名", "▲ 3"],
+    ];
+    kpi.forEach((k, i) => {
+      const kx = 36 + i * 152;
+      card(kx, 102, 140, 66, 12);
+      txt(k[0], kx + 14, 124, 11, sub);
+      txt(k[1], kx + 14, 152, 20, ink, 800, EN);
+      txt(k[2], kx + 92, 124, 11, mint, 700, EN);
+    });
+    // 予約リスト（名前・メニュー・時刻・状態。ハイライト行が巡回）
+    const rows = [
+      ["10:00", "佐", "佐藤 美咲 様", "カット＋カラー", "確定"],
+      ["11:30", "田", "田中 蓮 様", "メンズカット", "来店中"],
+      ["14:00", "山", "山本 結衣 様", "縮毛矯正", "確定"],
+    ];
+    const hi = Math.floor(t * 0.6) % 3;
+    rows.forEach((r, i) => {
+      const ry = 184 + i * 60, on = t > 0 && i === hi;
+      if (on) { x.fillStyle = "rgba(54,197,255,.08)"; x.beginPath(); x.roundRect(28, ry - 8, 456, 56, 10); x.fill(); }
+      // 時刻
+      txt(r[0], 40, ry + 24, 15, on ? ink : sub, 700, EN);
+      // アバター（イニシャル円）
+      x.fillStyle = on ? mint : "#2c3a58"; x.beginPath(); x.arc(112, ry + 18, 17, 0, 7); x.fill();
+      txt(r[1], 105, ry + 25, 14, on ? "#08331f" : "#9fb2d4", 800);
+      // 名前・メニュー
+      txt(r[2], 142, ry + 14, 14.5, ink, 700);
+      txt(r[3], 142, ry + 36, 11.5, sub);
+      // 状態ピル
+      const stw = 74, stx = 404;
+      const active = r[4] === "来店中";
+      pill(stx, ry + 2, stw, 28, active ? mint : "rgba(61,139,255,.16)");
+      x.strokeStyle = active ? "transparent" : "rgba(61,139,255,.55)"; x.lineWidth = 1.5;
+      if (!active) { x.beginPath(); x.roundRect(stx, ry + 2, stw, 28, 14); x.stroke(); }
+      txt(r[4], stx + (active ? 16 : 19), ry + 22, 12.5, active ? "#08331f" : "#7fa7ee", 700);
+    });
   } else if (kind === "reply") {
-    // 受信＋送信(青)。送信文が“打ち込まれて”いき、AIバッジが脈動（生成中の動き）。
-    rrect(36, 80, 270, 78, 18, "#1c2640");
-    rrect(56, 100, 210, 12, 6, "#3a496a"); rrect(56, 122, 170, 12, 6, "#3a496a");
-    rrect(150, 176, 326, 96, 18, blue);
-    const tw = t > 0 ? (t * 0.55) % 1.6 : 1.6, lw = [284, 250, 180];
-    x.fillStyle = "rgba(255,255,255,.92)";
-    [196, 218, 240].forEach((yy, i) => { const pr = Math.max(0, Math.min(1, tw - i * 0.35)); if (pr > 0.02) { x.beginPath(); x.roundRect(172, yy, lw[i] * pr, 12, 6); x.fill(); } });
-    const bp = 0.55 + 0.45 * (0.5 + 0.5 * Math.sin(t * 3));
-    x.globalAlpha = bp; x.fillStyle = mint; x.font = "700 17px sans-serif"; x.fillText("✦ AIが文案を生成", 172, 300); x.globalAlpha = 1;
-    stroke(36, 326, 388, 40, 20, line); rrect(56, 340, 160, 12, 6, soft);
-    pill(436, 326, 40, 40, blue); x.fillStyle = "#fff"; x.font = "700 20px sans-serif"; x.fillText("→", 448, 352);
+    // ===== AI返信：営業時間外の問い合わせに、AIが下書き→人が確認して送信 =====
+    // 受信（お客様・営業時間外バッジ付き）
+    txt("21:04", 36, 90, 11, sub, 600, EN);
+    pill(80, 76, 92, 20, "rgba(255,138,90,.14)");
+    txt("営業時間外", 92, 91, 10.5, "#ff9a7a", 700);
+    rrect(36, 100, 292, 66, 16, "#1d2946");
+    txt("明日の15時、2名で予約", 56, 128, 14.5, "#c9d5ee");
+    txt("できますか？", 56, 152, 14.5, "#c9d5ee");
+    // 送信（AI下書き→タイプされていく）。行は意味で区切る（数字や語の泣き別れ防止）
+    const replyLines = ["ありがとうございます。", "明日15:00、2名様でご案内できます。", "ご来店お待ちしております。"];
+    const totalLen = replyLines.join("").length;
+    const shownLen = t > 0 ? Math.floor((t * 9) % (totalLen + 14)) : totalLen;
+    rrect(128, 182, 348, 92, 16, blue);
+    x.save(); x.beginPath(); x.roundRect(128, 182, 348, 92, 16); x.clip();
+    x.fillStyle = "rgba(255,255,255,.95)"; x.font = `600 13.5px ${JP}`;
+    let used = 0;
+    replyLines.forEach((lineStr, li) => {
+      const seg = lineStr.slice(0, Math.max(0, shownLen - used));
+      used += lineStr.length;
+      if (seg) x.fillText(seg, 148, 212 + li * 22);
+    });
+    x.restore();
+    txt("21:05", 440, 292, 10.5, sub, 600, EN);
+    // 安心の要：AIが下書き → 人が確認して送信
+    const bp = t > 0 ? 0.6 + 0.4 * (0.5 + 0.5 * Math.sin(t * 3)) : 1;
+    x.globalAlpha = bp;
+    pill(128, 288, 140, 26, "rgba(26,92,255,.14)");
+    txt("✦ AIが下書き", 143, 306, 12, mint, 700);
+    x.globalAlpha = 1;
+    txt("→  人が確認して送信", 280, 306, 12, sub, 600);
+    // 入力バー
+    stroke(36, 330, 388, 40, 20, line, 2);
+    txt("返信を編集…", 58, 355, 12, soft);
+    pill(436, 330, 40, 40, blue);
+    txt("→", 448, 356, 20, "#fff", 700, EN);
   } else {
-    // 地図＋検索バー＋レーダー（拡大リング＋回転スイープ）＋ピン(バウンド)＋情報カード(件数ティック)
-    x.fillStyle = "#0e1626"; x.fillRect(24, 72, 464, 290);
-    x.strokeStyle = line; x.lineWidth = 3;
-    for (let i = 1; i < 7; i++) { x.beginPath(); x.moveTo(24, 72 + i * 42); x.lineTo(488, 72 + i * 42); x.stroke(); }
-    for (let i = 1; i < 9; i++) { x.beginPath(); x.moveTo(24 + i * 52, 72); x.lineTo(24 + i * 52, 362); x.stroke(); }
-    x.fillStyle = "rgba(63,109,240,.12)"; x.beginPath(); x.arc(216, 232, 86, 0, 7); x.fill();
-    const rr = (t * 0.6) % 1;
-    x.strokeStyle = `rgba(63,109,240,${0.45 * (1 - rr)})`; x.lineWidth = 2.5; x.beginPath(); x.arc(216, 232, 18 + rr * 82, 0, 7); x.stroke();
-    x.save(); x.beginPath(); x.arc(216, 232, 86, 0, 7); x.clip(); x.translate(216, 232); x.rotate(t * 1.1);
-    const sg = x.createLinearGradient(0, 0, 86, 0); sg.addColorStop(0, "rgba(63,109,240,.4)"); sg.addColorStop(1, "rgba(63,109,240,0)");
-    x.strokeStyle = sg; x.lineWidth = 4; x.beginPath(); x.moveTo(0, 0); x.lineTo(86, 0); x.stroke(); x.restore();
-    const pbo = Math.sin(t * 2.2) * 3;
-    x.fillStyle = blue; x.beginPath(); x.arc(216, 222 + pbo, 20, 0, 7); x.fill();
-    x.beginPath(); x.moveTo(216, 254 + pbo); x.lineTo(199, 228 + pbo); x.lineTo(233, 228 + pbo); x.closePath(); x.fill();
-    x.fillStyle = "#fff"; x.beginPath(); x.arc(216, 222 + pbo, 8, 0, 7); x.fill();
-    card(40, 86, 200, 36, 18); x.fillStyle = mint; x.beginPath(); x.arc(60, 104, 7, 0, 7); x.fill(); rrect(76, 98, 120, 12, 6, soft);
-    card(298, 212, 182, 104, 16);
-    x.fillStyle = mint; x.font = "700 18px sans-serif"; x.fillText("★ 4.3 (" + (128 + Math.floor((t * 1.5) % 9)) + ")", 318, 246);
-    rrect(318, 258, 120, 11, 5, soft); rrect(318, 274, 90, 11, 5, "#313f5e");
-    pill(318, 290, 108, 26, mint); x.fillStyle = "#fff"; x.font = "700 14px sans-serif"; x.fillText("ルート", 344, 308);
+    // ===== 集客マップ：街区・道路のある地図＋自店ピン＋高評価カード =====
+    x.fillStyle = "#0d1526"; x.fillRect(24, 72, 464, 292);
+    // 街区（少し明るいブロック）
+    x.fillStyle = "#131e33";
+    [[38, 86, 96, 70], [150, 86, 120, 54], [286, 86, 84, 88], [38, 172, 76, 92], [130, 258, 110, 88], [258, 210, 96, 66], [370, 250, 100, 96]]
+      .forEach(([bx, by, bw, bh]) => { x.beginPath(); x.roundRect(bx, by, bw, bh, 8); x.fill(); });
+    // 公園（緑地）
+    x.fillStyle = "rgba(42,150,105,.2)"; x.beginPath(); x.roundRect(388, 86, 84, 70, 10); x.fill();
+    // 道路（太めの明るい線＋中央線）
+    x.strokeStyle = "#233150"; x.lineWidth = 14; x.lineCap = "round";
+    x.beginPath(); x.moveTo(24, 240); x.quadraticCurveTo(230, 210, 488, 236); x.stroke();
+    x.beginPath(); x.moveTo(140, 72); x.lineTo(226, 364); x.stroke();
+    x.strokeStyle = "rgba(150,170,210,.25)"; x.lineWidth = 2; x.setLineDash([10, 10]);
+    x.beginPath(); x.moveTo(24, 240); x.quadraticCurveTo(230, 210, 488, 236); x.stroke();
+    x.setLineDash([]);
+    // 検索バー
+    card(40, 86, 216, 38, 19);
+    x.strokeStyle = sub; x.lineWidth = 2.5; x.beginPath(); x.arc(62, 104, 7, 0, 7); x.stroke();
+    x.beginPath(); x.moveTo(67, 110); x.lineTo(73, 116); x.stroke();
+    txt("近くの喫茶店", 84, 110, 12.5, sub, 600);
+    // 到達圏＋レーダースイープ
+    x.fillStyle = "rgba(61,139,255,.1)"; x.beginPath(); x.arc(208, 244, 84, 0, 7); x.fill();
+    if (t > 0) {
+      const rr = (t * 0.6) % 1;
+      x.strokeStyle = `rgba(61,139,255,${0.45 * (1 - rr)})`; x.lineWidth = 2.5;
+      x.beginPath(); x.arc(208, 244, 16 + rr * 80, 0, 7); x.stroke();
+      x.save(); x.beginPath(); x.arc(208, 244, 84, 0, 7); x.clip(); x.translate(208, 244); x.rotate(t * 1.1);
+      const sg = x.createLinearGradient(0, 0, 84, 0); sg.addColorStop(0, "rgba(61,139,255,.4)"); sg.addColorStop(1, "rgba(61,139,255,0)");
+      x.strokeStyle = sg; x.lineWidth = 4; x.beginPath(); x.moveTo(0, 0); x.lineTo(84, 0); x.stroke(); x.restore();
+    }
+    // 競合の小ピン（グレー）→ 自店ピン（ブランド色・最大）で"選ばれる"構図
+    [[300, 160], [120, 300]].forEach(([px2, py2]) => {
+      x.fillStyle = "#3a4666"; x.beginPath(); x.arc(px2, py2, 7, 0, 7); x.fill();
+      x.beginPath(); x.moveTo(px2, py2 + 13); x.lineTo(px2 - 6, py2 + 4); x.lineTo(px2 + 6, py2 + 4); x.closePath(); x.fill();
+    });
+    const pbo = t > 0 ? Math.sin(t * 2.2) * 3 : 0;
+    x.fillStyle = blue; x.beginPath(); x.arc(208, 234 + pbo, 19, 0, 7); x.fill();
+    x.beginPath(); x.moveTo(208, 264 + pbo); x.lineTo(192, 240 + pbo); x.lineTo(224, 240 + pbo); x.closePath(); x.fill();
+    x.fillStyle = "#fff"; x.beginPath(); x.arc(208, 234 + pbo, 7.5, 0, 7); x.fill();
+    // 自店カード（星・件数・営業中）
+    card(292, 196, 190, 118, 14);
+    txt("あなたのお店", 308, 222, 14, ink, 800);
+    txt("★ 4.8", 308, 248, 16, "#f0b445", 800, EN);
+    txt(`(${214 + (t > 0 ? Math.floor((t * 1.5) % 6) : 0)}件)`, 366, 247, 12, sub, 600, EN);
+    txt("営業中", 308, 272, 12, mint, 700);
+    txt("· 徒歩5分", 356, 272, 12, sub);
+    pill(308, 284, 76, 24, mint); txt("経路", 330, 301, 12, "#08331f", 700);
+    stroke(392, 284, 74, 24, 12, line, 1.5); txt("電話", 414, 301, 12, sub, 700);
   }
   x.restore();
 
@@ -130,11 +233,11 @@ function drawUIWire(x, kind, acc, p, t = 0) {
   if (t > 0) {
     const sx = 24 + ((t * 0.55 * 470) % 470);
     const g = x.createLinearGradient(sx - 36, 0, sx + 36, 0);
-    g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.16)"); g.addColorStop(1, "rgba(26,92,255,0)");
+    g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.14)"); g.addColorStop(1, "rgba(26,92,255,0)");
     x.fillStyle = g; x.fillRect(0, 60, 512, 324);
     const blink = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * 8));
     x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(488, 30, 6, 0, 7); x.fill();
-    x.fillStyle = "rgba(233,238,252,.7)"; x.font = "700 13px sans-serif"; x.textAlign = "right"; x.fillText("LIVE", 476, 35); x.textAlign = "left";
+    x.fillStyle = "rgba(233,238,252,.7)"; x.font = `700 13px ${EN}`; x.textAlign = "right"; x.fillText("LIVE", 476, 35); x.textAlign = "left";
   }
 }
 

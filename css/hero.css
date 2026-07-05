@@ -146,6 +146,12 @@
   text-shadow:0 1px 18px color-mix(in srgb,var(--paper) 72%,transparent);}
 .hero__sub b{color:var(--ink);font-weight:600;}
 .hero--v2 .hero__actions{justify-content:flex-start;}
+/* 価値チップ：CTAの下に「お求めやすさ・速さ・柔軟さ」を一目で */
+.hero__chips{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none;}
+.hero__chips li{display:inline-flex;align-items:baseline;gap:6px;font-size:.78rem;color:var(--ink-soft);
+  padding:7px 14px;border-radius:999px;background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px);}
+.hero__chips li b{font-family:var(--en);font-weight:700;font-size:.88rem;color:var(--ink);
+  background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
 /* 下部：左にコピー／右にScrollだけ（要素同士をぶつけない） */
 .hero--v2 .hero__meta{justify-content:flex-end;z-index:2;}
 .hero--v2 .hero__meta > span:not(.hero__scroll){display:none;}
@@ -178,4 +184,7 @@
   .hero--v2 .hero__content--center{bottom:clamp(70px,12vh,108px);max-width:90vw;}
   .hero__statement{font-size:clamp(1.3rem,6.2vw,1.8rem);line-height:1.45;max-width:none;margin-bottom:22px;}
   .hero__actions .btn{padding:14px 22px;}
+  .hero__chips{gap:6px;margin-top:14px;}
+  .hero__chips li{padding:5px 11px;font-size:.7rem;}
+  .hero__chips li b{font-size:.8rem;}
 }

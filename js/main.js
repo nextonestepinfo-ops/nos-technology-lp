@@ -10,7 +10,8 @@ import { initPalette } from "./palette.js";
 import { initServiceOverlay } from "./service-overlay.js";
 import { initFlowField } from "./flowfield.js";
 import { initParallax } from "./parallax.js";
-import { initStory } from "./story.js";
+import { initBuildCinema } from "./build-cinema.js";
+import { initEstimator } from "./estimator.js";
 
 // リロード時にブラウザが前回のスクロール位置を復元しないようにする（常にトップから開始）
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -56,8 +57,11 @@ async function boot() {
   // 5c. ヒーローのスクロール視差（層ごとに速度差＋フェードで奥行き）
   initParallax(lenis);
 
-  // 5d. スクロール・ストーリー（pin＋スクロール同期のプロト）
-  initStory(lenis);
+  // 5e. Build Cinema（AIがあなたのサイトを組み上げる演出）
+  initBuildCinema(lenis);
+
+  // 5f. かんたん見積り（目安のライブ計算＋フォーム転記）
+  initEstimator();
 
   // 6. マーキー（スクロール速度連動）
   initMarquee(document.getElementById("marquee"), lenis);
