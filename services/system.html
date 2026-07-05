@@ -53,8 +53,21 @@
       <a href="ai.html">AI自動化</a>
       <a href="system.html" aria-current="page">管理画面</a>
     </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
     <a class="header__cta" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
   </header>
+
+  <!-- モバイルメニュー（860px以下） -->
+  <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
+    <a href="../index.html" style="--mi:0"><small>Top</small>ホーム</a>
+    <a href="web.html" style="--mi:1"><small>01</small>Web制作</a>
+    <a href="ai.html" style="--mi:2"><small>02</small>AI自動化</a>
+    <a href="system.html" style="--mi:3"><small>03</small>管理画面・システム</a>
+    <a href="../index.html#pricing" style="--mi:4"><small>Price</small>料金</a>
+    <a href="../index.html#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
+    <a class="mnav__cta" href="../index.html#contact" style="--mi:6">無料相談する</a>
+  </nav>
+
 
   <main id="top">
     <section class="hero">
@@ -299,6 +312,15 @@
     <div class="footer__top">
       <a class="footer__big" href="../index.html#contact" data-cursor="無料相談">まずは、<br />無料相談から。</a>
     </div>
+        <nav class="footer__nav" aria-label="フッターナビゲーション">
+      <a href="web.html">Web制作</a>
+      <a href="ai.html">AI自動化</a>
+      <a href="system.html">管理画面・システム</a>
+      <a href="../index.html#pricing">料金</a>
+      <a href="../index.html#estimator">かんたん見積り</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#contact">無料相談</a>
+    </nav>
     <div class="footer__bottom">
       <span class="footer__brand">
         <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">

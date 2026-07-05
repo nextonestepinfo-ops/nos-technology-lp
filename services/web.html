@@ -52,8 +52,21 @@
       <a href="ai.html">AI自動化</a>
       <a href="system.html">管理画面</a>
     </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
     <a class="header__cta" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
   </header>
+
+  <!-- モバイルメニュー（860px以下） -->
+  <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
+    <a href="../index.html" style="--mi:0"><small>Top</small>ホーム</a>
+    <a href="web.html" style="--mi:1"><small>01</small>Web制作</a>
+    <a href="ai.html" style="--mi:2"><small>02</small>AI自動化</a>
+    <a href="system.html" style="--mi:3"><small>03</small>管理画面・システム</a>
+    <a href="../index.html#pricing" style="--mi:4"><small>Price</small>料金</a>
+    <a href="../index.html#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
+    <a class="mnav__cta" href="../index.html#contact" style="--mi:6">無料相談する</a>
+  </nav>
+
 
   <main id="top">
     <!-- Hero -->
@@ -91,50 +104,62 @@
       </ol>
     </section>
 
-    <!-- 制作イメージ（流れるショーケース：実スクショに差替え可） -->
-    <section class="section works" id="works">
-      <div class="section__head">
-        <p class="section__eyebrow" data-reveal="fade">Design Samples</p>
-        <h2 class="section__title" data-reveal="words">こんなサイトが、つくれます。</h2>
-        <p class="works__hint" data-reveal="fade">業種に合わせて。（表示はデザインイメージです）</p>
-      </div>
-      <div class="showcase" id="worksShowcase" aria-label="制作サイトのデザインイメージ">
+    <!-- 制作イメージ：実画像ショーケース（PC＋iPhone、TOPと同部品） -->
+    <section class="works-strip" id="works" aria-label="制作サイトのデザインイメージ">
+      <p class="works-strip__eyebrow" data-reveal="fade">Design Samples — 業種に合わせて、こんなサイトを</p>
+      <div class="showcase" id="worksShowcase">
         <div class="showcase__row" data-dir="left">
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>nexus-workspace.jp</span></div>
-            <div class="site__screen site--split" style="--s-bg:#c8ee46;--s-fg:#14161a;--s-img:linear-gradient(135deg,#b9e23a,#7aa82c);--s-accent:#14161a">
-              <nav class="site__nav"><b>NEXUS</b><em>Work</em><em>Space</em><em>News</em></nav>
-              <div class="site__splitb"><div class="site__txt"><h4>未来の働き方を、体験しよう</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">無料見学</span></div><div class="site__img"></div></div></div></article>
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>kojika-hotel.jp</span></div>
-            <div class="site__screen site--cover" style="--s-img:linear-gradient(155deg,#2a2018,#5a4636);--s-fg:#fff;--s-accent:#c9a36a">
-              <nav class="site__nav"><b>KOJIKA HOTEL</b><em>Rooms</em><em>Dining</em><em>Access</em></nav>
-              <div class="site__coverc"><h4>日常から、少し離れる場所</h4><span class="site__btn">空室を見る</span></div></div></article>
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>iron-gym.jp</span></div>
-            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#141417,#3a2a20);--s-fg:#fff;--s-accent:#ff6a3d">
-              <nav class="site__nav"><b>IRON GYM</b><em>About</em><em>Plan</em><em>Contact</em></nav>
-              <div class="site__coverc"><h4>鍛える、その先へ。</h4><span class="site__btn">体験する</span></div></div></article>
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>mode-craft.jp</span></div>
-            <div class="site__screen site--split" style="--s-bg:#f6f1ec;--s-fg:#1c1814;--s-img:linear-gradient(135deg,#e9d3c5,#bb8d79);--s-accent:#c08457">
-              <nav class="site__nav"><b>MODE CRAFT</b><em>Style</em><em>Menu</em><em>Book</em></nav>
-              <div class="site__splitb"><div class="site__txt"><h4>髪のデザインで、あなたらしく</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">予約する</span></div><div class="site__img"></div></div></div></article>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/salon-web.webp" alt="美容室・サロンのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/salon-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/cafe-web.webp" alt="カフェのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/diner-web.webp" alt="飲食店のサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/diner-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/clinic-web.webp" alt="クリニックのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/clinic-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/seitai-web.webp" alt="整体・接骨院のサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/seitai-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/gym-web.webp" alt="ジムのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/gym-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/school-web.webp" alt="学習塾のサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/school-mobile.webp" alt="" loading="lazy" /></span></a>
         </div>
-        <div class="showcase__row" data-dir="right">
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>internal-clinic.jp</span></div>
-            <div class="site__screen site--split" style="--s-bg:#f1f6fd;--s-fg:#13243f;--s-img:linear-gradient(135deg,#dbeafe,#9fbef2);--s-accent:#2f6df0">
-              <nav class="site__nav"><b>INTERNAL MEDICINE</b><em>診療</em><em>アクセス</em></nav>
-              <div class="site__splitb"><div class="site__txt"><h4>内科専門の、信頼される診療所</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">WEB予約</span></div><div class="site__img"></div></div></div></article>
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>mori-cafe.jp</span></div>
-            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#caa46f,#5e3f26);--s-fg:#fff;--s-accent:#8a5a32">
-              <nav class="site__nav"><b>MORI CAFE</b><em>Menu</em><em>Store</em></nav>
-              <div class="site__coverc"><h4>自然とともに、心安らぐ場所</h4><span class="site__btn">メニュー</span></div></div></article>
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>beauty-salon.jp</span></div>
-            <div class="site__screen site--split" style="--s-bg:#efe6dc;--s-fg:#231b14;--s-img:linear-gradient(135deg,#efe2d6,#c8b099);--s-accent:#9a7048">
-              <nav class="site__nav"><b>BEAUTY SALON</b><em>Salon</em><em>Book</em></nav>
-              <div class="site__splitb"><div class="site__txt"><h4>あなたらしい、美しさを</h4><span class="bar"></span><span class="bar short"></span><span class="site__btn">ご予約</span></div><div class="site__img"></div></div></div></article>
-          <article class="site"><div class="site__bar"><i></i><i></i><i></i><span>local-diner.jp</span></div>
-            <div class="site__screen site--cover" style="--s-img:linear-gradient(160deg,#2a1d16,#5a3a28);--s-fg:#fff;--s-accent:#e08a3c">
-              <nav class="site__nav"><b>LOCAL DINER</b><em>Food</em><em>Map</em></nav>
-              <div class="site__coverc"><h4>今日の特別を、この一皿に</h4><span class="site__btn">来店予約</span></div></div></article>
+      </div>
+    </section>
+
+    <!-- ===== Build Cinema（AIがあなたのお店のサイトを組み上げる／pin＋スクロール同期） ===== -->
+    <section class="build" id="build" aria-label="AIがあなたのサイトを作る流れ">
+      <div class="build__stage" id="buildStage" data-stage="0">
+        <div class="build__head">
+          <p class="build__eyebrow">Built by AI, for you</p>
+          <h2 class="build__title">AIが、<em>あなたのお店のため</em>に作る。</h2>
         </div>
+        <div class="build__grid">
+          <!-- 左：AIの作業コンソール（ログがスクロールで進む） -->
+          <div class="build__console" aria-hidden="true">
+            <div class="build__cbar"><i></i><i></i><i></i><span>Nos AI Studio — working…</span></div>
+            <ol class="build__log">
+              <li data-step="0"><b>ヒアリング</b><span>「カフェ／予約もほしい／温かい雰囲気で」</span></li>
+              <li data-step="1"><b>構成を設計</b><span>トップ・メニュー・アクセス・予約導線</span></li>
+              <li data-step="2"><b>デザインを適用</b><span>写真と配色を、お店に合わせて</span></li>
+              <li data-step="3"><b>スマホに最適化</b><span>片手で予約まで届く配置に</span></li>
+              <li data-step="4"><b>公開準備 完了</b><span>ここまで、最短3日</span></li>
+            </ol>
+            <p class="build__closing">AIが下ごしらえ、人が仕上げる。<br /><b>だからオーダーメイドでも、お求めやすく。</b></p>
+          </div>
+          <!-- 右：組み上がっていくブラウザ＋スマホ -->
+          <div class="build__preview" aria-hidden="true">
+            <div class="build__browser">
+              <div class="build__bbar"><i></i><i></i><i></i><span>yourshop.jp</span></div>
+              <div class="build__screen">
+                <!-- 1) ワイヤーフレーム（点線ブロックが順に出現） -->
+                <div class="build__wire">
+                  <b style="--i:0"></b><b style="--i:1"></b><b style="--i:2"></b>
+                  <b style="--i:3"></b><b style="--i:4"></b><b style="--i:5"></b>
+                </div>
+                <!-- 2) 完成デザインが上から“描画”されていく（スキャンライン付き） -->
+                <img class="build__shot" src="../assets/works/cafe-web.webp" alt="" loading="lazy" />
+                <span class="build__scan"></span>
+              </div>
+              <span class="build__stamp">Published</span>
+            </div>
+            <span class="build__phone"><img src="../assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span>
+          </div>
+        </div>
+        <div class="build__rail" aria-hidden="true"><i></i></div>
       </div>
     </section>
 
@@ -164,6 +189,7 @@
         </div>
         <div class="plan__cta" data-reveal="fade">
           <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="相談"><span>このプランを相談する</span></a>
+          <a class="btn btn--ghost" href="../index.html#estimator" data-cursor="見積り"><span>オプションを選んで目安を見る →</span></a>
           <p class="plan__note">※ 検索順位や売上を保証するものではありません。まずは現状の確認から。</p>
         </div>
       </div>
@@ -174,6 +200,15 @@
     <div class="footer__top">
       <a class="footer__big" href="../index.html#contact" data-cursor="無料相談">まずは、<br />無料相談から。</a>
     </div>
+        <nav class="footer__nav" aria-label="フッターナビゲーション">
+      <a href="web.html">Web制作</a>
+      <a href="ai.html">AI自動化</a>
+      <a href="system.html">管理画面・システム</a>
+      <a href="../index.html#pricing">料金</a>
+      <a href="../index.html#estimator">かんたん見積り</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#contact">無料相談</a>
+    </nav>
     <div class="footer__bottom">
       <span class="footer__brand">
         <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">

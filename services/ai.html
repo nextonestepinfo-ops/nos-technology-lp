@@ -21,6 +21,7 @@
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/hero.css" />
   <link rel="stylesheet" href="../css/sections.css" />
+  <link rel="stylesheet" href="../css/demos.css" />
 
   <script type="importmap">
     {
@@ -52,8 +53,21 @@
       <a href="ai.html" aria-current="page">AI自動化</a>
       <a href="system.html">管理画面</a>
     </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
     <a class="header__cta" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
   </header>
+
+  <!-- モバイルメニュー（860px以下） -->
+  <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
+    <a href="../index.html" style="--mi:0"><small>Top</small>ホーム</a>
+    <a href="web.html" style="--mi:1"><small>01</small>Web制作</a>
+    <a href="ai.html" style="--mi:2"><small>02</small>AI自動化</a>
+    <a href="system.html" style="--mi:3"><small>03</small>管理画面・システム</a>
+    <a href="../index.html#pricing" style="--mi:4"><small>Price</small>料金</a>
+    <a href="../index.html#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
+    <a class="mnav__cta" href="../index.html#contact" style="--mi:6">無料相談する</a>
+  </nav>
+
 
   <main id="top">
     <section class="hero">
@@ -89,6 +103,48 @@
       </ol>
     </section>
 
+
+    <!-- ===== 実例：AI返信アシストの画面（データはサンプル） ===== -->
+    <section class="section" id="demo">
+      <div class="section__head" style="max-width:var(--maxw);margin-left:auto;margin-right:auto;">
+        <p class="section__eyebrow" data-reveal="fade">Screen</p>
+        <h2 class="section__title" data-reveal="words">実際の画面は、こんな感じ。</h2>
+      </div>
+      <div class="demo">
+        <div class="demo__copy" data-reveal="rise">
+          <span class="demo__no">CASE — AI Reply</span>
+          <h3 class="demo__title">営業時間外も、<em>その場で返事</em>。</h3>
+          <p class="demo__text">夜の問い合わせにAIが下書きを用意。翌朝、人が確認して送るだけ。返事が早いお店は、それだけで選ばれます。</p>
+          <ul class="demo__points">
+            <li>よくある質問は自動で一次対応<small>→ 同じ返信を打たなくていい</small></li>
+            <li>文面はお店の言葉づかいを学習<small>→ “それっぽい定型文”にならない</small></li>
+            <li>最後は必ず人が確認して送信<small>→ AI任せにしない運用にできる</small></li>
+          </ul>
+        </div>
+        <figure class="shot" data-reveal="rise" aria-label="AI返信アシストの画面例">
+          <div class="shot__bar"><i></i><i></i><i></i><span>yourshop-admin.jp / 返信</span></div>
+          <div class="shot__body">
+            <div class="ap-head">
+              <h4>問い合わせ受信箱</h4>
+              <span class="ap-badge">AIが下書き済み</span>
+            </div>
+            <ul class="shift-alerts" style="gap:10px">
+              <li><b style="color:#ffb08a;background:rgba(255,138,92,.12);border:1px solid rgba(255,138,92,.38)">21:04</b>明日の15時、2名で予約できますか？<span>— Instagram経由</span></li>
+            </ul>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="align-self:flex-end;max-width:88%;padding:12px 16px;border-radius:14px 14px 4px 14px;background:var(--blue);color:#fff;font-size:.82rem;line-height:1.7">ありがとうございます。明日15:00、2名様でご案内できます。ご来店お待ちしております。</div>
+              <div style="align-self:flex-end;display:flex;gap:8px;align-items:center">
+                <span class="ap-badge">✦ AIの下書き</span>
+                <span class="ap-btn">編集する</span>
+                <span class="ap-btn ap-btn--pri">確認して送信</span>
+              </div>
+            </div>
+            <div class="pay-foot"><small>返信のトーン・NGワードはお店ごとに設定できます</small></div>
+          </div>
+        </figure>
+      </div>
+    </section>
+
     <section class="section plan" id="flow">
       <div class="plan__inner">
         <div class="section__head" style="text-align:center">
@@ -104,12 +160,68 @@
         </div>
       </div>
     </section>
+    <!-- ===== Before / After（スクロールジャック廃止：通常スクロールで“何が手放せるか”を具体に） ===== -->
+    <section class="section compare" id="compare" aria-label="AIに任せる前とあと">
+      <div class="section__head" style="text-align:center">
+        <p class="section__eyebrow" data-reveal="fade">Before / After</p>
+        <h2 class="section__title" data-reveal="words">毎日の“これ”、手放せます。</h2>
+        <p class="compare__lead" data-reveal="fade">お店の一日には、人にしかできない仕事と、仕組みに任せられる仕事があります。<br />Nosは、後者を静かに引き受けます。</p>
+      </div>
+      <div class="compare__grid">
+        <!-- これまで：ぜんぶ手作業 -->
+        <article class="daycol daycol--before" data-reveal="rise">
+          <header class="daycol__head">
+            <span class="daycol__tag">これまで</span>
+            <h3>ぜんぶ、自分で。</h3>
+          </header>
+          <ul class="daycol__list">
+            <li style="--i:0"><span>口コミへの返信</span><b>約30分</b></li>
+            <li style="--i:1"><span>予約の確認・リマインド</span><b>約20分</b></li>
+            <li style="--i:2"><span>InstagramとGoogleマップの更新</span><b>約25分</b></li>
+            <li style="--i:3"><span>問い合わせへの返事</span><b>約20分</b></li>
+            <li style="--i:4"><span>売上・顧客リストの転記</span><b>約15分</b></li>
+          </ul>
+          <footer class="daycol__foot">接客のあいまに、毎日 <b>約110分</b></footer>
+        </article>
+
+        <!-- 中央：受け渡しの矢印 -->
+        <div class="compare__hand" aria-hidden="true">
+          <span class="compare__hand-badge">AIと仕組みへ</span>
+        </div>
+
+        <!-- Nosと：確認するだけ -->
+        <article class="daycol daycol--after" data-reveal="rise">
+          <header class="daycol__head">
+            <span class="daycol__tag daycol__tag--on">Nosと整えたあと</span>
+            <h3>確認するだけ。</h3>
+          </header>
+          <ul class="daycol__list">
+            <li style="--i:0"><span>口コミへの返信</span><i>AIが下書き</i><b>3分</b></li>
+            <li style="--i:1"><span>予約の確認・リマインド</span><i>自動送信</i><b>0分</b></li>
+            <li style="--i:2"><span>Instagram・マップの更新</span><i>下準備をAIが</i><b>5分</b></li>
+            <li style="--i:3"><span>問い合わせへの返事</span><i>一次対応はAI</i><b>3分</b></li>
+            <li style="--i:4"><span>売上・顧客リストの転記</span><i>自動で記録</i><b>0分</b></li>
+          </ul>
+          <footer class="daycol__foot daycol__foot--on">浮いた時間は、目の前のお客様へ。</footer>
+        </article>
+      </div>
+      <p class="compare__note" data-reveal="fade">※時間は一例です。最後は必ず人が確認してから送る運用にできます。任せる範囲は、無料相談で一緒に決めましょう。</p>
+    </section>
   </main>
 
   <footer class="footer">
     <div class="footer__top">
       <a class="footer__big" href="../index.html#contact" data-cursor="無料相談">まずは、<br />無料相談から。</a>
     </div>
+        <nav class="footer__nav" aria-label="フッターナビゲーション">
+      <a href="web.html">Web制作</a>
+      <a href="ai.html">AI自動化</a>
+      <a href="system.html">管理画面・システム</a>
+      <a href="../index.html#pricing">料金</a>
+      <a href="../index.html#estimator">かんたん見積り</a>
+      <a href="../index.html#faq">FAQ</a>
+      <a href="../index.html#contact">無料相談</a>
+    </nav>
     <div class="footer__bottom">
       <span class="footer__brand">
         <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">

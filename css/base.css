@@ -110,6 +110,38 @@ strong{font-weight:700;color:var(--ink);}
 .header__cta:hover{background:var(--ink);border-color:var(--ink);color:var(--paper);transform:translateY(-1px);}
 @media(max-width:860px){.header__nav{display:none;}}
 
+/* ---- ハンバーガー＋モバイルメニュー（860px以下で有効） ---- */
+.menu-btn{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;
+  padding:10px;border:1px solid var(--line);border-radius:12px;background:transparent;cursor:pointer;flex:none;}
+.menu-btn i{display:block;height:2px;border-radius:2px;background:var(--ink);transition:transform .35s var(--ease),opacity .3s var(--ease);}
+.menu-btn.is-open i:nth-child(1){transform:translateY(7px) rotate(45deg);}
+.menu-btn.is-open i:nth-child(2){opacity:0;}
+.menu-btn.is-open i:nth-child(3){transform:translateY(-7px) rotate(-45deg);}
+.mnav{position:fixed;inset:0;z-index:75;display:flex;flex-direction:column;justify-content:center;gap:6px;
+  padding:90px var(--gut) 40px;background:color-mix(in srgb,var(--paper) 92%,transparent);backdrop-filter:blur(18px);
+  visibility:hidden;opacity:0;transition:opacity .4s var(--ease),visibility .4s var(--ease);}
+.mnav.is-open{visibility:visible;opacity:1;}
+.mnav a{font-size:clamp(1.3rem,6vw,1.7rem);font-weight:800;color:var(--ink);padding:12px 0;
+  border-bottom:1px solid var(--line-soft);display:flex;align-items:baseline;gap:14px;
+  opacity:0;transform:translateY(14px);transition:opacity .45s var(--ease),transform .45s var(--ease);
+  transition-delay:calc(var(--mi,0)*60ms);}
+.mnav.is-open a{opacity:1;transform:none;}
+.mnav a small{font-family:var(--en);font-size:.68rem;letter-spacing:.14em;color:var(--mint);text-transform:uppercase;}
+.mnav .mnav__cta{margin-top:18px;border:none;justify-content:center;border-radius:999px;background:var(--mint);
+  color:#fff;font-size:1.05rem;padding:16px;}
+@media(max-width:860px){
+  .menu-btn{display:flex;}
+  /* メニューを開くためにヘッダーはモバイルでは常時表示 */
+  .header{transform:none;opacity:1;pointer-events:auto;background:var(--glass);backdrop-filter:blur(14px);}
+}
+body.is-menu-open{overflow:hidden;}
+
+/* ---- フッター回遊ナビ ---- */
+.footer__nav{display:flex;flex-wrap:wrap;justify-content:center;gap:10px 26px;padding:0 var(--gut) 34px;
+  font-size:.88rem;}
+.footer__nav a{color:var(--ink-soft);transition:color .3s var(--ease);}
+.footer__nav a:hover{color:var(--mint);}
+
 /* ---- ボタン ---- */
 .btn{position:relative;display:inline-flex;align-items:center;justify-content:center;padding:16px 30px;border-radius:999px;
   font-weight:600;font-size:.98rem;border:1px solid transparent;overflow:hidden;isolation:isolate;

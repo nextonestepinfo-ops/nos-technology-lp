@@ -12,6 +12,7 @@ import { initFlowField } from "./flowfield.js";
 import { initParallax } from "./parallax.js";
 import { initBuildCinema } from "./build-cinema.js";
 import { initEstimator } from "./estimator.js";
+import { initMobileNav } from "./nav.js";
 
 // リロード時にブラウザが前回のスクロール位置を復元しないようにする（常にトップから開始）
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -36,8 +37,9 @@ async function boot() {
     if (lenis) lenis.scrollTo(0, { immediate: true });
   }
 
-  // 3. ヘッダー状態
+  // 3. ヘッダー状態＋モバイルメニュー
   initHeader();
+  initMobileNav();
 
   // 4. ヒーロー：ハイブリッド3D（WebGL対応時のみ）
   await initHeroBackground(document.getElementById("heroCanvas"));

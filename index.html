@@ -93,8 +93,9 @@
       <a href="services/system.html">管理画面</a>
       <a href="#pricing">料金</a>
       <a href="#estimator">かんたん見積り</a>
-      <a href="#process">進め方</a>
+      <a href="#faq">FAQ</a>
     </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
     <a class="header__cta" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
     <!-- スティッキー時に現れる流れるチップ帯（マーキーがバナーへ変化する演出） -->
     <div class="header__ticker" aria-hidden="true">
@@ -104,6 +105,18 @@
       </div>
     </div>
   </header>
+
+  <!-- モバイルメニュー（860px以下） -->
+  <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
+    <a href="#hero" style="--mi:0"><small>Top</small>ホーム</a>
+    <a href="services/web.html" style="--mi:1"><small>01</small>Web制作</a>
+    <a href="services/ai.html" style="--mi:2"><small>02</small>AI自動化</a>
+    <a href="services/system.html" style="--mi:3"><small>03</small>管理画面・システム</a>
+    <a href="#pricing" style="--mi:4"><small>Price</small>料金</a>
+    <a href="#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
+    <a class="mnav__cta" href="#contact" style="--mi:6">無料相談する</a>
+  </nav>
+
 
   <main id="top" class="home">
     <!-- ===== Hero（v2：全画面3Dオブジェクトが主役。文字は最小） ===== -->
@@ -146,64 +159,22 @@
       <p class="works-strip__eyebrow" data-reveal="fade">What we build — こんなサイトが、つくれます</p>
       <div class="showcase" id="worksShowcase">
         <div class="showcase__row" data-dir="left">
-          <article class="site"><img class="site__web" src="assets/works/salon-web.webp" alt="美容室・サロンのサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/salon-mobile.webp" alt="" loading="lazy" /></span></article>
-          <article class="site"><img class="site__web" src="assets/works/cafe-web.webp" alt="カフェ・喫茶のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span></article>
-          <article class="site"><img class="site__web" src="assets/works/diner-web.webp" alt="飲食店・レストランのサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/diner-mobile.webp" alt="" loading="lazy" /></span></article>
-          <article class="site"><img class="site__web" src="assets/works/clinic-web.webp" alt="クリニック・内科のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/clinic-mobile.webp" alt="" loading="lazy" /></span></article>
-          <article class="site"><img class="site__web" src="assets/works/seitai-web.webp" alt="整体・接骨院のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/seitai-mobile.webp" alt="" loading="lazy" /></span></article>
-          <article class="site"><img class="site__web" src="assets/works/gym-web.webp" alt="フィットネスジムのサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/gym-mobile.webp" alt="" loading="lazy" /></span></article>
-          <article class="site"><img class="site__web" src="assets/works/school-web.webp" alt="学習塾・教室のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/school-mobile.webp" alt="" loading="lazy" /></span></article>
+          <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" src="assets/works/salon-web.webp" alt="美容室・サロンのサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/salon-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" src="assets/works/cafe-web.webp" alt="カフェ・喫茶のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" src="assets/works/diner-web.webp" alt="飲食店・レストランのサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/diner-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" src="assets/works/clinic-web.webp" alt="クリニック・内科のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/clinic-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" src="assets/works/seitai-web.webp" alt="整体・接骨院のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/seitai-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" src="assets/works/gym-web.webp" alt="フィットネスジムのサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/gym-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" src="assets/works/school-web.webp" alt="学習塾・教室のサイト制作例" loading="lazy" /><span class="site__phone"><img src="assets/works/school-mobile.webp" alt="" loading="lazy" /></span></a>
         </div>
       </div>
+      <p class="works-strip__more" data-reveal="fade"><a class="btn btn--ghost" href="services/web.html" data-cursor="View"><span>制作イメージをもっと見る →</span></a></p>
     </section>
 
-    <!-- ===== Build Cinema（AIがあなたのお店のサイトを組み上げる／pin＋スクロール同期） ===== -->
-    <section class="build" id="build" aria-label="AIがあなたのサイトを作る流れ">
-      <div class="build__stage" id="buildStage" data-stage="0">
-        <div class="build__head">
-          <p class="build__eyebrow">Built by AI, for you</p>
-          <h2 class="build__title">AIが、<em>あなたのお店のため</em>に作る。</h2>
-        </div>
-        <div class="build__grid">
-          <!-- 左：AIの作業コンソール（ログがスクロールで進む） -->
-          <div class="build__console" aria-hidden="true">
-            <div class="build__cbar"><i></i><i></i><i></i><span>Nos AI Studio — working…</span></div>
-            <ol class="build__log">
-              <li data-step="0"><b>ヒアリング</b><span>「カフェ／予約もほしい／温かい雰囲気で」</span></li>
-              <li data-step="1"><b>構成を設計</b><span>トップ・メニュー・アクセス・予約導線</span></li>
-              <li data-step="2"><b>デザインを適用</b><span>写真と配色を、お店に合わせて</span></li>
-              <li data-step="3"><b>スマホに最適化</b><span>片手で予約まで届く配置に</span></li>
-              <li data-step="4"><b>公開準備 完了</b><span>ここまで、最短3日</span></li>
-            </ol>
-            <p class="build__closing">AIが下ごしらえ、人が仕上げる。<br /><b>だからオーダーメイドでも、お求めやすく。</b></p>
-          </div>
-          <!-- 右：組み上がっていくブラウザ＋スマホ -->
-          <div class="build__preview" aria-hidden="true">
-            <div class="build__browser">
-              <div class="build__bbar"><i></i><i></i><i></i><span>yourshop.jp</span></div>
-              <div class="build__screen">
-                <!-- 1) ワイヤーフレーム（点線ブロックが順に出現） -->
-                <div class="build__wire">
-                  <b style="--i:0"></b><b style="--i:1"></b><b style="--i:2"></b>
-                  <b style="--i:3"></b><b style="--i:4"></b><b style="--i:5"></b>
-                </div>
-                <!-- 2) 完成デザインが上から“描画”されていく（スキャンライン付き） -->
-                <img class="build__shot" src="assets/works/cafe-web.webp" alt="" loading="lazy" />
-                <span class="build__scan"></span>
-              </div>
-              <span class="build__stamp">Published</span>
-            </div>
-            <span class="build__phone"><img src="assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span>
-          </div>
-        </div>
-        <div class="build__rail" aria-hidden="true"><i></i></div>
-      </div>
-    </section>
-
-    <!-- ===== かんたん見積り（必要な分だけ選んで、目安をその場で） ===== -->
+<!-- ===== かんたん見積り（必要な分だけ選んで、目安をその場で） ===== -->
     <section class="section est" id="estimator">
       <div class="section__head">
-        <p class="section__eyebrow" data-reveal="fade">(05) Your plan</p>
+        <p class="section__eyebrow" data-reveal="fade">(03) Your plan</p>
         <h2 class="section__title" data-reveal="words">必要な分だけ。かんたん見積り。</h2>
         <p class="est__lead" data-reveal="fade">安売りではありません。<b>AIが制作を効率化した分を、価格に反映</b>しています。オプションを選ぶと、あなたのお店の目安がその場で分かります。</p>
       </div>
@@ -270,85 +241,17 @@
       </div>
     </section>
 
-    <!-- ===== Intro（人の時間を、AIでつくる の説明＋画像） ===== -->
-    <section class="section intro" id="intro">
-      <div class="intro__grid">
-        <div class="intro__text">
-          <p class="section__eyebrow" data-reveal="fade">Time for human work</p>
-          <h2 class="intro__title" data-reveal="words">人の時間を、<em>AI</em>でつくる。</h2>
-          <p class="intro__lead" data-reveal="fade">
-            店舗のWeb・集客・業務を、まとめて整える。
-            AIにできることは、AIへ。空いた時間で、人にしかできない仕事を。
-            あなたの時間と、効率と、売上を、もっと前へ。
-          </p>
-          <div class="intro__actions" data-reveal="fade">
-            <a class="btn btn--ghost" href="#services" data-cursor="見る"><span>できることを見る →</span></a>
-            <a class="btn btn--primary" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
-          </div>
-        </div>
-        <div class="intro__media" data-reveal="rise" aria-hidden="true">
-          <div class="intro__media-frame">
-            <canvas class="intro__canvas" id="introCanvas" aria-hidden="true"></canvas>
-          </div>
-        </div>
-      </div>
-    </section>
 
-    <!-- ===== Before / After（スクロールジャック廃止：通常スクロールで“何が手放せるか”を具体に） ===== -->
-    <section class="section compare" id="story" aria-label="AIに任せる前とあと">
-      <div class="section__head" style="text-align:center">
-        <p class="section__eyebrow" data-reveal="fade">Before / After</p>
-        <h2 class="section__title" data-reveal="words">毎日の“これ”、手放せます。</h2>
-        <p class="compare__lead" data-reveal="fade">お店の一日には、人にしかできない仕事と、仕組みに任せられる仕事があります。<br />Nosは、後者を静かに引き受けます。</p>
-      </div>
-      <div class="compare__grid">
-        <!-- これまで：ぜんぶ手作業 -->
-        <article class="daycol daycol--before" data-reveal="rise">
-          <header class="daycol__head">
-            <span class="daycol__tag">これまで</span>
-            <h3>ぜんぶ、自分で。</h3>
-          </header>
-          <ul class="daycol__list">
-            <li style="--i:0"><span>口コミへの返信</span><b>約30分</b></li>
-            <li style="--i:1"><span>予約の確認・リマインド</span><b>約20分</b></li>
-            <li style="--i:2"><span>InstagramとGoogleマップの更新</span><b>約25分</b></li>
-            <li style="--i:3"><span>問い合わせへの返事</span><b>約20分</b></li>
-            <li style="--i:4"><span>売上・顧客リストの転記</span><b>約15分</b></li>
-          </ul>
-          <footer class="daycol__foot">接客のあいまに、毎日 <b>約110分</b></footer>
-        </article>
 
-        <!-- 中央：受け渡しの矢印 -->
-        <div class="compare__hand" aria-hidden="true">
-          <span class="compare__hand-badge">AIと仕組みへ</span>
-        </div>
 
-        <!-- Nosと：確認するだけ -->
-        <article class="daycol daycol--after" data-reveal="rise">
-          <header class="daycol__head">
-            <span class="daycol__tag daycol__tag--on">Nosと整えたあと</span>
-            <h3>確認するだけ。</h3>
-          </header>
-          <ul class="daycol__list">
-            <li style="--i:0"><span>口コミへの返信</span><i>AIが下書き</i><b>3分</b></li>
-            <li style="--i:1"><span>予約の確認・リマインド</span><i>自動送信</i><b>0分</b></li>
-            <li style="--i:2"><span>Instagram・マップの更新</span><i>下準備をAIが</i><b>5分</b></li>
-            <li style="--i:3"><span>問い合わせへの返事</span><i>一次対応はAI</i><b>3分</b></li>
-            <li style="--i:4"><span>売上・顧客リストの転記</span><i>自動で記録</i><b>0分</b></li>
-          </ul>
-          <footer class="daycol__foot daycol__foot--on">浮いた時間は、目の前のお客様へ。</footer>
-        </article>
-      </div>
-      <p class="compare__note" data-reveal="fade">※時間は一例です。最後は必ず人が確認してから送る運用にできます。任せる範囲は、無料相談で一緒に決めましょう。</p>
-    </section>
 
     <!-- ===== Manifesto（理念のキャッチコピー） ===== -->
     <section class="section manifesto" id="manifesto">
       <p class="manifesto__eyebrow" data-reveal="fade">Time for human work</p>
-      <h2 class="manifesto__text" data-reveal="words">技術が進むほど、人の時間は、<em>もっと価値になる。</em></h2>
+      <h2 class="manifesto__text" data-reveal="words">人の時間を、<em>AIでつくる。</em></h2>
       <p class="manifesto__sub" data-reveal="fade">
-        AIにできることは、AIへ。空いた時間で、人にしかできない仕事を。
-        あなたの時間と、効率と、売上を、もっと前へ。
+        技術が進むほど、人の時間はもっと価値になる。
+        AIにできることはAIへ。空いた時間で、人にしかできない仕事を。
       </p>
     </section>
 
@@ -358,200 +261,59 @@
         <p class="section__eyebrow" data-reveal="fade">(01) What we do</p>
         <h2 class="section__title" data-reveal="words">主にやっていること</h2>
       </div>
-      <div class="services__list">
-        <article class="svc" data-reveal="rise" data-cursor="View" data-overlay="svc-01" role="button" tabindex="0" aria-haspopup="dialog">
-          <span class="svc__no">01</span>
-          <div class="svc__body">
-            <span class="svc__role svc__role--lead">入口 — お求めやすく · ¥30,000〜</span>
-            <h3 class="svc__title">Web制作・集客導線改善</h3>
-            <p class="svc__text">店舗ページ、既存サイト改善、Googleマップ、Instagram、問い合わせフォームまで、「見つけてもらい、相談につながる」導線を整えます。AI活用で最短3〜5日、オーダーメイドのご相談も柔軟に。</p>
-            <ul class="svc__tags"><li>店舗ページ</li><li>Map</li><li>SNS</li><li>フォーム</li></ul>
+      <div class="svcx__grid">
+        <!-- Web制作：実画像で「作るもの」を見せる -->
+        <a class="svcx" href="services/web.html" data-reveal="rise" data-cursor="View">
+          <figure class="svcx__media">
+            <img src="assets/works/salon-web.webp" alt="店舗サイトの制作例" loading="lazy" />
+            <span class="svcx__badge">¥30,000〜 · 最短3〜5日</span>
+          </figure>
+          <div class="svcx__body">
+            <span class="svc__role svc__role--lead">入口 — お求めやすく</span>
+            <h3 class="svcx__title">Web制作・集客導線</h3>
+            <p class="svcx__text">店舗ページ、Googleマップ、Instagram、フォーム。「見つけてもらい、相談につながる」までを整えます。</p>
+            <span class="svcx__more">詳しく見る →</span>
           </div>
-          <span class="svc__arrow" aria-hidden="true">→</span>
-        </article>
-        <article class="svc" data-reveal="rise" data-cursor="View" data-overlay="svc-02" role="button" tabindex="0" aria-haspopup="dialog">
-          <span class="svc__no">02</span>
-          <div class="svc__body">
-            <span class="svc__role">橋渡し — 日々の手間を自動化</span>
-            <h3 class="svc__title">AI業務改善・自動化</h3>
-            <p class="svc__text">問い合わせ対応、返信文案、通知、見込み客管理など、毎日の細かい手間をAIと仕組みで肩代わりします。</p>
-            <ul class="svc__tags"><li>返信案</li><li>通知</li><li>見込み客</li><li>自動化</li></ul>
+        </a>
+        <!-- AI自動化：返信チャットのミニUI -->
+        <a class="svcx" href="services/ai.html" data-reveal="rise" data-cursor="View">
+          <figure class="svcx__media svcx__media--ui" aria-hidden="true">
+            <span class="mchat__time">21:04 · 営業時間外</span>
+            <span class="mchat__in">明日の15時、2名で予約できますか？</span>
+            <span class="mchat__out">ご案内できます。ご来店お待ちしております。</span>
+            <span class="mchat__tag">✦ AIが下書き → 人が確認して送信</span>
+          </figure>
+          <div class="svcx__body">
+            <span class="svc__role">橋渡し — 手間を自動化</span>
+            <h3 class="svcx__title">AI業務改善・自動化</h3>
+            <p class="svcx__text">問い合わせ返信の下書き、通知、見込み客の整理。毎日の細かい手間をAIと仕組みで肩代わり。</p>
+            <span class="svcx__more">詳しく見る →</span>
           </div>
-          <span class="svc__arrow" aria-hidden="true">→</span>
-        </article>
-        <article class="svc" data-reveal="rise" data-cursor="View" data-overlay="svc-03" role="button" tabindex="0" aria-haspopup="dialog">
-          <span class="svc__no">03</span>
-          <div class="svc__body">
-            <span class="svc__role svc__role--flag">主力 — 本格的に業務を変える</span>
-            <h3 class="svc__title">システム・管理画面開発</h3>
-            <p class="svc__text">予約、顧客、問い合わせ、スタッフ管理など、現場で本当に使う小規模な管理画面を必要な分だけ作ります。</p>
-            <ul class="svc__tags"><li>予約</li><li>顧客</li><li>スタッフ</li><li>管理画面</li></ul>
+        </a>
+        <!-- システム：管理画面のミニUI -->
+        <a class="svcx" href="services/system.html" data-reveal="rise" data-cursor="View">
+          <figure class="svcx__media svcx__media--ui" aria-hidden="true">
+            <span class="mkpi"><small>今日の売上</small><b>¥68,500</b><em>+8.2%</em></span>
+            <span class="mrow"><b>10:00</b>佐藤様 カット＋カラー<i>確定</i></span>
+            <span class="mrow"><b>11:30</b>田中様 メンズカット<i class="on">来店中</i></span>
+            <span class="mbars"><i style="--v:34%"></i><i style="--v:58%"></i><i style="--v:88%"></i><i style="--v:64%"></i><i style="--v:96%"></i><i style="--v:70%"></i></span>
+          </figure>
+          <div class="svcx__body">
+            <span class="svc__role svc__role--flag">主力 — 業務そのものを変える</span>
+            <h3 class="svcx__title">システム・管理画面開発</h3>
+            <p class="svcx__text">売上・給与・勤怠×シフトまで。お店専用の“独自システム”を、必要な分だけ。</p>
+            <span class="svcx__more">詳しく見る →</span>
           </div>
-          <span class="svc__arrow" aria-hidden="true">→</span>
-        </article>
-      </div>
-
-      <!-- 各サービスの詳細（クリックでズームアップ表示）。文言はここを編集 -->
-      <template id="svc-01-detail">
-        <p class="ov__en">Web Design &amp; Reach</p>
-        <h3 class="ov__title" id="svc-01-title">Web制作・集客導線改善</h3>
-        <p class="ov__lead">「見つけてもらい、相談につながる」までの導線を、まとめて整えます。</p>
-        <div class="ov__cols">
-          <div class="ov__block">
-            <h4>できること</h4>
-            <ul class="ov__list">
-              <li>店舗1ページサイトの制作</li>
-              <li>既存サイトの改善</li>
-              <li>Googleマップ（MEO）の整備</li>
-              <li>Instagram・LINEの導線づくり</li>
-              <li>問い合わせフォーム設置</li>
-            </ul>
-          </div>
-          <div class="ov__block">
-            <h4>対象業種</h4>
-            <ul class="ov__list">
-              <li>美容室・サロン</li>
-              <li>飲食店・カフェ</li>
-              <li>整体・クリニック</li>
-              <li>教室・士業 など地域店舗</li>
-            </ul>
-            <div class="ov__media" aria-hidden="true"><span>Demo / UI（準備中）</span></div>
-          </div>
-        </div>
-        <div class="ov__price">
-          <div class="plan__card plan__card--in">
-            <h4 class="plan__card-title">料金目安・含むもの</h4>
-            <p class="ov__fee">¥30,000〜</p>
-            <ul class="plan__list">
-              <li>スマホ対応・店舗情報の掲載</li>
-              <li>電話 / LINE / Instagram リンク</li>
-              <li>Googleマップ導線・修正1回</li>
-            </ul>
-          </div>
-          <div class="plan__card plan__card--out">
-            <h4 class="plan__card-title">含まないもの</h4>
-            <ul class="plan__list plan__list--muted">
-              <li>フルオーダーデザイン</li>
-              <li>複数ページ構成・予約システム</li>
-              <li>本格的なSEO施策</li>
-            </ul>
-          </div>
-        </div>
-        <a class="btn btn--ghost" href="services/web.html" data-cursor="開く"><span>このサービスを詳しく見る →</span></a>
-        <a class="btn btn--primary" href="#contact" data-overlay-cta data-cursor="相談"><span>無料相談する</span></a>
-      </template>
-
-      <template id="svc-02-detail">
-        <p class="ov__en">AI Automation</p>
-        <h3 class="ov__title" id="svc-02-title">AI業務改善・自動化</h3>
-        <p class="ov__lead">毎日の細かい手間を、AIと仕組みで肩代わりします。小さく試せる構成から。</p>
-        <div class="ov__cols">
-          <div class="ov__block">
-            <h4>できること</h4>
-            <ul class="ov__list">
-              <li>問い合わせ返信の文案を自動生成</li>
-              <li>よくある質問の自動応答</li>
-              <li>予約・問い合わせの通知</li>
-              <li>見込み客リストの自動整理</li>
-              <li>定型作業のテンプレ化</li>
-            </ul>
-          </div>
-          <div class="ov__block">
-            <h4>対象業種</h4>
-            <ul class="ov__list">
-              <li>予約・問い合わせが多い店舗</li>
-              <li>返信・事務に時間を取られている事業者</li>
-            </ul>
-            <div class="ov__media" aria-hidden="true"><span>Demo / UI（準備中）</span></div>
-          </div>
-        </div>
-        <div class="ov__price">
-          <div class="plan__card plan__card--in">
-            <h4 class="plan__card-title">進め方・含むもの</h4>
-            <p class="ov__fee">個別見積</p>
-            <ul class="plan__list">
-              <li>現状ヒアリング・対象業務の切り出し</li>
-              <li>仕組みの構築と調整</li>
-              <li>簡単な使い方の手順書</li>
-            </ul>
-          </div>
-          <div class="plan__card plan__card--out">
-            <h4 class="plan__card-title">含まないもの</h4>
-            <ul class="plan__list plan__list--muted">
-              <li>大規模な基幹システム連携</li>
-              <li>24時間の有人サポート（別途）</li>
-            </ul>
-          </div>
-        </div>
-        <a class="btn btn--ghost" href="services/ai.html" data-cursor="開く"><span>このサービスを詳しく見る →</span></a>
-        <a class="btn btn--primary" href="#contact" data-overlay-cta data-cursor="相談"><span>無料相談する</span></a>
-      </template>
-
-      <template id="svc-03-detail">
-        <p class="ov__en">Admin System</p>
-        <h3 class="ov__title" id="svc-03-title">システム・管理画面開発</h3>
-        <p class="ov__lead">現場で本当に使う小規模な管理画面を、必要な分だけ作ります。</p>
-        <div class="ov__cols">
-          <div class="ov__block">
-            <h4>できること</h4>
-            <ul class="ov__list">
-              <li>予約管理</li>
-              <li>顧客管理</li>
-              <li>問い合わせ一覧</li>
-              <li>スタッフ・シフト管理</li>
-              <li>簡単な集計・通知</li>
-            </ul>
-          </div>
-          <div class="ov__block">
-            <h4>対象業種</h4>
-            <ul class="ov__list">
-              <li>小〜中規模の店舗・事業者</li>
-              <li>表計算での管理に限界を感じている方</li>
-            </ul>
-            <div class="ov__media" aria-hidden="true"><span>Demo / UI（準備中）</span></div>
-          </div>
-        </div>
-        <div class="ov__price">
-          <div class="plan__card plan__card--in">
-            <h4 class="plan__card-title">進め方・含むもの</h4>
-            <p class="ov__fee">個別見積</p>
-            <ul class="plan__list">
-              <li>必要機能の設計</li>
-              <li>小規模な管理画面の制作</li>
-              <li>初期データ投入の補助</li>
-            </ul>
-          </div>
-          <div class="plan__card plan__card--out">
-            <h4 class="plan__card-title">含まないもの</h4>
-            <ul class="plan__list plan__list--muted">
-              <li>既存基幹システムとの連携</li>
-              <li>モバイルアプリ化</li>
-            </ul>
-          </div>
-        </div>
-        <a class="btn btn--ghost" href="services/system.html" data-cursor="開く"><span>このサービスを詳しく見る →</span></a>
-        <a class="btn btn--primary" href="#contact" data-overlay-cta data-cursor="相談"><span>無料相談する</span></a>
-      </template>
-    </section>
-
-    <!-- ===== Process（循環ダイアグラム） ===== -->
-    <section class="section process" id="process">
-      <div class="section__head" style="text-align:center">
-        <p class="process__loop" data-reveal="fade">Repeat &amp; improve</p>
-        <h2 class="section__title" data-reveal="words">短いサイクルで、すぐ形にする。</h2>
-      </div>
-      <div class="cycle">
-        <div class="cstep" data-reveal="rise"><div class="cstep__ring">01</div><h3>把握</h3><p>現状の見え方・導線・業務の流れを確認。</p></div>
-        <div class="cstep" data-reveal="rise"><div class="cstep__ring">02</div><h3>設計</h3><p>効く導線とAIで減らせる作業を切り出す。</p></div>
-        <div class="cstep" data-reveal="rise"><div class="cstep__ring">03</div><h3>制作</h3><p>テンプレート＋AIで素早く形にする。</p></div>
-        <div class="cstep" data-reveal="rise"><div class="cstep__ring">04</div><h3>改善</h3><p>反応を見て、つながる仕組みへ広げる。</p></div>
+        </a>
       </div>
     </section>
+
+
 
     <!-- ===== Pricing（料金の目安：Web=入口で表に出す / システム=主力は投資対効果で） ===== -->
     <section class="section pricing" id="pricing">
       <div class="section__head">
-        <p class="section__eyebrow" data-reveal="fade">(04) Pricing</p>
+        <p class="section__eyebrow" data-reveal="fade">(02) Pricing</p>
         <h2 class="section__title" data-reveal="words">料金の目安</h2>
         <p class="pricing__lead" data-reveal="fade">安売りではありません。<b>AIが制作を効率化した分を、価格に反映</b>しています。まずはお求めやすい<b>Web（入口）</b>で集客を整え、軌道に乗ったら<b>業務をシステム</b>で。必要な分だけ、段階的に。</p>
       </div>
@@ -606,7 +368,7 @@
     <!-- ===== FAQ（よくある質問） ===== -->
     <section class="section faq" id="faq">
       <div class="section__head">
-        <p class="section__eyebrow" data-reveal="fade">(06) FAQ</p>
+        <p class="section__eyebrow" data-reveal="fade">(04) FAQ</p>
         <h2 class="section__title" data-reveal="words">よくある質問</h2>
       </div>
       <div class="faq__list">
@@ -614,6 +376,7 @@
         <details class="faq__item"><summary>どんなお店が対象ですか？</summary><div class="faq__a">美容室・サロン、カフェ・飲食店、クリニック・整体、ジム、教室・士業など、<b>地域のお店</b>が中心です。「何から手をつければ…」という段階のご相談も歓迎です。</div></details>
         <details class="faq__item"><summary>何から始めればいいですか？</summary><div class="faq__a">まずは<b>Webで集客を整える</b>のがおすすめ。軌道に乗ったら<b>業務をシステムで効率化</b>、と一社で伴走します。無料相談で現状を伺い、必要な分だけご提案します。</div></details>
         <details class="faq__item"><summary>対応してくれる範囲は？</summary><div class="faq__a">Web制作・集客導線（Googleマップ/Instagram/問い合わせフォーム）、AI業務自動化（返信文案・通知・見込み客の整理）、予約・顧客などの<b>管理画面/システム開発</b>まで、まとめて対応します。</div></details>
+        <details class="faq__item"><summary>進め方は？</summary><div class="faq__a"><b>把握→設計→制作→改善</b>の短いサイクルで進めます。まず現状の見え方・導線・業務の流れを確認し、効くところから小さく作って、反応を見て広げます。最初の打ち合わせは無料相談として実施します。</div></details>
         <details class="faq__item"><summary>どれくらいで形になりますか？</summary><div class="faq__a">Webは最短<b>数日〜</b>。AI自動化・システムは規模により個別にご相談。いずれも<b>小さく試せる構成</b>から始められます。</div></details>
       </div>
     </section>
@@ -621,7 +384,7 @@
     <!-- ===== Contact ===== -->
     <section class="section contact" id="contact">
       <div class="contact__inner">
-        <p class="section__eyebrow" data-reveal="fade">(07) Contact</p>
+        <p class="section__eyebrow" data-reveal="fade">(05) Contact</p>
         <h2 class="contact__title" data-reveal="words">まずは、無料相談から。</h2>
         <p class="contact__lead" data-reveal="fade">現状の見え方や困りごとを教えてください。改善できるところから一緒に整えます。</p>
         <form class="contact__form" id="contactForm" novalidate data-reveal="fade">
@@ -662,6 +425,15 @@
     <div class="footer__top">
       <a class="footer__big" href="#contact" data-cursor="無料相談">人の時間を、<br />AIでつくる。</a>
     </div>
+        <nav class="footer__nav" aria-label="フッターナビゲーション">
+      <a href="services/web.html">Web制作</a>
+      <a href="services/ai.html">AI自動化</a>
+      <a href="services/system.html">管理画面・システム</a>
+      <a href="#pricing">料金</a>
+      <a href="#estimator">かんたん見積り</a>
+      <a href="#faq">FAQ</a>
+      <a href="#contact">無料相談</a>
+    </nav>
     <div class="footer__bottom">
       <span class="footer__brand">
         <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
