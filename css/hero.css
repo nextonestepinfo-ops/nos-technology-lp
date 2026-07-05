@@ -86,7 +86,7 @@
 .hero-tag.is-show .hint{opacity:1;transform:none;transition-delay:.46s;}
 
 .hero__meta{position:absolute;left:var(--gut);right:var(--gut);bottom:34px;z-index:2;display:flex;align-items:center;justify-content:space-between;
-  font-family:var(--en);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 45%,transparent);}
+  font-family:var(--en);font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:color-mix(in srgb,var(--ink) 62%,transparent);}
 .hero__scroll{display:inline-flex;align-items:center;gap:12px;}
 .hero__scroll i{display:inline-block;width:38px;height:1px;background:linear-gradient(90deg,var(--mint),transparent);animation:scrollSlide 2s ease-in-out infinite;}
 @keyframes scrollSlide{0%,100%{transform:scaleX(.3);opacity:.4;transform-origin:left;}50%{transform:scaleX(1);opacity:1;transform-origin:left;}}
@@ -128,14 +128,14 @@
 .hero__topbrand b{font-weight:700;background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
 /* 下部中央：対応業種の一行（余白を埋め、誰向けかを伝える） */
 .hero__serves{position:absolute;left:0;right:0;bottom:clamp(150px,23vh,228px);z-index:1;text-align:center;pointer-events:none;
-  font-size:clamp(.74rem,1.4vw,.95rem);letter-spacing:.08em;color:color-mix(in srgb,var(--ink) 40%,transparent);padding:0 var(--gut);}
+  font-size:clamp(.78rem,1.4vw,.95rem);letter-spacing:.08em;color:color-mix(in srgb,var(--ink) 62%,transparent);padding:0 var(--gut);}
 .hero__serves b{color:var(--ink-soft);font-weight:600;}
 /* 左下：大きな一文（差し色強調）＋CTA。語の途中で折れないよう em は nowrap。 */
 .hero__statement{font-size:clamp(1.4rem,3vw,2.3rem);font-weight:800;line-height:1.5;letter-spacing:.01em;
   color:var(--ink);margin:0 0 30px;max-width:14em;text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}
 .hero__statement em{display:inline-block;white-space:nowrap;font-style:normal;font-weight:800;
   background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
-.hero__statement span{display:block;margin-top:8px;font-size:.78em;font-weight:600;color:var(--ink-soft);}
+.hero__statement span{display:block;margin-top:8px;font-size:.8em;font-weight:600;color:color-mix(in srgb,var(--ink) 86%,transparent);}
 
 /* 左下のロックアップ：社名ワードマーク＋一言＋CTA。発光オブジェクト上でも読めるよう微シャドウ。 */
 .hero__wordmark{font-family:var(--en);font-weight:500;font-size:clamp(1.6rem,3vw,2.3rem);line-height:1.05;
@@ -185,6 +185,6 @@
   .hero__statement{font-size:clamp(1.3rem,6.2vw,1.8rem);line-height:1.45;max-width:none;margin-bottom:22px;}
   .hero__actions .btn{padding:14px 22px;}
   .hero__chips{gap:6px;margin-top:14px;}
-  .hero__chips li{padding:5px 11px;font-size:.7rem;}
+  .hero__chips li{padding:6px 12px;font-size:.76rem;}
   .hero__chips li b{font-size:.8rem;}
 }

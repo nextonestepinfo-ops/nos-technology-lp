@@ -7,24 +7,52 @@ function wrapLine(el) {
   el.innerHTML = `<span class="reveal-line__inner">${el.innerHTML}</span>`;
 }
 
-// テキストを1文字ずつマスク用spanに分割（日本語は語の区切りがないため文字単位）
+// テキストを1文字ずつマスク用spanに分割してアニメさせる。
+// 折返しは「文節」（句読点区切り）単位＝1文字ずつのinline-blockだと
+// 禁則を無視した語中改行が起きるため、文節をinline-blockで包む。
+// <em>等の子要素はタグごと保持（グラデ装飾を壊さない）。
 function splitWords(el) {
-  const chars = Array.from(el.textContent);
-  el.textContent = "";
-  chars.forEach((ch, i) => {
-    if (ch === " ") {
-      el.appendChild(document.createTextNode(" "));
-      return;
-    }
+  let wi = 0;
+  const makeChar = (ch) => {
     const outer = document.createElement("span");
     outer.className = "reveal-word";
     const inner = document.createElement("span");
     inner.className = "reveal-word__inner";
-    inner.style.setProperty("--wi", String(i));
+    inner.style.setProperty("--wi", String(wi++));
     inner.textContent = ch;
     outer.appendChild(inner);
-    el.appendChild(outer);
+    return outer;
+  };
+  // 句読点の直後で文節を区切る
+  const fillPhrases = (parent, text) => {
+    text.split(/(?<=[、。・！？…])/).forEach((ph) => {
+      if (!ph) return;
+      const wrap = document.createElement("span");
+      wrap.className = "reveal-phrase";
+      Array.from(ph).forEach((ch) => {
+        if (ch === " ") wrap.appendChild(document.createTextNode(" "));
+        else wrap.appendChild(makeChar(ch));
+      });
+      parent.appendChild(wrap);
+    });
+  };
+  const frag = document.createDocumentFragment();
+  [...el.childNodes].forEach((node) => {
+    if (node.nodeType === Node.TEXT_NODE) {
+      fillPhrases(frag, node.textContent);
+    } else {
+      // 要素（em等）はタグごと保持し、文字分割しない。
+      // background-clip:text のグラデはtransform付き子スパンと相性が悪く
+      // 文字が消えるため、要素全体をopacityフェードで出す。
+      const clone = node.cloneNode(true);
+      clone.classList.add("reveal-phrase", "reveal-em");
+      clone.style.setProperty("--wi", String(wi));
+      wi += (node.textContent || "").length;
+      frag.appendChild(clone);
+    }
   });
+  el.textContent = "";
+  el.appendChild(frag);
 }
 
 // data-reveal 要素を準備し、ビューポート進入で is-in を付与

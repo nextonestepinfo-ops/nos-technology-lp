@@ -8,7 +8,7 @@
   /* シネマティックな“真っ黒”ベース（紺ではない）。アクセントは palette.js が切替（既定: Aether） */
   --paper:#07080c;
   --ink:#eef2f7;
-  --ink-soft:#8b95a4;
+  --ink-soft:#a0abbd;
   --mint:#36c5ff;
   --blue:#3d8bff;
   --lav:#9a8cff;
@@ -105,10 +105,15 @@ strong{font-weight:700;color:var(--ink);}
 .header__nav a:hover{color:var(--ink);}
 .header__nav a:hover::after{transform:scaleX(1);transform-origin:left;}
 /* 無料相談＝反転（青地×白）で最も目立たせる */
-.header__cta{padding:10px 22px;border-radius:999px;background:var(--mint);border:1px solid var(--mint);color:#fff;font-size:.9rem;font-weight:700;
+.header__cta{white-space:nowrap;padding:10px 22px;border-radius:999px;background:var(--mint);border:1px solid var(--mint);color:#fff;font-size:.9rem;font-weight:700;
   box-shadow:0 6px 20px color-mix(in srgb,var(--mint) 35%,transparent);transition:background .35s var(--ease),color .35s var(--ease),transform .35s var(--ease);}
 .header__cta:hover{background:var(--ink);border-color:var(--ink);color:var(--paper);transform:translateY(-1px);}
-@media(max-width:860px){.header__nav{display:none;}}
+@media(max-width:860px){
+  .header__nav{display:none;}
+  .header{padding:12px 16px;gap:10px;}
+  .header__cta{padding:9px 15px;font-size:.84rem;}
+  .header__ticker{display:none;} /* スマホは常時ヘッダーのため帯は出さない（被り・ノイズ防止） */
+}
 
 /* ---- ハンバーガー＋モバイルメニュー（860px以下で有効） ---- */
 .menu-btn{display:none;flex-direction:column;justify-content:center;gap:5px;width:44px;height:44px;
@@ -173,6 +178,11 @@ body.is-menu-open{overflow:hidden;}
 .reveal-line{display:block;overflow:hidden;}
 .reveal-line__inner{display:block;transform:translateY(110%);transition:transform 1s var(--ease);}
 .is-in .reveal-line__inner,.reveal-line.is-in .reveal-line__inner{transform:none;}
+/* 文節単位で折返し（禁則対応）。長すぎる文節だけは中で折る */
+.reveal-phrase{display:inline-block;max-width:100%;}
+/* em等の装飾要素：文字分割せずopacityで出現（background-clip:textを壊さない） */
+.reveal-em{opacity:0;transition:opacity .9s var(--ease);transition-delay:calc(var(--wi,0)*26ms);}
+[data-reveal].is-in .reveal-em{opacity:1;}
 .reveal-word{display:inline-block;overflow:hidden;vertical-align:top;}
 .reveal-word__inner{display:inline-block;transform:translateY(110%);transition:transform .9s var(--ease);transition-delay:calc(var(--wi,0)*30ms);}
 .is-in .reveal-word__inner{transform:none;}
