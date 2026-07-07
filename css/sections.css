@@ -184,7 +184,7 @@
   background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
 .tier__fee i{font-style:normal;font-size:.6em;}
 .tier__desc{color:var(--ink-soft);font-size:.9rem;line-height:1.8;}
-@media(max-width:720px){.plan__grid--3{grid-template-columns:1fr;}}
+@media(max-width:720px){.plan__grid.plan__grid--3{grid-template-columns:1fr;}}
 
 /* ===== FAQ（よくある質問・no-JSアコーディオン） ===== */
 .faq{background:var(--paper);}
@@ -644,3 +644,10 @@
 .footer__tagline{font-family:var(--en);font-size:.72rem;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-soft);}
 .footer__tagline em{color:var(--blue);font-weight:600;}
 .footer__bottom small{font-size:.78rem;}
+
+/* ===== サービスページ「できること」系リスト：スマホの項目間隔 ===== */
+@media(max-width:720px){
+  .process__list .step{margin-bottom:30px;padding-left:2px;}
+  .process__list .step:last-child{margin-bottom:0;}
+  .process__list .step__no{display:inline-block;margin-bottom:6px;font-size:.8rem;color:var(--blue);letter-spacing:.1em;}
+}
