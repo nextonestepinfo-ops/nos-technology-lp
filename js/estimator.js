@@ -71,7 +71,7 @@ export function initEstimator() {
 
     // 追記行（個別見積・月額）
     const extras = [];
-    if (hasQuote) extras.push("＋ 管理画面は個別見積");
+    if (hasQuote) extras.push("＋ 業務改善ツールは個別見積");
     if (monthly > 0) extras.push(`＋ 月々 ¥${fmt(monthly)}`);
     extraEl.textContent = extras.join("　");
 
@@ -105,13 +105,13 @@ export function initEstimator() {
           `希望内容: ${picked.join(" / ")}`,
           `目安: ¥${fmt(total)}〜` +
             (monthly > 0 ? `（＋月々¥${fmt(monthly)}）` : "") +
-            (hasQuote ? `（管理画面は個別見積）` : ""),
+            (hasQuote ? `（業務改善ツールは個別見積）` : ""),
           ``,
           `その他のご要望・ご予算感があればこちらへ:`,
         ].join("\n");
       }
       // 相談内容セレクトも合わせる（管理画面が選ばれていればそちらを優先）
-      if (typeSel) typeSel.value = hasQuote ? "管理画面・システム" : "Web制作・集客導線";
+      if (typeSel) typeSel.value = hasQuote ? "業務改善ツール・システム開発" : "Web制作・集客導線";
     });
   }
 

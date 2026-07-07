@@ -238,6 +238,17 @@
 .mbars{display:flex;align-items:flex-end;gap:4px;height:30px;padding:0 4px;}
 .mbars i{flex:1;border-radius:3px 3px 1px 1px;height:var(--v,30%);
   background:linear-gradient(180deg,var(--mint),color-mix(in srgb,var(--blue) 70%,transparent));opacity:.85;}
+/* システム開発カード：POC→本開発の段階ミニビジュアル */
+.mlad__cap{font-family:var(--en);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-soft);}
+.mlad{display:flex;align-items:flex-end;gap:8px;height:96px;padding:0 4px;}
+.mlad i{flex:1;position:relative;height:var(--h,30%);border-radius:8px 8px 4px 4px;
+  background:linear-gradient(180deg,color-mix(in srgb,var(--blue) 55%,transparent),color-mix(in srgb,var(--blue) 18%,transparent));
+  border:1px solid color-mix(in srgb,var(--blue) 45%,transparent);}
+.mlad i.on{background:linear-gradient(180deg,var(--mint),color-mix(in srgb,var(--blue) 60%,transparent));
+  border-color:transparent;box-shadow:0 0 22px color-mix(in srgb,var(--mint) 40%,transparent);}
+.mlad i small{position:absolute;left:0;right:0;bottom:5px;text-align:center;
+  font-family:var(--en);font-size:.56rem;font-weight:700;letter-spacing:.04em;color:#fff;font-style:normal;}
+.mlad__note{font-size:.7rem;font-weight:700;color:var(--mint);text-align:right;}
 .svcx__body{display:flex;flex-direction:column;gap:10px;padding:clamp(18px,2.4vw,26px);flex:1;}
 .svcx__title{font-size:clamp(1.15rem,2vw,1.45rem);font-weight:800;line-height:1.35;}
 .svcx__text{color:var(--ink-soft);font-size:.9rem;line-height:1.8;flex:1;}
@@ -378,6 +389,42 @@
   .cstep{flex:1 1 40%;}
   .cstep:not(:last-child)::after,.cstep:not(:last-child)::before{display:none;}
 }
+
+/* ===== 規模別ラダー（事業計画：金額帯×対応方針の階段） ===== */
+.ladder{max-width:var(--maxw);margin:0 auto;display:flex;flex-direction:column;gap:12px;counter-reset:lv;}
+.ladder__row{display:grid;grid-template-columns:190px minmax(60px,var(--barmax,1fr)) 150px 1.6fr;align-items:center;
+  gap:clamp(14px,2.4vw,26px);padding:clamp(18px,2.4vw,26px) clamp(18px,2.4vw,30px);
+  border-radius:14px;background:var(--surface-2);border:1px solid var(--line);
+  transition:border-color .35s var(--ease),transform .35s var(--ease);}
+.ladder__row:hover{border-color:color-mix(in srgb,var(--mint) 45%,transparent);transform:translateX(6px);}
+.ladder__range{font-family:var(--en);color:var(--ink-soft);font-size:.8rem;white-space:nowrap;}
+.ladder__range b{font-weight:800;font-size:clamp(1.3rem,2.4vw,1.8rem);letter-spacing:-.01em;
+  background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
+.ladder__range b small{font-size:.62em;font-weight:700;}
+/* 階段バー：段が上がるほど長く・明るく */
+.ladder__bar{height:10px;border-radius:5px;background:color-mix(in srgb,var(--ink) 8%,transparent);overflow:hidden;}
+.ladder__bar i{display:block;height:100%;width:0;border-radius:5px;
+  background:linear-gradient(90deg,var(--mint),var(--blue));opacity:calc(.45 + var(--lv,1)*.14);
+  transition:width 1s var(--ease) .2s;}
+.ladder__row.is-in .ladder__bar i{width:calc(var(--lv,1)*25%);}
+.ladder__how{font-weight:800;font-size:clamp(.98rem,1.6vw,1.15rem);color:var(--ink);white-space:nowrap;}
+.ladder__desc{color:var(--ink-soft);font-size:.92rem;line-height:1.8;}
+/* 最上段＝本格開発を主役に */
+.ladder__row--top{border-top:2px solid var(--blue);
+  background:radial-gradient(120% 100% at 100% 0%,color-mix(in srgb,var(--blue) 10%,transparent),transparent 55%),var(--surface-2);}
+@media(max-width:860px){
+  .ladder__row{grid-template-columns:1fr 1fr;grid-template-areas:"range how" "bar bar" "desc desc";row-gap:10px;}
+  .ladder__range{grid-area:range;}
+  .ladder__how{grid-area:how;justify-self:end;}
+  .ladder__bar{grid-area:bar;}
+  .ladder__desc{grid-area:desc;}
+}
+/* 6ステップ版サイクル（開発の流れ）：小さめリングで1行に収める */
+.cycle--6 .cstep__ring{width:72px;height:72px;font-size:1.3rem;}
+.cycle--6 .cstep:not(:last-child)::after{top:36px;left:calc(50% + 46px);width:calc(100% - 92px);}
+.cycle--6 .cstep:not(:last-child)::before{top:32px;left:calc(100% - 48px);}
+.cycle--6 .cstep h3{font-size:.98rem;}
+.cycle--6 .cstep p{font-size:.82rem;}
 
 /* ===== Contact ===== */
 .contact{background:radial-gradient(900px 600px at 80% 0%,color-mix(in srgb,var(--blue) 12%,transparent),transparent 60%),var(--paper);}

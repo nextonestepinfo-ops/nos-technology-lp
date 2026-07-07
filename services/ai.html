@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="AI業務改善・自動化｜Nos Technology。問い合わせ返信、通知、見込み客管理など、毎日の細かい手間をAIと仕組みで肩代わりします。" />
+  <meta name="description" content="システム開発｜Nos Technology。自社業務に合わせた中大規模の本格開発。POC（試作検証）から段階的に進めるため、100〜300万円規模もリスクを抑えて形にできます。" />
   <meta name="theme-color" content="#07080c" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Nos Technology" />
-  <meta property="og:title" content="AI業務改善・自動化｜Nos Technology" />
-  <meta property="og:description" content="毎日の細かい手間を、AIと仕組みで肩代わりします。" />
+  <meta property="og:title" content="システム開発｜Nos Technology" />
+  <meta property="og:description" content="POCから段階的に進める、自社業務に合わせた本格開発。" />
   <meta property="og:image" content="../assets/og/og-default.svg" />
-  <title>AI業務改善・自動化 — Nos Technology</title>
+  <title>システム開発 — Nos Technology</title>
 
   <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.svg" />
@@ -50,8 +50,8 @@
     <nav class="header__nav" aria-label="メインナビゲーション">
       <a href="../index.html">Top</a>
       <a href="web.html">Web制作</a>
-      <a href="ai.html" aria-current="page">AI自動化</a>
-      <a href="system.html">管理画面</a>
+      <a href="system.html">業務改善</a>
+      <a href="ai.html" aria-current="page">システム開発</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
     <a class="header__cta" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
@@ -61,8 +61,8 @@
   <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
     <a href="../index.html" style="--mi:0"><small>Top</small>ホーム</a>
     <a href="web.html" style="--mi:1"><small>01</small>Web制作</a>
-    <a href="ai.html" style="--mi:2"><small>02</small>AI自動化</a>
-    <a href="system.html" style="--mi:3"><small>03</small>管理画面・システム</a>
+    <a href="system.html" style="--mi:2"><small>02</small>業務改善ツール</a>
+    <a href="ai.html" style="--mi:3"><small>03</small>システム開発</a>
     <a href="../index.html#pricing" style="--mi:4"><small>Price</small>料金</a>
     <a href="../index.html#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
     <a class="mnav__cta" href="../index.html#contact" style="--mi:6">無料相談する</a>
@@ -73,139 +73,93 @@
     <section class="hero">
       <canvas class="hero__canvas" id="serviceHeroCanvas" data-kind="ai" aria-hidden="true"></canvas>
       <div class="hero__content">
-        <span class="hero__badge" data-reveal="fade"><i></i> Service 02 — AI Automation</span>
+        <span class="hero__badge" data-reveal="fade"><i></i> Service 03 — System Development</span>
         <h1 class="hero__title">
-          <span class="line" data-reveal="line">手間を、</span>
-          <span class="line" data-reveal="line"><em>AI</em>に渡す。</span>
+          <span class="line" data-reveal="line">小さな改善の先に、</span>
+          <span class="line" data-reveal="line"><em>本格開発</em>を。</span>
         </h1>
         <p class="hero__lead" data-reveal="fade">
-          問い合わせ返信、通知、見込み客の管理。毎日の細かい作業を、AIと仕組みで自動で回します。
-          小さく試せる構成から始められます。
+          自社ならではの業務に合わせた、中大規模のシステム開発。
+          いきなり大きく作らず、<b>POC（試作検証）→ 検証 → 本開発</b>と段階を分けて進めるので、
+          100〜300万円規模のプロジェクトも、リスクを抑えて形にできます。
         </p>
         <div class="hero__actions" data-reveal="fade">
           <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
-          <a class="btn btn--ghost" href="#flow" data-magnetic><span>自動化の流れを見る</span></a>
+          <a class="btn btn--ghost" href="#ladder" data-magnetic><span>規模別の進め方を見る</span></a>
         </div>
       </div>
-      <div class="hero__meta" aria-hidden="true"><span>Reply · Notify · Manage</span><span>Scroll<i></i></span></div>
+      <div class="hero__meta" aria-hidden="true"><span>PoC · Build · Maintain</span><span>Scroll<i></i></span></div>
     </section>
 
-    <section class="section process" id="features">
+    <!-- 対象と考え方 -->
+    <section class="section process" id="who">
       <div class="section__head">
-        <p class="section__eyebrow" data-reveal="fade">What we do</p>
-        <h2 class="section__title" data-reveal="words">できること</h2>
+        <p class="section__eyebrow" data-reveal="fade">Who &amp; How</p>
+        <h2 class="section__title" data-reveal="words">こんな会社の、こんな進め方。</h2>
       </div>
       <ol class="process__list">
-        <li class="step" data-reveal="rise"><span class="step__no">01</span><h3>返信文案の生成</h3><p>問い合わせ内容に合わせて、返信の下書きをAIが用意。</p></li>
-        <li class="step" data-reveal="rise"><span class="step__no">02</span><h3>よくある質問の応答</h3><p>定型的な問い合わせは自動で一次対応。</p></li>
-        <li class="step" data-reveal="rise"><span class="step__no">03</span><h3>通知・リマインド</h3><p>予約や問い合わせを見逃さないよう自動通知。</p></li>
-        <li class="step" data-reveal="rise"><span class="step__no">04</span><h3>見込み客の整理</h3><p>問い合わせを自動でリスト化し、追客しやすく。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">01</span><h3>対象</h3><p>自社ならではの業務を改善しながら、新しい仕組みを作りたい会社。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">02</span><h3>段階を分ける</h3><p>POC・検証・本開発に分割。契約や支払いも段階化できます。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">03</span><h3>小さく確かめる</h3><p>まずサンプルと試作で「本当に効くか」を確認してから投資判断。</p></li>
+        <li class="step" data-reveal="rise"><span class="step__no">04</span><h3>入口は自由</h3><p><a href="system.html" style="color:var(--mint)">業務改善ツール</a>から始めて、育ったら本開発へ——が定番です。</p></li>
       </ol>
     </section>
 
-
-    <!-- ===== 実例：AI返信アシストの画面（データはサンプル） ===== -->
-    <section class="section" id="demo">
-      <div class="section__head" style="max-width:var(--maxw);margin-left:auto;margin-right:auto;">
-        <p class="section__eyebrow" data-reveal="fade">Screen</p>
-        <h2 class="section__title" data-reveal="words">実際の画面は、こんな感じ。</h2>
-      </div>
-      <div class="demo">
-        <div class="demo__copy" data-reveal="rise">
-          <span class="demo__no">CASE — AI Reply</span>
-          <h3 class="demo__title">営業時間外も、<em>その場で返事</em>。</h3>
-          <p class="demo__text">夜の問い合わせにAIが下書きを用意。翌朝、人が確認して送るだけ。返事が早いお店は、それだけで選ばれます。</p>
-          <ul class="demo__points">
-            <li>よくある質問は自動で一次対応<small>→ 同じ返信を打たなくていい</small></li>
-            <li>文面はお店の言葉づかいを学習<small>→ “それっぽい定型文”にならない</small></li>
-            <li>最後は必ず人が確認して送信<small>→ AI任せにしない運用にできる</small></li>
-          </ul>
-        </div>
-        <figure class="shot" data-reveal="rise" aria-label="AI返信アシストの画面例">
-          <div class="shot__bar"><i></i><i></i><i></i><span>yourshop-admin.jp / 返信</span></div>
-          <div class="shot__body">
-            <div class="ap-head">
-              <h4>問い合わせ受信箱</h4>
-              <span class="ap-badge">AIが下書き済み</span>
-            </div>
-            <ul class="shift-alerts" style="gap:10px">
-              <li><b style="color:#ffb08a;background:rgba(255,138,92,.12);border:1px solid rgba(255,138,92,.38)">21:04</b>明日の15時、2名で予約できますか？<span>— Instagram経由</span></li>
-            </ul>
-            <div style="display:flex;flex-direction:column;gap:8px">
-              <div style="align-self:flex-end;max-width:88%;padding:12px 16px;border-radius:14px 14px 4px 14px;background:var(--blue);color:#fff;font-size:.82rem;line-height:1.7">ありがとうございます。明日15:00、2名様でご案内できます。ご来店お待ちしております。</div>
-              <div style="align-self:flex-end;display:flex;gap:8px;align-items:center">
-                <span class="ap-badge">✦ AIの下書き</span>
-                <span class="ap-btn">編集する</span>
-                <span class="ap-btn ap-btn--pri">確認して送信</span>
-              </div>
-            </div>
-            <div class="pay-foot"><small>返信のトーン・NGワードはお店ごとに設定できます</small></div>
-          </div>
-        </figure>
-      </div>
-    </section>
-
+    <!-- 開発の流れ -->
     <section class="section plan" id="flow">
       <div class="plan__inner">
         <div class="section__head" style="text-align:center">
-          <p class="process__loop" data-reveal="fade">Auto flow</p>
-          <h2 class="section__title" data-reveal="words">自動で回る流れ</h2>
+          <p class="process__loop" data-reveal="fade">Development flow</p>
+          <h2 class="section__title" data-reveal="words">開発の流れ</h2>
         </div>
-        <div class="cycle">
-          <div class="cstep" data-reveal="rise"><div class="cstep__ring">01</div><h3>受信</h3><p>問い合わせ・予約を受け取る。</p></div>
-          <div class="cstep" data-reveal="rise"><div class="cstep__ring">02</div><h3>判定</h3><p>内容をAIが判定・分類。</p></div>
-          <div class="cstep" data-reveal="rise"><div class="cstep__ring">03</div><h3>下書き</h3><p>返信文案を自動生成。</p></div>
-          <div class="cstep" data-reveal="rise"><div class="cstep__ring">04</div><h3>確認・送信</h3><p>人が確認して送信（自動も可）。</p></div>
-          <div class="cstep" data-reveal="rise"><div class="cstep__ring">05</div><h3>記録</h3><p>見込み客リストへ自動で記録。</p></div>
+        <div class="cycle cycle--6">
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">01</div><h3>ヒアリング</h3><p>業務と困りごとを聞く。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">02</div><h3>サンプル確認</h3><p>画面ラフで認識を合わせる。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">03</div><h3>POC / 検証</h3><p>試作を現場で実地検証。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">04</div><h3>調整</h3><p>検証結果で範囲を確定。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">05</div><h3>本開発</h3><p>確度が上がってから投資。</p></div>
+          <div class="cstep" data-reveal="rise"><div class="cstep__ring">06</div><h3>納品 / 保守</h3><p>使い方を伝え、育てる。</p></div>
         </div>
       </div>
     </section>
-    <!-- ===== Before / After（スクロールジャック廃止：通常スクロールで“何が手放せるか”を具体に） ===== -->
-    <section class="section compare" id="compare" aria-label="AIに任せる前とあと">
-      <div class="section__head" style="text-align:center">
-        <p class="section__eyebrow" data-reveal="fade">Before / After</p>
-        <h2 class="section__title" data-reveal="words">毎日の“これ”、手放せます。</h2>
-        <p class="compare__lead" data-reveal="fade">お店の一日には、人にしかできない仕事と、仕組みに任せられる仕事があります。<br />Nosは、後者を静かに引き受けます。</p>
-      </div>
-      <div class="compare__grid">
-        <!-- これまで：ぜんぶ手作業 -->
-        <article class="daycol daycol--before" data-reveal="rise">
-          <header class="daycol__head">
-            <span class="daycol__tag">これまで</span>
-            <h3>ぜんぶ、自分で。</h3>
-          </header>
-          <ul class="daycol__list">
-            <li style="--i:0"><span>口コミへの返信</span><b>約30分</b></li>
-            <li style="--i:1"><span>予約の確認・リマインド</span><b>約20分</b></li>
-            <li style="--i:2"><span>InstagramとGoogleマップの更新</span><b>約25分</b></li>
-            <li style="--i:3"><span>問い合わせへの返事</span><b>約20分</b></li>
-            <li style="--i:4"><span>売上・顧客リストの転記</span><b>約15分</b></li>
-          </ul>
-          <footer class="daycol__foot">接客のあいまに、毎日 <b>約110分</b></footer>
-        </article>
 
-        <!-- 中央：受け渡しの矢印 -->
-        <div class="compare__hand" aria-hidden="true">
-          <span class="compare__hand-badge">AIと仕組みへ</span>
-        </div>
-
-        <!-- Nosと：確認するだけ -->
-        <article class="daycol daycol--after" data-reveal="rise">
-          <header class="daycol__head">
-            <span class="daycol__tag daycol__tag--on">Nosと整えたあと</span>
-            <h3>確認するだけ。</h3>
-          </header>
-          <ul class="daycol__list">
-            <li style="--i:0"><span>口コミへの返信</span><i>AIが下書き</i><b>3分</b></li>
-            <li style="--i:1"><span>予約の確認・リマインド</span><i>自動送信</i><b>0分</b></li>
-            <li style="--i:2"><span>Instagram・マップの更新</span><i>下準備をAIが</i><b>5分</b></li>
-            <li style="--i:3"><span>問い合わせへの返事</span><i>一次対応はAI</i><b>3分</b></li>
-            <li style="--i:4"><span>売上・顧客リストの転記</span><i>自動で記録</i><b>0分</b></li>
-          </ul>
-          <footer class="daycol__foot daycol__foot--on">浮いた時間は、目の前のお客様へ。</footer>
-        </article>
+    <!-- 規模別の対応差（事業計画の金額帯ラダー） -->
+    <section class="section" id="ladder">
+      <div class="section__head" style="max-width:var(--maxw);margin-left:auto;margin-right:auto;">
+        <p class="section__eyebrow" data-reveal="fade">By project size</p>
+        <h2 class="section__title" data-reveal="words">規模に合わせて、進め方を変えます。</h2>
+        <p class="plan__desc" data-reveal="fade">流れは同じでも、金額とリスクに応じて丁寧さを変える——それが<b>早くて、無駄のない</b>理由です。</p>
       </div>
-      <p class="compare__note" data-reveal="fade">※時間は一例です。最後は必ず人が確認してから送る運用にできます。任せる範囲は、無料相談で一緒に決めましょう。</p>
+      <ol class="ladder">
+        <li class="ladder__row" data-reveal="rise" style="--lv:1">
+          <span class="ladder__range"><b>1<small>〜</small>10</b>万円</span>
+          <span class="ladder__bar" aria-hidden="true"><i></i></span>
+          <span class="ladder__how">定型対応</span>
+          <p class="ladder__desc">フォームと決まった確認項目でスピード納品。修正・小規模制作。</p>
+        </li>
+        <li class="ladder__row" data-reveal="rise" style="--lv:2">
+          <span class="ladder__range"><b>10<small>〜</small>50</b>万円</span>
+          <span class="ladder__bar" aria-hidden="true"><i></i></span>
+          <span class="ladder__how">簡易ヒアリング</span>
+          <p class="ladder__desc">課題と成果物を確認し、サンプルを出して範囲を決めて制作。</p>
+        </li>
+        <li class="ladder__row" data-reveal="rise" style="--lv:3">
+          <span class="ladder__range"><b>50<small>〜</small>100</b>万円</span>
+          <span class="ladder__bar" aria-hidden="true"><i></i></span>
+          <span class="ladder__how">丁寧な設計</span>
+          <p class="ladder__desc">現場の流れ・入力する人・確認する人・納品条件を整理してから制作。</p>
+        </li>
+        <li class="ladder__row ladder__row--top" data-reveal="rise" style="--lv:4">
+          <span class="ladder__range"><b>100<small>〜</small>300</b>万円</span>
+          <span class="ladder__bar" aria-hidden="true"><i></i></span>
+          <span class="ladder__how">POC / 検証</span>
+          <p class="ladder__desc">試作→実地検証→調整→本開発。契約・支払いも段階化してリスクを抑えます。</p>
+        </li>
+      </ol>
+      <div class="plan__cta" data-reveal="fade" style="max-width:var(--maxw);margin-left:auto;margin-right:auto;">
+        <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="相談"><span>うちの規模だとどうなる？を相談する</span></a>
+        <p class="plan__note">※ まず無料相談で業務を伺い、規模と進め方の目安をお出しします。</p>
+      </div>
     </section>
   </main>
 
@@ -215,8 +169,8 @@
     </div>
         <nav class="footer__nav" aria-label="フッターナビゲーション">
       <a href="web.html">Web制作</a>
-      <a href="ai.html">AI自動化</a>
-      <a href="system.html">管理画面・システム</a>
+      <a href="system.html">業務改善ツール</a>
+      <a href="ai.html">システム開発</a>
       <a href="../index.html#pricing">料金</a>
       <a href="../index.html#estimator">かんたん見積り</a>
       <a href="../index.html#faq">FAQ</a>

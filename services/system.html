@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="システム・管理画面開発｜Nos Technology。売上管理・給与計算・勤怠×シフトなど、お店に合わせた独自システムを必要な分だけ。現場で本当に使う小規模な管理画面を作ります。" />
+  <meta name="description" content="業務改善ツール｜Nos Technology。現場の困りごとを聞いて、勤怠・在庫・売上メモ・問い合わせ管理・集計をAI/APIで小さく改善。個人店・中小企業の「時間がかかる」を減らします。" />
   <meta name="theme-color" content="#07080c" />
   <meta property="og:type" content="article" />
   <meta property="og:site_name" content="Nos Technology" />
-  <meta property="og:title" content="システム・管理画面開発｜Nos Technology" />
-  <meta property="og:description" content="現場で本当に使う小規模な管理画面を、必要な分だけ作ります。" />
+  <meta property="og:title" content="業務改善ツール｜Nos Technology" />
+  <meta property="og:description" content="現場の困りごとを聞いて、小さな道具で改善します。" />
   <meta property="og:image" content="../assets/og/og-default.svg" />
-  <title>システム・管理画面開発 — Nos Technology</title>
+  <title>業務改善ツール — Nos Technology</title>
 
   <link rel="icon" href="../assets/favicon/favicon.svg" type="image/svg+xml" />
   <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.svg" />
@@ -50,8 +50,8 @@
     <nav class="header__nav" aria-label="メインナビゲーション">
       <a href="../index.html">Top</a>
       <a href="web.html">Web制作</a>
-      <a href="ai.html">AI自動化</a>
-      <a href="system.html" aria-current="page">管理画面</a>
+      <a href="system.html" aria-current="page">業務改善</a>
+      <a href="ai.html">システム開発</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
     <a class="header__cta" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
@@ -61,8 +61,8 @@
   <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
     <a href="../index.html" style="--mi:0"><small>Top</small>ホーム</a>
     <a href="web.html" style="--mi:1"><small>01</small>Web制作</a>
-    <a href="ai.html" style="--mi:2"><small>02</small>AI自動化</a>
-    <a href="system.html" style="--mi:3"><small>03</small>管理画面・システム</a>
+    <a href="system.html" style="--mi:2"><small>02</small>業務改善ツール</a>
+    <a href="ai.html" style="--mi:3"><small>03</small>システム開発</a>
     <a href="../index.html#pricing" style="--mi:4"><small>Price</small>料金</a>
     <a href="../index.html#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
     <a class="mnav__cta" href="../index.html#contact" style="--mi:6">無料相談する</a>
@@ -73,22 +73,22 @@
     <section class="hero">
       <canvas class="hero__canvas" id="serviceHeroCanvas" data-kind="system" aria-hidden="true"></canvas>
       <div class="hero__content">
-        <span class="hero__badge" data-reveal="fade"><i></i> Service 03 — Admin System</span>
+        <span class="hero__badge" data-reveal="fade"><i></i> Service 02 — Improvement Tools</span>
         <h1 class="hero__title">
-          <span class="line" data-reveal="line">お店の“独自</span>
-          <span class="line" data-reveal="line"><em>システム</em>”を。</span>
+          <span class="line" data-reveal="line">現場の困りごとを、</span>
+          <span class="line" data-reveal="line"><em>小さな道具</em>で。</span>
         </h1>
         <p class="hero__lead" data-reveal="fade">
-          売上の集計、給料の計算、勤怠とシフトの突き合わせ——
-          ノートと表計算と電卓でやっているその作業を、あなたのお店専用の1画面に。
-          既製ソフトに業務を合わせるのではなく、<b>業務にシステムを合わせます</b>。
+          勤怠、在庫、売上メモ、問い合わせ管理、集計——
+          ノートと表計算と電卓のその作業を、AI/APIも使って専用の1画面に。
+          既製ソフトに業務を合わせるのではなく、<b>業務に道具を合わせます</b>。
         </p>
         <div class="hero__actions" data-reveal="fade">
           <a class="btn btn--primary" href="../index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
           <a class="btn btn--ghost" href="#screens" data-magnetic><span>画面の実例を見る</span></a>
         </div>
       </div>
-      <div class="hero__meta" aria-hidden="true"><span>Booking · CRM · Staff</span><span>Scroll<i></i></span></div>
+      <div class="hero__meta" aria-hidden="true"><span>Timecard · Sales · Stock</span><span>Scroll<i></i></span></div>
     </section>
 
     <!-- ===== 画面の実例（営業でそのまま見せるデモ3枚。データはサンプル） ===== -->
@@ -193,7 +193,7 @@
         <div class="demo__copy" data-reveal="rise">
           <span class="demo__no">CASE 03 — Shift × Attendance</span>
           <h3 class="demo__title">勤怠とシフトを、<em>1枚に混ぜる</em>。</h3>
-          <p class="demo__text">「シフト表はLINE、打刻は紙、集計は月末にまとめて」——バラバラの3つを1画面に。予定と実績のズレがその日のうちに見えます。市販ソフトにない、<b>お店専用の混ぜ方</b>ができるのが独自システムです。</p>
+          <p class="demo__text">「シフト表はLINE、打刻は紙、集計は月末にまとめて」——バラバラの3つを1画面に。予定と実績のズレがその日のうちに見えます。市販ソフトにない、<b>お店専用の混ぜ方</b>ができるのが独自ツールです。</p>
           <ul class="demo__points">
             <li>シフト希望の提出→下書きまで自動<small>→ 組む時間を短縮</small></li>
             <li>予定と打刻のズレを自動で検出<small>→ 残業・遅刻がその日に分かる</small></li>
@@ -253,6 +253,41 @@
           </div>
         </figure>
       </div>
+    
+      <!-- ④ AI返信（業務改善ツールの一例） -->
+      <div class="demo">
+        <div class="demo__copy" data-reveal="rise">
+          <span class="demo__no">CASE 04 — AI Reply</span>
+          <h3 class="demo__title">営業時間外も、<em>その場で返事</em>。</h3>
+          <p class="demo__text">夜の問い合わせにAIが下書きを用意。翌朝、人が確認して送るだけ。返事が早いお店は、それだけで選ばれます。</p>
+          <ul class="demo__points">
+            <li>よくある質問は自動で一次対応<small>→ 同じ返信を打たなくていい</small></li>
+            <li>文面はお店の言葉づかいを学習<small>→ “それっぽい定型文”にならない</small></li>
+            <li>最後は必ず人が確認して送信<small>→ AI任せにしない運用にできる</small></li>
+          </ul>
+        </div>
+        <figure class="shot" data-reveal="rise" aria-label="AI返信アシストの画面例">
+          <div class="shot__bar"><i></i><i></i><i></i><span>yourshop-admin.jp / 返信</span></div>
+          <div class="shot__body">
+            <div class="ap-head">
+              <h4>問い合わせ受信箱</h4>
+              <span class="ap-badge">AIが下書き済み</span>
+            </div>
+            <ul class="shift-alerts" style="gap:10px">
+              <li><b style="color:#ffb08a;background:rgba(255,138,92,.12);border:1px solid rgba(255,138,92,.38)">21:04</b>明日の15時、2名で予約できますか？<span>— Instagram経由</span></li>
+            </ul>
+            <div style="display:flex;flex-direction:column;gap:8px">
+              <div style="align-self:flex-end;max-width:88%;padding:12px 16px;border-radius:14px 14px 4px 14px;background:var(--blue);color:#fff;font-size:.82rem;line-height:1.7">ありがとうございます。明日15:00、2名様でご案内できます。ご来店お待ちしております。</div>
+              <div style="align-self:flex-end;display:flex;gap:8px;align-items:center">
+                <span class="ap-badge">✦ AIの下書き</span>
+                <span class="ap-btn">編集する</span>
+                <span class="ap-btn ap-btn--pri">確認して送信</span>
+              </div>
+            </div>
+            <div class="pay-foot"><small>返信のトーン・NGワードはお店ごとに設定できます</small></div>
+          </div>
+        </figure>
+      </div>
     </section>
 
     <!-- ===== 組み合わせは自由（独自システムの幅） ===== -->
@@ -274,6 +309,54 @@
       <p class="mix__note" data-reveal="fade">既製ソフトは「業務をソフトに合わせる」もの。私たちは<b>いまのやり方を聞いてから、それに合う画面を作ります</b>。だから現場が使い続けられます。</p>
     </section>
 
+    <!-- ===== Before / After（スクロールジャック廃止：通常スクロールで“何が手放せるか”を具体に） ===== -->
+    <section class="section compare" id="compare" aria-label="AIに任せる前とあと">
+      <div class="section__head" style="text-align:center">
+        <p class="section__eyebrow" data-reveal="fade">Before / After</p>
+        <h2 class="section__title" data-reveal="words">毎日の“これ”、手放せます。</h2>
+        <p class="compare__lead" data-reveal="fade">お店の一日には、人にしかできない仕事と、仕組みに任せられる仕事があります。<br />Nosは、後者を静かに引き受けます。</p>
+      </div>
+      <div class="compare__grid">
+        <!-- これまで：ぜんぶ手作業 -->
+        <article class="daycol daycol--before" data-reveal="rise">
+          <header class="daycol__head">
+            <span class="daycol__tag">これまで</span>
+            <h3>ぜんぶ、自分で。</h3>
+          </header>
+          <ul class="daycol__list">
+            <li style="--i:0"><span>口コミへの返信</span><b>約30分</b></li>
+            <li style="--i:1"><span>予約の確認・リマインド</span><b>約20分</b></li>
+            <li style="--i:2"><span>InstagramとGoogleマップの更新</span><b>約25分</b></li>
+            <li style="--i:3"><span>問い合わせへの返事</span><b>約20分</b></li>
+            <li style="--i:4"><span>売上・顧客リストの転記</span><b>約15分</b></li>
+          </ul>
+          <footer class="daycol__foot">接客のあいまに、毎日 <b>約110分</b></footer>
+        </article>
+
+        <!-- 中央：受け渡しの矢印 -->
+        <div class="compare__hand" aria-hidden="true">
+          <span class="compare__hand-badge">AIと仕組みへ</span>
+        </div>
+
+        <!-- Nosと：確認するだけ -->
+        <article class="daycol daycol--after" data-reveal="rise">
+          <header class="daycol__head">
+            <span class="daycol__tag daycol__tag--on">Nosと整えたあと</span>
+            <h3>確認するだけ。</h3>
+          </header>
+          <ul class="daycol__list">
+            <li style="--i:0"><span>口コミへの返信</span><i>AIが下書き</i><b>3分</b></li>
+            <li style="--i:1"><span>予約の確認・リマインド</span><i>自動送信</i><b>0分</b></li>
+            <li style="--i:2"><span>Instagram・マップの更新</span><i>下準備をAIが</i><b>5分</b></li>
+            <li style="--i:3"><span>問い合わせへの返事</span><i>一次対応はAI</i><b>3分</b></li>
+            <li style="--i:4"><span>売上・顧客リストの転記</span><i>自動で記録</i><b>0分</b></li>
+          </ul>
+          <footer class="daycol__foot daycol__foot--on">浮いた時間は、目の前のお客様へ。</footer>
+        </article>
+      </div>
+      <p class="compare__note" data-reveal="fade">※時間は一例です。最後は必ず人が確認してから送る運用にできます。任せる範囲は、無料相談で一緒に決めましょう。</p>
+    </section>
+
     <!-- ===== 進め方と料金の考え方 ===== -->
     <section class="section pricing" id="price">
       <div class="section__head">
@@ -284,18 +367,19 @@
       <div class="pricing__grid">
         <article class="price-card price-card--lead" data-reveal="rise">
           <span class="price-card__role">進め方</span>
-          <h3 class="price-card__name">3ステップで、現場に届く</h3>
+          <h3 class="price-card__name">4つの工程で、現場に届く</h3>
           <ul class="price-roi">
-            <li><b>1. 業務を聞く（無料相談）</b><span>いまのノート・表計算・LINEの流れをそのまま見せてください。</span></li>
-            <li><b>2. 一番面倒な1画面を作る</b><span>小さく作って現場で試す。合わなければその場で直します。</span></li>
-            <li><b>3. 使いながら広げる</b><span>売上→給与→シフトのように、必要になった分だけ足していく。</span></li>
+            <li><b>1. 聞く</b><span>現場の不満と、時間の使い方を聞く。広島市内など足を運べる範囲は訪問も（オンラインも対応）。</span></li>
+            <li><b>2. 小さく決める</b><span>何を小さく作ると効果が出るかを考え、範囲を決める。</span></li>
+            <li><b>3. 作る</b><span>AI・API・スプレッドシート・アプリで、早く形にする。</span></li>
+            <li><b>4. 回収する</b><span>使い方を伝え、改善点を集めて育てる。</span></li>
           </ul>
         </article>
         <article class="price-card price-card--flag" data-reveal="rise">
           <span class="price-card__role price-card__role--flag">料金の考え方</span>
           <h3 class="price-card__name">個別見積 — 効果から逆算</h3>
           <p class="price-card__fee price-card__fee--quote">個別見積</p>
-          <p class="price-card__sub">「毎月何時間が浮くか」から逆算してご提案します。安売りではなく、AI活用で開発を効率化した分を価格に反映しています。</p>
+          <p class="price-card__sub">「毎月何時間が浮くか」から逆算してご提案。小さく始める案件から段階的に。中大規模の開発は<a href="ai.html" style="color:var(--mint)">システム開発</a>へ。</p>
           <ul class="price-roi">
             <li><b>時間が減る</b><span>レジ締め・給与計算・シフト作成などの定型作業を自動化。</span></li>
             <li><b>ミスが減る</b><span>転記ゼロ・計算ルール固定で、月末の照合作業をなくす。</span></li>
@@ -314,8 +398,8 @@
     </div>
         <nav class="footer__nav" aria-label="フッターナビゲーション">
       <a href="web.html">Web制作</a>
-      <a href="ai.html">AI自動化</a>
-      <a href="system.html">管理画面・システム</a>
+      <a href="system.html">業務改善ツール</a>
+      <a href="ai.html">システム開発</a>
       <a href="../index.html#pricing">料金</a>
       <a href="../index.html#estimator">かんたん見積り</a>
       <a href="../index.html#faq">FAQ</a>
