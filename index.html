@@ -210,6 +210,10 @@
               </div>
               <em class="opt__price">+¥8,000<small>/頁</small></em>
             </li>
+            <li class="opt"><label><input type="checkbox" data-name="簡易ヒアリング込みプラン" data-price="20000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>簡易ヒアリング込み</b><span>現状確認・構成のご提案（合計¥50,000〜相当）</span></div><em class="opt__price">+¥20,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="ハイクオリティ仕様(動き・演出)" data-price="90000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>ハイクオリティ仕様</b><span>動き・演出のあるサイト（合計¥120,000〜相当。相談で確定）</span></div><em class="opt__price">+¥90,000<small>〜</small></em></label></li>
             <li class="opt"><label><input type="checkbox" data-name="写真ギャラリー" data-price="5000" /><span class="opt__check"></span>
               <div class="opt__body"><b>写真ギャラリー</b><span>お店の雰囲気が伝わる写真の見せ場</span></div><em class="opt__price">+¥5,000</em></label></li>
             <li class="opt"><label><input type="checkbox" data-name="Googleマップ(MEO)強化" data-price="10000" /><span class="opt__check"></span>
@@ -222,8 +226,8 @@
               <div class="opt__body"><b>AI自動返信（一次対応）</b><span>問い合わせに、その場で返事が返る</span></div><em class="opt__price">+¥25,000</em></label></li>
             <li class="opt"><label><input type="checkbox" data-name="口コミ返信AI" data-price="15000" /><span class="opt__check"></span>
               <div class="opt__body"><b>口コミ返信AI</b><span>丁寧な返信文案を自動で用意</span></div><em class="opt__price">+¥15,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="業務改善ツール(勤怠・売上・在庫など)" data-quote="1" /><span class="opt__check"></span>
-              <div class="opt__body"><b>業務改善ツール（勤怠・売上・在庫など）</b><span>現場に合わせて設計（主軸メニュー）</span></div><em class="opt__price opt__price--quote">個別見積</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="業務改善ツール(勤怠・売上・在庫など)" data-price="60000" data-tool="1" /><span class="opt__check"></span>
+              <div class="opt__body"><b>業務改善ツール（勤怠・売上・在庫など）</b><span>ヒアリング必須・手間に合わせて見積もり</span></div><em class="opt__price">+¥60,000<small>〜</small></em></label></li>
             <li class="opt"><label><input type="checkbox" data-name="月々の運用サポート" data-monthly="5000" /><span class="opt__check"></span>
               <div class="opt__body"><b>月々の運用サポート</b><span>更新・軽微な修正・相談</span></div><em class="opt__price">月+¥5,000</em></label></li>
           </ul>
@@ -236,7 +240,7 @@
           <p class="est__extra" id="estExtra"></p>
           <ul class="est__picked" id="estPicked"><li>店舗ページ一式</li></ul>
           <a class="btn btn--primary btn--block" href="#contact" id="estCta" data-magnetic data-cursor="相談"><span>この内容で無料相談する</span></a>
-          <p class="est__note">表示は概算の目安です。正式なお見積りは無料相談で。内容の入れ替え・ご予算に合わせた調整も柔軟にできます。</p>
+          <p class="est__note">表示は概算の目安です。正式なお見積りは無料相談で（内容により特別なご案内をすることもあります）。入れ替えやご予算に合わせた調整も柔軟に。</p>
         </aside>
       </div>
     </section>
@@ -326,27 +330,12 @@
           <span class="price-card__role">入口 — まず手軽に</span>
           <h3 class="price-card__name">Web制作・集客導線</h3>
           <p class="price-card__fee"><span class="price-card__cur">¥</span>30,000<span class="price-card__unit">〜</span></p>
-          <p class="price-card__sub">スマホ対応の店舗ページ一式を、最短3〜5日で。組み合わせは<a href="#estimator" data-cursor="試す">かんたん見積り</a>で。</p>
-          <div class="price-card__cols">
-            <div>
-              <h4 class="price-card__h">含むもの</h4>
-              <ul class="price-list">
-                <li>スマホ対応・店舗情報の掲載</li>
-                <li>電話 / LINE / Instagram リンク</li>
-                <li>Googleマップ（MEO）導線</li>
-                <li>問い合わせフォーム設置</li>
-                <li>公開後の修正 1回</li>
-              </ul>
-            </div>
-            <div>
-              <h4 class="price-card__h price-card__h--muted">含まないもの</h4>
-              <ul class="price-list price-list--muted">
-                <li>フルオーダーデザイン</li>
-                <li>複数ページ・予約システム</li>
-                <li>本格的なSEO施策</li>
-              </ul>
-            </div>
-          </div>
+          <p class="price-card__sub">スマホ対応の店舗ページを、最短3〜5日で。詳しい内容は<a href="#estimator" data-cursor="試す">かんたん見積り</a>で組み立てられます。</p>
+          <ul class="tierlist">
+            <li><span>テンプレのみ<small>オプション追加可</small></span><b>¥30,000<i>〜</i></b></li>
+            <li><span>簡易ヒアリング込み<small>現状確認と構成のご提案つき</small></span><b>¥50,000<i>〜</i></b></li>
+            <li class="hi"><span>ハイクオリティ<small>動き・演出のあるサイト。相談で見積もり</small></span><b>¥120,000<i>〜</i></b></li>
+          </ul>
           <a class="btn btn--ghost" href="services/web.html" data-cursor="開く"><span>Webプランを詳しく →</span></a>
         </article>
 
@@ -354,14 +343,14 @@
         <article class="price-card price-card--flag" data-reveal="rise">
           <span class="price-card__role price-card__role--flag">主軸 — 業務そのものを変える</span>
           <h3 class="price-card__name">業務改善ツール・システム開発</h3>
-          <p class="price-card__fee price-card__fee--quote">個別見積</p>
-          <p class="price-card__sub">現場の困りごとは小さな道具で。大きな開発は<b>POC→検証→本開発</b>と段階化。</p>
+          <p class="price-card__fee"><span class="price-card__cur">¥</span>60,000<span class="price-card__unit">〜</span></p>
+          <p class="price-card__sub">ヒアリング必須。<b>あなたの手間（作業量）に合わせて</b>見積もります。内容により特別なご案内をすることも。</p>
           <ul class="price-roi">
             <li><b>時間が減る</b><span>返信・通知・転記などの定型作業をAIと仕組みで肩代わり。</span></li>
             <li><b>機会が増える</b><span>取りこぼし防止・対応スピードで、相談や成約を底上げ。</span></li>
             <li><b>必要な分だけ</b><span>予約・顧客・問い合わせ管理を、現場に合わせて段階的に。</span></li>
           </ul>
-          <p class="price-card__note">※ まず無料相談で対象業務を切り出します。規模別の進め方（1万〜300万円）は<a href="services/ai.html#ladder" style="color:var(--mint)">こちら</a>。</p>
+          <p class="price-card__note">※ まず無料相談で対象業務を切り出します。中大規模のシステム開発はご相談ベースで（規模別の進め方は<a href="services/ai.html#ladder" style="color:var(--mint)">こちら</a>）。</p>
           <a class="btn btn--ghost" href="services/system.html" data-cursor="開く"><span>業務改善ツールを詳しく →</span></a>
         </article>
       </div>
@@ -375,7 +364,7 @@
         <h2 class="section__title" data-reveal="words">よくある質問</h2>
       </div>
       <div class="faq__list">
-        <details class="faq__item"><summary>料金はどれくらい？</summary><div class="faq__a">Web制作は<b>¥30,000〜</b>（スマホ対応・店舗情報・電話/LINE/Instagramリンク・Googleマップ導線を含む“入口”プラン）。安売りではなく、<b>AIが制作を効率化した分を価格に反映</b>しています。オプションの組み合わせは<a href="#estimator">かんたん見積り</a>でその場で試せます。AI業務改善・管理画面/システム開発は内容により<b>個別見積</b>。費用対効果を一緒に設計します。</div></details>
+        <details class="faq__item"><summary>料金はどれくらい？</summary><div class="faq__a">Webはテンプレのみ<b>¥30,000〜</b>、簡易ヒアリング込み<b>¥50,000〜</b>、動き・演出のあるハイクオリティは<b>¥120,000〜</b>（相談で見積もり）。業務改善ツールは<b>¥60,000〜</b>で、ヒアリングのうえ手間（作業量）に合わせて見積もります。組み合わせは<a href="#estimator">かんたん見積り</a>で試せます。</div></details>
         <details class="faq__item"><summary>どんなお店が対象ですか？</summary><div class="faq__a">美容室・サロン、カフェ・飲食店、クリニック・整体、ジム、教室・士業など、<b>地域のお店</b>が中心です。「何から手をつければ…」という段階のご相談も歓迎です。</div></details>
         <details class="faq__item"><summary>何から始めればいいですか？</summary><div class="faq__a">まずは<b>Webで集客を整える</b>のがおすすめ。軌道に乗ったら<b>業務をシステムで効率化</b>、と一社で伴走します。無料相談で現状を伺い、必要な分だけご提案します。</div></details>
         <details class="faq__item"><summary>対応してくれる範囲は？</summary><div class="faq__a">Web制作・集客導線（Googleマップ/Instagram/問い合わせフォーム）、AI業務自動化（返信文案・通知・見込み客の整理）、予約・顧客などの<b>管理画面/システム開発</b>まで、まとめて対応します。</div></details>

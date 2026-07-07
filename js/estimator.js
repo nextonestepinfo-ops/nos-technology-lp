@@ -38,7 +38,7 @@ export function initEstimator() {
       picked.push(c.dataset.name);
       if (c.dataset.price) total += Number(c.dataset.price);
       if (c.dataset.monthly) monthly += Number(c.dataset.monthly);
-      if (c.dataset.quote) hasQuote = true;
+      if (c.dataset.quote || c.dataset.tool) hasQuote = true;
     });
     return { total, monthly, hasQuote, picked };
   }
@@ -71,7 +71,7 @@ export function initEstimator() {
 
     // 追記行（個別見積・月額）
     const extras = [];
-    if (hasQuote) extras.push("＋ 業務改善ツールは個別見積");
+    if (hasQuote) extras.push("※ 業務改善ツール分はヒアリング後に確定");
     if (monthly > 0) extras.push(`＋ 月々 ¥${fmt(monthly)}`);
     extraEl.textContent = extras.join("　");
 
@@ -105,7 +105,7 @@ export function initEstimator() {
           `希望内容: ${picked.join(" / ")}`,
           `目安: ¥${fmt(total)}〜` +
             (monthly > 0 ? `（＋月々¥${fmt(monthly)}）` : "") +
-            (hasQuote ? `（業務改善ツールは個別見積）` : ""),
+            (hasQuote ? `（業務改善ツール分はヒアリング後に確定）` : ""),
           ``,
           `その他のご要望・ご予算感があればこちらへ:`,
         ].join("\n");
