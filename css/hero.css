@@ -176,6 +176,8 @@
 
 @media(max-width:720px){
   .hero{padding-top:120px;}
+  /* サービスページのヒーロー3D：スマホでは薄い背景に落として文字を守る */
+  #serviceHeroCanvas{opacity:.42;}
   .hero__meta{font-size:.66rem;}
   /* スマホ：社名はヘッダーと二重になるため非表示。3Dは上半分・文字は下半分に分離 */
   .hero__topbrand,.hero-topline{display:none;}
