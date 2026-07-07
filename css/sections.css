@@ -645,9 +645,16 @@
 .footer__tagline em{color:var(--blue);font-weight:600;}
 .footer__bottom small{font-size:.78rem;}
 
-/* ===== サービスページ「できること」系リスト：スマホの項目間隔 ===== */
-@media(max-width:720px){
-  .process__list .step{margin-bottom:30px;padding-left:2px;}
-  .process__list .step:last-child{margin-bottom:0;}
-  .process__list .step__no{display:inline-block;margin-bottom:6px;font-size:.8rem;color:var(--blue);letter-spacing:.1em;}
-}
+/* ===== サービスページ「できること」系リスト：カードグリッド ===== */
+.process__list{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(14px,2vw,20px);counter-reset:none;}
+.process__list .step{background:var(--surface-2);border:1px solid var(--line);border-radius:14px;
+  padding:clamp(20px,2.6vw,28px);position:relative;transition:transform .35s var(--ease),border-color .35s var(--ease);}
+.process__list .step:hover{transform:translateY(-4px);border-color:color-mix(in srgb,var(--mint) 40%,transparent);}
+.process__list .step::before{content:none;} /* 汎用.stepのカウンター表示を無効化 */
+.process__list .step::after{content:none;}
+.process__list .step__no{display:inline-block;font-family:var(--en);font-weight:700;font-size:.82rem;letter-spacing:.12em;
+  color:var(--blue);margin-bottom:10px;}
+.process__list .step h3{font-size:1.05rem;font-weight:700;margin-bottom:8px;color:var(--ink);}
+.process__list .step p{font-size:.88rem;color:var(--ink-soft);line-height:1.75;}
+@media(max-width:900px){.process__list{grid-template-columns:1fr 1fr;}}
+@media(max-width:560px){.process__list{grid-template-columns:1fr;}}

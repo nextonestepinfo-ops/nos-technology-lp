@@ -176,8 +176,14 @@
 
 @media(max-width:720px){
   .hero{padding-top:120px;}
-  /* サービスページのヒーロー3D：スマホでは薄い背景に落として文字を守る */
-  #serviceHeroCanvas{opacity:.42;}
+  /* サービスページのヒーロー：上=3Dパネル（フル輝度）/ 下=コピーの2ゾーン */
+  .hero:not(.hero--v2){align-items:flex-end;padding:96px 20px 92px;}
+  .hero:not(.hero--v2)::after{content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+    background:linear-gradient(to top, var(--paper) 4%, color-mix(in srgb,var(--paper) 82%,transparent) 30%, transparent 56%);}
+  .hero:not(.hero--v2) .hero__content{position:relative;z-index:2;}
+  .hero:not(.hero--v2) .hero__badge{margin-bottom:16px;}
+  .hero:not(.hero--v2) .hero__title{margin-bottom:16px;}
+  .hero:not(.hero--v2) .hero__lead{margin-bottom:24px;}
   /* サービスページの見出し：語中で折れないサイズに（8〜9文字が1行に収まる） */
   .hero__title{font-size:clamp(2rem,9.2vw,2.5rem);line-height:1.28;}
   /* リード文：背後のパネルから浮かせる薄い影 */

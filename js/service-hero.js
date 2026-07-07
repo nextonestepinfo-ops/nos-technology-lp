@@ -279,10 +279,10 @@ export function initServiceHero(canvas, kind = "web") {
     renderer.setSize(r.width, r.height, false);
     cam.aspect = r.width / r.height; cam.updateProjectionMatrix();
     const small = r.width < 860;
-    // スマホ：パネルは薄い背景として下側へ（コピーの可読性を最優先）
-    group.position.x = small ? 0.2 : 1.6;
-    group.position.y = small ? -0.55 : 0;
-    baseScale = small ? 0.6 : 1;
+    // スマホ：上=パネル（フル輝度でフレームイン）/ 下=コピー の2ゾーン構成
+    group.position.x = small ? 0 : 1.6;
+    group.position.y = small ? 1.55 : 0;
+    baseScale = small ? 0.52 : 1;
     group.scale.setScalar(baseScale);
   }
   resize();

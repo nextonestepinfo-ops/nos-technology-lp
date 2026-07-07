@@ -274,3 +274,17 @@ a,button,[data-cursor],[data-magnetic],.svc[data-overlay],.chip{cursor:pointer;}
   .warp{display:none!important;}
   .cursor{display:none;}body{cursor:auto;}
 }
+
+/* ---- 追従CTAバー（サービスページ・スマホ専用） ---- */
+.cta-bar{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom));z-index:70;
+  display:none;gap:10px;padding:10px;border-radius:20px;
+  background:color-mix(in srgb,var(--paper) 78%,transparent);backdrop-filter:blur(16px);
+  border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.45);
+  transform:translateY(130%);opacity:0;transition:transform .5s var(--ease),opacity .4s var(--ease);}
+.cta-bar.is-show{transform:none;opacity:1;}
+.cta-bar__main{flex:1.2;text-align:center;padding:14px 10px;border-radius:14px;background:var(--mint);
+  color:#fff;font-weight:700;font-size:.95rem;box-shadow:0 8px 24px color-mix(in srgb,var(--mint) 35%,transparent);}
+.cta-bar__quote{flex:1;text-align:center;padding:14px 10px;border-radius:14px;border:1px solid var(--line);
+  color:var(--ink);font-weight:600;font-size:.9rem;background:color-mix(in srgb,var(--ink) 5%,transparent);}
+body.is-menu-open .cta-bar{opacity:0;pointer-events:none;}
+@media(max-width:860px){.cta-bar{display:flex;}}

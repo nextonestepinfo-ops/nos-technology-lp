@@ -25,3 +25,13 @@ export function initMobileNav() {
     if (e.key === "Escape" && nav.classList.contains("is-open")) setOpen(false);
   });
 }
+
+// 追従CTAバー（サービスページ・スマホ専用）：ヒーローを過ぎたら出現
+export function initCtaBar() {
+  const bar = document.getElementById("ctaBar");
+  if (!bar) return;
+  const onScroll = () =>
+    bar.classList.toggle("is-show", (window.scrollY || 0) > window.innerHeight * 0.55);
+  onScroll();
+  window.addEventListener("scroll", onScroll, { passive: true });
+}
