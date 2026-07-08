@@ -20,9 +20,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
-<link rel="preload" as="image" href="assets/photos/hero-pc.jpg" media="(min-width: 761px)" />
-<link rel="preload" as="image" href="assets/photos/hero.jpg" media="(max-width: 760px)" />
-<link rel="stylesheet" href="css/style.css?v=20260704" />
+<link rel="preload" as="image" href="assets/photos/hero.jpg" />
+<link rel="stylesheet" href="css/style.css?v=20260705" />
 </head>
 <body>
 
@@ -90,12 +89,9 @@
 <!-- ========================= 1. Hero ========================= -->
 <!-- 横長写真を全面背景に、テキストのみを左下へ配置（本人写真を隠さない構成・ぼかしなし） -->
 <section class="hero" id="hero">
-  <!-- ヒーロー背景：PC=ホテル演台のステージ写真(hero-pc) / SP=モノクロ縦写真(hero) -->
+  <!-- ヒーロー背景：本人のモノクロ縦写真。PCは原寸配置＋黒背景を延長（顔を鮮明に見せる） -->
   <div class="hero__bg" aria-hidden="true">
-    <picture>
-      <source media="(min-width: 761px)" srcset="assets/photos/hero-pc.jpg" />
-      <img src="assets/photos/hero.jpg" alt="" />
-    </picture>
+    <img src="assets/photos/hero.jpg" alt="" />
   </div>
   <div class="hero__veil" aria-hidden="true"></div>
 

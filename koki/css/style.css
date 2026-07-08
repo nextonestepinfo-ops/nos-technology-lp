@@ -213,28 +213,28 @@ body.nav-open .nav-toggle span:nth-child(1) { transform: translateY(6px) rotate(
 body.nav-open .nav-toggle span:nth-child(2) { opacity: 0; }
 body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate(-45deg); }
 
-/* ---------- ヒーロー（参考サイト準拠：全面写真＋中央に大きな名前） ---------- */
+/* ---------- ヒーロー（中央の大きな名前＋本人ポートレートを原寸で・顔を見せる） ---------- */
 .hero {
-  position: relative; min-height: 100svh; display: flex; align-items: center; justify-content: center;
+  position: relative; min-height: 100svh; display: flex; align-items: flex-end; justify-content: center;
   text-align: center; overflow: hidden; background: #050506;
-  padding: 120px 0 clamp(120px, 15vh, 170px); /* 下部ティッカー＋SCROLL分を確保 */
+  padding: 110px 0 clamp(150px, 19vh, 205px); /* テキストは下側＝顔を隠さない */
 }
-/* 背景写真：全面。モノクロ＋暗めでテキストを立たせる */
+/* 背景写真：拡大せず原寸の高さで中央やや左に配置し、両端を黒へ溶かす（写真の黒背景を延長） */
 .hero__bg { position: absolute; inset: 0; z-index: 0; background: #050506; }
-.hero__bg picture { display: contents; }
 .hero__bg img {
-  position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center 36%;
-  filter: grayscale(1) contrast(1.05) brightness(.52);
+  position: absolute; top: 0; left: clamp(16px, 9vw, 200px); height: 100%; width: auto;
+  filter: grayscale(1) contrast(1.04) brightness(.82);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
 }
 .hero__card { max-width: 900px; margin-inline: auto; }
-/* 重ねの暗幕（中央対称：中心をわずかに明るく残し、上下を締める） */
+/* 重ねの暗幕（上部＝顔まわりは軽く、テキストの乗る下部を締める） */
 .hero__veil {
   position: absolute; inset: 0; z-index: 1; pointer-events: none;
   background:
-    radial-gradient(72% 58% at 50% 42%, rgba(5,5,6,.12), rgba(5,5,6,.58) 84%),
+    radial-gradient(74% 60% at 47% 38%, rgba(5,5,6,.04), rgba(5,5,6,.5) 88%),
     radial-gradient(120% 60% at 50% 118%, rgba(142,12,34,.16), transparent 60%),
-    linear-gradient(180deg, rgba(5,5,6,.5) 0%, transparent 24% 54%, rgba(5,5,6,.94) 100%);
+    linear-gradient(180deg, rgba(5,5,6,.32) 0%, transparent 20% 48%, rgba(5,5,6,.94) 100%);
 }
 .hero__inner { position: relative; z-index: 3; width: 100%; }
 
@@ -242,7 +242,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate
 .hero__card { max-width: 640px; }
 .hero__title {
   font-family: var(--f-display); font-weight: 500;
-  font-size: clamp(4.6rem, 12.5vw, 12rem); line-height: .92;
+  font-size: clamp(4.6rem, 11.5vw, 11rem); line-height: .92;
   letter-spacing: .2em; padding-left: .2em; /* 字間ぶんの光学中央合わせ */
   margin: 0; color: var(--c-ink); text-shadow: 0 20px 70px rgba(0,0,0,.75);
 }
@@ -324,12 +324,19 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate
 }
 
 /* ---------- About（参考サイト準拠：写真を左半分フル断ち落とし＋右パネル） ---------- */
-.about { display: grid; grid-template-columns: 1fr 1fr; min-height: min(88vh, 720px); background: var(--c-bg-2); overflow: hidden; }
-.about__media { position: relative; }
+.about { display: grid; grid-template-columns: 1fr 1fr; min-height: min(92vh, 780px); background: var(--c-bg-2); overflow: hidden; }
+/* 写真は切らず全体を見せる（黒背景の写真を、黒地に浮かべて端を溶かす） */
+.about__media { position: relative; background: #050506; }
 .about__media img {
   position: absolute; inset: 0; width: 100%; height: 100%;
-  object-fit: cover; object-position: center top;
-  filter: grayscale(1) contrast(1.03) brightness(.94);
+  object-fit: contain; object-position: center;
+  filter: grayscale(1) contrast(1.03) brightness(.96);
+}
+.about__media::after {
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(5,5,6,.55), transparent 16% 82%, rgba(13,16,22,.6)),
+    radial-gradient(130% 130% at 50% 50%, transparent 58%, rgba(5,5,6,.5) 100%);
 }
 .about__panel {
   position: relative; display: flex; align-items: center;
