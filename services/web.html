@@ -16,7 +16,10 @@
   <link rel="apple-touch-icon" href="../assets/favicon/apple-touch-icon.svg" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet" />
+  <!-- フォントCSSは非ブロッキング読込（レンダーブロック対策）＋ウェイトを厳選 -->
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" /></noscript>
 
   <link rel="stylesheet" href="../css/base.css" />
   <link rel="stylesheet" href="../css/hero.css" />
@@ -97,13 +100,13 @@
       <p class="works-strip__eyebrow" data-reveal="fade">Design Samples — 業種に合わせて、こんなサイトを</p>
       <div class="showcase" id="worksShowcase">
         <div class="showcase__row" data-dir="left">
-          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/salon-web.webp" alt="美容室・サロンのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/salon-mobile.webp" alt="" loading="lazy" /></span></a>
-          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/cafe-web.webp" alt="カフェのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span></a>
-          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/diner-web.webp" alt="飲食店のサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/diner-mobile.webp" alt="" loading="lazy" /></span></a>
-          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/clinic-web.webp" alt="クリニックのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/clinic-mobile.webp" alt="" loading="lazy" /></span></a>
-          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/seitai-web.webp" alt="整体・接骨院のサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/seitai-mobile.webp" alt="" loading="lazy" /></span></a>
-          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/gym-web.webp" alt="ジムのサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/gym-mobile.webp" alt="" loading="lazy" /></span></a>
-          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" src="../assets/works/school-web.webp" alt="学習塾のサイト制作例" loading="lazy" /><span class="site__phone"><img src="../assets/works/school-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" width="1600" height="1000" src="../assets/works/salon-web.webp" alt="美容室・サロンのサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="../assets/works/salon-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" width="1600" height="1000" src="../assets/works/cafe-web.webp" alt="カフェのサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="../assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" width="1600" height="1000" src="../assets/works/diner-web.webp" alt="飲食店のサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="../assets/works/diner-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" width="1600" height="1000" src="../assets/works/clinic-web.webp" alt="クリニックのサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="../assets/works/clinic-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" width="1600" height="1000" src="../assets/works/seitai-web.webp" alt="整体・接骨院のサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="../assets/works/seitai-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" width="1600" height="1000" src="../assets/works/gym-web.webp" alt="ジムのサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="../assets/works/gym-mobile.webp" alt="" loading="lazy" /></span></a>
+          <a class="site" href="../index.html#estimator" data-cursor="見積り"><img class="site__web" width="1600" height="1000" src="../assets/works/school-web.webp" alt="学習塾のサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="../assets/works/school-mobile.webp" alt="" loading="lazy" /></span></a>
         </div>
       </div>
     </section>

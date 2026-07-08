@@ -16,12 +16,15 @@ export function initPreloader(onDone) {
     if (typeof onDone === "function") onDone();
   };
 
-  if (!el || prefersReducedMotion) {
+  // 再訪（同一セッション）はカウンター演出をスキップして即表示
+  let seen = false;
+  try { seen = sessionStorage.getItem("nos-preloaded") === "1"; sessionStorage.setItem("nos-preloaded", "1"); } catch (e) {}
+  if (!el || prefersReducedMotion || seen) {
     finish();
     return;
   }
 
-  const DURATION = 1500; // カウントに要する時間(ms)
+  const DURATION = 900; // カウントに要する時間(ms)。初回のみ・短めに
   let start = null;
 
   function tick(now) {

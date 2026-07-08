@@ -42,14 +42,14 @@ async function boot() {
   initMobileNav();
   initCtaBar();
 
-  // 4. ヒーロー：ハイブリッド3D（WebGL対応時のみ）
-  await initHeroBackground(document.getElementById("heroCanvas"));
-
-  // 4b. サービスページのシネマティック・ヒーロー（該当ページのみ）
-  await initServiceHeroScene();
-
-  // 4c. Introセクションの小3D（#introCanvas がある時のみ）
-  await initIntroScene();
+  // 4. 3Dシーン群は“遅延起動”：three.js(約250KB gzip)のDL/初期化が
+  //    初期表示(FCP/LCP)や後続initを塞がないよう、load完了後のidleで開始する。
+  //    CSSのアンビエント背景が先に出るため体感は途切れない。
+  deferHeavy(() => {
+    initHeroBackground(document.getElementById("heroCanvas"));
+    initServiceHeroScene();
+    initIntroScene();
+  });
 
   // 5. 配色を確定適用（Aether固定。スイッチャーUIは廃止＝要素なしでも既定が適用される）
   initPalette(document.getElementById("paletteSwitch"));
@@ -80,6 +80,17 @@ async function boot() {
 
   // 9. プリローダー完了後にリビール開始（ヒーローを隠れて再生させない）
   initPreloader(() => initReveal());
+}
+
+// 重い初期化を「ページ読込完了後のアイドル時」まで遅らせる。
+// 初回描画とメインスレッドを奪わないための入口。最悪でもtimeout後には必ず実行。
+function deferHeavy(fn, timeout = 1800) {
+  const run = () => {
+    if ("requestIdleCallback" in window) requestIdleCallback(() => fn(), { timeout });
+    else setTimeout(fn, 350);
+  };
+  if (document.readyState === "complete") run();
+  else window.addEventListener("load", run, { once: true });
 }
 
 // 「トップへ戻る」ボタン：下へスクロールしたら出現、クリックで先頭へ慣性スクロール
