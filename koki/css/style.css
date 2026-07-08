@@ -685,7 +685,7 @@ body.is-loaded .hero__badge    { animation: heroFade 1.6s var(--ease) 1.1s both;
   .proof__info { grid-template-columns: 1fr; gap: 28px; }
   .form__row { grid-template-columns: 1fr; }
   /* ヒーロー：顔は上側へ逃がし、文字は暗い下帯に集約 */
-  .hero { align-items: flex-end; text-align: center; min-height: min(96svh, 720px); padding: 88px 0 62px; }
+  .hero { align-items: flex-end; text-align: center; min-height: min(96svh, 720px); padding: 78px 0 112px; }
   .hero__title { font-size: clamp(3.05rem, 16vw, 4.35rem); }
   .hero__eyebrow { margin-bottom: 8px; }
   .hero__rule { margin-top: 10px; margin-bottom: 10px; }
@@ -705,7 +705,7 @@ body.is-loaded .hero__badge    { animation: heroFade 1.6s var(--ease) 1.1s both;
   }
   .hero__card {
     padding: 0 4px; border: none; background: none; backdrop-filter: none; -webkit-backdrop-filter: none; box-shadow: none;
-    transform: translateY(42px);
+    transform: none;
   }
   .hero__eyebrow { justify-content: center; }
   .hero__rule { margin-left: auto; margin-right: auto; }
@@ -726,5 +726,5 @@ body.is-loaded .hero__badge    { animation: heroFade 1.6s var(--ease) 1.1s both;
 
 @media (max-width: 420px) {
   .hero__title { font-size: clamp(3rem, 15.5vw, 4.1rem); }
-  .hero__card { transform: translateY(46px); }
+  .hero { padding-bottom: 118px; }
 }
