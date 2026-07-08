@@ -18,9 +18,6 @@ import { initMobileNav, initCtaBar } from "./nav.js";
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
 async function boot() {
-  // 0. 背景の流れる光（全体のアンビエント・モーション）
-  initFlowField(document.getElementById("bgFlow"));
-
   // 1. カスタムカーソル＆マグネティック
   initCursor(document.getElementById("cursor"));
   initMagnetic();
@@ -46,6 +43,7 @@ async function boot() {
   //    初期表示(FCP/LCP)や後続initを塞がないよう、load完了後のidleで開始する。
   //    CSSのアンビエント背景が先に出るため体感は途切れない。
   deferHeavy(() => {
+    initFlowField(document.getElementById("bgFlow")); // 背景の流れる光
     initHeroBackground(document.getElementById("heroCanvas"));
     initServiceHeroScene();
     initIntroScene();

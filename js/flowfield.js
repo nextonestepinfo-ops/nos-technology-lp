@@ -10,12 +10,24 @@ export function initFlowField(canvas) {
 
   // アクセント色（--mint）をCSSから取得。palette切替で更新。
   let rgb = [54, 197, 255];
+  let grads = []; // アルファ段階ごとの事前計算グラデーション（毎フレーム生成しない）
+  const buildGrads = () => {
+    grads = [];
+    for (let k = 0; k <= 10; k++) {
+      const a = (k / 10) * 0.22;
+      const g = ctx.createLinearGradient(0, 0, W, 0);
+      g.addColorStop(0, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0)`);
+      g.addColorStop(0.5, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${a})`);
+      g.addColorStop(1, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0)`);
+      grads.push(g);
+    }
+  };
   const readAccent = () => {
     const c = getComputedStyle(document.documentElement).getPropertyValue("--mint").trim();
     const m = c.match(/^#?([0-9a-f]{6})$/i);
     if (m) rgb = [parseInt(m[1].slice(0,2),16), parseInt(m[1].slice(2,4),16), parseInt(m[1].slice(4,6),16)];
+    buildGrads();
   };
-  readAccent();
   window.addEventListener("palette", readAccent);
 
   function resize() {
@@ -25,7 +37,8 @@ export function initFlowField(canvas) {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
   resize();
-  window.addEventListener("resize", resize);
+  readAccent();
+  window.addEventListener("resize", () => { resize(); buildGrads(); });
 
   // スクロール量・速度
   let scrollY = window.scrollY || 0;
@@ -47,7 +60,11 @@ export function initFlowField(canvas) {
     });
   }
 
+  let lastFrame = 0;
   function render(now) {
+    // 30fps制限：アンビエント背景にフルフレームは不要（メインスレッド節約）
+    if (now - lastFrame < 33) { requestAnimationFrame(render); return; }
+    lastFrame = now;
     const t = (now || 0) / 1000;
     // スクロール速度（線の発光・流れに反映）
     const dy = scrollY - lastY; lastY = scrollY;
@@ -69,11 +86,7 @@ export function initFlowField(canvas) {
           + Math.sin((x) / 60 - t * 0.6 + i) * (amp * 0.18);
         x === -40 ? ctx.moveTo(x, y) : ctx.lineTo(x, y);
       }
-      const grd = ctx.createLinearGradient(0, 0, W, 0);
-      grd.addColorStop(0, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0)`);
-      grd.addColorStop(0.5, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},${alpha})`);
-      grd.addColorStop(1, `rgba(${rgb[0]},${rgb[1]},${rgb[2]},0)`);
-      ctx.strokeStyle = grd;
+      ctx.strokeStyle = grads[Math.min(10, Math.round((alpha / 0.22) * 10))];
       ctx.lineWidth = 1.2;
       ctx.stroke();
     }

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="株式会社NOSテックの会社概要。店舗のWeb制作から業務改善ツール、システム開発まで。" />
+  <meta name="theme-color" content="#07080c" />
+  <!-- 会社情報の確定までは検索に載せない（確定後にこの行を削除して公開） -->
+  <meta name="robots" content="noindex,nofollow" />
+  <title>会社概要 — 株式会社NOSテック</title>
+
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" /></noscript>
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.mjs" } }
+  </script>
+  <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Organization",
+      "name": "株式会社NOSテック",
+      "alternateName": "Nos Technology",
+      "description": "店舗のWeb制作・業務改善ツール・システム開発",
+      "slogan": "人の時間を、AIでつくる。"
+    }
+  </script>
+</head>
+
+<body>
+  <canvas class="bg-flow" id="bgFlow" aria-hidden="true"></canvas>
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <span class="cursor__dot"></span><span class="cursor__ring"></span><span class="cursor__label"></span>
+  </div>
+
+  <header class="header" id="header">
+    <a class="header__brand" href="index.html" data-magnetic>
+      <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/><path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+        <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/><path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+      </svg>
+      <span class="header__name"><b>Nos</b><span>Technology</span></span>
+    </a>
+    <nav class="header__nav" aria-label="メインナビゲーション">
+      <a href="index.html">Top</a>
+      <a href="services/web.html">Web制作</a>
+      <a href="services/system.html">業務改善</a>
+      <a href="services/ai.html">システム開発</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
+    <a class="header__cta" href="index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
+  </header>
+
+  <!-- モバイルメニュー（860px以下） -->
+  <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
+    <a href="index.html" style="--mi:0"><small>Top</small>ホーム</a>
+    <a href="services/web.html" style="--mi:1"><small>01</small>Web制作</a>
+    <a href="services/system.html" style="--mi:2"><small>02</small>業務改善ツール</a>
+    <a href="services/ai.html" style="--mi:3"><small>03</small>システム開発</a>
+    <a href="index.html#pricing" style="--mi:4"><small>Price</small>料金</a>
+    <a href="index.html#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
+    <a class="mnav__cta" href="index.html#contact" style="--mi:6">無料相談する</a>
+  </nav>
+
+  <main id="top">
+    <section class="section docpage">
+      <div class="doc">
+        <p class="section__eyebrow" data-reveal="fade">Company</p>
+        <h1 class="doc__title" data-reveal="words">会社概要</h1>
+
+        <dl class="doc__table" data-reveal="fade">
+          <div><dt>商号</dt><dd>株式会社NOSテック</dd></div>
+          <div><dt>屋号・ブランド</dt><dd>Nos Technology（ノステクノロジー）</dd></div>
+          <!-- TODO: 以下はユーザー支給待ち。確定後に置換して noindex を外し公開 -->
+          <div><dt>代表者</dt><dd>（確定後に記載）</dd></div>
+          <div><dt>所在地</dt><dd>（確定後に記載）</dd></div>
+          <div><dt>設立</dt><dd>（確定後に記載）</dd></div>
+          <div><dt>事業内容</dt><dd>
+            店舗・中小企業向けWebサイト制作／業務改善ツールの企画・開発（勤怠・在庫・売上・問い合わせ管理など）／業務システムの受託開発／AIを活用した業務自動化支援
+          </dd></div>
+          <div><dt>連絡先</dt><dd>（確定後に記載）／<a href="index.html#contact" style="color:var(--mint)">お問い合わせフォーム</a></dd></div>
+        </dl>
+
+        <div class="doc__creed" data-reveal="fade">
+          <p class="doc__slogan">人の時間を、AIでつくる。</p>
+          <p class="doc__desc">
+            AIにできることはAIへ。空いた時間で、人にしかできない仕事を。
+            私たちは、地域のお店と中小企業の「時間がかかる」「売上につながらない」を、
+            Web・小さな道具・システムの3つで減らしていく会社です。
+          </p>
+        </div>
+
+        <p class="doc__links" data-reveal="fade">
+          <a href="legal.html">特定商取引法に基づく表記・プライバシーポリシー →</a>
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer__bottom">
+      <span class="footer__brand">
+        <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/><path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+          <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/><path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+        </svg>
+        <span class="footer__word"><b>Nos</b><span>Technology</span></span>
+      </span>
+      <span class="footer__tagline">Systems <em>for</em> human work.</span>
+      <small>&copy; 2026 株式会社NOSテック</small>
+    </div>
+  </footer>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>
