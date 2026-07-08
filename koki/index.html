@@ -20,6 +20,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
+<link rel="preload" as="image" href="assets/photos/hero-pc.jpg" media="(min-width: 761px)" />
+<link rel="preload" as="image" href="assets/photos/hero.jpg" media="(max-width: 760px)" />
 <link rel="stylesheet" href="css/style.css?v=20260704" />
 </head>
 <body>
@@ -88,9 +90,12 @@
 <!-- ========================= 1. Hero ========================= -->
 <!-- 横長写真を全面背景に、テキストのみを左下へ配置（本人写真を隠さない構成・ぼかしなし） -->
 <section class="hero" id="hero">
-  <!-- ヒーロー背景：本人のステージ写真（モノクロ）／画像編集①：スマホUI部分を切り取り -->
+  <!-- ヒーロー背景：PC=ホテル演台のステージ写真(hero-pc) / SP=モノクロ縦写真(hero) -->
   <div class="hero__bg" aria-hidden="true">
-    <img src="assets/photos/hero.jpg" alt="" />
+    <picture>
+      <source media="(min-width: 761px)" srcset="assets/photos/hero-pc.jpg" />
+      <img src="assets/photos/hero.jpg" alt="" />
+    </picture>
   </div>
   <div class="hero__veil" aria-hidden="true"></div>
 
@@ -108,18 +113,23 @@
   </div>
 
   <div class="container hero__inner">
-    <!-- テキストのみ・左下配置 -->
+    <!-- 中央構成（参考サイト準拠：名前→細線→OFFICIAL SITE→一行コピー→CTA） -->
     <div class="hero__card">
-      <p class="eyebrow hero__eyebrow">Magician</p>
       <h1 class="hero__title">KOKI</h1>
       <span class="hero__rule" aria-hidden="true"></span>
+      <p class="hero__official">Magician Koki &mdash; Official Site</p>
       <p class="hero__tagline"><span class="nw">その手のひらで、</span><span class="nw">世界が静かに<span class="accent">ほどけていく</span>。</span></p>
-      <p class="hero__sub"><span class="nw">関西を拠点に全国へ。</span><span class="nw">企業・結婚式・宴会ほか、幅広く対応。</span></p>
       <div class="hero__cta">
         <a class="btn btn--primary btn--lg" href="#contact">出演を相談する</a>
         <a class="btn btn--ghost btn--lg" href="#contact">空き日程を確認する</a>
       </div>
     </div>
+  </div>
+
+  <!-- スクロール誘導（ティッカーの上） -->
+  <div class="scroll-cue" aria-hidden="true">
+    <span>Scroll</span>
+    <span class="scroll-cue__line"></span>
   </div>
 
   <!-- 下部キーワードティッカー -->
@@ -256,36 +266,30 @@
   </div>
 </section>
 
-<!-- ========================= 6. About KOKI ========================= -->
-<section class="section" id="about">
-  <div class="container">
-    <div class="about__grid">
-      <div class="about__media reveal">
-        <div class="about__media-frame" aria-hidden="true"></div>
-        <!-- About メイン：本人の縦長プロフィール写真に差し替え -->
-        <div class="about__media-main">
-          <img src="assets/photos/about-main.jpg" alt="マジシャンKOKI プロフィール" loading="lazy" />
-        </div>
-        <!-- About サブ：本人の準備風景・手元写真に差し替え -->
-        <div class="about__media-sub">
-          <img src="assets/photos/about-sub.jpg" alt="テーブルでのカードマジック" loading="lazy" />
-        </div>
-      </div>
+<!-- ========================= 6. About KOKI（参考サイト準拠：写真半面＋プロフィールパネル） ========================= -->
+<section class="about" id="about">
+  <!-- 左半分：フル断ち落とし写真（本人のリング演技・モノクロ） -->
+  <div class="about__media">
+    <img src="assets/photos/about-main.jpg" alt="マジシャンKOKI" loading="lazy" />
+  </div>
 
-      <div class="about__body">
-        <p class="eyebrow">About KOKI</p>
-        <h2 class="heading"><span class="nw">驚きの先に、</span><span class="nw">信頼を。</span></h2>
-        <!-- TODO: 本人プロフィール文（経歴・受賞・メディア）が届いたら差し替え -->
-        <p class="lead">
-          関西を拠点に、全国で活動するマジシャン KOKI。
-          目の前の一瞬に静かに引き込む、大人のためのマジックを届けます。
-        </p>
-        <ul class="about__list">
-          <li><span class="spade">♠</span><span><span class="nw">大人向けで上質。</span><span class="nw">企業・結婚式・宴会の空気に馴染む。</span></span></li>
-          <li><span class="spade">♠</span><span>参加型で、その場に一体感をつくる。</span></li>
-          <li><span class="spade">♠</span><span>不思議さ重視。記憶に残る体験を。</span></li>
-        </ul>
-        <p class="about__sig">— KOKI</p>
+  <div class="about__panel">
+    <p class="about__ghost" aria-hidden="true">ABOUT</p>
+    <div class="about__inner reveal">
+      <p class="eyebrow">Profile</p>
+      <h2 class="about__name">KOKI<span>Magician</span></h2>
+      <span class="about__rule" aria-hidden="true"></span>
+      <!-- TODO: 本人プロフィール文（経歴・受賞・メディア）が届いたら差し替え -->
+      <p class="about__bio">関西を拠点に、全国で活動するマジシャン。派手さで押し切るのではなく、目の前の一瞬に静かに引き込み、その場にいる全員の記憶に残す——大人のためのマジックを届けています。</p>
+      <dl class="about__data">
+        <div><dt>活動拠点</dt><dd>関西 / 全国対応</dd></div>
+        <div><dt>ジャンル</dt><dd>ステージ・メンタル</dd></div>
+        <div><dt>スタイル</dt><dd>参加型・不思議さ重視</dd></div>
+        <div><dt>主な出演</dt><dd>企業・結婚式・宴会</dd></div>
+      </dl>
+      <div class="about__actions">
+        <a class="btn btn--gold" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener">Instagramを見る</a>
+        <a class="btn btn--ghost" href="#contact">出演を相談する</a>
       </div>
     </div>
   </div>
