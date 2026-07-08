@@ -20,7 +20,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Shippori+Mincho+B1:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@300;400;500;700&display=swap" rel="stylesheet" />
-<link rel="stylesheet" href="css/style.css?v=20260631" />
+<link rel="stylesheet" href="css/style.css?v=20260701" />
 </head>
 <body>
 
@@ -88,9 +88,9 @@
 <!-- ========================= 1. Hero ========================= -->
 <!-- 横長写真を全面背景に、テキストのみを左下へ配置（本人写真を隠さない構成・ぼかしなし） -->
 <section class="hero" id="hero">
-  <!-- ヒーロー背景：本人の横長宣材／ステージ写真（高解像度・横長）に差し替え -->
+  <!-- ヒーロー背景：本人のステージ写真（モノクロ）／画像編集①：スマホUI部分を切り取り -->
   <div class="hero__bg" aria-hidden="true">
-    <img src="assets/images/04-corporate-party-magic.png" alt="" />
+    <img src="assets/photos/hero.jpg" alt="" />
   </div>
   <div class="hero__veil" aria-hidden="true"></div>
 
@@ -168,7 +168,7 @@
     <div class="scene__grid">
       <!-- Scene 企業：企業パーティー実演写真に差し替え -->
       <article class="scene-card reveal" data-delay="0">
-        <div class="scene-card__media"><img src="assets/images/04-corporate-party-magic.png" alt="企業イベントでのマジック" loading="lazy" /></div>
+        <div class="scene-card__media"><img src="assets/photos/scene-corporate.jpg" alt="企業イベントでのマジック" loading="lazy" /></div>
         <div class="scene-card__body">
           <p class="scene-card__en">Corporate</p>
           <h3 class="scene-card__title">企業イベント・懇親会</h3>
@@ -179,7 +179,7 @@
 
       <!-- Scene 結婚式：披露宴での実演写真に差し替え -->
       <article class="scene-card reveal" data-delay="1">
-        <div class="scene-card__media"><img src="assets/images/03-wedding-reception-magic.png" alt="結婚式・披露宴でのマジック" loading="lazy" /></div>
+        <div class="scene-card__media"><img src="assets/photos/scene-wedding.jpg" alt="結婚式・披露宴でのマジック" loading="lazy" /></div>
         <div class="scene-card__body">
           <p class="scene-card__en">Wedding</p>
           <h3 class="scene-card__title">結婚式・披露宴</h3>
@@ -190,7 +190,7 @@
 
       <!-- Scene ホテル宴会：宴会場の実演写真に差し替え -->
       <article class="scene-card reveal" data-delay="2">
-        <div class="scene-card__media"><img src="assets/images/08-hotel-banquet-venue.png" alt="ホテル宴会場でのマジック" loading="lazy" /></div>
+        <div class="scene-card__media"><img src="assets/photos/scene-hotel.jpg" alt="ホテル宴会場でのマジック" loading="lazy" /></div>
         <div class="scene-card__body">
           <p class="scene-card__en">Hotel Banquet</p>
           <h3 class="scene-card__title">ホテル・宴会</h3>
@@ -264,11 +264,11 @@
         <div class="about__media-frame" aria-hidden="true"></div>
         <!-- About メイン：本人の縦長プロフィール写真に差し替え -->
         <div class="about__media-main">
-          <img src="assets/images/10-profile-portrait-neutral.png" alt="マジシャンKOKI プロフィール" loading="lazy" />
+          <img src="assets/photos/about-main.jpg" alt="マジシャンKOKI プロフィール" loading="lazy" />
         </div>
         <!-- About サブ：本人の準備風景・手元写真に差し替え -->
         <div class="about__media-sub">
-          <img src="assets/images/06-backstage-preparation.png" alt="出演前の準備風景" loading="lazy" />
+          <img src="assets/photos/about-sub.jpg" alt="テーブルでのカードマジック" loading="lazy" />
         </div>
       </div>
 
@@ -301,20 +301,19 @@
     </div>
 
     <div class="proof__media">
-      <!-- TODO: 横動画は本人のYouTube等を埋め込みに差し替え -->
-      <a class="video-card video-card--main reveal" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener" aria-label="パフォーマンス動画（Instagramで見る）">
-        <img src="assets/images/05-small-stage-performance.png" alt="ステージパフォーマンスの様子" loading="lazy" />
-        <span class="video-card__play"><span class="ring"></span></span>
-        <span class="video-card__label">パフォーマンス動画</span>
-      </a>
+      <!-- 本人のパフォーマンス動画（Web用に軽量化・再エンコード済み／ポスター付き） -->
+      <div class="video-card video-card--main reveal">
+        <video controls playsinline preload="none" poster="assets/photos/gallery-main.jpg">
+          <source src="assets/videos/main.mp4" type="video/mp4" />
+        </video>
+      </div>
 
       <div class="proof__side">
-        <!-- TODO: 縦ショート動画は本人のInstagram/TikTok縦動画に差し替え -->
-        <a class="video-card video-card--short reveal" data-delay="1" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener" aria-label="ショート動画（Instagramで見る）">
-          <img src="assets/images/11-social-short-video-vertical.png" alt="ショート動画の様子" loading="lazy" />
-          <span class="video-card__play"><span class="ring"></span></span>
-          <span class="video-card__label">Short</span>
-        </a>
+        <div class="video-card video-card--short reveal" data-delay="1">
+          <video controls playsinline preload="none" poster="assets/photos/gallery-short.jpg">
+            <source src="assets/videos/short.mp4" type="video/mp4" />
+          </video>
+        </div>
         <!-- TODO: YouTube / TikTok のURLが決まれば導線を追加 -->
         <a class="btn btn--gold btn--block reveal" data-delay="2" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener">Instagramで活動を見る</a>
       </div>
@@ -528,6 +527,6 @@
   <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
 </button>
 
-<script src="js/main.js?v=20260632"></script>
+<script src="js/main.js?v=20260701"></script>
 </body>
 </html>

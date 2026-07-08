@@ -395,6 +395,7 @@ body.nav-open .nav-toggle span:nth-child(3) { transform: translateY(-6px) rotate
 .video-card--main { aspect-ratio: 16 / 9; }
 .video-card--short { aspect-ratio: 9 / 16; }
 .video-card img { width: 100%; height: 100%; object-fit: cover; filter: brightness(.6); }
+.video-card video { width: 100%; height: 100%; object-fit: cover; display: block; background: #000; }
 .video-card__play {
   position: absolute; inset: 0; z-index: 2; display: grid; place-items: center;
 }

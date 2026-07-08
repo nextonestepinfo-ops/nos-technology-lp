@@ -15,3 +15,6 @@ Thumbs.db
 # Office 一時ロック
 ~$*
 *.tmp
+
+# KOKI source originals
+koki/image-KOKI/
