@@ -133,13 +133,35 @@
          ========================================================== -->
     <div class="mstory" aria-label="サービス紹介（スマホ）">
 
-      <!-- Scene 1: ヒーロー -->
+      <!-- Scene 1: ヒーロー（作り込み版） -->
       <section class="mscene mscene--hero" id="mHero">
-        <span class="mscene__orb" aria-hidden="true"></span>
+        <!-- 背景：ドリフトするオーロラ光 -->
+        <div class="mhero__aura" aria-hidden="true">
+          <span class="mhero__blob mhero__blob--1"></span>
+          <span class="mhero__blob mhero__blob--2"></span>
+          <span class="mhero__blob mhero__blob--3"></span>
+        </div>
         <span class="mscene__grid" aria-hidden="true"></span>
-        <div class="mscene__inner">
-          <p class="mscene__brand"><b>Nos</b> Technology</p>
-          <h1 class="mscene__h1">店舗の<em>Web</em>と<em>仕事</em>を、<br>ひとつに。</h1>
+        <!-- 浮遊プロダクトカード：Web・管理ツール・AI＝“作るもの”を上部に -->
+        <div class="mhero__cards" aria-hidden="true">
+          <figure class="mhero__card mhero__card--phone">
+            <img src="assets/works/salon-mobile.webp" width="900" height="1950" alt="" loading="eager" />
+          </figure>
+          <figure class="mhero__card mhero__card--admin">
+            <img src="assets/panels/panel-admin-m.webp" width="640" height="480" alt="" loading="eager" />
+          </figure>
+          <figure class="mhero__card mhero__card--ai">
+            <img src="assets/panels/panel-reply-m.webp" width="640" height="480" alt="" loading="eager" />
+          </figure>
+        </div>
+        <!-- コピーを守るシネマティック・スクリム -->
+        <span class="mhero__scrim" aria-hidden="true"></span>
+        <!-- フィルムグレイン -->
+        <span class="mhero__grain" aria-hidden="true"></span>
+        <!-- コピー -->
+        <div class="mscene__inner mhero__copy">
+          <p class="mhero__eyebrow"><i></i>地域のお店の、Web &amp; 業務改善</p>
+          <h1 class="mscene__h1 mhero__h1">店舗の<em>Web</em>と<em>仕事</em>を、<br>ひとつに。</h1>
           <p class="mscene__lead">Web制作・集客から、経理・在庫などの業務改善ツール、AI活用まで。<b>地域のお店を、まるごと。</b></p>
           <div class="mscene__actions">
             <a class="mbtn mbtn--primary" href="#contact">無料で相談する</a>

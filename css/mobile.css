@@ -97,8 +97,104 @@
     -webkit-mask-image:radial-gradient(80% 55% at 50% 8%,#000,transparent 78%);
             mask-image:radial-gradient(80% 55% at 50% 8%,#000,transparent 78%);}
 
-  /* ============ Scene: ヒーロー ============ */
-  .mscene--hero{background:radial-gradient(120% 78% at 50% -6%, #0b1326 0%, var(--paper) 58%);text-align:left;}
+  /* ============ Scene: ヒーロー（作り込み版） ============ */
+  .mscene--hero{
+    justify-content:flex-end;text-align:left;
+    padding-top:70px;
+    background:radial-gradient(130% 70% at 50% -8%, #0c1428 0%, var(--paper) 56%), var(--paper);
+  }
+  .mscene--hero .mscene__inner{max-width:none;}
+
+  /* --- オーロラ（ドリフトする光の塊） --- */
+  .mhero__aura{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
+  .mhero__blob{position:absolute;border-radius:50%;filter:blur(44px);opacity:.62;mix-blend-mode:screen;}
+  .mhero__blob--1{width:78vw;height:78vw;top:-14%;left:-16%;
+    background:radial-gradient(circle,color-mix(in srgb,var(--mint) 60%,transparent),transparent 68%);
+    animation:mAura1 20s ease-in-out infinite;}
+  .mhero__blob--2{width:70vw;height:70vw;top:2%;right:-20%;
+    background:radial-gradient(circle,color-mix(in srgb,var(--blue) 55%,transparent),transparent 68%);
+    animation:mAura2 24s ease-in-out infinite;}
+  .mhero__blob--3{width:64vw;height:64vw;top:26%;left:14%;
+    background:radial-gradient(circle,color-mix(in srgb,var(--lav) 42%,transparent),transparent 70%);
+    animation:mAura3 28s ease-in-out infinite;}
+  @keyframes mAura1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(10%,8%) scale(1.15);}}
+  @keyframes mAura2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-8%,10%) scale(1.1);}}
+  @keyframes mAura3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(6%,-8%) scale(1.18);}}
+
+  /* --- 浮遊プロダクトカード：中央フォン＋左右にダッシュボードが扇状 --- */
+  .mhero__cards{position:absolute;left:0;right:0;top:0;height:54%;z-index:1;pointer-events:none;}
+  .mhero__card{position:absolute;margin:0;border-radius:15px;overflow:hidden;
+    background:#0d1424;border:1px solid rgba(255,255,255,.16);
+    box-shadow:0 34px 66px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.14);
+    opacity:0;}
+  .mhero__card img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;}
+  /* 中央フォン背後のスポット発光（主役を浮かせる） */
+  .mhero__cards::before{content:"";position:absolute;top:8%;left:50%;transform:translateX(-50%);
+    width:70%;height:70%;border-radius:50%;filter:blur(40px);z-index:0;
+    background:radial-gradient(circle,color-mix(in srgb,var(--mint) 26%,transparent),transparent 66%);}
+  /* 左奥：管理ダッシュボード */
+  .mhero__card--admin{width:58%;aspect-ratio:16/10;top:19%;left:-9%;z-index:1;filter:brightness(.92);
+    animation:mCardIn 1s var(--ease) .05s forwards, mFloatB 9s ease-in-out 1.2s infinite;}
+  /* 右奥：AIアシスト */
+  .mhero__card--ai{width:52%;aspect-ratio:16/10;top:29%;right:-8%;z-index:1;filter:brightness(.9) blur(.3px);
+    animation:mCardIn 1s var(--ease) .22s forwards, mFloatA 10.5s ease-in-out 1.4s infinite;}
+  /* 中央前：実店舗サイト（主役） */
+  .mhero__card--phone{width:39%;aspect-ratio:9/19.3;top:8%;left:50%;z-index:3;
+    box-shadow:0 40px 80px rgba(0,0,0,.66),0 0 46px color-mix(in srgb,var(--mint) 24%,transparent),0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.18);
+    animation:mCardIn 1s var(--ease) .14s forwards, mFloatP 8s ease-in-out 1.3s infinite;}
+  @keyframes mCardIn{from{opacity:0;transform:translateY(24px) scale(.95);}to{opacity:1;}}
+  /* 各カードの静止姿勢を保った浮遊（translateで上下） */
+  .mhero__card--admin{transform:rotate(-9deg);}
+  .mhero__card--ai{transform:rotate(7deg);}
+  .mhero__card--phone{transform:translateX(-50%) rotate(-2deg);}
+  @keyframes mFloatP{0%,100%{transform:translateX(-50%) rotate(-2deg) translateY(0);}50%{transform:translateX(-50%) rotate(-2deg) translateY(-12px);}}
+  @keyframes mFloatA{0%,100%{transform:rotate(7deg) translateY(0);}50%{transform:rotate(7deg) translateY(-11px);}}
+  @keyframes mFloatB{0%,100%{transform:rotate(-9deg) translateY(0);}50%{transform:rotate(-9deg) translateY(-8px);}}
+
+  /* コピー可読性：下からのシネマティック・スクリム（カード群を下で溶かす） */
+  .mhero__scrim{position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:linear-gradient(to top,
+      var(--paper) 30%,
+      color-mix(in srgb,var(--paper) 88%,transparent) 44%,
+      color-mix(in srgb,var(--paper) 40%,transparent) 60%,
+      transparent 78%);}
+
+  /* フィルムグレイン（質感） */
+  .mhero__grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.05;mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    background-size:180px 180px;}
+
+  /* コピー（映画的な段階登場） */
+  .mhero__copy{z-index:5;}
+  .mhero__eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
+    font-size:.74rem;font-weight:600;letter-spacing:.02em;color:var(--ink);
+    padding:7px 14px 7px 12px;border-radius:999px;
+    background:color-mix(in srgb,var(--paper) 55%,transparent);border:1px solid var(--line);
+    backdrop-filter:blur(8px);}
+  .mhero__eyebrow i{width:7px;height:7px;border-radius:50%;
+    background:var(--mint);box-shadow:0 0 12px var(--mint);animation:mPulse 2.4s ease-in-out infinite;}
+  @keyframes mPulse{0%,100%{opacity:.45;transform:scale(.8);}50%{opacity:1;transform:scale(1);}}
+  .mhero__h1{font-size:clamp(2.35rem,11vw,3.3rem);letter-spacing:.004em;
+    text-shadow:0 2px 40px color-mix(in srgb,var(--paper) 60%,transparent);}
+  /* 見出しの差し色にアニメのシャイン（プロ感） */
+  .mhero__h1 em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav),var(--mint));
+    background-size:280% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
+    animation:mShine 6s linear infinite;}
+  @keyframes mShine{to{background-position:280% 0;}}
+
+  /* 段階登場（各要素を時間差で） */
+  .mhero__eyebrow,.mhero__h1,.mhero__copy .mscene__lead,.mhero__copy .mscene__actions{
+    opacity:0;animation:mRise .8s var(--ease) forwards;}
+  .mhero__eyebrow{animation-delay:.35s;}
+  .mhero__h1{animation-delay:.48s;}
+  .mhero__copy .mscene__lead{animation-delay:.62s;}
+  .mhero__copy .mscene__actions{animation-delay:.76s;}
+  @keyframes mRise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+
+  /* CTAをガラス質＋発光でプレミアムに */
+  .mscene--hero .mbtn--primary{
+    background:linear-gradient(135deg,var(--mint),var(--blue));
+    box-shadow:0 14px 34px color-mix(in srgb,var(--mint) 40%,transparent),inset 0 1px 0 rgba(255,255,255,.4);}
 
   /* ============ Scene: 全面ビジュアル（つくる/Web） ============ */
   .mscene--shot{justify-content:flex-end;padding-top:76px;}
@@ -187,8 +283,15 @@
   .footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px));}
 }
 
-/* モーション抑制時：スナップと演出を弱める */
+/* モーション抑制時：スナップと演出を弱める（最終状態で静止表示） */
 @media (max-width:860px) and (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none;}
-  .mscene__cue i{animation:none;}
+  .mscene__cue i,.mhero__blob,.mhero__eyebrow i,.mhero__h1 em{animation:none;}
+  .mhero__card,
+  .mhero__eyebrow,.mhero__h1,.mhero__copy .mscene__lead,.mhero__copy .mscene__actions{
+    animation:none;opacity:1;transform:none;}
+  /* カードの静止姿勢（回転）は保つ */
+  .mhero__card--admin{transform:rotate(-9deg);}
+  .mhero__card--ai{transform:rotate(7deg);}
+  .mhero__card--phone{transform:translateX(-50%) rotate(-2deg);}
 }
