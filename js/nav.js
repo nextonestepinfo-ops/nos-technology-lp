@@ -26,12 +26,20 @@ export function initMobileNav() {
   });
 }
 
-// 追従CTAバー（サービスページ・スマホ専用）：ヒーローを過ぎたら出現
+// 追従CTAバー（スマホ専用）：出現の閾値
+//  - 没入シーン物語(.mstory)がある時は「物語を過ぎて実用ゾーンに入ってから」出す
+//    （各シーンにCTAがあり、全画面の没入感をバーで削らないため）
+//  - 無い時（サブページ等）は従来どおりヒーローを過ぎたら出す
 export function initCtaBar() {
   const bar = document.getElementById("ctaBar");
   if (!bar) return;
+  const story = document.querySelector(".mstory");
+  const threshold = () =>
+    story && getComputedStyle(story).display !== "none"
+      ? story.offsetHeight - window.innerHeight * 0.5
+      : window.innerHeight * 0.55;
   const onScroll = () =>
-    bar.classList.toggle("is-show", (window.scrollY || 0) > window.innerHeight * 0.55);
+    bar.classList.toggle("is-show", (window.scrollY || 0) > threshold());
   onScroll();
   window.addEventListener("scroll", onScroll, { passive: true });
 }

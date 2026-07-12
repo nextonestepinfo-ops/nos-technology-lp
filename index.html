@@ -124,6 +124,125 @@
 
 
   <main id="top" class="home">
+
+    <!-- ==========================================================
+         スマホ専用：フルスクリーン没入シーン（1画面=1メッセージ）
+         PCでは display:none。既存の下記セクション(hero/capability/
+         works/manifesto/services/pricing)はスマホでは非表示にし、
+         この物語＋末尾の実用ゾーン(見積り/FAQ/相談)で完結させる。
+         ========================================================== -->
+    <div class="mstory" aria-label="サービス紹介（スマホ）">
+
+      <!-- Scene 1: ヒーロー -->
+      <section class="mscene mscene--hero" id="mHero">
+        <span class="mscene__orb" aria-hidden="true"></span>
+        <span class="mscene__grid" aria-hidden="true"></span>
+        <div class="mscene__inner">
+          <p class="mscene__brand"><b>Nos</b> Technology</p>
+          <h1 class="mscene__h1">店舗の<em>Web</em>と<em>仕事</em>を、<br>ひとつに。</h1>
+          <p class="mscene__lead">Web制作・集客から、経理・在庫などの業務改善ツール、AI活用まで。<b>地域のお店を、まるごと。</b></p>
+          <div class="mscene__actions">
+            <a class="mbtn mbtn--primary" href="#contact">無料で相談する</a>
+            <a class="mbtn mbtn--ghost" href="#mCreate">サービスを見る</a>
+          </div>
+        </div>
+        <span class="mscene__cue" aria-hidden="true"><i></i>SCROLL</span>
+      </section>
+
+      <!-- Scene 2: つくる（Web制作・集客）＝全面ビジュアル -->
+      <section class="mscene mscene--shot" id="mCreate">
+        <img class="mscene__bg" src="assets/works/cafe-mobile.webp" width="900" height="1950" alt="制作した店舗サイトのスマホ表示例" loading="lazy" />
+        <span class="mscene__scrim" aria-hidden="true"></span>
+        <div class="mscene__inner mscene__inner--bottom">
+          <p class="mscene__kicker"><b>01</b> CREATE — つくる</p>
+          <h2 class="mscene__h2">見つけて、<br>選ばれる。</h2>
+          <p class="mscene__text">スマホ対応の店舗サイト。Googleマップ・SNS・問い合わせ導線まで、まとめて整えます。</p>
+          <p class="mscene__meta"><span>¥30,000〜</span><span>最短3〜5日</span></p>
+          <a class="mscene__more" href="services/web.html">Web制作を詳しく <i>→</i></a>
+        </div>
+      </section>
+
+      <!-- Scene 3: 業務改善ツール（主軸）＝経理・在庫など独自ツール開発 -->
+      <section class="mscene mscene--panel">
+        <div class="mscene__inner">
+          <p class="mscene__kicker"><b>02</b> SYSTEM — 業務改善</p>
+          <h2 class="mscene__h2">日々の業務を、<br>もっと楽に。</h2>
+          <p class="mscene__text">経理・在庫・勤怠・売上集計…。お店や事業に合った<b>独自ツールを開発</b>して、毎日の手間を仕組みで減らします。</p>
+          <figure class="mscene__frame">
+            <img src="assets/panels/panel-admin-m.webp" width="640" height="480" alt="お店専用の業務ツールのイメージ" loading="lazy" />
+          </figure>
+          <a class="mscene__more" href="services/system.html">業務改善ツールを詳しく <i>→</i></a>
+        </div>
+      </section>
+
+      <!-- Scene 4: まかせる（AI自動化） -->
+      <section class="mscene mscene--panel mscene--alt">
+        <div class="mscene__inner">
+          <p class="mscene__kicker"><b>03</b> AUTOMATE — まかせる</p>
+          <h2 class="mscene__h2">面倒な作業は、<br>AIにまかせる。</h2>
+          <p class="mscene__text">集計・転記・通知から、問い合わせ返信・文案づくりまで。AIと自動化で、人は本来の仕事に集中できます。</p>
+          <figure class="mscene__frame">
+            <img src="assets/panels/panel-reply-m.webp" width="640" height="480" alt="AI自動返信の画面イメージ" loading="lazy" />
+          </figure>
+          <a class="mscene__more" href="services/ai.html">システム開発を詳しく <i>→</i></a>
+        </div>
+      </section>
+
+      <!-- Scene 5: 実績・信頼 -->
+      <section class="mscene mscene--proof">
+        <span class="mscene__orb mscene__orb--b" aria-hidden="true"></span>
+        <div class="mscene__inner">
+          <p class="mscene__kicker">なんでも、一社で。</p>
+          <h2 class="mscene__h2">地域のお店の<br><em>“まるごと”</em>を。</h2>
+          <dl class="mstat">
+            <div><dt>対応業種</dt><dd><b>8</b><span>+</span></dd></div>
+            <div><dt>最短公開</dt><dd><b>3</b><span>–5日</span></dd></div>
+            <div><dt>入口プラン</dt><dd><span class="cur">¥</span><b>30,000</b><span>〜</span></dd></div>
+          </dl>
+          <p class="mscene__note">美容室・カフェ・クリニック・整体・ジム・学習塾…</p>
+        </div>
+      </section>
+
+      <!-- Scene 6: 料金 -->
+      <section class="mscene mscene--price">
+        <div class="mscene__inner">
+          <p class="mscene__kicker">PRICING — 料金</p>
+          <h2 class="mscene__h2">必要な分だけ。</h2>
+          <div class="mprice">
+            <a class="mprice__card" href="services/web.html">
+              <span class="mprice__role">入口</span>
+              <b class="mprice__name">Web制作・集客</b>
+              <span class="mprice__fee"><i>¥</i>30,000<em>〜</em></span>
+              <span class="mprice__sub">スマホ対応の店舗ページを最短3〜5日で</span>
+            </a>
+            <a class="mprice__card mprice__card--flag" href="services/system.html">
+              <span class="mprice__role">主軸</span>
+              <b class="mprice__name">業務改善・システム</b>
+              <span class="mprice__fee"><i>¥</i>60,000<em>〜</em></span>
+              <span class="mprice__sub">経理・在庫など、お店専用のツールを開発</span>
+            </a>
+          </div>
+          <a class="mscene__more" href="#estimator">かんたん見積りで組み立てる <i>→</i></a>
+        </div>
+      </section>
+
+      <!-- Scene 7: 相談（CTA） -->
+      <section class="mscene mscene--cta">
+        <span class="mscene__orb" aria-hidden="true"></span>
+        <div class="mscene__inner">
+          <p class="mscene__kicker">CONTACT — 相談</p>
+          <h2 class="mscene__h1">まずは、<br>無料相談から。</h2>
+          <p class="mscene__lead">困りごとを聞かせてください。改善できるところから、一緒に整えます。</p>
+          <div class="mscene__actions">
+            <a class="mbtn mbtn--primary" href="#contact">無料で相談する</a>
+            <a class="mbtn mbtn--ghost" href="#estimator">かんたん見積り</a>
+          </div>
+          <p class="mscene__cont" aria-hidden="true">この下に、見積り・よくある質問・相談フォーム ↓</p>
+        </div>
+      </section>
+
+    </div>
+
     <!-- ===== Hero（v2：全画面3Dオブジェクトが主役。文字は最小） ===== -->
     <section class="hero hero--v2" id="hero">
       <canvas class="hero__canvas" id="heroCanvas" data-layout="center" aria-hidden="true"></canvas>

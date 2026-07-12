@@ -1,10 +1,12 @@
 // smooth.js : Lenis による慣性スクロール
-import { prefersReducedMotion } from "./utils.js";
+import { prefersReducedMotion, isMobileLayout } from "./utils.js";
 
 // Lenisを初期化して返す。失敗・モーション抑制時は null（ネイティブスクロールにフォールバック）。
 // lenis は動的importで読み込み、CDN失敗時もページ本体が表示されるようにする。
 export async function initSmoothScroll() {
-  if (prefersReducedMotion) return null;
+  // モバイルはネイティブスクロール。CSSスクロールスナップ（没入シーン）を効かせるため
+  // Lenisの慣性は使わない（transformベースのLenisはscroll-snapと相性が悪い）。
+  if (prefersReducedMotion || isMobileLayout) return null;
 
   try {
     const { default: Lenis } = await import("lenis");

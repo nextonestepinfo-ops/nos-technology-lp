@@ -1,5 +1,5 @@
 // main.js : 各モジュールの初期化エントリ
-import { supportsWebGL } from "./utils.js";
+import { supportsWebGL, isMobileLayout } from "./utils.js";
 import { initPreloader } from "./preloader.js";
 import { initCursor, initMagnetic } from "./cursor.js";
 import { initSmoothScroll } from "./smooth.js";
@@ -139,6 +139,8 @@ async function initServiceHeroScene() {
 
 // WebGL背景の初期化（動的importで、非対応時はThree.jsを読み込まない）
 async function initHeroBackground(canvas) {
+  // モバイルは没入シーン構成でヒーロー3Dを使わない＝three.jsを読み込まない（大幅軽量化）
+  if (isMobileLayout) return;
   if (!canvas || !supportsWebGL()) return;
   try {
     const mod = await import("./hero-hybrid.js");
