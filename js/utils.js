@@ -8,6 +8,10 @@ export const prefersReducedMotion = window.matchMedia(
 // タッチ主体の端末か（カスタムカーソル等を出さない判定に使う）
 export const isCoarsePointer = window.matchMedia("(pointer: coarse)").matches;
 
+// スマホレイアウトか（CSSの @media(max-width:860px) と閾値を統一。
+// 初回ロード時に確定させ、3Dパネル生成の有無などレイアウト分岐に使う）
+export const isMobileLayout = window.matchMedia("(max-width: 860px)").matches;
+
 // 値を範囲内に収める
 export function clamp(value, min, max) {
   return Math.min(max, Math.max(min, value));

@@ -3,6 +3,13 @@
 .env.*
 js/config.js
 
+# 個人情報・社内用（公開リポジトリに載せない）
+名刺/
+*.xlsx
+*.vcf
+# 電子名刺：公開準備ができたら下行を外して force-add する
+profile/
+
 # 依存・生成物
 node_modules/
 .playwright-mcp/

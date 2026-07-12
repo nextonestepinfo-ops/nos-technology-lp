@@ -17,6 +17,14 @@ import { initMobileNav, initCtaBar } from "./nav.js";
 // リロード時にブラウザが前回のスクロール位置を復元しないようにする（常にトップから開始）
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
 
+// スマホ/PCの境界(860px)をまたいだらリロードして作り直す。
+// 3Dパネルの生成有無・canvasのタップ可否などJS側の分岐がロード時確定のため、
+// リサイズだけでは正しいレイアウトに切り替わらない（実機では発生しない）。
+const layoutMq = window.matchMedia("(max-width: 860px)");
+const onLayoutChange = () => location.reload();
+if (layoutMq.addEventListener) layoutMq.addEventListener("change", onLayoutChange);
+else if (layoutMq.addListener) layoutMq.addListener(onLayoutChange);
+
 async function boot() {
   // 1. カスタムカーソル＆マグネティック
   initCursor(document.getElementById("cursor"));

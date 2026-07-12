@@ -1,0 +1,212 @@
+/* =========================================================
+   mobile.css : スマホ専用スタイル（860px以下）
+   PC(>860px)へ影響を出さないため、ルールは原則すべて
+   @media (max-width:860px) 内に置く。
+   例外は「スマホ専用セクション(.capability)をPCで隠す」既定のみ。
+   ========================================================= */
+
+/* スマホ専用セクション（PCでは3Dパネルが同じ内容を担う） */
+.capability{display:none;}
+
+/* スマホ専用のヒーロー付加要素はPCでは出さない（PCは3D＋既存演出が担う） */
+.hero__mstrip,.hero__mkicker,.hero__proof,.hero__mscroll{display:none;}
+
+@media (max-width:860px){
+
+  /* =========================================================
+     Hero：2ゾーン分離。上=Nコア3D（飾り）／下=コピー+CTA（平坦）
+     全画面重ね前提の演出（ビネット・フロアグラデ・ホバーカード）は畳む
+     ========================================================= */
+  .hero--v2{
+    min-height:auto;
+    display:flex;flex-direction:column;align-items:stretch;
+    padding:66px 20px 20px;
+  }
+  /* 3Dコアの舞台：背後にブランドグローを敷いて“黒い空白にぽつん”を解消 */
+  .hero--v2 .hero__canvas{
+    position:relative;inset:auto;flex:none;
+    width:100%;height:min(30svh,272px);margin-top:-6px;
+    pointer-events:none; /* JS側でも無効化済み。二重の保険 */
+    background:
+      radial-gradient(56% 54% at 50% 48%, color-mix(in srgb,var(--mint) 17%, transparent), transparent 72%),
+      radial-gradient(82% 72% at 50% 42%, color-mix(in srgb,var(--blue) 10%, transparent), transparent 76%);
+  }
+  .hero--v2::before,.hero--v2::after{display:none;}
+  .hero-tag{display:none!important;}
+  .hero--v2 .hero__meta{display:none;}
+  /* 全画面ヒーロー用の絶対配置テキストは2ゾーンでは使わない（hero.cssは720pxまでしか隠さないため） */
+  .hero__topbrand,.hero-topline,.hero__serves{display:none;}
+
+  /* 流れるキーワード帯：3Dとコピーの“間”を動きで埋める（密度＝安心感） */
+  .hero__mstrip{
+    display:block;overflow:hidden;margin:14px -20px 4px;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+  }
+  .hero__mstrip-track{
+    display:inline-flex;gap:10px;white-space:nowrap;padding:0 6px;
+    animation:heroMstrip 22s linear infinite;
+  }
+  .hero__mstrip-track span{
+    flex:none;display:inline-flex;align-items:center;gap:7px;
+    font-size:.74rem;letter-spacing:.02em;color:var(--ink-soft);
+    padding:6px 13px;border-radius:999px;
+    background:var(--glass);border:1px solid var(--line);
+  }
+  .hero__mstrip-track span::before{
+    content:"";width:5px;height:5px;border-radius:50%;
+    background:linear-gradient(120deg,var(--mint),var(--blue));flex:none;
+  }
+  @keyframes heroMstrip{to{transform:translateX(-50%);}}
+
+  /* 下ゾーン：absoluteをやめ通常フローへ＝ボタンが必ず押せる */
+  .hero--v2 .hero__content--center{
+    position:relative;left:auto;bottom:auto;z-index:2;
+    max-width:none;margin-top:10px;
+    pointer-events:auto;
+  }
+  /* 見出し上のブランド・タグライン（差し色の点でアクセント） */
+  .hero__mkicker{
+    display:flex;align-items:center;gap:9px;margin:0 0 12px;
+    font-family:var(--en);font-weight:600;font-size:.72rem;letter-spacing:.22em;
+    text-transform:uppercase;color:var(--ink-soft);
+  }
+  .hero__mkicker::before{
+    content:"";width:22px;height:2px;border-radius:2px;
+    background:linear-gradient(90deg,var(--mint),var(--blue));
+  }
+  .hero__statement{
+    font-size:clamp(1.5rem,6.8vw,2.05rem);line-height:1.5;
+    margin-bottom:22px;max-width:none;text-shadow:none;
+  }
+  .hero--v2 .hero__actions{width:100%;}
+  .hero--v2 .hero__actions .btn{width:100%;justify-content:center;padding:17px 22px;font-size:1.02rem;}
+  /* 汎用チップは実績ストリップに置き換え（数字で信頼を出す） */
+  .hero__chips{display:none;}
+
+  /* 数字の実績ストリップ：3列。大きな数字＋小さなラベルで“ちゃんとしてる”を一目に */
+  .hero__proof{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+    margin:18px 0 0;padding:14px 6px;
+    border-radius:16px;background:var(--surface);border:1px solid var(--line);
+  }
+  .hero__proof > div{display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;
+    position:relative;}
+  .hero__proof > div + div::before{content:"";position:absolute;left:-4px;top:14%;height:72%;width:1px;background:var(--line);}
+  .hero__proof dt{order:2;font-size:.66rem;letter-spacing:.04em;color:var(--ink-soft);}
+  .hero__proof dd{order:1;margin:0;display:inline-flex;align-items:baseline;
+    font-family:var(--en);color:var(--ink);}
+  .hero__proof dd b{font-weight:700;font-size:1.32rem;line-height:1;
+    background:linear-gradient(120deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
+  .hero__proof dd span{font-size:.8rem;font-weight:600;color:var(--ink-soft);}
+  .hero__proof dd .cur{font-size:.9rem;margin-right:1px;color:var(--ink-soft);}
+
+  /* スクロール誘導：ヒーローの締め。ぽつんとしたドットの代わりに動く縦線 */
+  .hero__mscroll{
+    display:flex;flex-direction:column;align-items:center;gap:8px;
+    margin:22px auto 2px;
+    font-family:var(--en);font-size:.62rem;letter-spacing:.28em;
+    color:color-mix(in srgb,var(--ink) 52%,transparent);
+  }
+  .hero__mscroll i{width:1px;height:34px;background:linear-gradient(180deg,var(--mint),transparent);
+    animation:heroScrollLine 1.8s ease-in-out infinite;transform-origin:top;}
+  @keyframes heroScrollLine{0%,100%{transform:scaleY(.35);opacity:.4;}50%{transform:scaleY(1);opacity:1;}}
+
+  /* =========================================================
+     Capability：3Dパネルの内容を2×2の画像カードで（ヒーロー直下）
+     ========================================================= */
+  .capability{display:block;padding:26px 20px 6px;}
+  .home > .capability{order:0;}
+  .capability__eyebrow{
+    text-align:center;font-family:var(--en);font-size:.78rem;
+    letter-spacing:.14em;text-transform:uppercase;color:var(--ink-soft);
+    margin:0 0 14px;
+  }
+  .capability__grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+  .capability__card{
+    display:flex;flex-direction:column;color:inherit;
+    padding:9px 9px 12px;border-radius:16px;
+    background:var(--surface);border:1px solid var(--line);
+  }
+  .capability__card img{width:100%;height:auto;display:block;border-radius:10px;border:1px solid var(--line-soft);}
+  .capability__card b{margin:9px 2px 2px;font-size:.88rem;line-height:1.4;color:var(--ink);}
+  .capability__card span{margin:0 2px;font-size:.72rem;line-height:1.55;color:var(--ink-soft);}
+
+  /* =========================================================
+     セクション順：カードの次に「制作イメージ（画像）」を先出し
+     （PCは sections.css の order = hero→services→works→… のまま）
+     ========================================================= */
+  .home > .works-strip{order:1;}
+  .home > .services{order:2;}
+
+  /* 全セクション共通：縦の間延びを抑えて“読み進めやすい”リズムに */
+  .section{padding:clamp(64px,16vw,96px) 20px;}
+  .section__head{margin-bottom:clamp(30px,8vw,48px);}
+  .section__title{font-size:clamp(1.7rem,7.6vw,2.2rem);}
+
+  /* =========================================================
+     works-strip：画像を大きく主役に（自動で流れる帯はそのまま）
+     ========================================================= */
+  .works-strip .site{width:min(72vw,320px);}
+  .works-strip__eyebrow{font-size:.82rem;padding:0 20px;}
+
+  /* =========================================================
+     est（かんたん見積り）：行間圧縮＋合計を画面下に貼り付け
+     ========================================================= */
+  .est__lead{font-size:.95rem;}
+  .est__base{padding:14px 16px;}
+  .est__base-note{font-size:.78rem;}
+  .opt__body b{font-size:.9rem;}
+  .opt__body span{font-size:.74rem;}
+  .opt__price{font-size:.88rem;}
+  /* ページ追加（ステッパー行）: 説明を全幅に、操作と価格は2行目へ */
+  .opt--step{flex-wrap:wrap;gap:8px 14px;padding:13px 15px;}
+  .opt--step .opt__body{flex:1 1 100%;}
+  .opt--step .opt__price{margin-left:auto;}
+  /* 合計サマリー：選ぶそばから金額が見える“ボトムカード”に */
+  .est__sum{
+    position:sticky;bottom:calc(76px + env(safe-area-inset-bottom));top:auto;z-index:5;
+    padding:16px 18px;
+    background:color-mix(in srgb,var(--paper) 88%,transparent);
+    backdrop-filter:blur(14px);
+    border:1px solid var(--line);
+    box-shadow:0 18px 50px rgba(0,0,0,.45);
+  }
+  .est__sum .est__picked{display:none;} /* 選択リストは省略（金額と導線に集中） */
+  .est__sum .est__note{display:none;}
+  .est__total{margin:2px 0 10px;}
+  .est__sum .btn{padding:13px 18px;}
+
+  /* =========================================================
+     manifesto：短く・静かに（言葉の間を保ちつつ圧縮）
+     ========================================================= */
+  .manifesto__text{font-size:clamp(1.5rem,7vw,2rem);}
+  .manifesto__sub{margin-top:20px;font-size:.92rem;}
+
+  /* =========================================================
+     services：画像リード＋説明は2行まで（詳細はサブページへ）
+     ========================================================= */
+  .svcx__text{
+    display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;
+    font-size:.88rem;
+  }
+  .svcx__body{padding-bottom:16px;}
+
+  /* =========================================================
+     pricing：カード縦積み（760px既存対応）＋文字量を圧縮
+     ========================================================= */
+  .pricing__lead{font-size:.92rem;}
+  .price-card__sub{font-size:.86rem;}
+  .price-card__note{font-size:.78rem;}
+
+  /* =========================================================
+     faq / contact：タッチターゲット最優先
+     ========================================================= */
+  .faq__item summary{padding:18px 8px;font-size:.95rem;}
+  .contact__form input,.contact__form select,.contact__form textarea{min-height:48px;font-size:16px;} /* iOSズーム防止に16px */
+  .contact__form .btn{padding:17px 22px;}
+
+  /* 追従CTAバーと最下部コンテンツが重ならない逃げ */
+  .contact{padding-bottom:calc(96px + env(safe-area-inset-bottom));}
+  .footer{padding-bottom:calc(90px + env(safe-area-inset-bottom));}
+}

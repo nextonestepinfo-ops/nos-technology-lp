@@ -31,6 +31,8 @@
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/hero.css" />
   <link rel="stylesheet" href="css/sections.css" />
+  <!-- スマホ専用（860px以下）。PCに影響を出さないため分離 -->
+  <link rel="stylesheet" href="css/mobile.css" />
 
   <script type="importmap">
     {
@@ -125,6 +127,13 @@
     <!-- ===== Hero（v2：全画面3Dオブジェクトが主役。文字は最小） ===== -->
     <section class="hero hero--v2" id="hero">
       <canvas class="hero__canvas" id="heroCanvas" data-layout="center" aria-hidden="true"></canvas>
+      <!-- スマホ専用：流れるキーワード帯（3Dの下・ヒーローに動きと密度を出す。PCは非表示） -->
+      <div class="hero__mstrip" aria-hidden="true">
+        <div class="hero__mstrip-track">
+          <span>Web制作</span><span>集客導線</span><span>Googleマップ</span><span>Instagram</span><span>AI自動返信</span><span>予約管理</span><span>顧客管理</span><span>業務改善</span>
+          <span>Web制作</span><span>集客導線</span><span>Googleマップ</span><span>Instagram</span><span>AI自動返信</span><span>予約管理</span><span>顧客管理</span><span>業務改善</span>
+        </div>
+      </div>
       <!-- ヒーロー上中央：ブランド名＋タグライン -->
       <p class="hero__topbrand" data-reveal="fade"><b>Nos</b> Technology</p>
       <p class="hero-topline" aria-hidden="true"><b>S</b>ystems <b>F</b>or <b>H</b>uman <b>W</b>ork</p>
@@ -139,6 +148,8 @@
         <span class="hint">Click → セクションへ</span>
       </div>
       <div class="hero__content hero__content--center">
+        <!-- スマホ専用：見出しの上のブランド・タグライン（PCは非表示） -->
+        <p class="hero__mkicker">SYSTEMS FOR HUMAN WORK.</p>
         <h1 class="hero__statement" data-reveal="fade">店舗の<em>Webサイト</em>から、<em>業務改善システム</em>まで、<span>まとめてご用意します。</span></h1>
         <div class="hero__actions" data-reveal="fade">
           <a class="btn btn--primary" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
@@ -149,11 +160,42 @@
           <li><b>最短3〜5日</b>で公開</li>
           <li><b>AI活用</b>×オーダーメイド</li>
         </ul>
+        <!-- スマホ専用：数字の実績ストリップ（信頼要素。PCは非表示） -->
+        <dl class="hero__proof" aria-label="実績の目安">
+          <div><dt>対応業種</dt><dd><b>8</b><span>+</span></dd></div>
+          <div><dt>最短公開</dt><dd><b>3</b><span>–5日</span></dd></div>
+          <div><dt>入口プラン</dt><dd><span class="cur">¥</span><b>30,000</b><span>〜</span></dd></div>
+        </dl>
       </div>
+      <!-- スマホ専用：スクロール誘導（PCは hero__meta を使用） -->
+      <div class="hero__mscroll" aria-hidden="true"><span>SCROLL</span><i></i></div>
       <p class="hero__serves" data-reveal="fade">美容室・カフェ・クリニック・整体・ジム・学習塾… <b>地域のお店の“まるごと”を。</b></p>
       <div class="hero__meta" aria-hidden="true">
         <span class="hero__scroll">Scroll<i></i></span>
         <span>Web · AI · System</span>
+      </div>
+    </section>
+
+    <!-- スマホ専用：3Dパネルの内容をカードで見せる（PCでは3Dパネルが担うため非表示） -->
+    <section class="capability" aria-label="できること">
+      <p class="capability__eyebrow" data-reveal="fade">What we do — この4つを、まとめて</p>
+      <div class="capability__grid">
+        <a class="capability__card" href="services/web.html" data-reveal="rise">
+          <img src="assets/panels/panel-site-m.webp" width="640" height="480" alt="店舗サイトの画面イメージ" loading="lazy" />
+          <b>店舗サイト制作</b><span>見つかる・選ばれるWebサイト</span>
+        </a>
+        <a class="capability__card" href="services/system.html" data-reveal="rise">
+          <img src="assets/panels/panel-admin-m.webp" width="640" height="480" alt="予約・顧客管理画面のイメージ" loading="lazy" />
+          <b>予約・顧客管理</b><span>予約とお客様をひと目で</span>
+        </a>
+        <a class="capability__card" href="services/ai.html" data-reveal="rise">
+          <img src="assets/panels/panel-reply-m.webp" width="640" height="480" alt="AI自動返信の画面イメージ" loading="lazy" />
+          <b>AI自動返信</b><span>問い合わせに24時間対応</span>
+        </a>
+        <a class="capability__card" href="services/web.html" data-reveal="rise">
+          <img src="assets/panels/panel-map-m.webp" width="640" height="480" alt="Googleマップ集客のイメージ" loading="lazy" />
+          <b>集客・SNS導線</b><span>マップ・SNSから来店へ</span>
+        </a>
       </div>
     </section>
 
@@ -443,6 +485,12 @@
       <small>&copy; 2026 Nos Technology — これは制作中のデモサイトです（素材は仮）。</small>
     </div>
   </footer>
+
+  <!-- スマホ追従CTA（860px以下・ヒーロー通過後に出現） -->
+  <div class="cta-bar" id="ctaBar">
+    <a class="cta-bar__main" href="#contact">無料で相談する</a>
+    <a class="cta-bar__quote" href="#estimator">かんたん見積り</a>
+  </div>
 
   <!-- 配色スイッチャー（色の方向性を試す。確定後は固定/削除可） -->
   <!-- トップへ戻る（下スクロールで出現） -->

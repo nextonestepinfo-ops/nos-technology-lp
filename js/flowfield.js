@@ -47,7 +47,7 @@ export function initFlowField(canvas) {
   window.addEventListener("scroll", () => { scrollY = window.scrollY || 0; }, { passive: true });
 
   // 流れる線（本数控えめ・太さ/位相をばらす）
-  const N = window.innerWidth < 720 ? 5 : 9;
+  const N = window.innerWidth < 860 ? 5 : 9; // モバイル閾値を全体(860px)と統一
   const lines = [];
   for (let i = 0; i < N; i++) {
     lines.push({

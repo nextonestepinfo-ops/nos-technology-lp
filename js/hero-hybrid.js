@@ -4,7 +4,7 @@
 // パネルはホバーで手前にズーム＋中身がビルドアニメ、クリックで対応セクションへ慣性スクロール。
 // "palette" イベントで配色に追従。失敗時は main.js 側でCSS背景にフォールバック。
 import * as THREE from "three";
-import { pointer, prefersReducedMotion, isCoarsePointer, lerp, clamp } from "./utils.js";
+import { pointer, prefersReducedMotion, isCoarsePointer, isMobileLayout, lerp, clamp } from "./utils.js";
 import { RoomEnvironment } from "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/environments/RoomEnvironment.js";
 
 const hx = (s) => parseInt(s.slice(1), 16);
@@ -371,7 +371,8 @@ export function initHeroHybrid(canvas) {
   ];
   let currentAcc = { mint: "#16b89a", blue: "#3f6df0" };
 
-  const panels = defs.map((d, idx) => {
+  // スマホ：パネルは生成しない（2ゾーン構成でNコアのみ。内容はDOMの.capabilityカードが担う）
+  const panels = isMobileLayout ? [] : defs.map((d, idx) => {
     const geo = panelGeo(d.w, d.h);
     // パネルごとに専用キャンバス＋テクスチャ（ビルドアニメで描き替える）
     const cv = document.createElement("canvas"); cv.width = TEX_W; cv.height = TEX_H;
@@ -422,13 +423,15 @@ export function initHeroHybrid(canvas) {
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, small ? 1.5 : 2));
     if (layout === "center") {
       group.position.x = 0;
-      baseScale = small ? 0.6 : 1.0;
+      // スマホ2ゾーン構成：canvasは上ゾーンのみなのでNコアを中央にやや大きく
+      baseScale = small ? (isMobileLayout ? 0.8 : 0.6) : 1.0;
     } else {
       group.position.x = small ? 0 : 1.7;
       baseScale = small ? 0.55 : 0.82;
     }
     group.scale.setScalar(baseScale);
-    groupYBase = small ? 0.85 : 0;
+    // スマホ2ゾーンではcanvas自体が上ゾーン＝上寄せ不要（centerレイアウトのみ）
+    groupYBase = small ? (isMobileLayout && layout === "center" ? 0 : 0.85) : 0;
     // スマホ：パネルを内側＆上へ寄せて「画面端で切れる」のを防ぎ、Nの周りにフレームインさせる
     panels.forEach((m) => {
       const u = m.userData;
@@ -533,6 +536,11 @@ export function initHeroHybrid(canvas) {
   window.addEventListener("pointercancel", endDrag);
 
   // クリックで対応セクションへ移動（その都度 pick して堅牢に）
+  // タッチ端末・スマホレイアウトでは canvas を完全に飾りにする：
+  // CTA周辺のタップが canvas に貫通して誤遷移する事故を構造的に防ぐ。
+  if (isCoarsePointer || isMobileLayout) {
+    canvas.style.pointerEvents = "none";
+  } else {
   canvas.style.pointerEvents = "auto";
   canvas.addEventListener("click", () => {
     if (suppressClick) { suppressClick = false; return; } // スワイプ回転後のクリックは無視
@@ -553,6 +561,7 @@ export function initHeroHybrid(canvas) {
       else target.scrollIntoView({ behavior: "smooth" });
     }, 230);
   });
+  }
 
   let rx = 0, ry = 0;
   let focusState = false; // is-focusing クラスの現在状態（毎フレームのトグル抑制用）
@@ -573,7 +582,8 @@ export function initHeroHybrid(canvas) {
     group.rotation.x = -0.05 - ry;
     // スクロール視差：下へ行くほどオブジェクトが少し上へドリフト＋わずかに縮小（層の奥行き）
     const sp = Math.min(1, Math.max(0, (window.scrollY || 0) / ((heroEl && heroEl.offsetHeight) || window.innerHeight || 1)));
-    group.position.y = groupYBase + sp * 2.6;
+    // スマホは上ゾーンが小さいので視差の持ち上げを控えめに（すぐ見切れないように）
+    group.position.y = groupYBase + sp * (isMobileLayout ? 1.1 : 2.6);
     group.rotation.z = sp * 0.12;
     group.scale.setScalar(baseScale * (1 - sp * 0.24));
 
