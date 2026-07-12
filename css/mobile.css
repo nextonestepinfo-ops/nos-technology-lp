@@ -207,6 +207,65 @@
   .mscene__meta span{font-family:var(--en);font-weight:700;font-size:.8rem;color:#fff;
     padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);}
 
+  /* ============ シーン共通の追加パーツ（密度を上げる小物） ============ */
+  /* アンビエント光のバリエーション */
+  .mscene__orb--c{width:60vw;height:60vw;top:-8%;right:-18%;left:auto;transform:none;
+    background:radial-gradient(circle,color-mix(in srgb,var(--blue) 22%,transparent),transparent 66%);}
+  .mscene__orb--d{width:56vw;height:56vw;top:auto;bottom:-10%;left:-14%;transform:none;
+    background:radial-gradient(circle,color-mix(in srgb,var(--lav) 18%,transparent),transparent 66%);}
+
+  /* Scene2: 浮かせた別業種の制作例（“数を作っている”を一枚で） */
+  .mscene__float{position:absolute;z-index:2;top:9%;right:5%;width:31%;aspect-ratio:9/19.3;margin:0;
+    border-radius:13px;overflow:hidden;border:1px solid rgba(255,255,255,.18);
+    box-shadow:0 26px 52px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.14);
+    transform:rotate(5deg);animation:mFloatC 9s ease-in-out infinite;}
+  .mscene__float img{width:100%;height:100%;object-fit:cover;object-position:top center;}
+  @keyframes mFloatC{0%,100%{transform:rotate(5deg) translateY(0);}50%{transform:rotate(5deg) translateY(-10px);}}
+
+  /* 対象業務チップ（少し傾けて“貼った”感じに） */
+  .mchips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;padding:0;list-style:none;}
+  .mchips li{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--ink);
+    padding:7px 13px;border-radius:999px;background:var(--glass);border:1px solid var(--line);
+    backdrop-filter:blur(6px);}
+  .mchips li::before{content:"";width:5px;height:5px;border-radius:50%;flex:none;
+    background:linear-gradient(120deg,var(--mint),var(--blue));}
+  .mchips li:nth-child(odd){transform:rotate(-1.4deg);}
+  .mchips li:nth-child(even){transform:rotate(1.2deg);}
+
+  /* 自動化の流れ（3ステップ） */
+  .mflow{display:flex;gap:7px;margin:16px 0 0;padding:0;list-style:none;counter-reset:mf;}
+  .mflow li{flex:1;font-size:.72rem;line-height:1.5;color:var(--ink);text-align:center;
+    padding:10px 6px 9px;border-radius:12px;background:var(--surface);border:1px solid var(--line);}
+  .mflow li::before{content:counter(mf,decimal-leading-zero);counter-increment:mf;display:block;
+    font-family:var(--en);font-weight:700;font-size:.62rem;letter-spacing:.1em;color:var(--mint);margin-bottom:3px;}
+
+  /* 対応業種が流れる帯（実績シーン下部） */
+  .mmarq{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));z-index:3;overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
+  .mmarq__track{display:inline-flex;gap:9px;white-space:nowrap;padding:0 6px;
+    animation:mMarq 26s linear infinite;}
+  .mmarq__track span{flex:none;display:inline-flex;align-items:center;gap:7px;
+    font-size:.76rem;color:var(--ink-soft);padding:7px 14px;border-radius:999px;
+    background:var(--glass);border:1px solid var(--line);}
+  .mmarq__track span::before{content:"";width:5px;height:5px;border-radius:50%;
+    background:linear-gradient(120deg,var(--mint),var(--blue));}
+  @keyframes mMarq{to{transform:translateX(-50%);}}
+
+  /* 料金カードの“含まれるもの”ミニリスト */
+  .mprice__points{margin:12px 0 0;padding:12px 0 0;list-style:none;display:flex;flex-direction:column;gap:6px;
+    border-top:1px dashed var(--line);}
+  .mprice__points li{position:relative;padding-left:20px;font-size:.78rem;line-height:1.6;color:var(--ink-soft);}
+  .mprice__points li::before{content:"";position:absolute;left:2px;top:6px;width:9px;height:5px;
+    border-left:2px solid var(--mint);border-bottom:2px solid var(--mint);transform:rotate(-45deg);}
+
+  /* 相談シーンの安心チップ */
+  .mtrust{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none;}
+  .mtrust li{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;color:var(--ink-soft);
+    padding:7px 13px;border-radius:999px;background:var(--surface);border:1px solid var(--line);}
+  .mtrust li::before{content:"";width:9px;height:5px;flex:none;
+    border-left:2px solid var(--mint);border-bottom:2px solid var(--mint);transform:rotate(-45deg) translateY(-1px);}
+
   /* ============ Scene: プロダクト画像（つかう/まかせる） ============ */
   .mscene--panel{background:radial-gradient(120% 80% at 50% 10%, #0b1326 0%, var(--paper) 62%);}
   .mscene--alt{background:radial-gradient(120% 80% at 50% 92%, #0b1326 0%, var(--paper) 62%);}
@@ -286,7 +345,8 @@
 /* モーション抑制時：スナップと演出を弱める（最終状態で静止表示） */
 @media (max-width:860px) and (prefers-reduced-motion:reduce){
   html{scroll-snap-type:none;}
-  .mscene__cue i,.mhero__blob,.mhero__eyebrow i,.mhero__h1 em{animation:none;}
+  .mscene__cue i,.mhero__blob,.mhero__eyebrow i,.mhero__h1 em,
+  .mmarq__track,.mscene__float{animation:none;}
   .mhero__card,
   .mhero__eyebrow,.mhero__h1,.mhero__copy .mscene__lead,.mhero__copy .mscene__actions{
     animation:none;opacity:1;transform:none;}
