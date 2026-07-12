@@ -40,9 +40,11 @@
   /* 見出し */
   .mscene__h1{font-size:clamp(2.2rem,10.5vw,3.1rem);font-weight:900;line-height:1.16;letter-spacing:.006em;color:var(--ink);}
   .mscene__h2{font-size:clamp(1.95rem,8.8vw,2.7rem);font-weight:900;line-height:1.2;letter-spacing:.006em;color:var(--ink);}
-  .mscene__h1 em,.mscene__h2 em{font-style:normal;
+  .mscene__h1 em,.mscene__h2 em{font-style:normal;white-space:nowrap; /* 強調語を途中で折らない */
     background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
     -webkit-background-clip:text;background-clip:text;color:transparent;}
+  /* 見出しは単語の途中で改行しない（不自然な折返し防止） */
+  .mscene__h1,.mscene__h2{word-break:keep-all;overflow-wrap:break-word;}
 
   /* 本文 */
   .mscene__lead{margin-top:16px;font-size:1rem;line-height:1.9;color:var(--ink-soft);max-width:22em;}
@@ -318,6 +320,9 @@
   .est__lead{font-size:.95rem;}
   .est__base{padding:14px 16px;}
   .est__base-note{font-size:.78rem;}
+  /* 基本セット行：タイトルが長く価格と重なるので縦積みに */
+  .est__base-row{flex-wrap:wrap;gap:2px 12px;}
+  .est__base-row b{flex:1 1 100%;font-size:1rem;line-height:1.5;}
   .opt__body b{font-size:.9rem;}
   .opt__body span{font-size:.74rem;}
   .opt__price{font-size:.88rem;}
