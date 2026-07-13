@@ -5,7 +5,8 @@
 
 /* ===== Works strip（v2：ヒーロー直下で制作サイトが流れる帯） ===== */
 /* 横padding=var(--gut)で、.showcaseの負マージンが相殺され全幅ブリードになる */
-.works-strip{padding:clamp(36px,6vw,80px) var(--gut) clamp(44px,7vw,88px);background:var(--paper);overflow:hidden;}
+.works-strip{padding:clamp(36px,6vw,80px) var(--gut) clamp(52px,8vw,104px);background:var(--paper);overflow:hidden;
+  perspective:1900px;perspective-origin:50% 34%;} /* 傾いたサイト群のmontage用の遠近 */
 .works-strip__eyebrow{text-align:center;font-family:var(--en);font-size:clamp(.78rem,1.3vw,.92rem);
   letter-spacing:.18em;text-transform:uppercase;color:var(--ink-soft);margin:0 0 clamp(26px,4vw,42px);}
 
@@ -336,10 +337,12 @@
 .works{background:var(--paper);overflow:hidden;}
 .works__hint{color:var(--ink-soft);font-size:.88rem;margin-top:12px;}
 /* セクション幅いっぱいに広げ、両端をフェード */
-.showcase{margin:0 calc(var(--gut)*-1);display:flex;flex-direction:column;gap:26px;
-  -webkit-mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
-  mask:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);}
-.showcase__row{display:flex;gap:26px;width:max-content;will-change:transform;padding:8px 0;}
+.showcase{margin:0 calc(var(--gut)*-1);display:flex;flex-direction:column;gap:clamp(20px,2.4vw,34px);
+  -webkit-mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);
+  mask:linear-gradient(90deg,transparent,#000 6%,#000 94%,transparent);}
+/* works帯（トップ）だけ：面を後ろへ倒し斜めに流す＝Studio級のmontage */
+.works-strip .showcase{transform:rotateX(11deg) rotateZ(-2.6deg) scale(1.04);transform-style:preserve-3d;}
+.showcase__row{display:flex;gap:clamp(20px,2.6vw,34px);width:max-content;will-change:transform;padding:8px 0;}
 
 /* 1枚＝ブラウザ枠に入ったミニサイト（実スクショに差替え可） */
 .site{width:clamp(210px,22vw,290px);flex:none;border-radius:14px;overflow:hidden;
@@ -348,8 +351,8 @@
 .site:hover{transform:translateY(-8px);box-shadow:0 28px 60px color-mix(in srgb,var(--ink) 22%,transparent);}
 
 /* works-strip（トップ）＝1セット：PC画面（横）＋iPhone（縦・全身）を下揃えで横並び。重ねず切れない */
-.works-strip .site{position:static;display:flex;align-items:flex-end;gap:clamp(10px,1.4vw,16px);
-  width:auto;height:clamp(178px,23vw,240px);overflow:visible;border:0;background:none;border-radius:0;box-shadow:none;}
+.works-strip .site{position:static;display:flex;align-items:flex-end;gap:clamp(10px,1.4vw,18px);
+  width:auto;height:clamp(210px,27vw,300px);overflow:visible;border:0;background:none;border-radius:0;box-shadow:none;}
 .works-strip .site:hover{transform:translateY(-8px);box-shadow:none;}
 /* PC画面：白枠なし。影だけで暗背景から浮かせる */
 .site__web{display:block;height:82%;width:auto;aspect-ratio:16/10;object-fit:cover;object-position:top;

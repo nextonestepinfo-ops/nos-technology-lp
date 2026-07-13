@@ -98,9 +98,38 @@
   .mband{overflow:hidden;
     -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
             mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
-  .mband .showcase__row{display:flex;gap:12px;width:max-content;padding:6px 0;will-change:transform;}
-  .mband img{height:172px;width:auto;border-radius:10px;
-    border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);}
+  .mband .showcase__row{display:flex;gap:13px;width:max-content;padding:10px 0;will-change:transform;}
+  .mband img{height:190px;width:auto;border-radius:12px;
+    border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);
+    box-shadow:0 14px 30px -10px color-mix(in srgb,var(--ink) 34%,transparent);}
+  /* 縦画面（スマホ実機ショット）は少し背高に見せてリズムを出す */
+  .mband img.tall{height:214px;}
+
+  /* ============ 理念バンド（墨色・角丸／スマホ版 施策5） ============ */
+  .mtop__manifesto{padding-top:34px;padding-bottom:20px;}
+  .mban{position:relative;overflow:hidden;border-radius:22px;
+    padding:38px 24px 40px;text-align:center;
+    /* 帯内だけ墨×真鍮に上書き（PC版manifestoと同系・常時暗） */
+    --paper:#0E0C09;--ink:#F4EFE4;--ink-soft:#A9A192;--mint:#D8B268;
+    color:var(--ink);
+    background:
+      radial-gradient(130% 120% at 14% 0%, color-mix(in srgb,var(--mint) 13%,transparent), transparent 48%),
+      linear-gradient(162deg,#14110C,#0B0A08 72%);
+    box-shadow:0 30px 60px -26px color-mix(in srgb,#000 72%,transparent),
+               inset 0 1px 0 color-mix(in srgb,#fff 8%,transparent);}
+  .mban::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+    background:linear-gradient(90deg,transparent,color-mix(in srgb,var(--mint) 70%,transparent),transparent);}
+  .mban__glow{position:absolute;inset:-40% -20% auto auto;width:75%;aspect-ratio:1;pointer-events:none;
+    background:radial-gradient(circle,color-mix(in srgb,var(--mint) 22%,transparent),transparent 62%);
+    filter:blur(16px);opacity:.5;}
+  .mban__eye{display:inline-flex;align-items:center;gap:8px;
+    font-family:var(--mono);font-size:.66rem;letter-spacing:.18em;text-transform:uppercase;color:var(--mint);margin-bottom:16px;}
+  .mban__eye i{width:6px;height:6px;border-radius:50%;background:var(--mint);
+    box-shadow:0 0 10px color-mix(in srgb,var(--mint) 80%,transparent);}
+  .mban__h{position:relative;font-size:clamp(1.4rem,6.4vw,1.78rem);font-weight:800;line-height:1.5;color:var(--ink);}
+  /* キー語は改行させない＝署名下線を割らない（語ごと次行に送る） */
+  .mban__h em{display:inline-block;white-space:nowrap;}
+  .mban__p{position:relative;max-width:30ch;margin:18px auto 0;font-size:.9rem;line-height:1.9;color:var(--ink-soft);}
 
   /* =========================================================
      実用ゾーン（見積り / FAQ / 相談 / フッター）

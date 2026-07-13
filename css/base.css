@@ -181,10 +181,10 @@ body.is-menu-open{overflow:hidden;}
 /* ---- 署名アンダーライン（見出しのキー語＝藍のブラシ下線で統一） ----
    em は地の文の色のまま、下に一筆の藍を引く。旧グラデ文字は打ち消す。
    対象を1箇所に集約：section見出し／ヒーロー一文／intro／build。 */
-.section__title em,.hero__statement em,.intro__title em,.build__title em{
+.section__title em,.hero__statement em,.intro__title em,.build__title em,.manifesto__text em,.mban__h em{
   position:relative;font-style:normal;color:var(--ink);
   background:none;-webkit-text-fill-color:currentColor;}
-.section__title em::after,.hero__statement em::after,.intro__title em::after,.build__title em::after{
+.section__title em::after,.hero__statement em::after,.intro__title em::after,.build__title em::after,.manifesto__text em::after,.mban__h em::after{
   content:"";position:absolute;left:-.06em;right:-.06em;bottom:-.14em;height:.34em;pointer-events:none;
   background:var(--mint);
   -webkit-mask:var(--sig-brush) center/100% 100% no-repeat;
