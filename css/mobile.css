@@ -21,7 +21,7 @@
   .mtop{padding-top:calc(64px + env(safe-area-inset-top,0px));}
   .mtop__sec{padding:44px 20px 8px;}
   .mtop__lab{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;
-    font-family:var(--en);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
+    font-family:var(--mono);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
   .mtop__lab b{color:var(--mint);font-weight:700;}
   .mtop__note{margin-top:14px;font-size:.78rem;line-height:1.7;color:var(--ink-soft);}
   .mtop__more{display:inline-flex;margin-top:12px;font-weight:700;font-size:.9rem;color:var(--mint);}
@@ -29,7 +29,7 @@
   /* ============ ヒーロー ============ */
   .mtop__hero{padding:12px 20px 8px;
     background:radial-gradient(120% 70% at 50% -8%, color-mix(in srgb,var(--mint) 7%, transparent), transparent 58%);}
-  .mtop__brand{font-family:var(--en);font-weight:600;font-size:.82rem;letter-spacing:.2em;
+  .mtop__brand{font-family:var(--mono);font-weight:600;font-size:.82rem;letter-spacing:.2em;
     text-transform:uppercase;color:var(--ink);}
   .mtop__brand b{font-weight:700;}
   .mtop__brand span{display:block;margin-top:4px;font-size:.6rem;letter-spacing:.24em;color:var(--ink-soft);}
@@ -48,14 +48,14 @@
   .deck__card img{width:100%;height:100%;object-fit:cover;object-position:top center;pointer-events:none;}
   .deck__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;}
   .deck__label{display:flex;align-items:baseline;gap:10px;min-width:0;}
-  .deck__label i{font-style:normal;font-family:var(--en);font-weight:700;font-size:.66rem;
+  .deck__label i{font-style:normal;font-family:var(--mono);font-weight:700;font-size:.66rem;
     letter-spacing:.12em;color:var(--mint);white-space:nowrap;}
   .deck__label b{font-size:.95rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
   .deck__dots{display:inline-flex;gap:6px;flex:none;}
   .deck__dots i{width:6px;height:6px;border-radius:50%;background:color-mix(in srgb,var(--ink) 22%,transparent);
     transition:background .3s,transform .3s;}
   .deck__dots i.on{background:var(--mint);transform:scale(1.25);}
-  .deck__hint{margin-top:8px;font-family:var(--en);font-size:.6rem;letter-spacing:.22em;
+  .deck__hint{margin-top:8px;font-family:var(--mono);font-size:.6rem;letter-spacing:.22em;
     text-transform:uppercase;color:color-mix(in srgb,var(--ink) 45%,transparent);text-align:center;}
 
   .mtop__cta{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
@@ -74,8 +74,8 @@
   .mtop__stat > div + div::before{content:"";position:absolute;left:-4px;top:16%;height:68%;width:1px;
     background:color-mix(in srgb,var(--ink) 12%,transparent);}
   .mtop__stat dt{order:2;font-size:.64rem;letter-spacing:.04em;color:var(--ink-soft);}
-  .mtop__stat dd{order:1;margin:0;display:inline-flex;align-items:baseline;font-family:var(--en);color:var(--ink);}
-  .mtop__stat dd b{font-weight:700;font-size:1.38rem;line-height:1;color:var(--mint);}
+  .mtop__stat dd{order:1;margin:0;display:inline-flex;align-items:baseline;font-family:var(--disp);color:var(--ink);}
+  .mtop__stat dd b{font-weight:400;font-size:1.5rem;line-height:1;letter-spacing:.02em;color:var(--mint);}
   .mtop__stat dd span{font-size:.78rem;font-weight:600;color:var(--ink-soft);}
   .mtop__stat dd .cur{font-size:.88rem;margin-right:1px;color:var(--ink-soft);}
 
@@ -83,12 +83,12 @@
   .mlinks{display:block;border-top:1px solid color-mix(in srgb,var(--ink) 14%,transparent);}
   .mlink{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
     padding:16px 2px;border-bottom:1px solid color-mix(in srgb,var(--ink) 10%,transparent);}
-  .mlink i{font-style:normal;font-family:var(--en);font-weight:700;font-size:.72rem;
+  .mlink i{font-style:normal;font-family:var(--mono);font-weight:700;font-size:.72rem;
     letter-spacing:.08em;color:var(--mint);}
-  .mlink i.yen{font-size:.86rem;}
+  .mlink i.yen{font-family:var(--disp);font-weight:400;font-size:1rem;letter-spacing:.03em;}
   .mlink b{font-size:1.02rem;font-weight:700;color:var(--ink);line-height:1.4;}
   .mlink b small{display:block;margin-top:2px;font-size:.74rem;font-weight:500;color:var(--ink-soft);}
-  .mlink span{font-family:var(--en);color:var(--ink-soft);}
+  .mlink span{font-family:var(--mono);color:var(--ink-soft);}
   .mlink:active{background:color-mix(in srgb,var(--ink) 5%,transparent);}
 
   /* ============ 制作イメージの帯（showcase.jsで流れる） ============ */

@@ -126,7 +126,7 @@
   -webkit-background-clip:text;background-clip:text;color:transparent;}
 /* 上中央：会社名（ブランド）＝大きく特徴的に。Nosは差し色グラデ。タグライン帯はこの下。 */
 .hero__topbrand{position:absolute;top:clamp(24px,4vh,46px);left:0;right:0;z-index:2;text-align:center;pointer-events:none;
-  font-family:var(--en);font-weight:500;font-size:clamp(1.25rem,2.7vw,2.05rem);letter-spacing:.3em;text-transform:uppercase;
+  font-family:var(--disp);font-weight:400;font-size:clamp(1.25rem,2.7vw,2.05rem);letter-spacing:.3em;text-transform:uppercase;
   color:var(--ink);padding-left:.3em;}
 .hero__topbrand b{font-weight:700;background:linear-gradient(110deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
 /* 下部中央：対応業種の一行（余白を埋め、誰向けかを伝える） */
