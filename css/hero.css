@@ -136,8 +136,8 @@
 /* 左下：大きな一文（差し色強調）＋CTA。語の途中で折れないよう em は nowrap。 */
 .hero__statement{font-size:clamp(1.4rem,3vw,2.3rem);font-weight:800;line-height:1.5;letter-spacing:.01em;
   color:var(--ink);margin:0 0 30px;max-width:14em;text-shadow:0 2px 30px color-mix(in srgb,var(--paper) 82%,transparent);}
-.hero__statement em{display:inline-block;white-space:nowrap;font-style:normal;font-weight:800;
-  background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+/* 署名下線は base.css に集約。ここでは配置のみ（inline-block＋nowrapで語を折らない） */
+.hero__statement em{display:inline-block;white-space:nowrap;font-weight:800;}
 .hero__statement span{display:block;margin-top:8px;font-size:.8em;font-weight:600;color:color-mix(in srgb,var(--ink) 86%,transparent);}
 
 /* 左下のロックアップ：社名ワードマーク＋一言＋CTA。発光オブジェクト上でも読めるよう微シャドウ。 */

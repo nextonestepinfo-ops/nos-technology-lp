@@ -14,7 +14,7 @@
 .intro__grid{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1.05fr .95fr;
   gap:clamp(32px,6vw,80px);align-items:center;}
 .intro__title{font-size:clamp(2rem,5vw,3.6rem);font-weight:900;line-height:1.18;letter-spacing:.01em;margin-bottom:26px;}
-.intro__title em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+/* .intro__title em の署名下線は base.css に集約 */
 .intro__lead{color:var(--ink-soft);font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.95;max-width:54ch;margin-bottom:36px;}
 .intro__actions{display:flex;flex-wrap:wrap;gap:14px;}
 /* 画像枠（実素材到着までプレースホルダ） */
@@ -477,7 +477,7 @@
 .build__head{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto clamp(22px,3.5vh,40px);width:100%;}
 .build__eyebrow{font-family:var(--en);font-size:.78rem;letter-spacing:.24em;text-transform:uppercase;color:var(--mint);margin-bottom:12px;}
 .build__title{font-size:clamp(1.7rem,4.2vw,3rem);font-weight:900;line-height:1.3;}
-.build__title em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));-webkit-background-clip:text;background-clip:text;color:transparent;}
+/* .build__title em の署名下線は base.css に集約 */
 .build__grid{position:relative;z-index:1;max-width:var(--maxw);margin:0 auto;width:100%;
   display:grid;grid-template-columns:.92fr 1.08fr;gap:clamp(24px,4vw,56px);align-items:center;}
 
@@ -572,7 +572,7 @@
 .quote-lead{background:var(--paper);}
 .quote-lead__in{max-width:var(--maxw);margin:0 auto;text-align:center;
   display:flex;flex-direction:column;align-items:center;}
-.quote-lead .section__title em{color:var(--mint);font-style:normal;}
+/* quote-lead も署名下線に統一（em の色は base.css で ink＋藍下線） */
 .quote-lead__text{max-width:60ch;margin:18px auto 0;color:var(--ink-soft);
   font-size:clamp(1rem,1.5vw,1.15rem);line-height:1.9;}
 .quote-lead__text b{color:var(--ink);font-weight:700;}

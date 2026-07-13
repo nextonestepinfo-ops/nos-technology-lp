@@ -29,6 +29,10 @@
   --mono:"Space Mono", ui-monospace, monospace;  /* 精密ラベル（A×C由来） */
   --jp:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Yu Gothic","Meiryo",system-ui,sans-serif;
   --ease:cubic-bezier(.16,1,.3,1);
+
+  /* 署名ブラシ下線：手書き風の一筆をSVGマスク化。色は --mint（藍）を流し込むので配色追従。
+     Studioの点線下線に対する“うちの型”。em の旧グラデ文字を置換する。 */
+  --sig-brush:url("data:image/svg+xml,%3Csvg%20xmlns='http://www.w3.org/2000/svg'%20viewBox='0%200%20240%2022'%20preserveAspectRatio='none'%3E%3Cpath%20d='M4,13%20C56,7%20128,6%20176,8%20C205,9%20226,11%20236,7%20C232,13%20206,16%20172,16%20C120,16%2058,17%2016,18%20C8,18%202,16%204,13%20Z'%20fill='%23000'/%3E%3C/svg%3E");
 }
 
 *,*::before,*::after{box-sizing:border-box;}
@@ -173,6 +177,18 @@ body.is-menu-open{overflow:hidden;}
 .section__head{max-width:var(--maxw);margin:0 auto clamp(48px,7vw,96px);}
 .section__eyebrow{font-family:var(--mono);font-size:.8rem;letter-spacing:.16em;text-transform:uppercase;color:var(--blue);margin-bottom:18px;}
 .section__title{font-size:clamp(1.9rem,5vw,3.4rem);font-weight:700;line-height:1.25;letter-spacing:.01em;}
+
+/* ---- 署名アンダーライン（見出しのキー語＝藍のブラシ下線で統一） ----
+   em は地の文の色のまま、下に一筆の藍を引く。旧グラデ文字は打ち消す。
+   対象を1箇所に集約：section見出し／ヒーロー一文／intro／build。 */
+.section__title em,.hero__statement em,.intro__title em,.build__title em{
+  position:relative;font-style:normal;color:var(--ink);
+  background:none;-webkit-text-fill-color:currentColor;}
+.section__title em::after,.hero__statement em::after,.intro__title em::after,.build__title em::after{
+  content:"";position:absolute;left:-.06em;right:-.06em;bottom:-.14em;height:.34em;pointer-events:none;
+  background:var(--mint);
+  -webkit-mask:var(--sig-brush) center/100% 100% no-repeat;
+          mask:var(--sig-brush) center/100% 100% no-repeat;}
 
 /* ---- リビール ---- */
 [data-reveal]{will-change:transform,opacity;}
