@@ -186,7 +186,7 @@
       <section class="mtop__sec mtop__sec--works">
         <p class="mtop__lab" data-reveal="fade"><b>WORK</b>制作イメージ</p>
         <div class="mband" id="mWorks" aria-hidden="true">
-          <div class="showcase__row" data-dir="left">
+          <div class="showcase__row" data-dir="right">
             <img src="assets/works/salon-web.webp" width="1600" height="1000" alt="" loading="lazy" />
             <img class="tall" src="assets/works/cafe-mobile.webp" width="900" height="1950" alt="" loading="lazy" />
             <img src="assets/works/diner-web.webp" width="1600" height="1000" alt="" loading="lazy" />
@@ -273,7 +273,7 @@
     <section class="works-strip" aria-label="制作サイトのデザインイメージ">
       <p class="works-strip__eyebrow" data-reveal="fade">What we build — こんなサイトが、つくれます</p>
       <div class="showcase" id="worksShowcase">
-        <div class="showcase__row" data-dir="left">
+        <div class="showcase__row" data-dir="right">
           <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" width="1600" height="1000" src="assets/works/salon-web.webp" alt="美容室・サロンのサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="assets/works/salon-mobile.webp" alt="" loading="lazy" /></span></a>
           <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" width="1600" height="1000" src="assets/works/cafe-web.webp" alt="カフェ・喫茶のサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="assets/works/cafe-mobile.webp" alt="" loading="lazy" /></span></a>
           <a class="site" href="services/web.html" data-cursor="View"><img class="site__web" width="1600" height="1000" src="assets/works/diner-web.webp" alt="飲食店・レストランのサイト制作例" loading="lazy" /><span class="site__phone"><img width="900" height="1950" src="assets/works/diner-mobile.webp" alt="" loading="lazy" /></span></a>
@@ -286,77 +286,16 @@
       <p class="works-strip__more" data-reveal="fade"><a class="btn btn--ghost" href="services/web.html" data-cursor="View"><span>制作イメージをもっと見る →</span></a></p>
     </section>
 
-<!-- ===== かんたん見積り（必要な分だけ選んで、目安をその場で） ===== -->
-    <section class="section est" id="estimator">
-      <div class="section__head">
+<!-- ===== 見積り・相談への導線（概算は専用ページに集約） ===== -->
+    <section class="section quote-lead" id="quote-lead">
+      <div class="quote-lead__in">
         <p class="section__eyebrow" data-reveal="fade">(03) Your plan</p>
-        <h2 class="section__title" data-reveal="words">かんたん見積り。</h2>
-        <p class="est__lead" data-reveal="fade">必要な分だけ選ぶと、<b>あなたのお店の目安</b>がその場で分かります。</p>
-      </div>
-      <div class="est__grid">
-        <!-- 左：オプション選択 -->
-        <div class="est__opts">
-          <div class="field est__kind">
-            <label for="est-kind">お店の業種</label>
-            <select id="est-kind">
-              <option>美容室・サロン</option>
-              <option>カフェ・喫茶</option>
-              <option>飲食店</option>
-              <option>クリニック・整体</option>
-              <option>ジム・スタジオ</option>
-              <option>教室・スクール</option>
-              <option>その他</option>
-            </select>
-          </div>
-
-          <div class="est__base">
-            <span class="est__base-tag">基本セット（必ず含まれます）</span>
-            <div class="est__base-row"><b>店舗ページ一式（テンプレートから）</b><em>¥30,000</em></div>
-            <p class="est__base-note">数種類のテンプレートから選んで完成。スマホ対応・店舗情報・電話/LINE/Instagramリンク・Googleマップ導線・問い合わせフォーム・修正1回</p>
-          </div>
-
-          <ul class="est__list" id="estList">
-            <li class="opt opt--step">
-              <div class="opt__body"><b>ページ追加</b><span>メニュー・スタッフ紹介・こだわり など</span></div>
-              <div class="opt__step">
-                <button type="button" class="opt__btn" data-step="-1" aria-label="ページを減らす">−</button>
-                <output id="estPages">0</output>
-                <button type="button" class="opt__btn" data-step="1" aria-label="ページを増やす">＋</button>
-              </div>
-              <em class="opt__price">+¥8,000<small>/頁</small></em>
-            </li>
-            <li class="opt"><label><input type="checkbox" data-name="簡易ヒアリング込みプラン" data-price="20000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>1から作る（簡易ヒアリング込み）</b><span>テンプレを使わず設計から。合計¥50,000〜相当</span></div><em class="opt__price">+¥20,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="ハイクオリティ仕様(動き・演出)" data-price="90000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>ハイクオリティ仕様</b><span>1から作る＋動き・演出（合計¥120,000〜相当。相談で確定）</span></div><em class="opt__price">+¥90,000<small>〜</small></em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="写真ギャラリー" data-price="5000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>写真ギャラリー</b><span>お店の雰囲気が伝わる写真の見せ場</span></div><em class="opt__price">+¥5,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="Googleマップ(MEO)強化" data-price="10000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>Googleマップ（MEO）強化</b><span>「近くの◯◯」で見つかる情報整備</span></div><em class="opt__price">+¥10,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="LINE予約導線" data-price="10000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>LINE予約導線</b><span>友だち追加→予約までの流れづくり</span></div><em class="opt__price">+¥10,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="ネット予約連携" data-price="15000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>ネット予約の連携</b><span>お使いの予約サービスと接続</span></div><em class="opt__price">+¥15,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="AI自動返信(一次対応)" data-price="25000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>AI自動返信（一次対応）</b><span>問い合わせに、その場で返事が返る</span></div><em class="opt__price">+¥25,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="口コミ返信AI" data-price="15000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>口コミ返信AI</b><span>丁寧な返信文案を自動で用意</span></div><em class="opt__price">+¥15,000</em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="業務改善ツール(勤怠・売上・在庫など)" data-price="60000" data-tool="1" /><span class="opt__check"></span>
-              <div class="opt__body"><b>業務改善ツール（勤怠・売上・在庫など）</b><span>ヒアリング必須・手間に合わせて見積もり</span></div><em class="opt__price">+¥60,000<small>〜</small></em></label></li>
-            <li class="opt"><label><input type="checkbox" data-name="月々の運用サポート" data-monthly="5000" /><span class="opt__check"></span>
-              <div class="opt__body"><b>月々の運用サポート</b><span>更新・軽微な修正・相談</span></div><em class="opt__price">月+¥5,000</em></label></li>
-          </ul>
+        <h2 class="section__title" data-reveal="words">見積りは、<em>完成イメージ付き</em>で。</h2>
+        <p class="quote-lead__text" data-reveal="fade">業種と必要な項目を選ぶと、<b>目安の費用</b>と<b>完成イメージ</b>がその場で分かります。そのまま無料相談にも進めます。</p>
+        <div class="quote-lead__btns" data-reveal="fade">
+          <a class="btn btn--primary" href="estimate.html" data-magnetic data-cursor="見積り"><span>かんたん見積り・完成イメージ →</span></a>
+          <a class="btn btn--ghost" href="#contact" data-magnetic data-cursor="相談"><span>無料で相談する</span></a>
         </div>
-
-        <!-- 右：目安サマリー（sticky） -->
-        <aside class="est__sum" aria-live="polite">
-          <p class="est__sum-label">あなたのお店の目安</p>
-          <p class="est__total"><span class="est__cur">¥</span><span id="estTotal">30,000</span><span class="est__unit">〜</span></p>
-          <p class="est__extra" id="estExtra"></p>
-          <ul class="est__picked" id="estPicked"><li>店舗ページ一式</li></ul>
-          <a class="btn btn--primary btn--block" href="#contact" id="estCta" data-magnetic data-cursor="相談"><span>この内容で無料相談する</span></a>
-          <p class="est__note">表示は概算の目安です。正式なお見積りは無料相談で（内容により特別なご案内をすることもあります）。入れ替えやご予算に合わせた調整も柔軟に。</p>
-        </aside>
       </div>
     </section>
 
@@ -445,7 +384,7 @@
           <span class="price-card__role">入口 — まず手軽に</span>
           <h3 class="price-card__name">Web制作・集客導線</h3>
           <p class="price-card__fee"><span class="price-card__cur">¥</span>30,000<span class="price-card__unit">〜</span></p>
-          <p class="price-card__sub">スマホ対応の店舗ページを、最短3〜5日で。詳しい内容は<a href="#estimator" data-cursor="試す">かんたん見積り</a>で組み立てられます。</p>
+          <p class="price-card__sub">スマホ対応の店舗ページを、最短3〜5日で。詳しい内容は<a href="estimate.html" data-cursor="試す">かんたん見積り</a>で組み立てられます。</p>
           <ul class="tierlist">
             <li><span>テンプレートから作る<small>数種類のテンプレから、あなたのお店仕様に完成</small></span><b>¥30,000<i>〜</i></b></li>
             <li><span>1から作る<small>簡易ヒアリング込み。設計から作るオリジナル</small></span><b>¥50,000<i>〜</i></b></li>
@@ -559,7 +498,7 @@
   <!-- スマホ追従CTA（860px以下・ヒーロー通過後に出現） -->
   <div class="cta-bar" id="ctaBar">
     <a class="cta-bar__main" href="#contact">無料で相談する</a>
-    <a class="cta-bar__quote" href="#estimator">かんたん見積り</a>
+    <a class="cta-bar__quote" href="estimate.html">かんたん見積り</a>
   </div>
 
   <!-- 配色スイッチャー（色の方向性を試す。確定後は固定/削除可） -->
