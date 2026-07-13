@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="かんたん見積り｜業種と必要な項目を選ぶだけで、費用の目安と「こんなサイトになる」完成イメージがその場で分かります。Nos Technology" />
+  <meta name="theme-color" content="#F2F0EA" />
+  <meta name="robots" content="index,follow" />
+  <link rel="canonical" href="https://nextonestepinfo-ops.github.io/nos-technology-lp/estimate.html" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Nos Technology" />
+  <meta property="og:title" content="かんたん見積り — 完成イメージ付き | Nos Technology" />
+  <meta property="og:description" content="選ぶだけで、目安と完成イメージがその場で分かります。" />
+  <meta property="og:image" content="https://nextonestepinfo-ops.github.io/nos-technology-lp/assets/og/og-default.svg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <title>かんたん見積り — 完成イメージ付き | Nos Technology</title>
+
+  <link rel="icon" href="assets/favicon/favicon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="assets/favicon/apple-touch-icon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" /></noscript>
+
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/sections.css" />
+  <link rel="stylesheet" href="css/mobile.css" />
+  <link rel="stylesheet" href="css/estimate.css" />
+
+  <script type="importmap">
+    { "imports": { "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js", "lenis": "https://cdn.jsdelivr.net/npm/lenis@1.1.14/dist/lenis.mjs" } }
+  </script>
+</head>
+
+<body>
+  <!-- 背景の流れる光 -->
+  <canvas class="bg-flow" id="bgFlow" aria-hidden="true"></canvas>
+
+  <!-- カスタムカーソル -->
+  <div class="cursor" id="cursor" aria-hidden="true">
+    <span class="cursor__dot"></span>
+    <span class="cursor__ring"></span>
+    <span class="cursor__label"></span>
+  </div>
+
+  <!-- ヘッダー -->
+  <header class="header" id="header">
+    <a class="header__brand" href="index.html" data-magnetic>
+      <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+        <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/>
+        <path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+        <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/>
+        <path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+      </svg>
+      <span class="header__name"><b>Nos</b><span>Technology</span></span>
+    </a>
+    <nav class="header__nav" aria-label="メインナビゲーション">
+      <a href="services/web.html">Web制作</a>
+      <a href="services/system.html">業務改善</a>
+      <a href="services/ai.html">システム開発</a>
+      <a href="index.html#pricing">料金</a>
+      <a href="index.html#faq">FAQ</a>
+    </nav>
+    <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
+    <a class="header__cta" href="index.html#contact" data-magnetic data-cursor="無料相談"><span>無料相談</span></a>
+  </header>
+
+  <!-- モバイルメニュー -->
+  <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
+    <a href="index.html" style="--mi:0"><small>Top</small>ホーム</a>
+    <a href="services/web.html" style="--mi:1"><small>01</small>Web制作</a>
+    <a href="services/system.html" style="--mi:2"><small>02</small>業務改善ツール</a>
+    <a href="services/ai.html" style="--mi:3"><small>03</small>システム開発</a>
+    <a href="index.html#pricing" style="--mi:4"><small>Price</small>料金</a>
+    <a class="mnav__cta" href="index.html#contact" style="--mi:5">無料相談する</a>
+  </nav>
+
+  <main id="top">
+
+    <!-- 見出し -->
+    <section class="section esth">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">Quote — 完成イメージ付き</p>
+        <h1 class="section__title" data-reveal="words">かんたん見積り。</h1>
+        <p class="est__lead" data-reveal="fade">業種と必要な項目を選ぶと、<b>目安の費用</b>と<b>完成イメージ</b>がその場で分かります。</p>
+      </div>
+    </section>
+
+    <!-- 完成イメージ・プレビュー -->
+    <section class="estprev" aria-label="完成イメージのプレビュー">
+      <div class="estprev__in">
+        <figure class="estprev__web" data-reveal="fade">
+          <span class="pwin"><img id="prevWeb" src="assets/works/salon-web.webp" width="1600" height="1000" alt="完成イメージ（PC表示）" /></span>
+          <figcaption>PCでの見え方</figcaption>
+        </figure>
+        <figure class="estprev__sp" data-reveal="fade">
+          <span class="pph"><img id="prevSp" src="assets/works/salon-mobile.webp" width="900" height="1950" alt="完成イメージ（スマホ表示）" /></span>
+          <figcaption>スマホでの見え方</figcaption>
+        </figure>
+        <div class="estprev__meta" data-reveal="fade">
+          <p class="estprev__note">※ 同業種の制作イメージです。実際はあなたのお店に合わせて設計します。</p>
+          <ul class="estprev__chips" id="prevChips" aria-label="選択中のオプション"><li class="none">基本セットのみ</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- 見積り本体（indexと同じdata-*駆動） -->
+    <section class="section est" id="estimator">
+      <div class="est__grid">
+        <!-- 左：オプション選択 -->
+        <div class="est__opts">
+          <div class="field est__kind">
+            <label for="est-kind">お店の業種（プレビューが切り替わります）</label>
+            <select id="est-kind">
+              <option>美容室・サロン</option>
+              <option>カフェ・喫茶</option>
+              <option>飲食店</option>
+              <option>クリニック・整体</option>
+              <option>ジム・スタジオ</option>
+              <option>教室・スクール</option>
+              <option>その他</option>
+            </select>
+          </div>
+
+          <div class="est__base">
+            <span class="est__base-tag">基本セット（必ず含まれます）</span>
+            <div class="est__base-row"><b>店舗ページ一式（テンプレートから）</b><em>¥30,000</em></div>
+            <p class="est__base-note">数種類のテンプレートから選んで完成。スマホ対応・店舗情報・電話/LINE/Instagramリンク・Googleマップ導線・問い合わせフォーム・修正1回</p>
+          </div>
+
+          <ul class="est__list" id="estList">
+            <li class="opt opt--step">
+              <div class="opt__body"><b>ページ追加</b><span>メニュー・スタッフ紹介・こだわり など</span></div>
+              <div class="opt__step">
+                <button type="button" class="opt__btn" data-step="-1" aria-label="ページを減らす">−</button>
+                <output id="estPages">0</output>
+                <button type="button" class="opt__btn" data-step="1" aria-label="ページを増やす">＋</button>
+              </div>
+              <em class="opt__price">+¥8,000<small>/頁</small></em>
+            </li>
+            <li class="opt"><label><input type="checkbox" data-name="簡易ヒアリング込みプラン" data-price="20000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>1から作る（簡易ヒアリング込み）</b><span>テンプレを使わず設計から。合計¥50,000〜相当</span></div><em class="opt__price">+¥20,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="ハイクオリティ仕様(動き・演出)" data-price="90000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>ハイクオリティ仕様</b><span>1から作る＋動き・演出（合計¥120,000〜相当。相談で確定）</span></div><em class="opt__price">+¥90,000<small>〜</small></em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="写真ギャラリー" data-price="5000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>写真ギャラリー</b><span>お店の雰囲気が伝わる写真の見せ場</span></div><em class="opt__price">+¥5,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="Googleマップ(MEO)強化" data-price="10000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>Googleマップ（MEO）強化</b><span>「近くの◯◯」で見つかる情報整備</span></div><em class="opt__price">+¥10,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="LINE予約導線" data-price="10000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>LINE予約導線</b><span>友だち追加→予約までの流れづくり</span></div><em class="opt__price">+¥10,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="ネット予約連携" data-price="15000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>ネット予約の連携</b><span>お使いの予約サービスと接続</span></div><em class="opt__price">+¥15,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="AI自動返信(一次対応)" data-price="25000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>AI自動返信（一次対応）</b><span>問い合わせに、その場で返事が返る</span></div><em class="opt__price">+¥25,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="口コミ返信AI" data-price="15000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>口コミ返信AI</b><span>丁寧な返信文案を自動で用意</span></div><em class="opt__price">+¥15,000</em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="業務改善ツール(勤怠・売上・在庫など)" data-price="60000" data-tool="1" /><span class="opt__check"></span>
+              <div class="opt__body"><b>業務改善ツール（勤怠・売上・在庫など）</b><span>ヒアリング必須・手間に合わせて見積もり</span></div><em class="opt__price">+¥60,000<small>〜</small></em></label></li>
+            <li class="opt"><label><input type="checkbox" data-name="月々の運用サポート" data-monthly="5000" /><span class="opt__check"></span>
+              <div class="opt__body"><b>月々の運用サポート</b><span>更新・軽微な修正・相談</span></div><em class="opt__price">月+¥5,000</em></label></li>
+          </ul>
+        </div>
+
+        <!-- 右：目安サマリー（sticky） -->
+        <aside class="est__sum" aria-live="polite">
+          <p class="est__sum-label">あなたのお店の目安</p>
+          <p class="est__total"><span class="est__cur">¥</span><span id="estTotal">30,000</span><span class="est__unit">〜</span></p>
+          <p class="est__extra" id="estExtra"></p>
+          <ul class="est__picked" id="estPicked"><li>店舗ページ一式</li></ul>
+          <a class="btn btn--primary btn--block" href="index.html#contact" id="estCta" data-magnetic data-cursor="相談"><span>この内容で無料相談する</span></a>
+          <p class="est__note">表示は概算の目安です。正式なお見積りは無料相談で（内容により特別なご案内をすることもあります）。入れ替えやご予算に合わせた調整も柔軟に。</p>
+        </aside>
+      </div>
+    </section>
+  </main>
+
+  <!-- フッター（簡易） -->
+  <footer class="footer">
+    <div class="footer__bottom">
+      <span class="footer__brand">
+        <svg class="logo-mark" viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <path d="M18 20 H34 V80 H18 Z" fill="var(--ink)"/>
+          <path d="M68 20 H82 V80 H68 Z" fill="var(--ink)"/>
+          <path d="M32 20 H48 L68 80 H52 Z" fill="var(--ink)" opacity="0.82"/>
+          <path d="M64 10 H90 V34 Z" fill="var(--blue)"/>
+        </svg>
+        <span class="footer__word"><b>Nos</b><span>Technology</span></span>
+      </span>
+      <span class="footer__tagline">Systems <em>for</em> human work.</span>
+      <small>&copy; 2026 Nos Technology — これは制作中のデモサイトです（素材は仮）。</small>
+    </div>
+  </footer>
+
+  <!-- スマホ追従CTA -->
+  <div class="cta-bar" id="ctaBar">
+    <a href="index.html#contact">無料で相談する</a>
+    <a href="#estimator">目安を見る</a>
+  </div>
+
+  <button class="to-top" id="toTop" aria-label="トップへ戻る" data-cursor="Top">
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 14l6-6 6 6" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/><path d="M12 8.5v10" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/></svg>
+  </button>
+
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

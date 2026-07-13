@@ -1,0 +1,62 @@
+/* =========================================================
+   estimate.css : 見積りページ専用（完成イメージ・プレビュー）
+   トークン（--paper/--ink/--mint等）に追従。明暗どちらの面でも成立。
+   ========================================================= */
+
+/* 見出しは詰めて、プレビューを主役に */
+.esth{padding-bottom:0;}
+.esth .section__head{margin-bottom:clamp(20px,3vw,32px);}
+
+/* ---- プレビュー帯 ---- */
+.estprev{padding:0 var(--gut);}
+.estprev__in{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1fr;gap:18px;}
+.estprev figure{margin:0;}
+.estprev figcaption{margin-top:9px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);}
+
+/* ブラウザ窓（3ドット） */
+.pwin{display:block;border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);background:#fff;
+  box-shadow:0 18px 44px color-mix(in srgb,var(--ink) 14%,transparent);border-radius:10px;overflow:hidden;}
+.pwin::before{content:"";display:block;height:26px;background:color-mix(in srgb,var(--ink) 5%,#fff);
+  border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
+  background-image:
+    radial-gradient(circle 3.2px at 14px 13px,color-mix(in srgb,var(--ink) 24%,transparent) 3.2px,transparent 4.2px),
+    radial-gradient(circle 3.2px at 27px 13px,color-mix(in srgb,var(--ink) 24%,transparent) 3.2px,transparent 4.2px),
+    radial-gradient(circle 3.2px at 40px 13px,color-mix(in srgb,var(--ink) 24%,transparent) 3.2px,transparent 4.2px);}
+.pwin img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;
+  transition:opacity .3s;}
+
+/* スマホ筐体 */
+.pph{display:inline-block;position:relative;padding:16px 8px 10px;border-radius:24px;background:#fff;
+  border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);
+  box-shadow:0 18px 44px color-mix(in srgb,var(--ink) 14%,transparent);}
+.pph::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);
+  width:38px;height:4px;border-radius:2px;background:color-mix(in srgb,var(--ink) 18%,transparent);}
+.pph img{display:block;width:min(46vw,190px);border-radius:12px;transition:opacity .3s;}
+
+/* メタ（注記＋選択チップ） */
+.estprev__note{font-size:.78rem;line-height:1.7;color:var(--ink-soft);}
+.estprev__chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;padding:0;list-style:none;}
+.estprev__chips li{display:inline-flex;align-items:center;gap:7px;font-size:.76rem;color:var(--ink);
+  padding:6px 13px;border-radius:999px;border:1px solid color-mix(in srgb,var(--mint) 40%,transparent);
+  background:color-mix(in srgb,var(--mint) 8%,transparent);}
+.estprev__chips li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--mint);flex:none;}
+.estprev__chips li.none{color:var(--ink-soft);border-color:var(--line);background:transparent;}
+.estprev__chips li.none::before{background:color-mix(in srgb,var(--ink) 30%,transparent);}
+
+/* 画像切替のフェード */
+.pwin img.is-swap,.pph img.is-swap{opacity:0;}
+
+/* ---- PC ---- */
+@media (min-width:861px){
+  .estprev__in{grid-template-columns:1.25fr auto .9fr;align-items:start;gap:clamp(20px,3vw,40px);}
+  .estprev__sp{justify-self:center;}
+  .estprev__meta{align-self:end;}
+  /* 見積り本体は従来の2カラム（sections.css）を使用 */
+  .est{padding-top:clamp(40px,5vw,64px);}
+}
+@media (max-width:860px){
+  .estprev{padding:0 20px;}
+  .estprev__sp{display:none;} /* スマホでは実機で見ているのでPCイメージのみ */
+  .est{padding-top:36px;}
+}

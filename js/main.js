@@ -14,6 +14,7 @@ import { initBuildCinema } from "./build-cinema.js";
 import { initEstimator } from "./estimator.js";
 import { initMobileNav, initCtaBar } from "./nav.js";
 import { initDeck } from "./deck.js";
+import { initEstPreview, applyEstHandoff } from "./est-preview.js";
 
 // リロード時にブラウザが前回のスクロール位置を復元しないようにする（常にトップから開始）
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -72,6 +73,8 @@ async function boot() {
 
   // 5f. かんたん見積り（目安のライブ計算＋フォーム転記）
   initEstimator();
+  initEstPreview();   // 見積りページの完成イメージ・プレビュー（要素が無ければ何もしない）
+  applyEstHandoff();  // 見積りページから持ち越した内容を相談フォームへ
 
   // 6. マーキー（スクロール速度連動）
   initMarquee(document.getElementById("marquee"), lenis);

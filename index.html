@@ -24,9 +24,9 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <!-- フォントCSSは非ブロッキング読込（レンダーブロック対策）＋ウェイトを厳選 -->
-  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" />
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" media="print" onload="this.media='all'" />
-  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" /></noscript>
+  <link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" media="print" onload="this.media='all'" />
+  <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anton&family=Space+Mono:wght@400;700&family=Space+Grotesk:wght@500;700&family=Zen+Kaku+Gothic+New:wght@400;700;900&display=swap" /></noscript>
 
   <link rel="stylesheet" href="css/base.css" />
   <link rel="stylesheet" href="css/hero.css" />
@@ -97,7 +97,7 @@
       <a href="services/system.html">業務改善</a>
       <a href="services/ai.html">システム開発</a>
       <a href="#pricing">料金</a>
-      <a href="#estimator">かんたん見積り</a>
+      <a href="estimate.html">かんたん見積り</a>
       <a href="#faq">FAQ</a>
     </nav>
     <button class="menu-btn" id="menuBtn" aria-label="メニューを開く" aria-expanded="false" aria-controls="mnav"><i></i><i></i><i></i></button>
@@ -118,7 +118,7 @@
     <a href="services/system.html" style="--mi:2"><small>02</small>業務改善ツール</a>
     <a href="services/ai.html" style="--mi:3"><small>03</small>システム開発</a>
     <a href="#pricing" style="--mi:4"><small>Price</small>料金</a>
-    <a href="#estimator" style="--mi:5"><small>Quote</small>かんたん見積り</a>
+    <a href="estimate.html" style="--mi:5"><small>Quote</small>かんたん見積り</a>
     <a class="mnav__cta" href="#contact" style="--mi:6">無料相談する</a>
   </nav>
 
@@ -162,7 +162,7 @@
 
         <div class="mtop__cta" data-reveal="fade">
           <a class="mbtn mbtn--fill" href="#contact">無料で相談する</a>
-          <a class="mbtn mbtn--line" href="#estimator">かんたん見積り</a>
+          <a class="mbtn mbtn--line" href="estimate.html">かんたん見積り</a>
         </div>
 
         <dl class="mtop__stat" data-reveal="fade">
@@ -203,10 +203,10 @@
       <section class="mtop__sec">
         <p class="mtop__lab" data-reveal="fade"><b>PRICING</b>料金の入口</p>
         <nav class="mlinks" data-reveal="fade">
-          <a class="mlink" href="#estimator"><i class="yen">¥30K〜</i><b>Web・集客<small>最短3〜5日で公開</small></b><span>→</span></a>
-          <a class="mlink" href="#estimator"><i class="yen">¥60K〜</i><b>業務改善・システム<small>手間に合わせて見積り</small></b><span>→</span></a>
+          <a class="mlink" href="estimate.html"><i class="yen">¥30K〜</i><b>Web・集客<small>最短3〜5日で公開</small></b><span>→</span></a>
+          <a class="mlink" href="estimate.html"><i class="yen">¥60K〜</i><b>業務改善・システム<small>手間に合わせて見積り</small></b><span>→</span></a>
         </nav>
-        <p class="mtop__note" data-reveal="fade">下の「かんたん見積り」で、目安をその場で出せます。</p>
+        <p class="mtop__note" data-reveal="fade">「かんたん見積り」ページで、完成イメージと目安をその場で確認できます。</p>
       </section>
 
     </div>
@@ -479,7 +479,7 @@
         <h2 class="section__title" data-reveal="words">よくある質問</h2>
       </div>
       <div class="faq__list">
-        <details class="faq__item"><summary>料金はどれくらい？</summary><div class="faq__a">Webは数種類のテンプレートから完成させて<b>¥30,000〜</b>、1から作るオリジナルは<b>¥50,000〜</b>（簡易ヒアリング込み）、動き・演出のあるハイクオリティは<b>¥120,000〜</b>（相談で見積もり）。業務改善ツールは<b>¥60,000〜</b>で、ヒアリングのうえ手間（作業量）に合わせて見積もります。組み合わせは<a href="#estimator">かんたん見積り</a>で試せます。</div></details>
+        <details class="faq__item"><summary>料金はどれくらい？</summary><div class="faq__a">Webは数種類のテンプレートから完成させて<b>¥30,000〜</b>、1から作るオリジナルは<b>¥50,000〜</b>（簡易ヒアリング込み）、動き・演出のあるハイクオリティは<b>¥120,000〜</b>（相談で見積もり）。業務改善ツールは<b>¥60,000〜</b>で、ヒアリングのうえ手間（作業量）に合わせて見積もります。組み合わせは<a href="estimate.html">かんたん見積り</a>で試せます。</div></details>
         <details class="faq__item"><summary>どんなお店が対象ですか？</summary><div class="faq__a">美容室・サロン、カフェ・飲食店、クリニック・整体、ジム、教室・士業など、<b>地域のお店</b>が中心です。「何から手をつければ…」という段階のご相談も歓迎です。</div></details>
         <details class="faq__item"><summary>何から始めればいいですか？</summary><div class="faq__a">まずは<b>Webで集客を整える</b>のがおすすめ。軌道に乗ったら<b>業務をシステムで効率化</b>、と一社で伴走します。無料相談で現状を伺い、必要な分だけご提案します。</div></details>
         <details class="faq__item"><summary>対応してくれる範囲は？</summary><div class="faq__a">Web制作・集客導線（Googleマップ/Instagram/問い合わせフォーム）、AI業務自動化（返信文案・通知・見込み客の整理）、予約・顧客などの<b>管理画面/システム開発</b>まで、まとめて対応します。</div></details>
@@ -537,7 +537,7 @@
       <a href="services/system.html">業務改善ツール</a>
       <a href="services/ai.html">システム開発</a>
       <a href="#pricing">料金</a>
-      <a href="#estimator">かんたん見積り</a>
+      <a href="estimate.html">かんたん見積り</a>
       <a href="#faq">FAQ</a>
       <a href="#contact">無料相談</a>
     </nav>
