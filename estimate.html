@@ -79,51 +79,58 @@
 
   <main id="top">
 
-    <!-- 見出し -->
-    <section class="section esth">
-      <div class="section__head">
-        <p class="section__eyebrow" data-reveal="fade">Quote — 完成イメージ付き</p>
-        <h1 class="section__title" data-reveal="words">かんたん見積り。</h1>
-        <p class="est__lead" data-reveal="fade">業種と必要な項目を選ぶと、<b>目安の費用</b>と<b>完成イメージ</b>がその場で分かります。</p>
-      </div>
-    </section>
+    <!-- 完成イメージ・ヒーロー（左＝コピー＋業種選択＋一点もの訴求／右＝デバイス・プレビュー） -->
+    <section class="esthero" aria-label="完成イメージと見積り">
+      <div class="esthero__in">
+        <div class="esthero__copy">
+          <p class="section__eyebrow" data-reveal="fade">Quote — 見積り</p>
+          <h1 class="esthero__title" data-reveal="words">先に、完成イメージを<br>見てから決める。</h1>
+          <p class="esthero__lead" data-reveal="fade">業種を選ぶと、<b>費用の目安</b>と<b>完成イメージ</b>がその場で分かります。</p>
 
-    <!-- 完成イメージ・プレビュー -->
-    <section class="estprev" aria-label="完成イメージのプレビュー">
-      <div class="estprev__in">
-        <figure class="estprev__web" data-reveal="fade">
-          <span class="pwin"><img id="prevWeb" src="assets/works/salon-web.webp" width="1600" height="1000" alt="完成イメージ（PC表示）" /></span>
-          <figcaption>PCでの見え方</figcaption>
-        </figure>
-        <figure class="estprev__sp" data-reveal="fade">
-          <span class="pph"><img id="prevSp" src="assets/works/salon-mobile.webp" width="900" height="1950" alt="完成イメージ（スマホ表示）" /></span>
-          <figcaption>スマホでの見え方</figcaption>
-        </figure>
-        <div class="estprev__meta" data-reveal="fade">
-          <p class="estprev__note">※ 同業種の制作イメージです。実際はあなたのお店に合わせて設計します。</p>
-          <ul class="estprev__chips" id="prevChips" aria-label="選択中のオプション"><li class="none">基本セットのみ</li></ul>
+          <div class="kindpick" data-reveal="fade">
+            <span class="kindpick__label">業種を選ぶ</span>
+            <div class="kindchips" id="kindChips" role="group" aria-label="お店の業種を選ぶ">
+              <button type="button" class="kindchip is-on" data-kind="美容室・サロン">美容室・サロン</button>
+              <button type="button" class="kindchip" data-kind="カフェ・喫茶">カフェ・喫茶</button>
+              <button type="button" class="kindchip" data-kind="飲食店">飲食店</button>
+              <button type="button" class="kindchip" data-kind="クリニック・整体">クリニック・整体</button>
+              <button type="button" class="kindchip" data-kind="ジム・スタジオ">ジム・スタジオ</button>
+              <button type="button" class="kindchip" data-kind="教室・スクール">教室・スクール</button>
+              <button type="button" class="kindchip" data-kind="その他">その他</button>
+            </div>
+          </div>
+
+          <aside class="ordermade" data-reveal="fade">
+            <span class="ordermade__stamp">Order-made — 一点もの</span>
+            <p class="ordermade__text">これは<b>“イメージ”</b>です。実物は、あなたのお店に合わせて<b>ここに写っている以上のもの</b>を、一つひとつ作り込みます。</p>
+          </aside>
+        </div>
+
+        <div class="esthero__preview" data-reveal="fade">
+          <figure class="pdev">
+            <span class="pwin">
+              <span class="pwin__bar" aria-hidden="true"><i></i><i></i><i></i><span class="pwin__url" id="prevUrl">salon-nos.jp</span></span>
+              <span class="pwin__screen"><img id="prevWeb" src="assets/works/salon-web.webp" alt="完成イメージ（PC表示）" /></span>
+            </span>
+            <span class="pph">
+              <span class="pph__screen"><img id="prevSp" src="assets/works/salon-mobile.webp" alt="完成イメージ（スマホ表示）" /></span>
+            </span>
+          </figure>
+          <ul class="estprev__chips" id="prevChips" aria-label="この完成イメージに含まれる内容"><li class="none">基本セットのみ</li></ul>
         </div>
       </div>
     </section>
 
-    <!-- 見積り本体（indexと同じdata-*駆動） -->
+    <!-- 見積り本体（data-*駆動：オプションを選ぶと目安が更新） -->
     <section class="section est" id="estimator">
+      <div class="section__head">
+        <p class="section__eyebrow" data-reveal="fade">Estimate — 費用の目安</p>
+        <h2 class="section__title" data-reveal="words">必要な分だけ、選ぶ。</h2>
+        <p class="est__lead" data-reveal="fade">基本セットに、欲しい機能を足していくだけ。<b>合計の目安</b>が右にその場で出ます。</p>
+      </div>
       <div class="est__grid">
         <!-- 左：オプション選択 -->
         <div class="est__opts">
-          <div class="field est__kind">
-            <label for="est-kind">お店の業種（プレビューが切り替わります）</label>
-            <select id="est-kind">
-              <option>美容室・サロン</option>
-              <option>カフェ・喫茶</option>
-              <option>飲食店</option>
-              <option>クリニック・整体</option>
-              <option>ジム・スタジオ</option>
-              <option>教室・スクール</option>
-              <option>その他</option>
-            </select>
-          </div>
-
           <div class="est__base">
             <span class="est__base-tag">基本セット（必ず含まれます）</span>
             <div class="est__base-row"><b>店舗ページ一式（テンプレートから）</b><em>¥30,000</em></div>

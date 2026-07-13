@@ -3,60 +3,96 @@
    トークン（--paper/--ink/--mint等）に追従。明暗どちらの面でも成立。
    ========================================================= */
 
-/* 見出しは詰めて、プレビューを主役に */
-.esth{padding-bottom:0;}
-.esth .section__head{margin-bottom:clamp(20px,3vw,32px);}
+/* ===== 完成イメージ・ヒーロー（左＝コピー／右＝デバイス） ===== */
+.esthero{background:var(--paper);padding:clamp(116px,15vh,164px) var(--gut) clamp(48px,7vw,84px);}
+.esthero__in{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1fr;gap:clamp(30px,5vw,56px);align-items:center;}
 
-/* ---- プレビュー帯 ---- */
-.estprev{padding:0 var(--gut);}
-.estprev__in{max-width:var(--maxw);margin:0 auto;display:grid;grid-template-columns:1fr;gap:18px;}
-.estprev figure{margin:0;}
-.estprev figcaption{margin-top:9px;font-family:var(--mono);font-size:.68rem;letter-spacing:.14em;
-  text-transform:uppercase;color:var(--ink-soft);}
+.esthero__title{font-size:clamp(2.1rem,4.4vw,3.5rem);font-weight:900;line-height:1.14;letter-spacing:.01em;
+  color:var(--ink);margin:14px 0 0;}
+.esthero__lead{max-width:46ch;margin:18px 0 0;color:var(--ink-soft);
+  font-size:clamp(1rem,1.4vw,1.12rem);line-height:1.9;}
+.esthero__lead b{color:var(--ink);font-weight:700;}
 
-/* ブラウザ窓（3ドット） */
-.pwin{display:block;border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);background:#fff;
-  box-shadow:0 18px 44px color-mix(in srgb,var(--ink) 14%,transparent);border-radius:10px;overflow:hidden;}
-.pwin::before{content:"";display:block;height:26px;background:color-mix(in srgb,var(--ink) 5%,#fff);
-  border-bottom:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
-  background-image:
-    radial-gradient(circle 3.2px at 14px 13px,color-mix(in srgb,var(--ink) 24%,transparent) 3.2px,transparent 4.2px),
-    radial-gradient(circle 3.2px at 27px 13px,color-mix(in srgb,var(--ink) 24%,transparent) 3.2px,transparent 4.2px),
-    radial-gradient(circle 3.2px at 40px 13px,color-mix(in srgb,var(--ink) 24%,transparent) 3.2px,transparent 4.2px);}
-.pwin img{display:block;width:100%;aspect-ratio:16/10;object-fit:cover;object-position:top center;
-  transition:opacity .3s;}
+/* 業種チップ（プレビューを切り替える） */
+.kindpick{margin-top:clamp(24px,3.5vw,34px);}
+.kindpick__label{display:block;font-family:var(--mono);font-size:.7rem;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink-soft);margin-bottom:12px;}
+.kindchips{display:flex;flex-wrap:wrap;gap:9px;}
+.kindchip{font:inherit;font-size:.9rem;color:var(--ink-soft);cursor:pointer;
+  padding:9px 15px;border-radius:999px;border:1px solid var(--line);background:var(--paper);
+  transition:color .2s,border-color .2s,background .2s,transform .12s;}
+.kindchip:hover{color:var(--ink);border-color:color-mix(in srgb,var(--mint) 45%,transparent);}
+.kindchip:active{transform:translateY(1px);}
+.kindchip.is-on{color:#fff;background:var(--mint);border-color:var(--mint);
+  box-shadow:0 8px 20px color-mix(in srgb,var(--mint) 30%,transparent);}
+.kindchip:focus-visible{outline:2px solid var(--mint);outline-offset:2px;}
 
-/* スマホ筐体 */
-.pph{display:inline-block;position:relative;padding:16px 8px 10px;border-radius:24px;background:#fff;
-  border:1px solid color-mix(in srgb,var(--ink) 18%,transparent);
-  box-shadow:0 18px 44px color-mix(in srgb,var(--ink) 14%,transparent);}
-.pph::before{content:"";position:absolute;top:7px;left:50%;transform:translateX(-50%);
-  width:38px;height:4px;border-radius:2px;background:color-mix(in srgb,var(--ink) 18%,transparent);}
-.pph img{display:block;width:min(46vw,190px);border-radius:12px;transition:opacity .3s;}
+/* 一点もの訴求（＝これはイメージ、実物はこれ以上を作る） */
+.ordermade{position:relative;margin-top:clamp(26px,3.5vw,36px);padding:20px 22px 20px 26px;
+  border:1px solid color-mix(in srgb,var(--mint) 28%,transparent);border-radius:var(--radius);
+  background:color-mix(in srgb,var(--mint) 5%,transparent);overflow:hidden;}
+.ordermade::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--mint);}
+.ordermade__stamp{display:inline-block;font-family:var(--mono);font-size:.66rem;font-weight:700;
+  letter-spacing:.16em;text-transform:uppercase;color:var(--mint);
+  padding:5px 11px;border:1px solid color-mix(in srgb,var(--mint) 40%,transparent);border-radius:999px;
+  margin-bottom:11px;}
+.ordermade__text{font-size:.95rem;line-height:1.85;color:var(--ink);}
+.ordermade__text b{font-weight:700;color:var(--mint);}
 
-/* メタ（注記＋選択チップ） */
-.estprev__note{font-size:.78rem;line-height:1.7;color:var(--ink-soft);}
-.estprev__chips{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0 0;padding:0;list-style:none;}
-.estprev__chips li{display:inline-flex;align-items:center;gap:7px;font-size:.76rem;color:var(--ink);
+/* ===== デバイス・プレビュー（ブラウザ窓＋スマホ） ===== */
+.esthero__preview{position:relative;}
+.pdev{display:flex;align-items:flex-end;justify-content:flex-start;margin:0;}
+
+/* ブラウザ窓 */
+.pwin{flex:1 1 auto;min-width:0;display:block;border-radius:12px;overflow:hidden;background:#fff;
+  border:1px solid color-mix(in srgb,var(--ink) 12%,transparent);
+  box-shadow:0 26px 60px color-mix(in srgb,var(--ink) 16%,transparent);}
+.pwin__bar{display:flex;align-items:center;gap:7px;height:34px;padding:0 14px;
+  background:color-mix(in srgb,var(--ink) 4%,#fff);
+  border-bottom:1px solid color-mix(in srgb,var(--ink) 9%,transparent);}
+.pwin__bar i{width:9px;height:9px;border-radius:50%;background:color-mix(in srgb,var(--ink) 20%,transparent);flex:none;}
+.pwin__url{margin-left:12px;padding:3px 12px;border-radius:6px;flex:1 1 auto;
+  background:color-mix(in srgb,var(--ink) 6%,#fff);
+  font-family:var(--mono);font-size:.72rem;letter-spacing:.02em;color:var(--ink-soft);
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.pwin__screen{display:block;aspect-ratio:16/10;overflow:hidden;background:color-mix(in srgb,var(--ink) 4%,#fff);}
+.pwin__screen img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:opacity .3s;}
+
+/* スマホ（ブラウザ窓の右下に重ねる） */
+.pph{flex:0 0 clamp(88px,15%,124px);margin-left:clamp(-40px,-5vw,-20px);margin-bottom:-10px;
+  position:relative;z-index:2;padding:7px 6px;border-radius:20px;background:#fff;
+  border:1px solid color-mix(in srgb,var(--ink) 14%,transparent);
+  box-shadow:0 20px 44px color-mix(in srgb,var(--ink) 20%,transparent);}
+.pph::before{content:"";position:absolute;top:4px;left:50%;transform:translateX(-50%);
+  width:28px;height:3px;border-radius:2px;background:color-mix(in srgb,var(--ink) 16%,transparent);}
+.pph__screen{display:block;margin-top:6px;aspect-ratio:9/19;overflow:hidden;border-radius:12px;
+  background:color-mix(in srgb,var(--ink) 4%,#fff);}
+.pph__screen img{width:100%;height:100%;object-fit:cover;object-position:top center;transition:opacity .3s;}
+
+/* 画像切替のフェード */
+.pwin__screen img.is-swap,.pph__screen img.is-swap{opacity:0;}
+
+/* この完成イメージに含まれる内容（選択オプション） */
+.estprev__chips{display:flex;flex-wrap:wrap;gap:8px;margin:22px 0 0;padding:0;list-style:none;}
+.estprev__chips li{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--ink);
   padding:6px 13px;border-radius:999px;border:1px solid color-mix(in srgb,var(--mint) 40%,transparent);
   background:color-mix(in srgb,var(--mint) 8%,transparent);}
 .estprev__chips li::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--mint);flex:none;}
 .estprev__chips li.none{color:var(--ink-soft);border-color:var(--line);background:transparent;}
 .estprev__chips li.none::before{background:color-mix(in srgb,var(--ink) 30%,transparent);}
 
-/* 画像切替のフェード */
-.pwin img.is-swap,.pph img.is-swap{opacity:0;}
+/* 見積り本体：ヒーロー直後なので上余白を詰める */
+.est.section{padding-top:clamp(40px,6vw,72px);}
 
-/* ---- PC ---- */
-@media (min-width:861px){
-  .estprev__in{grid-template-columns:1.25fr auto .9fr;align-items:start;gap:clamp(20px,3vw,40px);}
-  .estprev__sp{justify-self:center;}
-  .estprev__meta{align-self:end;}
-  /* 見積り本体は従来の2カラム（sections.css）を使用 */
-  .est{padding-top:clamp(40px,5vw,64px);}
+/* ===== レイアウト分岐 ===== */
+@media (min-width:981px){
+  .esthero__in{grid-template-columns:0.92fr 1.08fr;gap:clamp(40px,5vw,72px);}
+}
+@media (max-width:980px){
+  .esthero__preview{max-width:600px;}
 }
 @media (max-width:860px){
-  .estprev{padding:0 20px;}
-  .estprev__sp{display:none;} /* スマホでは実機で見ているのでPCイメージのみ */
-  .est{padding-top:36px;}
+  /* スマホ実機で見ているのでスマホ筐体は省き、ブラウザ窓のみ大きく見せる */
+  .pph{display:none;}
+  .pdev{display:block;}
 }

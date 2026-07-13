@@ -13,6 +13,17 @@ const KIND_MAP = {
   "その他": "salon",
 };
 
+// ブラウザ窓に映すダミーURL（業種ごとに“それらしさ”を出すディテール）
+const URL_MAP = {
+  "美容室・サロン": "salon-nos.jp",
+  "カフェ・喫茶": "kissa-nos.jp",
+  "飲食店": "dining-nos.jp",
+  "クリニック・整体": "seitai-nos.jp",
+  "ジム・スタジオ": "studio-nos.jp",
+  "教室・スクール": "school-nos.jp",
+  "その他": "your-shop.jp",
+};
+
 // data-name の部分一致 → プレビューに出す短いチップ名
 const CHIP_RULES = [
   ["1から作る", "オリジナル設計"],
@@ -29,12 +40,16 @@ const CHIP_RULES = [
 ];
 
 export function initEstPreview() {
-  const kind = document.getElementById("est-kind");
   const web = document.getElementById("prevWeb");
-  if (!kind || !web) return; // プレビューの無いページ（index等）では何もしない
+  const chips = [...document.querySelectorAll(".kindchip")];
+  if (!web || !chips.length) return; // プレビューの無いページ（index等）では何もしない
   const sp = document.getElementById("prevSp");
+  const urlEl = document.getElementById("prevUrl");
   const chipsEl = document.getElementById("prevChips");
   const list = document.getElementById("estList");
+
+  // 選択中の業種（アクティブなチップが真実値）
+  const currentKind = () => (chips.find((c) => c.classList.contains("is-on")) || chips[0]).dataset.kind;
 
   // 画像切替（ふわっとフェード）
   function swapImg(img, src) {
@@ -46,10 +61,20 @@ export function initEstPreview() {
     next.src = src;
   }
   function applyKind() {
-    const k = KIND_MAP[kind.value] || "salon";
+    const kv = currentKind();
+    const k = KIND_MAP[kv] || "salon";
     swapImg(web, `assets/works/${k}-web.webp`);
     if (sp) swapImg(sp, `assets/works/${k}-mobile.webp`);
+    if (urlEl) urlEl.textContent = URL_MAP[kv] || "your-shop.jp";
   }
+
+  // チップで業種を切替（1つだけアクティブ）
+  chips.forEach((chip) => {
+    chip.addEventListener("click", () => {
+      chips.forEach((c) => c.classList.toggle("is-on", c === chip));
+      applyKind();
+    });
+  });
 
   // 選択オプション → チップ
   function applyChips() {
@@ -64,7 +89,6 @@ export function initEstPreview() {
       : `<li class="none">基本セットのみ</li>`;
   }
 
-  kind.addEventListener("change", applyKind);
   if (list) list.addEventListener("change", applyChips);
 
   // CTA：見積り内容をトップの相談フォームへ持ち越し
@@ -77,7 +101,7 @@ export function initEstPreview() {
         const extra = document.getElementById("estExtra")?.textContent || "";
         const msg = [
           "【かんたん見積りから】",
-          `業種: ${kind.value}`,
+          `業種: ${currentKind()}`,
           `希望内容: ${picked.join(" / ")}`,
           `目安: ¥${total}〜${extra ? `（${extra}）` : ""}`,
           "",

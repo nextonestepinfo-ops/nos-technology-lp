@@ -43,7 +43,10 @@ body.is-loading{overflow:hidden;height:100vh;}
 h1,h2,h3,h4,p,ul,ol,figure{margin:0;}
 ul,ol{padding:0;list-style:none;}
 a{color:inherit;text-decoration:none;}
+/* height:auto を明示：HTMLのwidth/height属性がCSSのaspect-ratioを上書きして
+   画像が縦に伸びる事故を全ページで防ぐ（既知の再発パターン） */
 img,canvas,svg{display:block;max-width:100%;}
+img{height:auto;}
 em{font-style:normal;}
 strong{font-weight:700;color:var(--ink);}
 ::selection{background:var(--ink);color:var(--paper);}
