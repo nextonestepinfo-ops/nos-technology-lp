@@ -9,244 +9,6 @@ import { RoomEnvironment } from "https://cdn.jsdelivr.net/npm/three@0.160.0/exam
 
 const hx = (s) => parseInt(s.slice(1), 16);
 
-// パネルテクスチャ解像度（高解像度化で手描きUIの文字をくっきり）。手描きは512座標系で描き、ここでスケールする。
-const TEX_W = 1024, TEX_H = 768;
-
-// パネル面：パネルサイズ用に最適化した手描きUI（太く大きい要素・ブランド配色・ビルド/スキャン演出）。
-// 512座標系で描いてテクスチャ解像度へスケール（リアル写真スクショは小サイズで白く潰れて読めないため手描きを採用）。
-function drawUI(x, kind, acc, p, t = 0) {
-  x.save();
-  x.scale(TEX_W / 512, TEX_H / 384);
-  drawUIWire(x, kind, acc, p, t);
-  x.restore();
-}
-
-// パネルサイズ用に最適化した手描きUI（512×384座標系）。
-// “実在するプロダクトの画面”に見える精度で描く＝安心感の核。
-// 実データ風の文言（名前・時刻・件数・文章）と本物の情報階層で構成する。
-// p(0〜1)で左→右に“描き込まれる”ビルド表現、t>0でライブ演出（スキャン光＋LIVE）。
-const JP = '"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN",sans-serif';
-const EN = '"Space Grotesk",sans-serif';
-
-function drawUIWire(x, kind, acc, p, t = 0) {
-  x.clearRect(0, 0, 512, 384);
-  // パネルの下地はテーマ追従：暗面=ネイビー基調 / 明面=白い紙のUI
-  const dk = acc.dark !== false;
-  const page = x.createLinearGradient(0, 0, 0, 384);
-  if (dk) { page.addColorStop(0, "#101a2e"); page.addColorStop(1, "#0a101f"); }
-  else { page.addColorStop(0, "#ffffff"); page.addColorStop(1, "#f4f2ec"); }
-  x.fillStyle = page; x.fillRect(0, 0, 512, 384);
-  const mint = acc.mint, blue = acc.blue,
-    ink = dk ? "#eaf0fc" : "#23262d", sub = dk ? "#8fa0c0" : "#7a8090",
-    soft = dk ? "#3c4d72" : "#b9bdc6", line = dk ? "#26324e" : "#e3e1d9",
-    bg = dk ? "#151f38" : "#f1efe8", surf = dk ? "#182240" : "#ffffff";
-  const pill = (px, py, pw, ph, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, ph / 2); x.fill(); };
-  const rrect = (px, py, pw, ph, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); };
-  const stroke = (px, py, pw, ph, r, col, lw = 2) => { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
-  const card = (px, py, pw, ph, r) => { rrect(px, py, pw, ph, r, surf); x.strokeStyle = line; x.lineWidth = 1.5; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
-  const txt = (s, px, py, size, col, weight = 500, font = JP) => { x.fillStyle = col; x.font = `${weight} ${size}px ${font}`; x.fillText(s, px, py); };
-
-  // 上部バー（常時表示）：種別アイコン＋日本語タイトルで“何の画面か”を一目で
-  x.fillStyle = bg; x.fillRect(0, 0, 512, 64);
-  x.strokeStyle = "rgba(255,255,255,.05)"; x.lineWidth = 2; x.strokeRect(1, 1, 510, 382);
-  x.save(); x.translate(42, 33); x.strokeStyle = mint; x.fillStyle = mint; x.lineWidth = 3; x.lineJoin = "round";
-  if (kind === "site") { x.strokeRect(-13, -12, 26, 24); x.fillRect(-13, -12, 26, 7); }
-  else if (kind === "admin") { for (let i = 0; i < 3; i++) x.fillRect(-13, -11 + i * 9, 26, 4); }
-  else if (kind === "reply") { x.beginPath(); x.roundRect(-13, -12, 26, 18, 6); x.stroke(); x.beginPath(); x.moveTo(-5, 6); x.lineTo(3, 6); x.lineTo(-7, 13); x.closePath(); x.fill(); }
-  else { x.beginPath(); x.arc(0, -3, 9, Math.PI, 0); x.lineTo(0, 13); x.closePath(); x.fill(); x.fillStyle = "#fff"; x.beginPath(); x.arc(0, -3, 3.4, 0, 7); x.fill(); }
-  x.restore();
-  txt({ site: "店舗サイト", admin: "予約・顧客管理", reply: "AI返信アシスト", map: "集客マップ" }[kind], 66, 42, 25, ink, 800);
-
-  // 本文は左→右にワイプして“出来上がる”
-  const w = Math.max(0, Math.min(1, p));
-  if (w <= 0) return;
-  x.save();
-  x.beginPath(); x.rect(0, 60, 512 * w, 324); x.clip();
-
-  if (kind === "site") {
-    // ===== 店舗の完成サイト（明るいページ＝ひと目で「Webサイト」と分かる） =====
-    const cream = "#f8f5f0", inkD = "#231d16", subD = "#8a7f70";
-    rrect(24, 72, 464, 292, 12, cream);
-    // ページ内ナビ：店名ロゴ＋メニュー＋予約ピル
-    txt("Kissa Nos", 44, 104, 19, inkD, 800, EN);
-    txt("メニュー", 210, 102, 12, subD, 600);
-    txt("こだわり", 272, 102, 12, subD, 600);
-    txt("アクセス", 334, 102, 12, subD, 600);
-    pill(398, 84, 74, 28, inkD); txt("ご予約", 418, 103, 12, "#fff", 700);
-    // 見出し（実文言）＋編集キャレット
-    txt("今日の一杯を、", 44, 156, 30, inkD, 800);
-    txt("丁寧に。", 44, 196, 30, inkD, 800);
-    if (t > 0 && (t % 1) < 0.5) { x.fillStyle = blue; x.fillRect(172, 172, 3.5, 28); }
-    txt("駅から歩いて3分。自家焙煎の", 44, 226, 12.5, subD);
-    txt("小さな喫茶店です。", 44, 246, 12.5, subD);
-    // CTA
-    pill(44, 268, 132, 40, mint); txt("ご予約する", 70, 294, 15, "#fff", 700);
-    stroke(188, 268, 122, 40, 20, "#d9d2c7", 2); txt("メニューを見る", 205, 293, 12, subD, 600);
-    // 右：写真ブロック（珈琲カップ＋湯気を描いて“写真”に見せる）
-    const ph_ = x.createLinearGradient(330, 90, 470, 300);
-    ph_.addColorStop(0, "#c8a273"); ph_.addColorStop(.55, "#8a5f3c"); ph_.addColorStop(1, "#4c3320");
-    x.fillStyle = ph_; x.beginPath(); x.roundRect(330, 88, 142, 218, 12); x.fill();
-    // ソーサー＋カップ
-    x.fillStyle = "rgba(255,248,238,.95)"; x.beginPath(); x.ellipse(401, 240, 46, 13, 0, 0, 7); x.fill();
-    x.beginPath(); x.roundRect(371, 190, 60, 46, [6, 6, 22, 22]); x.fill();
-    x.strokeStyle = "rgba(255,248,238,.95)"; x.lineWidth = 7; x.beginPath(); x.arc(437, 208, 12, -1.2, 1.3); x.stroke();
-    x.fillStyle = "#5a3d28"; x.beginPath(); x.ellipse(401, 192, 26, 7, 0, 0, 7); x.fill();
-    // 湯気（tでゆらぐ）
-    x.strokeStyle = "rgba(255,255,255,.65)"; x.lineWidth = 3; x.lineCap = "round";
-    for (let i = 0; i < 2; i++) {
-      const sx0 = 392 + i * 18, ph2 = t * 1.4 + i * 2;
-      x.beginPath(); x.moveTo(sx0, 178);
-      x.quadraticCurveTo(sx0 + Math.sin(ph2) * 7, 158, sx0 + Math.sin(ph2 + 1) * 5, 140);
-      x.stroke();
-    }
-    // 下部の店舗情報行（信頼感：営業時間・駅徒歩・星）
-    txt("★ 4.8", 44, 342, 14, "#b98a2e", 800, EN);
-    txt("口コミ 214件", 96, 341, 11, subD);
-    txt("水曜定休", 188, 341, 11, subD);
-    txt("8:00 – 18:00", 260, 341, 11.5, subD, 600, EN);
-  } else if (kind === "admin") {
-    // ===== 予約・顧客管理ダッシュボード（今日の予約が動いている） =====
-    txt("7/4（土）", 36, 92, 14, sub, 700);
-    txt("本日の予約", 110, 92, 13, sub);
-    // KPI 3枚（実数値＋前月比）
-    const kpi = [
-      ["本日の予約", (12 + Math.floor((t * 0.8) % 3)) + " 件", "▲ 2"],
-      ["今月の売上", "¥482,000", "▲ 12%"],
-      ["新規のお客様", "8 名", "▲ 3"],
-    ];
-    kpi.forEach((k, i) => {
-      const kx = 36 + i * 152;
-      card(kx, 102, 140, 66, 12);
-      txt(k[0], kx + 14, 124, 11, sub);
-      txt(k[1], kx + 14, 152, 20, ink, 800, EN);
-      txt(k[2], kx + 92, 124, 11, mint, 700, EN);
-    });
-    // 予約リスト（名前・メニュー・時刻・状態。ハイライト行が巡回）
-    const rows = [
-      ["10:00", "佐", "佐藤 美咲 様", "カット＋カラー", "確定"],
-      ["11:30", "田", "田中 蓮 様", "メンズカット", "来店中"],
-      ["14:00", "山", "山本 結衣 様", "縮毛矯正", "確定"],
-    ];
-    const hi = Math.floor(t * 0.6) % 3;
-    rows.forEach((r, i) => {
-      const ry = 184 + i * 60, on = t > 0 && i === hi;
-      if (on) { x.fillStyle = "rgba(54,197,255,.08)"; x.beginPath(); x.roundRect(28, ry - 8, 456, 56, 10); x.fill(); }
-      // 時刻
-      txt(r[0], 40, ry + 24, 15, on ? ink : sub, 700, EN);
-      // アバター（イニシャル円）
-      x.fillStyle = on ? mint : "#2c3a58"; x.beginPath(); x.arc(112, ry + 18, 17, 0, 7); x.fill();
-      txt(r[1], 105, ry + 25, 14, on ? "#08331f" : "#9fb2d4", 800);
-      // 名前・メニュー
-      txt(r[2], 142, ry + 14, 14.5, ink, 700);
-      txt(r[3], 142, ry + 36, 11.5, sub);
-      // 状態ピル
-      const stw = 74, stx = 404;
-      const active = r[4] === "来店中";
-      pill(stx, ry + 2, stw, 28, active ? mint : "rgba(61,139,255,.16)");
-      x.strokeStyle = active ? "transparent" : "rgba(61,139,255,.55)"; x.lineWidth = 1.5;
-      if (!active) { x.beginPath(); x.roundRect(stx, ry + 2, stw, 28, 14); x.stroke(); }
-      txt(r[4], stx + (active ? 16 : 19), ry + 22, 12.5, active ? "#08331f" : "#7fa7ee", 700);
-    });
-  } else if (kind === "reply") {
-    // ===== AI返信：営業時間外の問い合わせに、AIが下書き→人が確認して送信 =====
-    // 受信（お客様・営業時間外バッジ付き）
-    txt("21:04", 36, 90, 11, sub, 600, EN);
-    pill(80, 76, 92, 20, "rgba(255,138,90,.14)");
-    txt("営業時間外", 92, 91, 10.5, "#ff9a7a", 700);
-    rrect(36, 100, 292, 66, 16, "#1d2946");
-    txt("明日の15時、2名で予約", 56, 128, 14.5, "#c9d5ee");
-    txt("できますか？", 56, 152, 14.5, "#c9d5ee");
-    // 送信（AI下書き→タイプされていく）。行は意味で区切る（数字や語の泣き別れ防止）
-    const replyLines = ["ありがとうございます。", "明日15:00、2名様でご案内できます。", "ご来店お待ちしております。"];
-    const totalLen = replyLines.join("").length;
-    const shownLen = t > 0 ? Math.floor((t * 9) % (totalLen + 14)) : totalLen;
-    rrect(128, 182, 348, 92, 16, blue);
-    x.save(); x.beginPath(); x.roundRect(128, 182, 348, 92, 16); x.clip();
-    x.fillStyle = "rgba(255,255,255,.95)"; x.font = `600 13.5px ${JP}`;
-    let used = 0;
-    replyLines.forEach((lineStr, li) => {
-      const seg = lineStr.slice(0, Math.max(0, shownLen - used));
-      used += lineStr.length;
-      if (seg) x.fillText(seg, 148, 212 + li * 22);
-    });
-    x.restore();
-    txt("21:05", 440, 292, 10.5, sub, 600, EN);
-    // 安心の要：AIが下書き → 人が確認して送信
-    const bp = t > 0 ? 0.6 + 0.4 * (0.5 + 0.5 * Math.sin(t * 3)) : 1;
-    x.globalAlpha = bp;
-    pill(128, 288, 140, 26, "rgba(26,92,255,.14)");
-    txt("✦ AIが下書き", 143, 306, 12, mint, 700);
-    x.globalAlpha = 1;
-    txt("→  人が確認して送信", 280, 306, 12, sub, 600);
-    // 入力バー
-    stroke(36, 330, 388, 40, 20, line, 2);
-    txt("返信を編集…", 58, 355, 12, soft);
-    pill(436, 330, 40, 40, blue);
-    txt("→", 448, 356, 20, "#fff", 700, EN);
-  } else {
-    // ===== 集客マップ：街区・道路のある地図＋自店ピン＋高評価カード =====
-    x.fillStyle = "#0d1526"; x.fillRect(24, 72, 464, 292);
-    // 街区（少し明るいブロック）
-    x.fillStyle = "#131e33";
-    [[38, 86, 96, 70], [150, 86, 120, 54], [286, 86, 84, 88], [38, 172, 76, 92], [130, 258, 110, 88], [258, 210, 96, 66], [370, 250, 100, 96]]
-      .forEach(([bx, by, bw, bh]) => { x.beginPath(); x.roundRect(bx, by, bw, bh, 8); x.fill(); });
-    // 公園（緑地）
-    x.fillStyle = "rgba(42,150,105,.2)"; x.beginPath(); x.roundRect(388, 86, 84, 70, 10); x.fill();
-    // 道路（太めの明るい線＋中央線）
-    x.strokeStyle = "#233150"; x.lineWidth = 14; x.lineCap = "round";
-    x.beginPath(); x.moveTo(24, 240); x.quadraticCurveTo(230, 210, 488, 236); x.stroke();
-    x.beginPath(); x.moveTo(140, 72); x.lineTo(226, 364); x.stroke();
-    x.strokeStyle = "rgba(150,170,210,.25)"; x.lineWidth = 2; x.setLineDash([10, 10]);
-    x.beginPath(); x.moveTo(24, 240); x.quadraticCurveTo(230, 210, 488, 236); x.stroke();
-    x.setLineDash([]);
-    // 検索バー
-    card(40, 86, 216, 38, 19);
-    x.strokeStyle = sub; x.lineWidth = 2.5; x.beginPath(); x.arc(62, 104, 7, 0, 7); x.stroke();
-    x.beginPath(); x.moveTo(67, 110); x.lineTo(73, 116); x.stroke();
-    txt("近くの喫茶店", 84, 110, 12.5, sub, 600);
-    // 到達圏＋レーダースイープ
-    x.fillStyle = "rgba(61,139,255,.1)"; x.beginPath(); x.arc(208, 244, 84, 0, 7); x.fill();
-    if (t > 0) {
-      const rr = (t * 0.6) % 1;
-      x.strokeStyle = `rgba(61,139,255,${0.45 * (1 - rr)})`; x.lineWidth = 2.5;
-      x.beginPath(); x.arc(208, 244, 16 + rr * 80, 0, 7); x.stroke();
-      x.save(); x.beginPath(); x.arc(208, 244, 84, 0, 7); x.clip(); x.translate(208, 244); x.rotate(t * 1.1);
-      const sg = x.createLinearGradient(0, 0, 84, 0); sg.addColorStop(0, "rgba(61,139,255,.4)"); sg.addColorStop(1, "rgba(61,139,255,0)");
-      x.strokeStyle = sg; x.lineWidth = 4; x.beginPath(); x.moveTo(0, 0); x.lineTo(84, 0); x.stroke(); x.restore();
-    }
-    // 競合の小ピン（グレー）→ 自店ピン（ブランド色・最大）で"選ばれる"構図
-    [[300, 160], [120, 300]].forEach(([px2, py2]) => {
-      x.fillStyle = "#3a4666"; x.beginPath(); x.arc(px2, py2, 7, 0, 7); x.fill();
-      x.beginPath(); x.moveTo(px2, py2 + 13); x.lineTo(px2 - 6, py2 + 4); x.lineTo(px2 + 6, py2 + 4); x.closePath(); x.fill();
-    });
-    const pbo = t > 0 ? Math.sin(t * 2.2) * 3 : 0;
-    x.fillStyle = blue; x.beginPath(); x.arc(208, 234 + pbo, 19, 0, 7); x.fill();
-    x.beginPath(); x.moveTo(208, 264 + pbo); x.lineTo(192, 240 + pbo); x.lineTo(224, 240 + pbo); x.closePath(); x.fill();
-    x.fillStyle = "#fff"; x.beginPath(); x.arc(208, 234 + pbo, 7.5, 0, 7); x.fill();
-    // 自店カード（星・件数・営業中）
-    card(292, 196, 190, 118, 14);
-    txt("あなたのお店", 308, 222, 14, ink, 800);
-    txt("★ 4.8", 308, 248, 16, "#f0b445", 800, EN);
-    txt(`(${214 + (t > 0 ? Math.floor((t * 1.5) % 6) : 0)}件)`, 366, 247, 12, sub, 600, EN);
-    txt("営業中", 308, 272, 12, mint, 700);
-    txt("· 徒歩5分", 356, 272, 12, sub);
-    pill(308, 284, 76, 24, mint); txt("経路", 330, 301, 12, "#08331f", 700);
-    stroke(392, 284, 74, 24, 12, line, 1.5); txt("電話", 414, 301, 12, sub, 700);
-  }
-  x.restore();
-
-  // ホバー中のライブ表示（処理が動いている感：スキャン光＋LIVEドット）
-  if (t > 0) {
-    const sx = 24 + ((t * 0.55 * 470) % 470);
-    const g = x.createLinearGradient(sx - 36, 0, sx + 36, 0);
-    g.addColorStop(0, "rgba(26,92,255,0)"); g.addColorStop(.5, "rgba(26,92,255,.14)"); g.addColorStop(1, "rgba(26,92,255,0)");
-    x.fillStyle = g; x.fillRect(0, 60, 512, 324);
-    const blink = 0.35 + 0.65 * (0.5 + 0.5 * Math.sin(t * 8));
-    x.fillStyle = `rgba(42,193,109,${blink})`; x.beginPath(); x.arc(488, 30, 6, 0, 7); x.fill();
-    x.fillStyle = "rgba(233,238,252,.7)"; x.font = `700 13px ${EN}`; x.textAlign = "right"; x.fillText("LIVE", 476, 35); x.textAlign = "left";
-  }
-}
-
 function glowTexture() {
   const c = document.createElement("canvas"); c.width = c.height = 128;
   const x = c.getContext("2d");
@@ -384,38 +146,50 @@ export function initHeroHybrid(canvas) {
     return g;
   }
   const defs = [
-    { kind:"site",  w:2.5, h:1.85, pos:[2.9, 1.0, 0.3],  rot:[-.1, -.5, .03],  en:"Web Design",    jp:"店舗サイト制作",   note:"Design · SEO · Forms",   chips:["ランディング設計","Googleマップ","問い合わせ導線"], target:"#works" },
-    { kind:"admin", w:2.2, h:1.6,  pos:[-3.0, 1.3, -0.5], rot:[-.05, .42, -.04], en:"Admin System",  jp:"予約・顧客管理",   note:"Bookings · CRM",         chips:["予約管理","顧客管理","スタッフ管理"],     target:"#services" },
-    { kind:"reply", w:2.1, h:1.55, pos:[2.7, -1.5, -0.2], rot:[.05, -.55, .02],  en:"AI Automation", jp:"AI業務自動化",     note:"Replies in seconds",     chips:["自動文案","24時間対応","見込み客管理"],   target:"#services" },
-    { kind:"map",   w:1.95, h:1.45, pos:[-2.7, -1.2, 0.4], rot:[-.08, .5, .03],   en:"Growth",        jp:"集客・SNS導線",   note:"Local SEO · MEO",        chips:["MEO対策","SNS導線","口コミ獲得"],         target:"#services" },
+    { kind:"site",  w:2.5, h:1.875, pos:[2.9, 1.0, 0.3],  rot:[-.1, -.5, .03],  en:"Web Design",    jp:"店舗サイト制作",   note:"Design · SEO · Forms",   chips:["ランディング設計","Googleマップ","問い合わせ導線"], target:"#works" },
+    { kind:"admin", w:2.2, h:1.65, pos:[-3.0, 1.3, -0.5], rot:[-.05, .42, -.04], en:"Admin System",  jp:"予約・顧客管理",   note:"Bookings · CRM",         chips:["予約管理","顧客管理","スタッフ管理"],     target:"#services" },
+    { kind:"reply", w:2.1, h:1.575, pos:[2.7, -1.5, -0.2], rot:[.05, -.55, .02],  en:"AI Automation", jp:"AI業務自動化",     note:"Replies in seconds",     chips:["自動文案","24時間対応","見込み客管理"],   target:"#services" },
+    { kind:"map",   w:1.95, h:1.4625, pos:[-2.7, -1.2, 0.4], rot:[-.08, .5, .03],   en:"Growth",        jp:"集客・SNS導線",   note:"Local SEO · MEO",        chips:["MEO対策","SNS導線","口コミ獲得"],         target:"#services" },
   ];
   let currentAcc = { mint: "#16b89a", blue: "#3f6df0" };
+
+  // パネル面は「実際に作ったツールのスクリーンショット」を貼る＝リアリティの核。
+  // 手描きUIはAI感が出るため廃止。実プロダクト画面（管理/AI返信/MEOマップ/サイト）の
+  // 軽量webp(4:3)をテクスチャに使う。読み込み完了で needsUpdate される。
+  const texLoader = new THREE.TextureLoader();
+  function panelTexture(kind) {
+    const tex = texLoader.load(`assets/panels/panel-${kind}-tex.webp`, (t) => {
+      t.colorSpace = THREE.SRGBColorSpace;
+      t.anisotropy = maxAniso;
+      t.needsUpdate = true;
+    });
+    tex.colorSpace = THREE.SRGBColorSpace;
+    tex.anisotropy = maxAniso;
+    // ミップ有効で遠景でも縮小ノイズを抑える（1024×768はWebGL2でNPOTミップ可）
+    tex.minFilter = THREE.LinearMipmapLinearFilter;
+    tex.magFilter = THREE.LinearFilter;
+    return tex;
+  }
 
   // スマホ：パネルは生成しない（2ゾーン構成でNコアのみ。内容はDOMの.capabilityカードが担う）
   const panels = isMobileLayout ? [] : defs.map((d, idx) => {
     const geo = panelGeo(d.w, d.h);
-    // パネルごとに専用キャンバス＋テクスチャ（ビルドアニメで描き替える）
-    const cv = document.createElement("canvas"); cv.width = TEX_W; cv.height = TEX_H;
-    const ctx = cv.getContext("2d");
-    drawUI(ctx, d.kind, currentAcc, 1);
-    // 文字をくっきり：高解像度テクスチャ＋異方性フィルタ最大＋ミップ無し線形（NPOTでもボケない）
-    const tex = new THREE.CanvasTexture(cv);
-    tex.anisotropy = maxAniso; tex.colorSpace = THREE.SRGBColorSpace;
-    tex.minFilter = THREE.LinearFilter; tex.magFilter = THREE.LinearFilter; tex.generateMipmaps = false;
-    // 面は“発光する画面”として描く：emissiveMapで自発光させ暗い空間でも色が出る。強すぎると白がにじむので控えめに。
-    const face = new THREE.MeshStandardMaterial({ map: tex, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: .78, roughness: .66, metalness: 0, transparent: true, toneMapped: false });
-    const side = new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: .22, metalness: .12, transparent: true });
+    const tex = panelTexture(d.kind);
+    // 面＝ガラス画面。emissiveを強くすると白背景UIが一律発光して白飛び→拡大時にUIが飛ぶ。
+    // よって自発光はごく弱い下支えに留め、画像本来の陰影＋ライティングでUIをくっきり見せる。
+    const face = new THREE.MeshStandardMaterial({ map: tex, emissive: 0xffffff, emissiveMap: tex, emissiveIntensity: .14, roughness: .34, metalness: 0, transparent: true });
+    // 側面（厚みの縁）はやや濃いグレーにして、白いUI面と生成り地の境界を立てる
+    const side = new THREE.MeshStandardMaterial({ color: 0xcfccc3, roughness: .3, metalness: .1, transparent: true });
     const mesh = new THREE.Mesh(geo, [face, side]);
     mesh.position.set(...d.pos); mesh.rotation.set(...d.rot);
     mesh.userData = {
       kind: d.kind, en: d.en, jp: d.jp, note: d.note, chips: d.chips, idx: String(idx + 1).padStart(2, "0"), target: d.target,
       home: new THREE.Vector3(...d.pos), baseRot: new THREE.Euler(...d.rot),
-      ph: Math.random() * 6, ctx, tex,
-      h: 0, progress: 1, wasHover: false, click: 0,
+      ph: Math.random() * 6, tex,
+      h: 0, click: 0,
     };
     group.add(mesh); return mesh;
   });
-  const redraw = (panel, p, t = 0) => { drawUI(panel.userData.ctx, panel.userData.kind, currentAcc, p, t); panel.userData.tex.needsUpdate = true; };
 
   // ---- コア→各パネルの結線＋流れる光 ----
   const lines = [], pulses = [], lineMats = [], pulseMats = [];
@@ -677,17 +451,10 @@ export function initHeroHybrid(canvas) {
     panels.forEach((m, i) => {
       const u = m.userData;
       const isH = m === hovered;
-      // ホバー開始でビルドアニメを頭から
-      if (isH && !u.wasHover) u.progress = 0;
-      u.wasHover = isH;
       // ホバー寄り(0→1)
       u.h = lerp(u.h, isH ? 1 : 0, 0.15);
       // クリック演出の減衰
       u.click = lerp(u.click, 0, 0.08);
-
-      // ビルド＋ライブ：ホバー中は毎フレーム描き替え（スキャン光が動く）、解除時は完成形に
-      if (isH) { u.progress = Math.min(1, u.progress + 0.045); redraw(m, u.progress, t); }
-      else if (u.progress !== 1) { u.progress = 1; redraw(m, 1, 0); }
 
       // 他パネルはフォーカス時に奥へ退いて減光（対象を引き立てる）
       const otherR = isH ? 0 : focus;
@@ -731,9 +498,8 @@ export function initHeroHybrid(canvas) {
     pulseMats.forEach((m) => m.color.setHex(M));
     groundShadowMat.opacity = p.dark ? 0 : 0.85; // 接地影は明るい面だけ
     currentAcc = { mint: p.css.mint, blue: p.css.blue, dark: !!p.dark };
-    // 明面ではパネル画面の自発光を抑える（白飛び防止）
-    panels.forEach((m) => { m.material[0].emissiveIntensity = p.dark ? 0.78 : 0.58; });
-    panels.forEach((m) => redraw(m, m.userData.progress)); // 現在の進捗で塗り直し
+    // 実画像パネル：自発光は弱い下支えのみ（拡大時の白飛び回避）。暗面でやや強める程度。
+    panels.forEach((m) => { m.material[0].emissiveIntensity = p.dark ? 0.28 : 0.14; });
   }
   window.addEventListener("palette", (e) => applyPalette(e.detail));
 
