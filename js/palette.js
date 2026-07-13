@@ -4,9 +4,9 @@
 // AAAゲーム（FF級3D）の色使いを参考にしたシネマティック配色。すべて“真っ黒”ベース。
 // 3つのアクセント(mint/blue/lav)はグラデ/発光/ライトに使われる。dark:true で3Dの発光を強める。
 export const PALETTES = [
-  // 既定：生成り×墨×真鍮（明るい脱AI配色）。白すぎない上質紙の白に、
-  // 墨の文字・真鍮の差し色・鋼青の影。「職人の工房」を明るい面で。
-  { key:'shiro', label:'Shiro', css:{paper:'#F2F0EA',ink:'#1F2023',soft:'#6E6A5E',mint:'#A9812F',blue:'#56688C',lav:'#8A6D2B'} },
+  // 既定：生成り×墨×藍（明るい脱AI配色）。白すぎない上質紙の白に、
+  // 墨の文字と、ロゴ由来の藍（平らなインディゴ・光らせない）。鋼青を従に。
+  { key:'shiro', label:'Shiro', css:{paper:'#F2F0EA',ink:'#1F2023',soft:'#6E6A5E',mint:'#2C4EC8',blue:'#56688C',lav:'#7E97D8'} },
   // 墨×真鍮（暗い脱AI配色・切替用に保持）
   { key:'sumi', label:'Sumi', dark:true, css:{paper:'#0D0E11',ink:'#F2EFE7',soft:'#99958B',mint:'#C9A05A',blue:'#8B9DC0',lav:'#E4CFA1'} },
   // 氷晶（クリスタル）。黒地に冷たいシアン〜ブルーの発光。
