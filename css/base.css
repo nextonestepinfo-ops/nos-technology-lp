@@ -133,7 +133,7 @@ strong{font-weight:700;color:var(--ink);}
 .mnav.is-open a{opacity:1;transform:none;}
 .mnav a small{font-family:var(--en);font-size:.68rem;letter-spacing:.14em;color:var(--mint);text-transform:uppercase;}
 .mnav .mnav__cta{margin-top:18px;border:none;justify-content:center;border-radius:999px;background:var(--mint);
-  color:#fff;font-size:1.05rem;padding:16px;}
+  color:#12130F;font-size:1.05rem;padding:16px;}
 @media(max-width:860px){
   .menu-btn{display:flex;}
   /* メニューを開くためにヘッダーはモバイルでは常時表示 */
@@ -155,7 +155,7 @@ body.is-menu-open{overflow:hidden;}
 .btn::before{content:"";position:absolute;inset:0;z-index:0;transform:scaleY(0);transform-origin:bottom;transition:transform .45s var(--ease);}
 .btn:hover::before{transform:scaleY(1);}
 /* プライマリ＝青地×白文字（視認性重視） */
-.btn--primary{background:var(--mint);color:#fff;box-shadow:0 10px 36px color-mix(in srgb,var(--mint) 36%,transparent);}
+.btn--primary{background:var(--mint);color:#12130F;box-shadow:0 10px 36px color-mix(in srgb,var(--mint) 36%,transparent);}
 .btn--primary::before{background:var(--ink);}
 .btn--primary:hover{color:var(--paper);}
 .btn--ghost{color:var(--ink);border-color:var(--line);}
@@ -283,7 +283,7 @@ a,button,[data-cursor],[data-magnetic],.svc[data-overlay],.chip{cursor:pointer;}
   transform:translateY(130%);opacity:0;transition:transform .5s var(--ease),opacity .4s var(--ease);}
 .cta-bar.is-show{transform:none;opacity:1;}
 .cta-bar__main{flex:1.2;text-align:center;padding:14px 10px;border-radius:14px;background:var(--mint);
-  color:#fff;font-weight:700;font-size:.95rem;box-shadow:0 8px 24px color-mix(in srgb,var(--mint) 35%,transparent);}
+  color:#12130F;font-weight:700;font-size:.95rem;box-shadow:0 8px 24px color-mix(in srgb,var(--mint) 35%,transparent);}
 .cta-bar__quote{flex:1;text-align:center;padding:14px 10px;border-radius:14px;border:1px solid var(--line);
   color:var(--ink);font-weight:600;font-size:.9rem;background:color-mix(in srgb,var(--ink) 5%,transparent);}
 body.is-menu-open .cta-bar{opacity:0;pointer-events:none;}

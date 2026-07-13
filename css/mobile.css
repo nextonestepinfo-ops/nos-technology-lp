@@ -1,326 +1,117 @@
 /* =========================================================
-   mobile.css : スマホ専用（860px以下）
-   コンセプト = 暗いまま没入シーン型
-   1画面=1メッセージのフルスクリーン・スナップ物語（.mstory）＋
-   末尾に実用ゾーン（かんたん見積り / FAQ / 相談フォーム）。
-   PC(>860px)へは一切影響させない（全ルールを media 内 or .mstory 既定に隔離）。
+   mobile.css : スマホ専用（860px以下）— 触感型トップ（.mtop）
+   PCの3Dシネマティックに対する“指で触れる”翻訳。
+   ・世界観はPCと同一（--paper/--ink/--mint等のトークンを共有）
+   ・署名＝スワイプで送れる実UIカードデッキ（deck.js）
+   ・文字は最小。詳細はサービスページ/見積りへ
+   PC(>860px)へは一切影響させない（原則すべて media 内）。
    ========================================================= */
 
-/* スマホ専用の物語ブロックはPCでは出さない */
-.mstory{display:none;}
-
-/* 旧スマホ専用要素は物語(.mstory)に置換済み＝全幅で不使用に固定。
-   （PCで誤表示しないよう base で必ず隠す） */
-.capability,
-.hero__mstrip,.hero__mkicker,.hero__proof,.hero__mscroll{display:none;}
+/* スマホ専用トップはPCでは出さない */
+.mtop{display:none;}
 
 @media (max-width:860px){
 
-  /* 旧ピッチ系セクションはスマホでは非表示（物語＋実用ゾーンで完結） */
+  /* 旧ピッチ系セクションはスマホでは非表示（mtop＋実用ゾーンで完結） */
   #hero,.capability,.works-strip,#manifesto,#services,#pricing{display:none!important;}
+  .mtop{display:block;}
+  .home>.mtop{order:-1;}
 
-  /* 物語を先頭に、実用ゾーン(est=5/faq=6/contact=7)はその後ろ */
-  .mstory{display:block;}
-  .home>.mstory{order:-1;}
+  /* ============ 共通パーツ ============ */
+  .mtop{padding-top:calc(64px + env(safe-area-inset-top,0px));}
+  .mtop__sec{padding:44px 20px 8px;}
+  .mtop__lab{display:flex;align-items:baseline;gap:10px;margin-bottom:16px;
+    font-family:var(--en);font-size:.7rem;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-soft);}
+  .mtop__lab b{color:var(--mint);font-weight:700;}
+  .mtop__note{margin-top:14px;font-size:.78rem;line-height:1.7;color:var(--ink-soft);}
+  .mtop__more{display:inline-flex;margin-top:12px;font-weight:700;font-size:.9rem;color:var(--mint);}
 
-  /* スクロールスナップ：proximity=末尾の実用ゾーンは自由スクロール */
-  html{scroll-snap-type:y proximity;scroll-padding-top:0;}
-  body{-webkit-overflow-scrolling:touch;}
+  /* ============ ヒーロー ============ */
+  .mtop__hero{padding:12px 20px 8px;
+    background:radial-gradient(120% 70% at 50% -8%, color-mix(in srgb,var(--mint) 7%, transparent), transparent 58%);}
+  .mtop__brand{font-family:var(--en);font-weight:600;font-size:.82rem;letter-spacing:.2em;
+    text-transform:uppercase;color:var(--ink);}
+  .mtop__brand b{font-weight:700;}
+  .mtop__brand span{display:block;margin-top:4px;font-size:.6rem;letter-spacing:.24em;color:var(--ink-soft);}
+  .mtop__h1{margin:18px 0 0;font-weight:900;font-size:clamp(1.66rem,7.6vw,2.1rem);line-height:1.42;color:var(--ink);}
 
-  /* ============ シーン共通 ============ */
-  .mscene{
-    position:relative;min-height:100svh;
-    display:flex;flex-direction:column;justify-content:center;
-    padding:calc(62px + env(safe-area-inset-top,0px)) 22px calc(46px + env(safe-area-inset-bottom,0px));
-    scroll-snap-align:start;overflow:hidden;
-  }
-  .mscene__inner{position:relative;z-index:3;width:100%;max-width:30em;}
-  .mscene__inner--bottom{margin-top:auto;max-width:none;}
+  /* ---- 署名：カードデッキ ---- */
+  .deck{margin-top:22px;}
+  .deck__stage{position:relative;height:calc((100vw - 40px) * .72 + 42px);max-height:360px;
+    touch-action:pan-y;cursor:grab;}
+  .deck__stage:active{cursor:grabbing;}
+  .deck__card{position:absolute;inset:0 0 auto 0;margin:0;aspect-ratio:640/460;max-height:318px;
+    border-radius:18px;overflow:hidden;background:#fff;
+    border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);
+    box-shadow:0 24px 50px rgba(0,0,0,.45), inset 0 1px 0 rgba(255,255,255,.35);
+    will-change:transform;user-select:none;-webkit-user-drag:none;}
+  .deck__card img{width:100%;height:100%;object-fit:cover;object-position:top center;pointer-events:none;}
+  .deck__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;}
+  .deck__label{display:flex;align-items:baseline;gap:10px;min-width:0;}
+  .deck__label i{font-style:normal;font-family:var(--en);font-weight:700;font-size:.66rem;
+    letter-spacing:.12em;color:var(--mint);white-space:nowrap;}
+  .deck__label b{font-size:.95rem;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .deck__dots{display:inline-flex;gap:6px;flex:none;}
+  .deck__dots i{width:6px;height:6px;border-radius:50%;background:color-mix(in srgb,var(--ink) 22%,transparent);
+    transition:background .3s,transform .3s;}
+  .deck__dots i.on{background:var(--mint);transform:scale(1.25);}
+  .deck__hint{margin-top:8px;font-family:var(--en);font-size:.6rem;letter-spacing:.22em;
+    text-transform:uppercase;color:color-mix(in srgb,var(--ink) 45%,transparent);text-align:center;}
 
-  /* 見出し */
-  .mscene__h1{font-size:clamp(2.2rem,10.5vw,3.1rem);font-weight:900;line-height:1.16;letter-spacing:.006em;color:var(--ink);}
-  .mscene__h2{font-size:clamp(1.95rem,8.8vw,2.7rem);font-weight:900;line-height:1.2;letter-spacing:.006em;color:var(--ink);}
-  .mscene__h1 em,.mscene__h2 em{font-style:normal;white-space:nowrap; /* 強調語を途中で折らない */
-    background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav));
-    -webkit-background-clip:text;background-clip:text;color:transparent;}
-  /* 見出しは単語の途中で改行しない（不自然な折返し防止） */
-  .mscene__h1,.mscene__h2{word-break:keep-all;overflow-wrap:break-word;}
-
-  /* 本文 */
-  .mscene__lead{margin-top:16px;font-size:1rem;line-height:1.9;color:var(--ink-soft);max-width:22em;}
-  .mscene__lead b{color:var(--ink);font-weight:700;}
-  .mscene__text{margin-top:12px;font-size:.95rem;line-height:1.85;color:var(--ink-soft);max-width:24em;}
-  .mscene__text b{color:var(--ink);font-weight:700;}
-  .mscene__note{margin-top:16px;font-size:.84rem;line-height:1.7;color:var(--ink-soft);}
-
-  /* ブランド / キッカー */
-  .mscene__brand{font-family:var(--en);font-weight:600;font-size:.92rem;letter-spacing:.26em;
-    text-transform:uppercase;color:var(--ink-soft);margin-bottom:24px;}
-  .mscene__brand b{color:var(--ink);}
-  .mscene__kicker{display:inline-flex;align-items:center;gap:9px;margin-bottom:14px;
-    font-family:var(--en);font-weight:600;font-size:.7rem;letter-spacing:.14em;
-    text-transform:uppercase;color:var(--mint);}
-  .mscene__kicker b{display:inline-flex;align-items:center;justify-content:center;
-    min-width:22px;height:22px;padding:0 6px;border-radius:7px;font-size:.72rem;
-    color:var(--paper);background:linear-gradient(120deg,var(--mint),var(--blue));}
-
-  /* ボタン */
-  .mscene__actions{display:flex;flex-direction:column;gap:10px;margin-top:28px;}
+  .mtop__cta{display:flex;flex-direction:column;gap:10px;margin-top:24px;}
   .mbtn{display:flex;align-items:center;justify-content:center;padding:16px 22px;border-radius:14px;
-    font-family:var(--jp);font-weight:700;font-size:1rem;letter-spacing:.01em;
-    transition:transform .15s var(--ease),box-shadow .2s;}
+    font-weight:700;font-size:1rem;transition:transform .15s var(--ease);}
   .mbtn:active{transform:scale(.98);}
-  .mbtn--primary{color:#fff;background:var(--mint);box-shadow:0 12px 30px color-mix(in srgb,var(--mint) 34%,transparent);}
-  .mbtn--ghost{color:var(--ink);background:var(--glass);border:1px solid var(--line);backdrop-filter:blur(8px);}
+  .mbtn--fill{background:var(--mint);color:#12130F;
+    box-shadow:0 10px 28px color-mix(in srgb,var(--mint) 28%,transparent);}
+  .mbtn--line{color:var(--ink);border:1px solid color-mix(in srgb,var(--ink) 30%,transparent);}
 
-  /* 「詳しく →」リンク */
-  .mscene__more{display:inline-flex;align-items:center;gap:8px;margin-top:20px;
-    font-weight:700;font-size:.92rem;color:var(--mint);}
-  .mscene__more i{font-style:normal;transition:transform .3s var(--ease);}
-  .mscene__more:active i{transform:translateX(4px);}
+  .mtop__stat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:22px 0 0;
+    padding:15px 6px;border-radius:16px;
+    background:color-mix(in srgb,var(--ink) 4%,transparent);
+    border:1px solid color-mix(in srgb,var(--ink) 12%,transparent);}
+  .mtop__stat > div{position:relative;display:flex;flex-direction:column;align-items:center;gap:3px;text-align:center;}
+  .mtop__stat > div + div::before{content:"";position:absolute;left:-4px;top:16%;height:68%;width:1px;
+    background:color-mix(in srgb,var(--ink) 12%,transparent);}
+  .mtop__stat dt{order:2;font-size:.64rem;letter-spacing:.04em;color:var(--ink-soft);}
+  .mtop__stat dd{order:1;margin:0;display:inline-flex;align-items:baseline;font-family:var(--en);color:var(--ink);}
+  .mtop__stat dd b{font-weight:700;font-size:1.38rem;line-height:1;color:var(--mint);}
+  .mtop__stat dd span{font-size:.78rem;font-weight:600;color:var(--ink-soft);}
+  .mtop__stat dd .cur{font-size:.88rem;margin-right:1px;color:var(--ink-soft);}
 
-  /* スクロール誘導 */
-  .mscene__cue{position:absolute;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom,0px));z-index:3;
-    display:flex;flex-direction:column;align-items:center;gap:8px;
-    font-family:var(--en);font-size:.6rem;letter-spacing:.3em;color:color-mix(in srgb,var(--ink) 50%,transparent);}
-  .mscene__cue i{width:1px;height:30px;background:linear-gradient(180deg,var(--mint),transparent);
-    animation:mCue 1.8s ease-in-out infinite;transform-origin:top;}
-  @keyframes mCue{0%,100%{transform:scaleY(.35);opacity:.4;}50%{transform:scaleY(1);opacity:1;}}
+  /* ============ 一行リンク（仕様書風の行） ============ */
+  .mlinks{display:block;border-top:1px solid color-mix(in srgb,var(--ink) 14%,transparent);}
+  .mlink{display:grid;grid-template-columns:auto 1fr auto;gap:14px;align-items:center;
+    padding:16px 2px;border-bottom:1px solid color-mix(in srgb,var(--ink) 10%,transparent);}
+  .mlink i{font-style:normal;font-family:var(--en);font-weight:700;font-size:.72rem;
+    letter-spacing:.08em;color:var(--mint);}
+  .mlink i.yen{font-size:.86rem;}
+  .mlink b{font-size:1.02rem;font-weight:700;color:var(--ink);line-height:1.4;}
+  .mlink b small{display:block;margin-top:2px;font-size:.74rem;font-weight:500;color:var(--ink-soft);}
+  .mlink span{font-family:var(--en);color:var(--ink-soft);}
+  .mlink:active{background:color-mix(in srgb,var(--ink) 5%,transparent);}
 
-  /* アンビエント：グロー / グリッド */
-  .mscene__orb{position:absolute;z-index:1;border-radius:50%;filter:blur(6px);pointer-events:none;
-    width:min(90vw,440px);height:min(90vw,440px);top:-8%;left:50%;transform:translateX(-50%);
-    background:radial-gradient(circle,color-mix(in srgb,var(--mint) 30%,transparent),transparent 66%);}
-  .mscene__orb--b{top:auto;bottom:-12%;left:16%;transform:none;
-    background:radial-gradient(circle,color-mix(in srgb,var(--blue) 24%,transparent),transparent 66%);}
-  .mscene__grid{position:absolute;inset:0;z-index:1;opacity:.5;pointer-events:none;
-    background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
-    background-size:46px 46px;
-    -webkit-mask-image:radial-gradient(80% 55% at 50% 8%,#000,transparent 78%);
-            mask-image:radial-gradient(80% 55% at 50% 8%,#000,transparent 78%);}
-
-  /* ============ Scene: ヒーロー（作り込み版） ============ */
-  .mscene--hero{
-    justify-content:flex-end;text-align:left;
-    padding-top:70px;
-    background:radial-gradient(130% 70% at 50% -8%, #0c1428 0%, var(--paper) 56%), var(--paper);
-  }
-  .mscene--hero .mscene__inner{max-width:none;}
-
-  /* --- オーロラ（ドリフトする光の塊） --- */
-  .mhero__aura{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none;}
-  .mhero__blob{position:absolute;border-radius:50%;filter:blur(44px);opacity:.62;mix-blend-mode:screen;}
-  .mhero__blob--1{width:78vw;height:78vw;top:-14%;left:-16%;
-    background:radial-gradient(circle,color-mix(in srgb,var(--mint) 60%,transparent),transparent 68%);
-    animation:mAura1 20s ease-in-out infinite;}
-  .mhero__blob--2{width:70vw;height:70vw;top:2%;right:-20%;
-    background:radial-gradient(circle,color-mix(in srgb,var(--blue) 55%,transparent),transparent 68%);
-    animation:mAura2 24s ease-in-out infinite;}
-  .mhero__blob--3{width:64vw;height:64vw;top:26%;left:14%;
-    background:radial-gradient(circle,color-mix(in srgb,var(--lav) 42%,transparent),transparent 70%);
-    animation:mAura3 28s ease-in-out infinite;}
-  @keyframes mAura1{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(10%,8%) scale(1.15);}}
-  @keyframes mAura2{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(-8%,10%) scale(1.1);}}
-  @keyframes mAura3{0%,100%{transform:translate(0,0) scale(1);}50%{transform:translate(6%,-8%) scale(1.18);}}
-
-  /* --- 浮遊プロダクトカード：中央フォン＋左右にダッシュボードが扇状 --- */
-  .mhero__cards{position:absolute;left:0;right:0;top:0;height:54%;z-index:1;pointer-events:none;}
-  .mhero__card{position:absolute;margin:0;border-radius:15px;overflow:hidden;
-    background:#0d1424;border:1px solid rgba(255,255,255,.16);
-    box-shadow:0 34px 66px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.14);
-    opacity:0;}
-  .mhero__card img{display:block;width:100%;height:100%;object-fit:cover;object-position:top center;}
-  /* 中央フォン背後のスポット発光（主役を浮かせる） */
-  .mhero__cards::before{content:"";position:absolute;top:8%;left:50%;transform:translateX(-50%);
-    width:70%;height:70%;border-radius:50%;filter:blur(40px);z-index:0;
-    background:radial-gradient(circle,color-mix(in srgb,var(--mint) 26%,transparent),transparent 66%);}
-  /* 左奥：管理ダッシュボード */
-  .mhero__card--admin{width:58%;aspect-ratio:16/10;top:19%;left:-9%;z-index:1;filter:brightness(.92);
-    animation:mCardIn 1s var(--ease) .05s forwards, mFloatB 9s ease-in-out 1.2s infinite;}
-  /* 右奥：AIアシスト */
-  .mhero__card--ai{width:52%;aspect-ratio:16/10;top:29%;right:-8%;z-index:1;filter:brightness(.9) blur(.3px);
-    animation:mCardIn 1s var(--ease) .22s forwards, mFloatA 10.5s ease-in-out 1.4s infinite;}
-  /* 中央前：実店舗サイト（主役） */
-  .mhero__card--phone{width:39%;aspect-ratio:9/19.3;top:8%;left:50%;z-index:3;
-    box-shadow:0 40px 80px rgba(0,0,0,.66),0 0 46px color-mix(in srgb,var(--mint) 24%,transparent),0 0 0 1px rgba(255,255,255,.1),inset 0 1px 0 rgba(255,255,255,.18);
-    animation:mCardIn 1s var(--ease) .14s forwards, mFloatP 8s ease-in-out 1.3s infinite;}
-  @keyframes mCardIn{from{opacity:0;transform:translateY(24px) scale(.95);}to{opacity:1;}}
-  /* 各カードの静止姿勢を保った浮遊（translateで上下） */
-  .mhero__card--admin{transform:rotate(-9deg);}
-  .mhero__card--ai{transform:rotate(7deg);}
-  .mhero__card--phone{transform:translateX(-50%) rotate(-2deg);}
-  @keyframes mFloatP{0%,100%{transform:translateX(-50%) rotate(-2deg) translateY(0);}50%{transform:translateX(-50%) rotate(-2deg) translateY(-12px);}}
-  @keyframes mFloatA{0%,100%{transform:rotate(7deg) translateY(0);}50%{transform:rotate(7deg) translateY(-11px);}}
-  @keyframes mFloatB{0%,100%{transform:rotate(-9deg) translateY(0);}50%{transform:rotate(-9deg) translateY(-8px);}}
-
-  /* コピー可読性：下からのシネマティック・スクリム（カード群を下で溶かす） */
-  .mhero__scrim{position:absolute;inset:0;z-index:2;pointer-events:none;
-    background:linear-gradient(to top,
-      var(--paper) 30%,
-      color-mix(in srgb,var(--paper) 88%,transparent) 44%,
-      color-mix(in srgb,var(--paper) 40%,transparent) 60%,
-      transparent 78%);}
-
-  /* フィルムグレイン（質感） */
-  .mhero__grain{position:absolute;inset:0;z-index:4;pointer-events:none;opacity:.05;mix-blend-mode:soft-light;
-    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-    background-size:180px 180px;}
-
-  /* コピー（映画的な段階登場） */
-  .mhero__copy{z-index:5;}
-  .mhero__eyebrow{display:inline-flex;align-items:center;gap:8px;margin-bottom:16px;
-    font-size:.74rem;font-weight:600;letter-spacing:.02em;color:var(--ink);
-    padding:7px 14px 7px 12px;border-radius:999px;
-    background:color-mix(in srgb,var(--paper) 55%,transparent);border:1px solid var(--line);
-    backdrop-filter:blur(8px);}
-  .mhero__eyebrow i{width:7px;height:7px;border-radius:50%;
-    background:var(--mint);box-shadow:0 0 12px var(--mint);animation:mPulse 2.4s ease-in-out infinite;}
-  @keyframes mPulse{0%,100%{opacity:.45;transform:scale(.8);}50%{opacity:1;transform:scale(1);}}
-  .mhero__h1{font-size:clamp(2.35rem,11vw,3.3rem);letter-spacing:.004em;
-    text-shadow:0 2px 40px color-mix(in srgb,var(--paper) 60%,transparent);}
-  /* 見出しの差し色にアニメのシャイン（プロ感） */
-  .mhero__h1 em{background:linear-gradient(110deg,var(--mint),var(--blue),var(--lav),var(--mint));
-    background-size:280% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;
-    animation:mShine 6s linear infinite;}
-  @keyframes mShine{to{background-position:280% 0;}}
-
-  /* 段階登場（各要素を時間差で） */
-  .mhero__eyebrow,.mhero__h1,.mhero__copy .mscene__lead,.mhero__copy .mscene__actions{
-    opacity:0;animation:mRise .8s var(--ease) forwards;}
-  .mhero__eyebrow{animation-delay:.35s;}
-  .mhero__h1{animation-delay:.48s;}
-  .mhero__copy .mscene__lead{animation-delay:.62s;}
-  .mhero__copy .mscene__actions{animation-delay:.76s;}
-  @keyframes mRise{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
-
-  /* CTAをガラス質＋発光でプレミアムに */
-  .mscene--hero .mbtn--primary{
-    background:linear-gradient(135deg,var(--mint),var(--blue));
-    box-shadow:0 14px 34px color-mix(in srgb,var(--mint) 40%,transparent),inset 0 1px 0 rgba(255,255,255,.4);}
-
-  /* ============ Scene: 全面ビジュアル（つくる/Web） ============ */
-  .mscene--shot{justify-content:flex-end;padding-top:76px;}
-  .mscene__bg{position:absolute;inset:0;z-index:0;width:100%;height:100%;object-fit:cover;object-position:top center;}
-  .mscene__scrim{position:absolute;inset:0;z-index:1;
-    background:
-      linear-gradient(to top, var(--paper) 6%, color-mix(in srgb,var(--paper) 82%,transparent) 26%, transparent 58%),
-      linear-gradient(to bottom, color-mix(in srgb,var(--paper) 70%,transparent), transparent 26%);}
-  .mscene__meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
-  .mscene__meta span{font-family:var(--en);font-weight:700;font-size:.8rem;color:#fff;
-    padding:6px 13px;border-radius:999px;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);}
-
-  /* ============ シーン共通の追加パーツ（密度を上げる小物） ============ */
-  /* アンビエント光のバリエーション */
-  .mscene__orb--c{width:60vw;height:60vw;top:-8%;right:-18%;left:auto;transform:none;
-    background:radial-gradient(circle,color-mix(in srgb,var(--blue) 22%,transparent),transparent 66%);}
-  .mscene__orb--d{width:56vw;height:56vw;top:auto;bottom:-10%;left:-14%;transform:none;
-    background:radial-gradient(circle,color-mix(in srgb,var(--lav) 18%,transparent),transparent 66%);}
-
-  /* Scene2: 浮かせた別業種の制作例（“数を作っている”を一枚で） */
-  .mscene__float{position:absolute;z-index:2;top:9%;right:5%;width:31%;aspect-ratio:9/19.3;margin:0;
-    border-radius:13px;overflow:hidden;border:1px solid rgba(255,255,255,.18);
-    box-shadow:0 26px 52px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.14);
-    transform:rotate(5deg);animation:mFloatC 9s ease-in-out infinite;}
-  .mscene__float img{width:100%;height:100%;object-fit:cover;object-position:top center;}
-  @keyframes mFloatC{0%,100%{transform:rotate(5deg) translateY(0);}50%{transform:rotate(5deg) translateY(-10px);}}
-
-  /* 対象業務チップ（少し傾けて“貼った”感じに） */
-  .mchips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0;padding:0;list-style:none;}
-  .mchips li{display:inline-flex;align-items:center;gap:7px;font-size:.78rem;color:var(--ink);
-    padding:7px 13px;border-radius:999px;background:var(--glass);border:1px solid var(--line);
-    backdrop-filter:blur(6px);}
-  .mchips li::before{content:"";width:5px;height:5px;border-radius:50%;flex:none;
-    background:linear-gradient(120deg,var(--mint),var(--blue));}
-  .mchips li:nth-child(odd){transform:rotate(-1.4deg);}
-  .mchips li:nth-child(even){transform:rotate(1.2deg);}
-
-  /* 自動化の流れ（3ステップ） */
-  .mflow{display:flex;gap:7px;margin:16px 0 0;padding:0;list-style:none;counter-reset:mf;}
-  .mflow li{flex:1;font-size:.72rem;line-height:1.5;color:var(--ink);text-align:center;
-    padding:10px 6px 9px;border-radius:12px;background:var(--surface);border:1px solid var(--line);}
-  .mflow li::before{content:counter(mf,decimal-leading-zero);counter-increment:mf;display:block;
-    font-family:var(--en);font-weight:700;font-size:.62rem;letter-spacing:.1em;color:var(--mint);margin-bottom:3px;}
-
-  /* 対応業種が流れる帯（実績シーン下部） */
-  .mmarq{position:absolute;left:0;right:0;bottom:calc(26px + env(safe-area-inset-bottom,0px));z-index:3;overflow:hidden;
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);
-            mask-image:linear-gradient(90deg,transparent,#000 12%,#000 88%,transparent);}
-  .mmarq__track{display:inline-flex;gap:9px;white-space:nowrap;padding:0 6px;
-    animation:mMarq 26s linear infinite;}
-  .mmarq__track span{flex:none;display:inline-flex;align-items:center;gap:7px;
-    font-size:.76rem;color:var(--ink-soft);padding:7px 14px;border-radius:999px;
-    background:var(--glass);border:1px solid var(--line);}
-  .mmarq__track span::before{content:"";width:5px;height:5px;border-radius:50%;
-    background:linear-gradient(120deg,var(--mint),var(--blue));}
-  @keyframes mMarq{to{transform:translateX(-50%);}}
-
-  /* 料金カードの“含まれるもの”ミニリスト */
-  .mprice__points{margin:12px 0 0;padding:12px 0 0;list-style:none;display:flex;flex-direction:column;gap:6px;
-    border-top:1px dashed var(--line);}
-  .mprice__points li{position:relative;padding-left:20px;font-size:.78rem;line-height:1.6;color:var(--ink-soft);}
-  .mprice__points li::before{content:"";position:absolute;left:2px;top:6px;width:9px;height:5px;
-    border-left:2px solid var(--mint);border-bottom:2px solid var(--mint);transform:rotate(-45deg);}
-
-  /* 相談シーンの安心チップ */
-  .mtrust{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0 0;padding:0;list-style:none;}
-  .mtrust li{display:inline-flex;align-items:center;gap:8px;font-size:.76rem;color:var(--ink-soft);
-    padding:7px 13px;border-radius:999px;background:var(--surface);border:1px solid var(--line);}
-  .mtrust li::before{content:"";width:9px;height:5px;flex:none;
-    border-left:2px solid var(--mint);border-bottom:2px solid var(--mint);transform:rotate(-45deg) translateY(-1px);}
-
-  /* ============ Scene: プロダクト画像（つかう/まかせる） ============ */
-  .mscene--panel{background:radial-gradient(120% 80% at 50% 10%, #0b1326 0%, var(--paper) 62%);}
-  .mscene--alt{background:radial-gradient(120% 80% at 50% 92%, #0b1326 0%, var(--paper) 62%);}
-  .mscene__frame{margin:22px 0 4px;border-radius:16px;overflow:hidden;
-    border:1px solid var(--line);background:#0d1424;box-shadow:0 30px 70px rgba(0,0,0,.5);}
-  .mscene__frame img{display:block;width:100%;height:auto;}
-
-  /* ============ Scene: 実績 ============ */
-  .mscene--proof{background:radial-gradient(120% 80% at 50% 100%, #0b1326 0%, var(--paper) 60%);}
-  .mstat{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:26px 0 0;
-    padding:18px 6px;border-radius:18px;background:var(--surface);border:1px solid var(--line);}
-  .mstat > div{position:relative;display:flex;flex-direction:column;align-items:center;gap:4px;text-align:center;}
-  .mstat > div + div::before{content:"";position:absolute;left:-4px;top:14%;height:72%;width:1px;background:var(--line);}
-  .mstat dt{order:2;font-size:.66rem;letter-spacing:.04em;color:var(--ink-soft);}
-  .mstat dd{order:1;margin:0;display:inline-flex;align-items:baseline;font-family:var(--en);color:var(--ink);}
-  .mstat dd b{font-weight:700;font-size:1.5rem;line-height:1;
-    background:linear-gradient(120deg,var(--mint),var(--blue));-webkit-background-clip:text;background-clip:text;color:transparent;}
-  .mstat dd span{font-size:.82rem;font-weight:600;color:var(--ink-soft);}
-  .mstat dd .cur{font-size:.92rem;margin-right:1px;color:var(--ink-soft);}
-
-  /* ============ Scene: 料金 ============ */
-  .mscene--price{background:radial-gradient(120% 80% at 50% 8%, #0b1326 0%, var(--paper) 60%);}
-  .mprice{display:flex;flex-direction:column;gap:12px;margin:24px 0 0;}
-  .mprice__card{display:block;padding:18px 18px 20px;border-radius:16px;color:inherit;
-    background:var(--surface-2);border:1px solid var(--line);border-top:3px solid var(--mint);}
-  .mprice__card--flag{border-top-color:var(--blue);}
-  .mprice__role{display:inline-block;font-family:var(--en);font-size:.66rem;letter-spacing:.06em;
-    color:var(--mint);border:1px solid color-mix(in srgb,var(--mint) 42%,transparent);
-    border-radius:999px;padding:3px 11px;}
-  .mprice__card--flag .mprice__role{color:var(--blue);border-color:color-mix(in srgb,var(--blue) 46%,transparent);}
-  .mprice__name{display:block;margin:10px 0 6px;font-size:1.06rem;font-weight:700;color:var(--ink);}
-  .mprice__fee{font-family:var(--en);font-weight:800;font-size:1.85rem;line-height:1;color:var(--ink);}
-  .mprice__fee i{font-style:normal;font-size:.62em;color:var(--ink-soft);margin-right:2px;}
-  .mprice__fee em{font-style:normal;font-size:.5em;color:var(--ink-soft);margin-left:2px;}
-  .mprice__sub{display:block;margin-top:8px;font-size:.82rem;line-height:1.6;color:var(--ink-soft);}
-
-  /* ============ Scene: 相談 ============ */
-  .mscene--cta{background:radial-gradient(100% 70% at 50% 26%, #0b1326 0%, var(--paper) 62%);}
-  .mscene__cont{margin-top:26px;font-size:.76rem;letter-spacing:.02em;color:color-mix(in srgb,var(--ink) 46%,transparent);}
+  /* ============ 制作イメージの帯（showcase.jsで流れる） ============ */
+  .mtop__sec--works{padding-right:0;padding-left:0;}
+  .mtop__sec--works .mtop__lab,.mtop__sec--works .mtop__note,.mtop__sec--works .mtop__more{
+    margin-left:20px;margin-right:20px;}
+  .mband{overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);
+            mask-image:linear-gradient(90deg,transparent,#000 7%,#000 93%,transparent);}
+  .mband .showcase__row{display:flex;gap:12px;width:max-content;padding:6px 0;will-change:transform;}
+  .mband img{height:172px;width:auto;border-radius:10px;
+    border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);}
 
   /* =========================================================
-     末尾の実用ゾーン（見積り / FAQ / 相談フォーム / フッター）
-     スナップ対象外（自由スクロール）
+     実用ゾーン（見積り / FAQ / 相談 / フッター）
      ========================================================= */
-  .section{padding:clamp(64px,15vw,92px) 20px;}
-  .section__head{margin-bottom:clamp(28px,7vw,44px);}
-  .section__title{font-size:clamp(1.7rem,7.6vw,2.2rem);}
+  .section{padding:clamp(56px,14vw,88px) 20px;}
+  .section__head{margin-bottom:clamp(26px,7vw,42px);}
+  .section__title{font-size:clamp(1.6rem,7.2vw,2.1rem);}
 
-  /* est（かんたん見積り） */
   .est__lead{font-size:.95rem;}
   .est__base{padding:14px 16px;}
   .est__base-note{font-size:.78rem;}
-  /* 基本セット行：タイトルが長く価格と重なるので縦積みに */
   .est__base-row{flex-wrap:wrap;gap:2px 12px;}
   .est__base-row b{flex:1 1 100%;font-size:1rem;line-height:1.5;}
   .opt__body b{font-size:.9rem;}
@@ -329,34 +120,22 @@
   .opt--step{flex-wrap:wrap;gap:8px 14px;padding:13px 15px;}
   .opt--step .opt__body{flex:1 1 100%;}
   .opt--step .opt__price{margin-left:auto;}
-  .est__sum{
-    position:sticky;bottom:calc(76px + env(safe-area-inset-bottom,0px));top:auto;z-index:5;
+  .est__sum{position:sticky;bottom:calc(76px + env(safe-area-inset-bottom,0px));top:auto;z-index:5;
     padding:16px 18px;background:color-mix(in srgb,var(--paper) 88%,transparent);
     backdrop-filter:blur(14px);border:1px solid var(--line);box-shadow:0 18px 50px rgba(0,0,0,.45);}
   .est__sum .est__picked,.est__sum .est__note{display:none;}
   .est__total{margin:2px 0 10px;}
   .est__sum .btn{padding:13px 18px;}
 
-  /* FAQ / 相談 */
   .faq__item summary{padding:18px 8px;font-size:.95rem;}
   .contact__form input,.contact__form select,.contact__form textarea{min-height:48px;font-size:16px;}
   .contact__form .btn{padding:17px 22px;}
 
-  /* 追従CTAと重ならない逃げ */
   .contact{padding-bottom:calc(96px + env(safe-area-inset-bottom,0px));}
   .footer{padding-bottom:calc(90px + env(safe-area-inset-bottom,0px));}
 }
 
-/* モーション抑制時：スナップと演出を弱める（最終状態で静止表示） */
+/* モーション抑制時：デッキの自動送り等はdeck.js側で停止。装飾も静的に */
 @media (max-width:860px) and (prefers-reduced-motion:reduce){
-  html{scroll-snap-type:none;}
-  .mscene__cue i,.mhero__blob,.mhero__eyebrow i,.mhero__h1 em,
-  .mmarq__track,.mscene__float{animation:none;}
-  .mhero__card,
-  .mhero__eyebrow,.mhero__h1,.mhero__copy .mscene__lead,.mhero__copy .mscene__actions{
-    animation:none;opacity:1;transform:none;}
-  /* カードの静止姿勢（回転）は保つ */
-  .mhero__card--admin{transform:rotate(-9deg);}
-  .mhero__card--ai{transform:rotate(7deg);}
-  .mhero__card--phone{transform:translateX(-50%) rotate(-2deg);}
+  .deck__dots i{transition:none;}
 }

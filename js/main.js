@@ -13,6 +13,7 @@ import { initParallax } from "./parallax.js";
 import { initBuildCinema } from "./build-cinema.js";
 import { initEstimator } from "./estimator.js";
 import { initMobileNav, initCtaBar } from "./nav.js";
+import { initDeck } from "./deck.js";
 
 // リロード時にブラウザが前回のスクロール位置を復元しないようにする（常にトップから開始）
 if ("scrollRestoration" in history) history.scrollRestoration = "manual";
@@ -75,8 +76,12 @@ async function boot() {
   // 6. マーキー（スクロール速度連動）
   initMarquee(document.getElementById("marquee"), lenis);
 
-  // 7. Works：流れるサイト・ショーケース
+  // 7. Works：流れるサイト・ショーケース（PC）＋スマホの制作イメージ帯
   initShowcase(document.getElementById("worksShowcase"));
+  initShowcase(document.getElementById("mWorks"));
+
+  // 7b. スマホの署名：触れるカードデッキ
+  initDeck(document.getElementById("deck"));
 
   // 8. 相談フォーム
   initContactForm(document.getElementById("contactForm"));

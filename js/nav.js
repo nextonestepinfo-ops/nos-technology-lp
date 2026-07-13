@@ -33,7 +33,7 @@ export function initMobileNav() {
 export function initCtaBar() {
   const bar = document.getElementById("ctaBar");
   if (!bar) return;
-  const story = document.querySelector(".mstory");
+  const story = document.querySelector(".mstory,.mtop");
   const threshold = () =>
     story && getComputedStyle(story).display !== "none"
       ? story.offsetHeight - window.innerHeight * 0.5

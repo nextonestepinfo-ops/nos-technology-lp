@@ -4,7 +4,10 @@
 // AAAゲーム（FF級3D）の色使いを参考にしたシネマティック配色。すべて“真っ黒”ベース。
 // 3つのアクセント(mint/blue/lav)はグラデ/発光/ライトに使われる。dark:true で3Dの発光を強める。
 export const PALETTES = [
-  // 既定：氷晶（クリスタル）。黒地に冷たいシアン〜ブルーの発光。
+  // 既定：墨×真鍮（脱AI配色）。“黒地に電光シアン”というAI典型を避け、
+  // 温かい墨・生成りの文字・真鍮の光・鋼青の影で「職人の工房」の質感に。
+  { key:'sumi', label:'Sumi', dark:true, css:{paper:'#0D0E11',ink:'#F2EFE7',soft:'#99958B',mint:'#C9A05A',blue:'#8B9DC0',lav:'#E4CFA1'} },
+  // 氷晶（クリスタル）。黒地に冷たいシアン〜ブルーの発光。
   { key:'aether', label:'Aether', dark:true, css:{paper:'#07080c',ink:'#eef3f8',soft:'#8b95a4',mint:'#36c5ff',blue:'#3d8bff',lav:'#9a8cff'} },
   // 炎（FFの召喚・火）。黒地に琥珀〜緋色。AI感を最も抑えた暖色。
   { key:'ember',  label:'Ember',  dark:true, css:{paper:'#0a0807',ink:'#f6efe6',soft:'#a89a8c',mint:'#ff8a3c',blue:'#ff5470',lav:'#ffd166'} },
@@ -22,7 +25,7 @@ export const PALETTES = [
   { key:'sand',  label:'Sand',  css:{paper:'#efeae0',ink:'#221d14',soft:'#6f6354',mint:'#c0813c',blue:'#0e9aa0',lav:'#b0673a'} },
 ];
 
-const DEFAULT_INDEX = 0; // Aether（黒×シアン/ブルー）
+const DEFAULT_INDEX = 0; // Sumi（墨×真鍮・脱AI配色）
 
 // 指定インデックスの配色を適用（CSS変数更新＋3Dへ通知）
 function applyPalette(i, chips) {

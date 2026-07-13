@@ -113,7 +113,7 @@
 
   <!-- モバイルメニュー（860px以下） -->
   <nav class="mnav" id="mnav" aria-label="モバイルメニュー">
-    <a href="#hero" style="--mi:0"><small>Top</small>ホーム</a>
+    <a href="#top" style="--mi:0"><small>Top</small>ホーム</a>
     <a href="services/web.html" style="--mi:1"><small>01</small>Web制作</a>
     <a href="services/system.html" style="--mi:2"><small>02</small>業務改善ツール</a>
     <a href="services/ai.html" style="--mi:3"><small>03</small>システム開発</a>
@@ -126,172 +126,87 @@
   <main id="top" class="home">
 
     <!-- ==========================================================
-         スマホ専用：フルスクリーン没入シーン（1画面=1メッセージ）
-         PCでは display:none。既存の下記セクション(hero/capability/
-         works/manifesto/services/pricing)はスマホでは非表示にし、
-         この物語＋末尾の実用ゾーン(見積り/FAQ/相談)で完結させる。
+         スマホ専用トップ（触感型）：PCの3Dに対する“指で触れる”翻訳。
+         文字は最小・詳細はサービスページ/見積りページへ。
+         PCでは display:none（mobile.cssで制御）。
          ========================================================== -->
-    <div class="mstory" aria-label="サービス紹介（スマホ）">
+    <div class="mtop" aria-label="サービス紹介（スマホ）">
 
-      <!-- Scene 1: ヒーロー（作り込み版） -->
-      <section class="mscene mscene--hero" id="mHero">
-        <!-- 背景：ドリフトするオーロラ光 -->
-        <div class="mhero__aura" aria-hidden="true">
-          <span class="mhero__blob mhero__blob--1"></span>
-          <span class="mhero__blob mhero__blob--2"></span>
-          <span class="mhero__blob mhero__blob--3"></span>
+      <!-- ヒーロー：一言＋触れるカードデッキ（署名） -->
+      <section class="mtop__hero">
+        <p class="mtop__brand" data-reveal="fade"><b>Nos</b> Technology<span>／ Systems for human work</span></p>
+        <h1 class="mtop__h1" data-reveal="fade">店舗のWebと仕事を、<br>ぜんぶ一社で。</h1>
+
+        <!-- 署名：スワイプで送れる実UIのデッキ（バネ物理・deck.js） -->
+        <div class="deck" id="deck" data-reveal="fade">
+          <div class="deck__stage" id="deckStage" aria-label="つくるものの例（スワイプで切替）">
+            <figure class="deck__card" data-tag="01 / WEB" data-title="店舗サイト・集客" data-href="services/web.html">
+              <img src="assets/panels/panel-site-m.webp" width="640" height="480" alt="店舗サイトの画面" loading="eager" />
+            </figure>
+            <figure class="deck__card" data-tag="02 / SYSTEM" data-title="予約・顧客・売上の管理" data-href="services/system.html">
+              <img src="assets/panels/panel-admin-m.webp" width="640" height="480" alt="予約・顧客管理の画面" loading="eager" />
+            </figure>
+            <figure class="deck__card" data-tag="03 / AI" data-title="AI自動対応" data-href="services/ai.html">
+              <img src="assets/panels/panel-reply-m.webp" width="640" height="480" alt="AI自動返信の画面" loading="eager" />
+            </figure>
+            <figure class="deck__card" data-tag="04 / GROWTH" data-title="集客・マップ" data-href="services/web.html">
+              <img src="assets/panels/panel-map-m.webp" width="640" height="480" alt="集客・マップの画面" loading="lazy" />
+            </figure>
+          </div>
+          <div class="deck__meta">
+            <p class="deck__label"><i id="deckTag">01 / WEB</i><b id="deckTitle">店舗サイト・集客</b></p>
+            <span class="deck__dots" id="deckDots" aria-hidden="true"></span>
+          </div>
+          <p class="deck__hint" aria-hidden="true">カードをスワイプ ↔</p>
         </div>
-        <span class="mscene__grid" aria-hidden="true"></span>
-        <!-- 浮遊プロダクトカード：Web・管理ツール・AI＝“作るもの”を上部に -->
-        <div class="mhero__cards" aria-hidden="true">
-          <figure class="mhero__card mhero__card--phone">
-            <img src="assets/works/salon-mobile.webp" width="900" height="1950" alt="" loading="eager" />
-          </figure>
-          <figure class="mhero__card mhero__card--admin">
-            <img src="assets/panels/panel-admin-m.webp" width="640" height="480" alt="" loading="eager" />
-          </figure>
-          <figure class="mhero__card mhero__card--ai">
-            <img src="assets/panels/panel-reply-m.webp" width="640" height="480" alt="" loading="eager" />
-          </figure>
+
+        <div class="mtop__cta" data-reveal="fade">
+          <a class="mbtn mbtn--fill" href="#contact">無料で相談する</a>
+          <a class="mbtn mbtn--line" href="#estimator">かんたん見積り</a>
         </div>
-        <!-- コピーを守るシネマティック・スクリム -->
-        <span class="mhero__scrim" aria-hidden="true"></span>
-        <!-- フィルムグレイン -->
-        <span class="mhero__grain" aria-hidden="true"></span>
-        <!-- コピー -->
-        <div class="mscene__inner mhero__copy">
-          <p class="mhero__eyebrow"><i></i>地域のお店の、Web &amp; 業務改善</p>
-          <h1 class="mscene__h1 mhero__h1">店舗の<em>Web</em>と<br><em>仕事</em>を、<br>ひとつに。</h1>
-          <p class="mscene__lead">Web制作・集客から、経理・在庫などの業務改善ツール、AI活用まで。<b>地域のお店を、まるごと。</b></p>
-          <div class="mscene__actions">
-            <a class="mbtn mbtn--primary" href="#contact">無料で相談する</a>
-            <a class="mbtn mbtn--ghost" href="#mCreate">サービスを見る</a>
+
+        <dl class="mtop__stat" data-reveal="fade">
+          <div><dt>対応業種</dt><dd><b>8</b><span>+</span></dd></div>
+          <div><dt>最短公開</dt><dd><b>3</b><span>–5日</span></dd></div>
+          <div><dt>入口プラン</dt><dd><span class="cur">¥</span><b>30,000</b><span>〜</span></dd></div>
+        </dl>
+      </section>
+
+      <!-- 手がけること：一行×3（詳細はサービスページへ） -->
+      <section class="mtop__sec">
+        <p class="mtop__lab" data-reveal="fade"><b>SERVICES</b>手がけること</p>
+        <nav class="mlinks" data-reveal="fade">
+          <a class="mlink" href="services/web.html"><i>01</i><b>Web・集客<small>見つけて、選ばれるサイト</small></b><span>→</span></a>
+          <a class="mlink" href="services/system.html"><i>02</i><b>業務改善ツール<small>経理・在庫・予約を、お店専用に</small></b><span>→</span></a>
+          <a class="mlink" href="services/ai.html"><i>03</i><b>AI・自動化<small>面倒な作業を、まかせる</small></b><span>→</span></a>
+        </nav>
+      </section>
+
+      <!-- 制作イメージ：流れる帯（文字なし・見るだけ） -->
+      <section class="mtop__sec mtop__sec--works">
+        <p class="mtop__lab" data-reveal="fade"><b>WORK</b>制作イメージ</p>
+        <div class="mband" id="mWorks" aria-hidden="true">
+          <div class="showcase__row" data-dir="left">
+            <img src="assets/works/salon-web.webp" width="1600" height="1000" alt="" loading="lazy" />
+            <img class="tall" src="assets/works/cafe-mobile.webp" width="900" height="1950" alt="" loading="lazy" />
+            <img src="assets/works/diner-web.webp" width="1600" height="1000" alt="" loading="lazy" />
+            <img class="tall" src="assets/works/gym-mobile.webp" width="900" height="1950" alt="" loading="lazy" />
+            <img src="assets/works/clinic-web.webp" width="1600" height="1000" alt="" loading="lazy" />
+            <img class="tall" src="assets/works/school-mobile.webp" width="900" height="1950" alt="" loading="lazy" />
           </div>
         </div>
-        <span class="mscene__cue" aria-hidden="true"><i></i>SCROLL</span>
+        <p class="mtop__note" data-reveal="fade">美容室・カフェ・飲食・クリニック・整体・ジム・塾…</p>
+        <a class="mtop__more" href="services/web.html" data-reveal="fade">制作イメージをもっと見る →</a>
       </section>
 
-      <!-- Scene 2: つくる（Web制作・集客）＝全面ビジュアル -->
-      <section class="mscene mscene--shot" id="mCreate">
-        <img class="mscene__bg" src="assets/works/cafe-mobile.webp" width="900" height="1950" alt="制作した店舗サイトのスマホ表示例" loading="lazy" />
-        <span class="mscene__scrim" aria-hidden="true"></span>
-        <!-- 別業種の制作例を小さく浮かせて“数を作っている”を見せる -->
-        <figure class="mscene__float" aria-hidden="true">
-          <img src="assets/works/seitai-mobile.webp" width="900" height="1950" alt="" loading="lazy" />
-        </figure>
-        <div class="mscene__inner mscene__inner--bottom">
-          <p class="mscene__kicker"><b>01</b> CREATE — つくる</p>
-          <h2 class="mscene__h2">見つけて、<br>選ばれる。</h2>
-          <p class="mscene__text">スマホ対応の店舗サイト。Googleマップ・SNS・問い合わせ導線まで、まとめて整えます。</p>
-          <p class="mscene__meta"><span>¥30,000〜</span><span>最短3〜5日</span></p>
-          <a class="mscene__more" href="services/web.html">Web制作を詳しく <i>→</i></a>
-        </div>
-      </section>
-
-      <!-- Scene 3: 業務改善ツール（主軸）＝経理・在庫など独自ツール開発 -->
-      <section class="mscene mscene--panel">
-        <span class="mscene__orb mscene__orb--c" aria-hidden="true"></span>
-        <div class="mscene__inner">
-          <p class="mscene__kicker"><b>02</b> SYSTEM — 業務改善</p>
-          <h2 class="mscene__h2">日々の業務を、<br>もっと楽に。</h2>
-          <p class="mscene__text">お店や事業に合った<b>独自ツールを開発</b>。毎日の手間を、仕組みで減らします。</p>
-          <ul class="mchips" aria-label="対象業務の例">
-            <li>経理</li><li>在庫管理</li><li>勤怠</li><li>売上集計</li><li>予約台帳</li>
-          </ul>
-          <figure class="mscene__frame">
-            <img src="assets/panels/panel-admin-m.webp" width="640" height="480" alt="お店専用の業務ツールのイメージ" loading="lazy" />
-          </figure>
-          <a class="mscene__more" href="services/system.html">業務改善ツールを詳しく <i>→</i></a>
-        </div>
-      </section>
-
-      <!-- Scene 4: まかせる（AI自動化） -->
-      <section class="mscene mscene--panel mscene--alt">
-        <span class="mscene__orb mscene__orb--d" aria-hidden="true"></span>
-        <div class="mscene__inner">
-          <p class="mscene__kicker"><b>03</b> AUTOMATE — まかせる</p>
-          <h2 class="mscene__h2">面倒な作業は、<br>AIにまかせる。</h2>
-          <p class="mscene__text">集計・転記・通知から、問い合わせ返信・文案づくりまで。人は、本来の仕事に集中。</p>
-          <ol class="mflow" aria-label="自動化の流れ">
-            <li>仕事が発生</li><li>AIが処理・下書き</li><li>記録して通知</li>
-          </ol>
-          <figure class="mscene__frame">
-            <img src="assets/panels/panel-reply-m.webp" width="640" height="480" alt="AI自動返信の画面イメージ" loading="lazy" />
-          </figure>
-          <a class="mscene__more" href="services/ai.html">システム開発を詳しく <i>→</i></a>
-        </div>
-      </section>
-
-      <!-- Scene 5: 実績・信頼 -->
-      <section class="mscene mscene--proof">
-        <span class="mscene__orb mscene__orb--b" aria-hidden="true"></span>
-        <div class="mscene__inner">
-          <p class="mscene__kicker">なんでも、一社で。</p>
-          <h2 class="mscene__h2">地域のお店の<br><em>“まるごと”</em>を。</h2>
-          <dl class="mstat">
-            <div><dt>対応業種</dt><dd><b>8</b><span>+</span></dd></div>
-            <div><dt>最短公開</dt><dd><b>3</b><span>–5日</span></dd></div>
-            <div><dt>入口プラン</dt><dd><span class="cur">¥</span><b>30,000</b><span>〜</span></dd></div>
-          </dl>
-          <p class="mscene__note">はじめてのご相談も歓迎です。</p>
-        </div>
-        <!-- 対応業種が流れる帯（画面幅いっぱい） -->
-        <div class="mmarq" aria-hidden="true">
-          <div class="mmarq__track">
-            <span>美容室</span><span>サロン</span><span>カフェ</span><span>飲食店</span><span>クリニック</span><span>整体・接骨院</span><span>ジム</span><span>学習塾</span>
-            <span>美容室</span><span>サロン</span><span>カフェ</span><span>飲食店</span><span>クリニック</span><span>整体・接骨院</span><span>ジム</span><span>学習塾</span>
-          </div>
-        </div>
-      </section>
-
-      <!-- Scene 6: 料金 -->
-      <section class="mscene mscene--price">
-        <span class="mscene__orb mscene__orb--d" aria-hidden="true"></span>
-        <div class="mscene__inner">
-          <p class="mscene__kicker">PRICING — 料金</p>
-          <h2 class="mscene__h2">必要な分だけ。</h2>
-          <div class="mprice">
-            <a class="mprice__card" href="services/web.html">
-              <span class="mprice__role">入口</span>
-              <b class="mprice__name">Web制作・集客</b>
-              <span class="mprice__fee"><i>¥</i>30,000<em>〜</em></span>
-              <span class="mprice__sub">スマホ対応の店舗ページを最短3〜5日で</span>
-              <ul class="mprice__points">
-                <li>テンプレートから ¥30,000〜</li>
-                <li>1から作るオリジナル ¥50,000〜</li>
-              </ul>
-            </a>
-            <a class="mprice__card mprice__card--flag" href="services/system.html">
-              <span class="mprice__role">主軸</span>
-              <b class="mprice__name">業務改善・システム</b>
-              <span class="mprice__fee"><i>¥</i>60,000<em>〜</em></span>
-              <span class="mprice__sub">経理・在庫など、お店専用のツールを開発</span>
-              <ul class="mprice__points">
-                <li>ヒアリングして、手間に合わせて見積り</li>
-                <li>月々の運用サポート 月¥5,000〜</li>
-              </ul>
-            </a>
-          </div>
-          <a class="mscene__more" href="#estimator">かんたん見積りで組み立てる <i>→</i></a>
-        </div>
-      </section>
-
-      <!-- Scene 7: 相談（CTA） -->
-      <section class="mscene mscene--cta">
-        <span class="mscene__orb" aria-hidden="true"></span>
-        <div class="mscene__inner">
-          <p class="mscene__kicker">CONTACT — 相談</p>
-          <h2 class="mscene__h1">まずは、<br>無料相談から。</h2>
-          <p class="mscene__lead">困りごとを聞かせてください。改善できるところから、一緒に整えます。</p>
-          <div class="mscene__actions">
-            <a class="mbtn mbtn--primary" href="#contact">無料で相談する</a>
-            <a class="mbtn mbtn--ghost" href="#estimator">かんたん見積り</a>
-          </div>
-          <ul class="mtrust" aria-label="安心して相談できる理由">
-            <li>相談は無料</li><li>押し売りしません</li><li>オンライン対応</li>
-          </ul>
-          <p class="mscene__cont" aria-hidden="true">この下に、見積り・よくある質問・相談フォーム ↓</p>
-        </div>
+      <!-- 料金：入口だけ見せて見積りへ -->
+      <section class="mtop__sec">
+        <p class="mtop__lab" data-reveal="fade"><b>PRICING</b>料金の入口</p>
+        <nav class="mlinks" data-reveal="fade">
+          <a class="mlink" href="#estimator"><i class="yen">¥30K〜</i><b>Web・集客<small>最短3〜5日で公開</small></b><span>→</span></a>
+          <a class="mlink" href="#estimator"><i class="yen">¥60K〜</i><b>業務改善・システム<small>手間に合わせて見積り</small></b><span>→</span></a>
+        </nav>
+        <p class="mtop__note" data-reveal="fade">下の「かんたん見積り」で、目安をその場で出せます。</p>
       </section>
 
     </div>
@@ -299,13 +214,6 @@
     <!-- ===== Hero（v2：全画面3Dオブジェクトが主役。文字は最小） ===== -->
     <section class="hero hero--v2" id="hero">
       <canvas class="hero__canvas" id="heroCanvas" data-layout="center" aria-hidden="true"></canvas>
-      <!-- スマホ専用：流れるキーワード帯（3Dの下・ヒーローに動きと密度を出す。PCは非表示） -->
-      <div class="hero__mstrip" aria-hidden="true">
-        <div class="hero__mstrip-track">
-          <span>Web制作</span><span>集客導線</span><span>Googleマップ</span><span>Instagram</span><span>AI自動返信</span><span>予約管理</span><span>顧客管理</span><span>業務改善</span>
-          <span>Web制作</span><span>集客導線</span><span>Googleマップ</span><span>Instagram</span><span>AI自動返信</span><span>予約管理</span><span>顧客管理</span><span>業務改善</span>
-        </div>
-      </div>
       <!-- ヒーロー上中央：ブランド名＋タグライン -->
       <p class="hero__topbrand" data-reveal="fade"><b>Nos</b> Technology</p>
       <p class="hero-topline" aria-hidden="true"><b>S</b>ystems <b>F</b>or <b>H</b>uman <b>W</b>ork</p>
@@ -320,8 +228,6 @@
         <span class="hint">Click → セクションへ</span>
       </div>
       <div class="hero__content hero__content--center">
-        <!-- スマホ専用：見出しの上のブランド・タグライン（PCは非表示） -->
-        <p class="hero__mkicker">SYSTEMS FOR HUMAN WORK.</p>
         <h1 class="hero__statement" data-reveal="fade">店舗の<em>Webサイト</em>から、<em>業務改善システム</em>まで、<span>まとめてご用意します。</span></h1>
         <div class="hero__actions" data-reveal="fade">
           <a class="btn btn--primary" href="#contact" data-magnetic data-cursor="無料相談"><span>無料相談する</span></a>
@@ -332,15 +238,7 @@
           <li><b>最短3〜5日</b>で公開</li>
           <li><b>AI活用</b>×オーダーメイド</li>
         </ul>
-        <!-- スマホ専用：数字の実績ストリップ（信頼要素。PCは非表示） -->
-        <dl class="hero__proof" aria-label="実績の目安">
-          <div><dt>対応業種</dt><dd><b>8</b><span>+</span></dd></div>
-          <div><dt>最短公開</dt><dd><b>3</b><span>–5日</span></dd></div>
-          <div><dt>入口プラン</dt><dd><span class="cur">¥</span><b>30,000</b><span>〜</span></dd></div>
-        </dl>
       </div>
-      <!-- スマホ専用：スクロール誘導（PCは hero__meta を使用） -->
-      <div class="hero__mscroll" aria-hidden="true"><span>SCROLL</span><i></i></div>
       <p class="hero__serves" data-reveal="fade">美容室・カフェ・クリニック・整体・ジム・学習塾… <b>地域のお店の“まるごと”を。</b></p>
       <div class="hero__meta" aria-hidden="true">
         <span class="hero__scroll">Scroll<i></i></span>
@@ -499,8 +397,8 @@
         <a class="svcx" href="services/system.html" data-reveal="rise" data-cursor="View">
           <figure class="svcx__media svcx__media--ui" aria-hidden="true">
             <span class="mkpi"><small>今日の売上</small><b>¥68,500</b><em>+8.2%</em></span>
-            <span class="mrow"><b>10:00</b>佐藤様 カット＋カラー<i>確定</i></span>
-            <span class="mrow"><b>11:30</b>田中様 メンズカット<i class="on">来店中</i></span>
+            <span class="mlink"><b>10:00</b>佐藤様 カット＋カラー<i>確定</i></span>
+            <span class="mlink"><b>11:30</b>田中様 メンズカット<i class="on">来店中</i></span>
             <span class="mbars"><i style="--v:34%"></i><i style="--v:58%"></i><i style="--v:88%"></i><i style="--v:64%"></i><i style="--v:96%"></i><i style="--v:70%"></i></span>
           </figure>
           <div class="svcx__body">
