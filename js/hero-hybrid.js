@@ -30,10 +30,16 @@ const EN = '"Space Grotesk",sans-serif';
 
 function drawUIWire(x, kind, acc, p, t = 0) {
   x.clearRect(0, 0, 512, 384);
+  // パネルの下地はテーマ追従：暗面=ネイビー基調 / 明面=白い紙のUI
+  const dk = acc.dark !== false;
   const page = x.createLinearGradient(0, 0, 0, 384);
-  page.addColorStop(0, "#101a2e"); page.addColorStop(1, "#0a101f");
+  if (dk) { page.addColorStop(0, "#101a2e"); page.addColorStop(1, "#0a101f"); }
+  else { page.addColorStop(0, "#ffffff"); page.addColorStop(1, "#f4f2ec"); }
   x.fillStyle = page; x.fillRect(0, 0, 512, 384);
-  const mint = acc.mint, blue = acc.blue, ink = "#eaf0fc", sub = "#8fa0c0", soft = "#3c4d72", line = "#26324e", bg = "#151f38", surf = "#182240";
+  const mint = acc.mint, blue = acc.blue,
+    ink = dk ? "#eaf0fc" : "#23262d", sub = dk ? "#8fa0c0" : "#7a8090",
+    soft = dk ? "#3c4d72" : "#b9bdc6", line = dk ? "#26324e" : "#e3e1d9",
+    bg = dk ? "#151f38" : "#f1efe8", surf = dk ? "#182240" : "#ffffff";
   const pill = (px, py, pw, ph, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, ph / 2); x.fill(); };
   const rrect = (px, py, pw, ph, r, col) => { x.fillStyle = col; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.fill(); };
   const stroke = (px, py, pw, ph, r, col, lw = 2) => { x.strokeStyle = col; x.lineWidth = lw; x.beginPath(); x.roundRect(px, py, pw, ph, r); x.stroke(); };
@@ -271,6 +277,20 @@ export function initHeroHybrid(canvas) {
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
 
   const group = new THREE.Group(); group.position.x = 1.7; group.rotation.x = -0.05; scene.add(group);
+
+  // 接地影：明るい面でオブジェクトの浮遊感を出す柔らかい楕円（暗面では消す）
+  const shadowTex = (() => {
+    const c = document.createElement("canvas"); c.width = c.height = 256;
+    const g = c.getContext("2d");
+    const r = g.createRadialGradient(128, 128, 8, 128, 128, 126);
+    r.addColorStop(0, "rgba(22,24,30,0.34)"); r.addColorStop(1, "rgba(22,24,30,0)");
+    g.fillStyle = r; g.fillRect(0, 0, 256, 256);
+    return new THREE.CanvasTexture(c);
+  })();
+  const groundShadowMat = new THREE.MeshBasicMaterial({ map: shadowTex, transparent: true, depthWrite: false, opacity: 0 });
+  const groundShadow = new THREE.Mesh(new THREE.PlaneGeometry(8.2, 2.9), groundShadowMat);
+  groundShadow.rotation.x = -Math.PI / 2; groundShadow.position.y = -2.62;
+  group.add(groundShadow);
 
   // ---- 中央のAIコア ----
   const coreWrap = new THREE.Group(); group.add(coreWrap);
@@ -709,13 +729,24 @@ export function initHeroHybrid(canvas) {
     glowMat.color.setHex(M); ptsMat.color.setHex(M);
     lineMats.forEach((m) => { m.color.setHex(B); m.opacity = p.dark ? 0.5 : 0.32; });
     pulseMats.forEach((m) => m.color.setHex(M));
-    currentAcc = { mint: p.css.mint, blue: p.css.blue };
+    groundShadowMat.opacity = p.dark ? 0 : 0.85; // 接地影は明るい面だけ
+    currentAcc = { mint: p.css.mint, blue: p.css.blue, dark: !!p.dark };
+    // 明面ではパネル画面の自発光を抑える（白飛び防止）
+    panels.forEach((m) => { m.material[0].emissiveIntensity = p.dark ? 0.78 : 0.58; });
     panels.forEach((m) => redraw(m, m.userData.progress)); // 現在の進捗で塗り直し
   }
   window.addEventListener("palette", (e) => applyPalette(e.detail));
 
-  // 配色はブランド固定（ネイビー×ブルー）で初期化
-  applyPalette({ css: { mint: "#1a5cff", blue: "#3d8bff", lav: "#5b6bff" }, dark: false });
+  // 現在適用中のパレット（CSS変数）から初期化。
+  // 以前はここでネイビー固定に上書きしており、既定パレットが3Dに反映されないバグがあった。
+  {
+    const cs = getComputedStyle(document.documentElement);
+    const v = (name, fb) => (cs.getPropertyValue(name).trim() || fb);
+    applyPalette({
+      css: { mint: v("--mint", "#1a5cff"), blue: v("--blue", "#3d8bff"), lav: v("--lav", "#5b6bff") },
+      dark: document.documentElement.dataset.theme === "dark",
+    });
+  }
 
   if (prefersReducedMotion) {
     render(0);

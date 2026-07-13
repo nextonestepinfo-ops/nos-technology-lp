@@ -51,12 +51,15 @@
 /* 中央(N)ホバー：黒いボックスを消して“文字だけ浮かぶ”おしゃれな表示に */
 .hero-tag.is-core{max-width:none;background:none;border:0;box-shadow:none;backdrop-filter:none;padding:0;text-align:center;}
 .hero-tag.is-core .hero-tag__chips,.hero-tag.is-core .hero-tag__thumb,.hero-tag.is-core .hint,.hero-tag.is-core .hero-tag__idx{display:none;}
-.hero-tag.is-core .en{justify-content:center;font-size:clamp(1.3rem,2.4vw,1.9rem);letter-spacing:.3em;color:#fff;
-  text-shadow:0 2px 26px rgba(0,0,0,.85), 0 0 26px color-mix(in srgb,var(--mint) 55%,transparent);}
+.hero-tag.is-core .en{justify-content:center;font-size:clamp(1.3rem,2.4vw,1.9rem);letter-spacing:.3em;color:var(--ink);
+  padding:8px 20px;border-radius:999px;
+  background:color-mix(in srgb,var(--paper) 78%,transparent);backdrop-filter:blur(6px);
+  text-shadow:0 2px 26px color-mix(in srgb,var(--paper) 88%,transparent);}
 .hero-tag.is-core .jp{display:inline-block;margin-top:14px;font-family:var(--en);font-size:.74rem;letter-spacing:.26em;
-  text-transform:uppercase;color:color-mix(in srgb,var(--mint) 85%,#fff);
-  padding:7px 16px;border:1px solid color-mix(in srgb,var(--mint) 40%,transparent);border-radius:999px;
-  text-shadow:0 2px 14px rgba(0,0,0,.8);}
+  text-transform:uppercase;color:var(--mint);
+  padding:7px 16px;border:1px solid color-mix(in srgb,var(--mint) 45%,transparent);border-radius:999px;
+  background:color-mix(in srgb,var(--paper) 72%,transparent);
+  text-shadow:none;}
 
 .hero-tag__idx{position:absolute;top:11px;right:15px;font-family:var(--en);font-weight:700;font-size:1.05rem;
   letter-spacing:.06em;color:color-mix(in srgb,var(--mint) 70%,transparent);}

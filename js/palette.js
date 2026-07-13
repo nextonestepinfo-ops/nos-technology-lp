@@ -39,6 +39,8 @@ function applyPalette(i, chips) {
   root.setProperty('--mint', p.css.mint);
   root.setProperty('--blue', p.css.blue);
   root.setProperty('--lav', p.css.lav);
+  // 3D等が「明/暗どちらのテーマか」を参照できるようにdatasetへ公開
+  document.documentElement.dataset.theme = p.dark ? 'dark' : 'light';
   if (chips) chips.forEach((c, j) => c.classList.toggle('on', j === i));
   // 3Dシーンへ配色を通知
   window.dispatchEvent(new CustomEvent('palette', { detail: p }));

@@ -167,7 +167,15 @@ export function initDeck(root) {
   }
 
   syncMeta();
-  wake();
+  // 登場演出：カードが奥から順に積み上がり、先頭は右からスライドイン
+  // （バネ物理そのものが最初の一目で伝わる）。モーション抑制時は即整列。
+  if (!prefersReducedMotion) {
+    order.forEach((ci, pos) => { depth[ci].p = 3.2 + pos * 1.35; depth[ci].v = 0; });
+    drag.x = stage.clientWidth * 0.5; drag.v = 0; drag.t = 0;
+    setTimeout(wake, 340);
+  } else {
+    wake();
+  }
   tickAuto();
   window.addEventListener("pagehide", () => clearTimeout(autoTimer));
 }
