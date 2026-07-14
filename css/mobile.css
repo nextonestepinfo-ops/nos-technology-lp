@@ -37,15 +37,38 @@
 
   /* ---- 署名：カードデッキ ---- */
   .deck{margin-top:22px;}
-  .deck__stage{position:relative;height:calc((100vw - 40px) * .72 + 42px);max-height:360px;
+  .deck__stage{position:relative;height:calc((100vw - 40px) * .70 + 46px);max-height:372px;
     touch-action:pan-y;cursor:grab;}
   .deck__stage:active{cursor:grabbing;}
-  .deck__card{position:absolute;inset:0 0 auto 0;margin:0;aspect-ratio:640/460;max-height:318px;
-    border-radius:18px;overflow:hidden;background:#fff;
+  /* カード＝実在ソフトの“ブラウザ窓”。信号機ドット＋稼働URL＋LIVEで実ツール感を出す */
+  .deck__card{position:absolute;inset:0;margin:0;display:flex;flex-direction:column;
+    border-radius:15px;overflow:hidden;background:#fff;
     border:1px solid color-mix(in srgb,var(--ink) 16%,transparent);
-    box-shadow:0 22px 44px color-mix(in srgb,var(--ink) 20%,transparent), inset 0 1px 0 rgba(255,255,255,.35);
+    box-shadow:0 22px 44px color-mix(in srgb,var(--ink) 20%,transparent), inset 0 1px 0 rgba(255,255,255,.4);
     will-change:transform;user-select:none;-webkit-user-drag:none;}
-  .deck__card img{width:100%;height:100%;object-fit:cover;object-position:top center;pointer-events:none;}
+  /* ブラウザのツールバー */
+  .deck__bar{flex:none;display:flex;align-items:center;gap:6px;height:34px;padding:0 12px;
+    background:linear-gradient(#f8f9fb,#edeff2);border-bottom:1px solid rgba(0,0,0,.08);}
+  .deck__bar>i{width:9px;height:9px;border-radius:50%;flex:none;}
+  .deck__bar>i:nth-child(1){background:#ff5f57;}
+  .deck__bar>i:nth-child(2){background:#febc2e;}
+  .deck__bar>i:nth-child(3){background:#28c840;}
+  /* アドレスバー（南京錠＋稼働URL） */
+  .deck__url{flex:1;min-width:0;margin-left:8px;height:21px;
+    display:inline-flex;align-items:center;gap:6px;overflow:hidden;
+    padding:0 10px;border-radius:7px;background:#fff;border:1px solid rgba(0,0,0,.08);
+    font-family:var(--mono);font-weight:400;font-size:.62rem;letter-spacing:0;color:#5b616c;
+    white-space:nowrap;text-overflow:ellipsis;}
+  .deck__url::before{content:"";flex:none;width:8px;height:9px;background:#8a909a;
+    -webkit-mask:var(--ico-lock) center/contain no-repeat;mask:var(--ico-lock) center/contain no-repeat;}
+  .deck__live{flex:none;display:inline-flex;align-items:center;gap:5px;margin-left:8px;
+    font-family:var(--mono);font-weight:700;font-size:.54rem;letter-spacing:.14em;color:#0f9d58;font-style:normal;}
+  .deck__live::before{content:"";width:6px;height:6px;border-radius:50%;background:#0f9d58;
+    box-shadow:0 0 8px color-mix(in srgb,#0f9d58 90%,transparent);animation:deckLive 2s ease-in-out infinite;}
+  @keyframes deckLive{0%,100%{opacity:1;}50%{opacity:.35;}}
+  /* スクリーン（実ツールのスクショ） */
+  .deck__shot{flex:1;min-height:0;overflow:hidden;background:#fff;}
+  .deck__shot img{width:100%;height:100%;object-fit:cover;object-position:top center;pointer-events:none;}
   .deck__meta{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:14px;}
   .deck__label{display:flex;align-items:baseline;gap:10px;min-width:0;}
   .deck__label i{font-style:normal;font-family:var(--mono);font-weight:700;font-size:.66rem;
