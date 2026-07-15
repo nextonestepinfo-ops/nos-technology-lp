@@ -291,4 +291,108 @@
       }
     });
   }
+
+  const galleryItems = Array.from(document.querySelectorAll("[data-gallery-item]"));
+  const lightbox = document.getElementById("lightbox");
+  const lightboxImage = document.getElementById("lightboxImage");
+  const lightboxCaption = document.getElementById("lightboxCaption");
+  const lightboxClose = lightbox ? lightbox.querySelector("[data-lightbox-close]") : null;
+  const lightboxPrev = lightbox ? lightbox.querySelector("[data-lightbox-prev]") : null;
+  const lightboxNext = lightbox ? lightbox.querySelector("[data-lightbox-next]") : null;
+
+  if (galleryItems.length && lightbox && lightboxImage && lightboxCaption) {
+    let currentGalleryIndex = 0;
+    let lastGalleryTrigger = null;
+
+    function renderGalleryItem(index) {
+      currentGalleryIndex = (index + galleryItems.length) % galleryItems.length;
+
+      const item = galleryItems[currentGalleryIndex];
+      const thumbnail = item.querySelector("img");
+      lightboxImage.src = item.dataset.full || (thumbnail ? thumbnail.currentSrc : "");
+      lightboxImage.alt = thumbnail ? thumbnail.alt : "";
+      lightboxCaption.textContent = item.dataset.caption || "";
+    }
+
+    function openLightbox(index, trigger) {
+      renderGalleryItem(index);
+      lastGalleryTrigger = trigger;
+      body.classList.add("lightbox-open");
+      lightbox.hidden = false;
+
+      if (lightboxClose) {
+        window.requestAnimationFrame(function () {
+          lightboxClose.focus();
+        });
+      }
+    }
+
+    function closeLightbox() {
+      if (lightbox.hidden) {
+        return;
+      }
+
+      lightbox.hidden = true;
+      body.classList.remove("lightbox-open");
+      lightboxImage.src = "";
+
+      if (lastGalleryTrigger) {
+        lastGalleryTrigger.focus();
+      }
+    }
+
+    galleryItems.forEach(function (item, index) {
+      item.addEventListener("click", function () {
+        openLightbox(index, item);
+      });
+    });
+
+    if (lightboxClose) {
+      lightboxClose.addEventListener("click", closeLightbox);
+    }
+
+    if (lightboxPrev) {
+      lightboxPrev.addEventListener("click", function () {
+        renderGalleryItem(currentGalleryIndex - 1);
+      });
+    }
+
+    if (lightboxNext) {
+      lightboxNext.addEventListener("click", function () {
+        renderGalleryItem(currentGalleryIndex + 1);
+      });
+    }
+
+    lightbox.addEventListener("click", function (event) {
+      if (event.target === lightbox) {
+        closeLightbox();
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (lightbox.hidden) {
+        return;
+      }
+
+      if (event.key === "Escape") {
+        closeLightbox();
+      } else if (event.key === "ArrowLeft") {
+        renderGalleryItem(currentGalleryIndex - 1);
+      } else if (event.key === "ArrowRight") {
+        renderGalleryItem(currentGalleryIndex + 1);
+      } else if (event.key === "Tab") {
+        const controls = [lightboxClose, lightboxPrev, lightboxNext].filter(Boolean);
+        const firstControl = controls[0];
+        const lastControl = controls[controls.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstControl) {
+          event.preventDefault();
+          lastControl.focus();
+        } else if (!event.shiftKey && document.activeElement === lastControl) {
+          event.preventDefault();
+          firstControl.focus();
+        }
+      }
+    });
+  }
 })();
