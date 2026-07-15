@@ -571,9 +571,10 @@ body.nav-open .nav-toggle span:nth-child(3) {
 /* Introduction */
 .intro {
   background:
-    linear-gradient(90deg, transparent 0 48%, rgba(23, 20, 22, 0.08) 48% calc(48% + 1px), transparent calc(48% + 1px)),
-    var(--paper);
-  color: var(--ink);
+    radial-gradient(circle at 12% 12%, rgba(183, 149, 88, 0.1), transparent 30%),
+    linear-gradient(90deg, transparent 0 48%, rgba(255, 253, 248, 0.09) 48% calc(48% + 1px), transparent calc(48% + 1px)),
+    #0a0a0c;
+  color: var(--ivory);
 }
 
 .intro-grid {
@@ -584,7 +585,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .intro .eyebrow {
-  color: var(--red);
+  color: var(--gold-light);
 }
 
 .intro-copy {
@@ -592,6 +593,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .intro-copy p {
+  color: rgba(255, 253, 248, 0.72);
   font-size: clamp(1rem, 1.3vw, 1.12rem);
   line-height: 2.2;
 }
@@ -719,16 +721,20 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 /* Movies */
 .movie {
-  background: var(--paper);
-  color: var(--ink);
+  border-top: 1px solid rgba(183, 149, 88, 0.24);
+  border-bottom: 1px solid rgba(183, 149, 88, 0.24);
+  background:
+    radial-gradient(circle at 85% 12%, rgba(105, 11, 32, 0.2), transparent 32%),
+    #0b0a0c;
+  color: var(--ivory);
 }
 
 .movie .eyebrow {
-  color: var(--red);
+  color: var(--gold-light);
 }
 
 .movie .section-heading > p:last-child {
-  color: #645e57;
+  color: var(--muted);
 }
 
 .movie-grid {
@@ -746,7 +752,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 .movie video {
   width: 100%;
   background: #000;
-  box-shadow: 0 18px 60px rgba(23, 20, 22, 0.18);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.42);
   object-fit: contain;
 }
 
@@ -761,7 +767,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 .movie figcaption {
   margin-top: 14px;
-  color: #665f57;
+  color: var(--muted);
   font-size: 0.84rem;
   letter-spacing: 0.02em;
 }
@@ -778,7 +784,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
   justify-content: center;
   border-left: 3px solid var(--red);
   padding: 24px 28px;
-  background: var(--black);
+  background: #151013;
   color: var(--white);
   transition:
     background-color 0.3s ease,
@@ -1014,20 +1020,22 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 /* Flow */
 .flow {
-  background: var(--paper);
-  color: var(--ink);
+  background:
+    radial-gradient(circle at 12% 88%, rgba(180, 20, 50, 0.12), transparent 30%),
+    #0c0b0d;
+  color: var(--ivory);
 }
 
 .flow .eyebrow {
-  color: var(--red);
+  color: var(--gold-light);
 }
 
 .flow-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: clamp(56px, 7vw, 90px);
-  border-top: 1px solid var(--line-light);
-  border-bottom: 1px solid var(--line-light);
+  border-top: 1px solid var(--line-dark);
+  border-bottom: 1px solid var(--line-dark);
   list-style: none;
 }
 
@@ -1038,7 +1046,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .flow-list li + li {
-  border-left: 1px solid var(--line-light);
+  border-left: 1px solid var(--line-dark);
 }
 
 .flow-list span {
@@ -1050,6 +1058,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 .flow-list strong {
   display: block;
+  color: var(--white);
   margin-top: 18px;
   font-family: var(--jp-serif);
   font-size: 1.15rem;
@@ -1057,7 +1066,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
 .flow-list p {
   margin-top: 13px;
-  color: #655e57;
+  color: var(--muted);
   font-size: 0.87rem;
   line-height: 1.85;
 }
@@ -1437,7 +1446,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
   }
 
   .flow-list li:nth-child(n + 3) {
-    border-top: 1px solid var(--line-light);
+    border-top: 1px solid var(--line-dark);
   }
 
   .contact-copy {
@@ -1580,7 +1589,9 @@ body.nav-open .nav-toggle span:nth-child(3) {
   }
 
   .intro {
-    background: var(--paper);
+    background:
+      radial-gradient(circle at 12% 12%, rgba(183, 149, 88, 0.1), transparent 30%),
+      #0a0a0c;
   }
 
   .intro-grid {
@@ -1589,7 +1600,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
   }
 
   .intro-copy {
-    border-top: 1px solid var(--line-light);
+    border-top: 1px solid var(--line-dark);
     padding-top: 32px;
   }
 
@@ -1718,7 +1729,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
   .flow-list li + li,
   .flow-list li:nth-child(3) {
-    border-top: 1px solid var(--line-light);
+    border-top: 1px solid var(--line-dark);
     border-left: 0;
   }
 
