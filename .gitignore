@@ -25,3 +25,6 @@ Thumbs.db
 
 # KOKI source originals
 koki/image-KOKI/
+
+# Local Netlify folder
+.netlify
