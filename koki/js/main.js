@@ -1,199 +1,294 @@
-/* =========================================================
-   マジシャンKOKI 公式LP / main.js
-   ヘッダー追従・モバイルメニュー・スクロール演出・静的フォーム
-   ========================================================= */
 (function () {
   "use strict";
 
-  const header = document.getElementById("header");
-  const navToggle = document.getElementById("navToggle");
-  const nav = document.getElementById("nav");
+  document.documentElement.classList.add("js");
+
   const body = document.body;
+  const header = document.getElementById("header");
   const progress = document.getElementById("scrollProgress");
-  const toTop = document.getElementById("toTop");
-  const heroEl = document.querySelector(".hero");
+  const nav = document.getElementById("nav");
+  const navToggle = document.getElementById("navToggle");
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  // ---- ローディング画面 → ヒーロー登場 ----
-  // ゲートがある場合は解除時に gate.js から __startIntro() が呼ばれる。
-  // ゲートが無い（認証済み or 本番）場合はここで開始する。
-  var loader = document.getElementById("loader");
-  var introStarted = false;
-  function startIntro() {
-    if (introStarted) return;
-    introStarted = true;
-    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-    function finish() {
-      window.scrollTo(0, 0); // ヒーロー表示時は最上部から
-      document.body.classList.add("is-loaded");
-      if (loader) {
-        loader.classList.add("is-hidden");
-        setTimeout(function () { if (loader.parentNode) loader.parentNode.removeChild(loader); }, 900);
-      }
+  let scrollTicking = false;
+
+  function updateScrollState() {
+    const y = window.scrollY;
+    const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = scrollable > 0 ? Math.min(Math.max(y / scrollable, 0), 1) : 0;
+
+    if (header) {
+      header.classList.toggle("is-scrolled", y > 20);
     }
-    if (reduce) { finish(); return; }
-    var minDone = false;
-    var loadDone = document.readyState === "complete";
-    setTimeout(function () { minDone = true; if (loadDone) finish(); }, 1300); // 最低表示時間
-    if (!loadDone) window.addEventListener("load", function () { loadDone = true; if (minDone) finish(); });
-    setTimeout(finish, 2800); // 安全策（読み込みが遅くても必ず進む）
-  }
-  window.__startIntro = startIntro;
-  if (!window.__gateWillShow) startIntro(); // ゲートが出ないならすぐ開始
 
-  // ---- ヘッダー追従・スクロール進捗・トップへ戻るの表示 ----
-  // 毎フレーム処理を避けるため rAF で間引く
-  let ticking = false;
+    if (progress) {
+      progress.style.transform = "scaleX(" + ratio + ")";
+    }
+
+    scrollTicking = false;
+  }
+
   function onScroll() {
-    if (ticking) return;
-    ticking = true;
-    requestAnimationFrame(function () {
-      const y = window.scrollY;
-      // ヒーローを過ぎてからヘッダーを表示（ヒーローの大きなKOKIとの重複を回避）
-      const showHeader = heroEl ? y > heroEl.offsetHeight - 80 : y > 60;
-      header.classList.toggle("is-visible", showHeader);
-      if (progress) {
-        const h = document.documentElement.scrollHeight - window.innerHeight;
-        progress.style.width = (h > 0 ? (y / h) * 100 : 0) + "%";
-      }
-      if (toTop) toTop.classList.toggle("is-show", y > window.innerHeight * 0.9);
-      ticking = false;
-    });
+    if (scrollTicking) {
+      return;
+    }
+
+    scrollTicking = true;
+    window.requestAnimationFrame(updateScrollState);
   }
+
   window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
+  window.addEventListener("resize", onScroll, { passive: true });
+  updateScrollState();
 
-  // ---- ページトップへ戻る ----
-  if (toTop) {
-    toTop.addEventListener("click", function () {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-    });
-  }
+  function closeNav(restoreFocus) {
+    if (!navToggle) {
+      return;
+    }
 
-  // ---- モバイルメニュー開閉 ----
-  function closeNav() {
     body.classList.remove("nav-open");
     navToggle.setAttribute("aria-expanded", "false");
-  }
-  if (navToggle) {
-    navToggle.addEventListener("click", function () {
-      const open = body.classList.toggle("nav-open");
-      navToggle.setAttribute("aria-expanded", open ? "true" : "false");
-    });
-  }
-  // メニュー内リンクをタップしたら閉じる
-  if (nav) {
-    nav.addEventListener("click", function (e) {
-      if (e.target.closest("a")) closeNav();
-    });
-  }
-  // Escで閉じる
-  document.addEventListener("keydown", function (e) {
-    if (e.key === "Escape") closeNav();
-  });
+    navToggle.setAttribute("aria-label", "メニューを開く");
 
-  // ---- スクロール演出（IntersectionObserver） ----
-  const reveals = document.querySelectorAll(".reveal");
-  if ("IntersectionObserver" in window && reveals.length) {
-    const io = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (entry) {
-          if (entry.isIntersecting) {
-            entry.target.classList.add("is-in");
-            io.unobserve(entry.target); // 一度表示したら監視解除
-          }
-        });
-      },
-      { rootMargin: "0px 0px -10% 0px", threshold: 0.12 }
-    );
-    reveals.forEach(function (el) {
-      io.observe(el);
+    if (restoreFocus) {
+      navToggle.focus();
+    }
+  }
+
+  function openNav() {
+    if (!navToggle || !nav) {
+      return;
+    }
+
+    body.classList.add("nav-open");
+    navToggle.setAttribute("aria-expanded", "true");
+    navToggle.setAttribute("aria-label", "メニューを閉じる");
+
+    const firstLink = nav.querySelector("a");
+    if (firstLink) {
+      window.requestAnimationFrame(function () {
+        firstLink.focus();
+      });
+    }
+  }
+
+  if (navToggle && nav) {
+    navToggle.addEventListener("click", function () {
+      if (body.classList.contains("nav-open")) {
+        closeNav(true);
+      } else {
+        openNav();
+      }
+    });
+
+    nav.addEventListener("click", function (event) {
+      if (event.target.closest("a")) {
+        closeNav(false);
+      }
+    });
+
+    document.addEventListener("keydown", function (event) {
+      if (event.key === "Escape" && body.classList.contains("nav-open")) {
+        closeNav(true);
+      }
+    });
+
+    window.addEventListener("resize", function () {
+      if (window.innerWidth > 900 && body.classList.contains("nav-open")) {
+        closeNav(false);
+      }
+    });
+  }
+
+  const revealElements = Array.from(document.querySelectorAll(".reveal"));
+
+  if (reduceMotion || !("IntersectionObserver" in window)) {
+    revealElements.forEach(function (element) {
+      element.classList.add("is-visible");
     });
   } else {
-    // 非対応環境では全表示にフォールバック
-    reveals.forEach(function (el) {
-      el.classList.add("is-in");
-    });
-  }
-
-  // ---- ナビ現在地ハイライト（scroll-spy） ----
-  const navLinks = Array.prototype.slice.call(document.querySelectorAll(".nav__link"));
-  const spyTargets = navLinks.map(function (a) {
-    return document.querySelector(a.getAttribute("href"));
-  });
-  if ("IntersectionObserver" in window) {
-    const spy = new IntersectionObserver(
-      function (entries) {
-        entries.forEach(function (en) {
-          if (en.isIntersecting) {
-            const i = spyTargets.indexOf(en.target);
-            navLinks.forEach(function (a, j) {
-              a.classList.toggle("is-current", j === i);
-            });
+    const revealObserver = new IntersectionObserver(
+      function (entries, observer) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) {
+            return;
           }
+
+          entry.target.classList.add("is-visible");
+          observer.unobserve(entry.target);
         });
       },
-      { rootMargin: "-50% 0px -45% 0px" }
+      {
+        rootMargin: "0px 0px -8% 0px",
+        threshold: 0.06
+      }
     );
-    spyTargets.forEach(function (s) {
-      if (s) spy.observe(s);
+
+    revealElements.forEach(function (element) {
+      revealObserver.observe(element);
     });
   }
 
-  // ---- フッターの年号 ----
-  const yearEl = document.getElementById("year");
-  if (yearEl) {
-    yearEl.textContent = String(new Date().getFullYear());
+  const navLinks = Array.from(document.querySelectorAll('.nav a[href^="#"]'));
+  const navTargets = navLinks
+    .map(function (link) {
+      return document.querySelector(link.getAttribute("href"));
+    })
+    .filter(Boolean);
+
+  if ("IntersectionObserver" in window && navTargets.length) {
+    const sectionObserver = new IntersectionObserver(
+      function (entries) {
+        entries.forEach(function (entry) {
+          if (!entry.isIntersecting) {
+            return;
+          }
+
+          navLinks.forEach(function (link) {
+            const current = link.getAttribute("href") === "#" + entry.target.id;
+            if (current) {
+              link.setAttribute("aria-current", "true");
+            } else {
+              link.removeAttribute("aria-current");
+            }
+          });
+        });
+      },
+      {
+        rootMargin: "-34% 0px -58% 0px",
+        threshold: 0
+      }
+    );
+
+    navTargets.forEach(function (target) {
+      sectionObserver.observe(target);
+    });
   }
 
-  // ---- 問い合わせフォーム：インライン検証＋送信状態 ----
-  // TODO: 公開前に、送信先（フォームサービス / メール送信API）へ接続する。
-  //       現状は送信を止め、入力チェック後に完了メッセージのみ表示する。
-  const form = document.getElementById("contactForm");
-  const formMsg = document.getElementById("formMsg");
-  if (form) {
-    const rules = [
-      { id: "f-name", msg: "お名前をご入力ください。", test: function (v) { return v.trim() !== ""; } },
-      { id: "f-email", msg: "正しいメールアドレスをご入力ください。", test: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v.trim()); } }
+  const videos = Array.from(document.querySelectorAll("video"));
+  videos.forEach(function (video) {
+    video.addEventListener("play", function () {
+      videos.forEach(function (otherVideo) {
+        if (otherVideo !== video && !otherVideo.paused) {
+          otherVideo.pause();
+        }
+      });
+    });
+  });
+
+  const year = document.getElementById("year");
+  if (year) {
+    year.textContent = String(new Date().getFullYear());
+  }
+
+  const contactForm = document.getElementById("contactForm");
+  const formMessage = document.getElementById("formMsg");
+
+  function createInquiryText(form) {
+    const fields = [
+      ["お名前", form.elements.name.value.trim()],
+      ["メールアドレス", form.elements.email.value.trim()],
+      ["電話番号", form.elements.tel.value.trim()],
+      ["ご希望シーン", form.elements.scene.value.trim()],
+      ["候補日", form.elements.date.value.trim()],
+      ["相談内容", form.elements.message.value.trim()]
     ];
 
-    // 各必須項目にエラー表示要素を用意し、入力で解除
-    rules.forEach(function (r) {
-      const input = document.getElementById(r.id);
-      if (!input) return;
-      const field = input.closest(".field");
-      if (field && !field.querySelector(".field__err")) {
-        const span = document.createElement("span");
-        span.className = "field__err";
-        span.textContent = r.msg;
-        field.appendChild(span);
-      }
-      input.addEventListener("input", function () {
-        if (field) field.classList.remove("has-error");
-      });
+    const lines = fields.map(function (field) {
+      return field[0] + "：" + (field[1] || "未入力");
     });
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      let firstError = null;
-      rules.forEach(function (r) {
-        const input = document.getElementById(r.id);
-        if (!input) return;
-        const field = input.closest(".field");
-        const ok = r.test(input.value);
-        if (field) field.classList.toggle("has-error", !ok);
-        if (!ok && !firstError) firstError = input;
-      });
-      if (firstError) {
-        firstError.focus();
-        firstError.scrollIntoView({ behavior: "smooth", block: "center" });
+    return ["【マジシャンKOKI 出演相談】", "", ...lines].join("\n");
+  }
+
+  async function copyText(text) {
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(text);
+        return true;
+      } catch (error) {
+        // Continue to the selection-based fallback.
+      }
+    }
+
+    const temporary = document.createElement("textarea");
+    temporary.value = text;
+    temporary.setAttribute("readonly", "");
+    temporary.style.position = "fixed";
+    temporary.style.left = "-9999px";
+    temporary.style.top = "0";
+    body.appendChild(temporary);
+    temporary.focus();
+    temporary.select();
+
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch (error) {
+      copied = false;
+    }
+
+    temporary.remove();
+    return copied;
+  }
+
+  function showManualCopy(text) {
+    if (!contactForm) {
+      return;
+    }
+
+    let output = contactForm.querySelector(".copy-output");
+    if (!output) {
+      output = document.createElement("textarea");
+      output.className = "copy-output";
+      output.readOnly = true;
+      output.setAttribute("aria-label", "コピー用の相談内容");
+      contactForm.appendChild(output);
+    }
+
+    output.value = text;
+    output.hidden = false;
+    output.focus();
+    output.select();
+  }
+
+  if (contactForm && formMessage) {
+    contactForm.addEventListener("input", function () {
+      formMessage.textContent = "";
+      formMessage.classList.remove("is-error");
+
+      const output = contactForm.querySelector(".copy-output");
+      if (output) {
+        output.hidden = true;
+      }
+    });
+
+    contactForm.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      if (!contactForm.checkValidity()) {
+        contactForm.reportValidity();
+        formMessage.textContent = "必須項目をご確認ください。";
+        formMessage.classList.add("is-error");
         return;
       }
-      // TODO: ここで送信先へPOSTする（fetch等）。接続するまでは完了表示のみ。
-      if (formMsg) {
-        formMsg.classList.add("is-show");
-        formMsg.scrollIntoView({ behavior: "smooth", block: "center" });
+
+      const inquiryText = createInquiryText(contactForm);
+      const copied = await copyText(inquiryText);
+
+      if (copied) {
+        formMessage.textContent = "相談内容をコピーしました。InstagramのDMへ貼り付けてお送りください。";
+        formMessage.classList.remove("is-error");
+
+        const output = contactForm.querySelector(".copy-output");
+        if (output) {
+          output.hidden = true;
+        }
+      } else {
+        formMessage.textContent = "自動コピーができなかったため、下の文章を選択してコピーしてください。";
+        formMessage.classList.add("is-error");
+        showManualCopy(inquiryText);
       }
-      form.reset();
     });
   }
 })();
