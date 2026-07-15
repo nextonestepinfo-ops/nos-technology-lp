@@ -1359,6 +1359,11 @@ body.nav-open .nav-toggle span:nth-child(3) {
 .lightbox-close {
   top: 18px;
   right: 22px;
+  display: inline-flex;
+  min-width: 44px;
+  min-height: 44px;
+  align-items: center;
+  justify-content: center;
   padding: 8px 12px;
   color: var(--gold-light);
   font-size: 0.78rem;
@@ -1598,10 +1603,20 @@ body.nav-open .nav-toggle span:nth-child(3) {
   margin-top: 4px;
 }
 
-.form-actions > a {
+.form-actions > a:not(.btn) {
   border-bottom: 1px solid var(--gold);
   color: var(--gold-light);
   font-size: 0.82rem;
+}
+
+.form-actions .btn-gold {
+  flex: 1 1 auto;
+}
+
+.form-actions .btn-gold.is-ready {
+  background: var(--gold);
+  color: var(--black);
+  box-shadow: 0 0 0 1px rgba(217, 189, 123, 0.28);
 }
 
 .form-message {
@@ -1656,7 +1671,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 }
 
 .footer small {
-  color: #716c64;
+  color: #8f8980;
   font-size: 0.72rem;
   text-align: right;
 }
@@ -1737,16 +1752,20 @@ body.nav-open .nav-toggle span:nth-child(3) {
       rgba(5, 5, 6, 0.985);
     opacity: 0;
     pointer-events: none;
+    visibility: hidden;
     transform: translateX(20px);
     transition:
       opacity 0.3s ease,
-      transform 0.45s var(--ease);
+      transform 0.45s var(--ease),
+      visibility 0s linear 0.45s;
   }
 
   body.nav-open .nav {
     opacity: 1;
     pointer-events: auto;
+    visibility: visible;
     transform: none;
+    transition-delay: 0s;
   }
 
   .nav a {
@@ -1893,7 +1912,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
   .hero-media {
     position: relative;
     inset: auto;
-    height: min(100svh, 183.91vw, 760px);
+    height: min(100svh, 160vw, 640px);
     background: #000;
   }
 
@@ -1903,7 +1922,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
   .hero-shade {
     inset: 0 0 auto;
-    height: min(100svh, 183.91vw, 760px);
+    height: min(100svh, 160vw, 640px);
     background:
       linear-gradient(180deg, rgba(5, 5, 6, 0.55) 0%, transparent 19%, transparent 78%, rgba(5, 5, 6, 0.95) 100%),
       linear-gradient(90deg, rgba(5, 5, 6, 0.1), transparent 40%);
@@ -1912,7 +1931,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
 
   .hero-inner {
     min-height: 0;
-    padding-top: 36px;
+    padding-top: 30px;
     padding-bottom: 42px;
     background: var(--black);
   }
@@ -1922,12 +1941,12 @@ body.nav-open .nav-toggle span:nth-child(3) {
   }
 
   .hero h1 {
-    margin-top: 16px;
-    font-size: clamp(5.1rem, 25vw, 7rem);
+    margin-top: 12px;
+    font-size: clamp(4rem, 20vw, 5.5rem);
   }
 
   .hero-copy {
-    margin-top: 28px;
+    margin-top: 20px;
     font-size: clamp(1.35rem, 6.8vw, 1.85rem);
     line-height: 1.6;
   }
@@ -2248,7 +2267,7 @@ body.nav-open .nav-toggle span:nth-child(3) {
     width: 100%;
   }
 
-  .form-actions > a {
+  .form-actions > a:not(.btn) {
     align-self: center;
   }
 

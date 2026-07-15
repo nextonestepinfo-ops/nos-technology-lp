@@ -76,7 +76,7 @@
     <section class="hero" aria-label="KOKIメインビジュアル">
       <picture class="hero-media" aria-hidden="true">
         <source srcset="assets/photos/hero-pc.jpg" media="(min-width: 761px)" />
-        <img src="assets/photos/hero.jpg" alt="" />
+        <img src="assets/photos/hero.jpg" alt="" fetchpriority="high" decoding="async" />
       </picture>
       <div class="hero-shade" aria-hidden="true"></div>
 
@@ -122,7 +122,7 @@
 
         <div class="scene-grid">
           <article class="scene-card reveal">
-            <img src="assets/photos/scene-corporate.jpg" alt="企業イベントでテーブルマジックを行うKOKI" loading="lazy" />
+            <img src="assets/photos/scene-corporate.jpg" alt="企業イベントでテーブルマジックを行うKOKI" loading="lazy" decoding="async" />
             <div>
               <p class="card-label">Corporate</p>
               <h3>企業イベント・懇親会</h3>
@@ -130,7 +130,7 @@
             </div>
           </article>
           <article class="scene-card reveal">
-            <img src="assets/photos/scene-wedding.jpg" alt="結婚式や披露宴でのマジックシーン" loading="lazy" />
+            <img src="assets/photos/scene-wedding.jpg" alt="結婚式や披露宴でのマジックシーン" loading="lazy" decoding="async" />
             <div>
               <p class="card-label">Wedding</p>
               <h3>結婚式・披露宴</h3>
@@ -138,7 +138,7 @@
             </div>
           </article>
           <article class="scene-card reveal">
-            <img src="assets/photos/scene-hotel.jpg" alt="ホテル宴会場でのステージマジック" loading="lazy" />
+            <img src="assets/photos/scene-hotel.jpg" alt="ホテル宴会場でのステージマジック" loading="lazy" decoding="async" />
             <div>
               <p class="card-label">Hotel Banquet</p>
               <h3>ホテル・宴会</h3>
@@ -209,7 +209,7 @@
 
     <section class="profile section" id="profile">
       <div class="profile-photo">
-        <img src="assets/photos/about-main.jpg" alt="マジシャンKOKIのプロフィール写真" loading="lazy" />
+        <img src="assets/photos/about-main.jpg" alt="マジシャンKOKIのプロフィール写真" loading="lazy" decoding="async" />
       </div>
         <div class="profile-body">
           <p class="eyebrow">Profile</p>
@@ -255,9 +255,9 @@
           <p>企業イベント、結婚式、ホテル宴会など、実際の出演シーンをご覧いただけます。</p>
         </div>
         <div class="gallery-grid">
-          <img class="reveal" src="assets/photos/about-sub.jpg" alt="テーブルマジックの手元" loading="lazy" />
-          <img class="reveal" src="assets/photos/gallery-main.jpg" alt="会場でマジックを披露するKOKI" loading="lazy" />
-          <img class="reveal" src="assets/photos/gallery-short.jpg" alt="ショート動画用の演出カット" loading="lazy" />
+          <img class="reveal" src="assets/photos/about-sub.jpg" alt="テーブルマジックの手元" loading="lazy" decoding="async" />
+          <img class="reveal" src="assets/photos/gallery-main.jpg" alt="会場でマジックを披露するKOKI" loading="lazy" decoding="async" />
+          <img class="reveal" src="assets/photos/gallery-short.jpg" alt="ショート動画用の演出カット" loading="lazy" decoding="async" />
         </div>
         <div class="gallery-actions reveal">
           <a class="btn btn-gold btn-large" href="gallery.html">ギャラリーをすべて見る</a>
@@ -322,7 +322,7 @@
           </div>
           <div class="form-actions">
             <button class="btn btn-primary btn-large" type="submit">相談内容をコピーする</button>
-            <a href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener">コピー後、Instagramを開く</a>
+            <a class="btn btn-gold" id="instagramAfterCopy" href="https://www.instagram.com/koki19990907/" target="_blank" rel="noopener">Instagramを開く</a>
           </div>
           <p class="form-message" id="formMsg" role="status" aria-live="polite" tabindex="-1"></p>
         </form>

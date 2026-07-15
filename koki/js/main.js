@@ -88,8 +88,30 @@
     });
 
     document.addEventListener("keydown", function (event) {
-      if (event.key === "Escape" && body.classList.contains("nav-open")) {
+      if (!body.classList.contains("nav-open")) {
+        return;
+      }
+
+      if (event.key === "Escape") {
         closeNav(true);
+      } else if (event.key === "Tab") {
+        const menuLinks = Array.from(nav.querySelectorAll("a"));
+        const firstMenuLink = menuLinks[0];
+        const lastMenuLink = menuLinks[menuLinks.length - 1];
+
+        if (event.shiftKey && document.activeElement === firstMenuLink) {
+          event.preventDefault();
+          navToggle.focus();
+        } else if (event.shiftKey && document.activeElement === navToggle) {
+          event.preventDefault();
+          lastMenuLink.focus();
+        } else if (!event.shiftKey && document.activeElement === lastMenuLink) {
+          event.preventDefault();
+          navToggle.focus();
+        } else if (!event.shiftKey && document.activeElement === navToggle) {
+          event.preventDefault();
+          firstMenuLink.focus();
+        }
       }
     });
 
@@ -183,6 +205,7 @@
 
   const contactForm = document.getElementById("contactForm");
   const formMessage = document.getElementById("formMsg");
+  const instagramAfterCopy = document.getElementById("instagramAfterCopy");
 
   function createInquiryText(form) {
     const fields = [
@@ -257,6 +280,11 @@
       formMessage.textContent = "";
       formMessage.classList.remove("is-error");
 
+      if (instagramAfterCopy) {
+        instagramAfterCopy.classList.remove("is-ready");
+        instagramAfterCopy.textContent = "Instagramを開く";
+      }
+
       const output = contactForm.querySelector(".copy-output");
       if (output) {
         output.hidden = true;
@@ -280,6 +308,12 @@
         formMessage.textContent = "相談内容をコピーしました。InstagramのDMへ貼り付けてお送りください。";
         formMessage.classList.remove("is-error");
 
+        if (instagramAfterCopy) {
+          instagramAfterCopy.classList.add("is-ready");
+          instagramAfterCopy.textContent = "Instagramを開いて貼り付ける";
+          instagramAfterCopy.focus();
+        }
+
         const output = contactForm.querySelector(".copy-output");
         if (output) {
           output.hidden = true;
@@ -299,10 +333,25 @@
   const lightboxClose = lightbox ? lightbox.querySelector("[data-lightbox-close]") : null;
   const lightboxPrev = lightbox ? lightbox.querySelector("[data-lightbox-prev]") : null;
   const lightboxNext = lightbox ? lightbox.querySelector("[data-lightbox-next]") : null;
+  const lightboxBackground = [header, document.querySelector("main"), document.querySelector(".footer")].filter(Boolean);
 
   if (galleryItems.length && lightbox && lightboxImage && lightboxCaption) {
     let currentGalleryIndex = 0;
     let lastGalleryTrigger = null;
+
+    function setLightboxBackgroundState(isOpen) {
+      lightboxBackground.forEach(function (element) {
+        element.inert = isOpen;
+
+        if (isOpen) {
+          element.setAttribute("inert", "");
+          element.setAttribute("aria-hidden", "true");
+        } else {
+          element.removeAttribute("inert");
+          element.removeAttribute("aria-hidden");
+        }
+      });
+    }
 
     function renderGalleryItem(index) {
       currentGalleryIndex = (index + galleryItems.length) % galleryItems.length;
@@ -318,6 +367,7 @@
       renderGalleryItem(index);
       lastGalleryTrigger = trigger;
       body.classList.add("lightbox-open");
+      setLightboxBackgroundState(true);
       lightbox.hidden = false;
 
       if (lightboxClose) {
@@ -335,6 +385,7 @@
       lightbox.hidden = true;
       body.classList.remove("lightbox-open");
       lightboxImage.src = "";
+      setLightboxBackgroundState(false);
 
       if (lastGalleryTrigger) {
         lastGalleryTrigger.focus();
